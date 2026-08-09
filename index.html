@@ -148,7 +148,7 @@
 
     <!-- Primary CTA Button -->
     <div class="starter-prompt-actions" style="margin-bottom:28px">
-      <button class="btn-primary btn-lg" onclick="showStarterPromptModal()">Use the starter prompt</button>
+      <button onClick="{{ showStarterPromptModal }}" class="btn-primary btn-lg">Use the starter prompt</button>
     </div>
 
     <!-- What It Provides Card -->
@@ -649,7 +649,7 @@ class Component extends DCLogic {
   goApp = () => { window.scrollTo(0, 0); this.setState({ view: 'app', phase: 'wizard', step: 1, sectionIndex: 0 }); };
   goBrowse = () => { window.scrollTo(0, 0); this.setState({ view: 'browse' }); };
   goLanding = () => { window.scrollTo(0, 0); this.setState({ view: 'landing' }); };
-  goStarterPrompt = () => this.setState({ view: 'starterPrompt', showStarterPromptText: false });
+  goStarterPrompt = () => { window.scrollTo(0, 0); this.setState({ view: 'starterPrompt', showStarterPromptText: false }); };
   toggleStarterPromptText = () => this.setState((s) => ({ showStarterPromptText: !s.showStarterPromptText }));
   copyStarter = () => this.copyText(STARTER_PROMPT_DATA.prompt, 'Starter prompt copied');
   copyGeneric = () => this.copyText(GENERIC_PROMPT, 'Starter prompt copied');
@@ -997,6 +997,7 @@ class Component extends DCLogic {
       starterPrompt: STARTER_PROMPT_DATA,
       showStarterPromptText: s.showStarterPromptText,
       toggleStarterPromptText: this.toggleStarterPromptText,
+      showStarterPromptModal: window.showStarterPromptModal,
       copyGeneric: this.copyGeneric, copyStarter: this.copyStarter,
       currentSection,
       sectionNumber: s.sectionIndex + 1,
@@ -1319,21 +1320,35 @@ window.PROMPTS_DATA = PROMPTS_DATA;
   };
 
   // Helper function to show copy modal for starter prompt
-  const showStarterPromptModal = () => {
-    if (!window.STARTER_PROMPT_DATA) return;
+  window.showStarterPromptModal = function() {
+    console.log('[showStarterPromptModal] Function called');
+    console.log('[showStarterPromptModal] STARTER_PROMPT_DATA:', window.STARTER_PROMPT_DATA);
 
-    const promptText = STARTER_PROMPT_DATA.prompt || '';
+    if (!window.STARTER_PROMPT_DATA) {
+      console.error('[showStarterPromptModal] STARTER_PROMPT_DATA not found');
+      return;
+    }
+
+    const promptText = window.STARTER_PROMPT_DATA.prompt || '';
+    console.log('[showStarterPromptModal] promptText length:', promptText.length);
+
     const modal = document.getElementById('copy-modal');
-    if (!modal) return;
+    console.log('[showStarterPromptModal] modal element:', modal);
+    if (!modal) {
+      console.error('[showStarterPromptModal] Modal element not found');
+      return;
+    }
 
     // Update modal heading
     const heading = modal.querySelector('#modal-heading');
+    console.log('[showStarterPromptModal] heading element:', heading);
     if (heading) {
       heading.textContent = 'prompt copied';
     }
 
     // Update prompt display
     const promptEl = modal.querySelector('#modal-prompt');
+    console.log('[showStarterPromptModal] promptEl element:', promptEl);
     if (promptEl) {
       promptEl.textContent = promptText;
     }
@@ -1357,10 +1372,13 @@ window.PROMPTS_DATA = PROMPTS_DATA;
     }
 
     // Show modal
+    console.log('[showStarterPromptModal] Showing modal');
     modal.style.display = 'flex';
 
     // Initialize chatbot selection when modal opens
+    console.log('[showStarterPromptModal] Initializing chatbot selection');
     initializeChatbotSelection();
+    console.log('[showStarterPromptModal] Modal displayed');
   };
 
   // Helper function to show toast
