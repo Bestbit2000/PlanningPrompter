@@ -137,41 +137,72 @@
 
   <!-- ============ STARTER PROMPT ============ -->
   <sc-if value="{{ isStarterPrompt }}">
-  <div data-screen-label="Starter Prompt" class="starter-prompt-container">
+  <div data-screen-label="Starter Prompt" style="max-width:1120px;margin:0 auto;padding:32px">
 
-    <h1 class="starter-prompt-page-heading">Starter prompt</h1>
-
-    <!-- Value Proposition Callout -->
-    <div class="starter-prompt-value-prop">
-      <p class="starter-prompt-value-prop-text">This prompt will get you going on your journey towards retirement.</p>
+    <!-- Header Section -->
+    <div style="margin-bottom:32px">
+      <h1 style="font-size:32px;font-weight:800;color:#201e1d;margin:0 0 16px">Starter prompt</h1>
+      <p style="font-size:16px;color:#555;margin:0;line-height:1.6;border-left:4px solid #2C8494;padding-left:16px;background:#fff;padding:12px 16px;border-radius:0 8px 8px 0;box-shadow:0 1px 3px rgba(0,0,0,0.1)">
+        This prompt will get you going on your journey towards retirement. Copy it and use it with your preferred AI assistant.
+      </p>
     </div>
 
-    <!-- Primary CTA Button -->
-    <div class="starter-prompt-actions" style="margin-bottom:28px">
-      <button onClick="{{ showStarterPromptModal }}" class="btn-primary btn-lg">Use the starter prompt</button>
+    <!-- Three Cards Section -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:32px">
+      <!-- Card 1: What it provides -->
+      <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid #e2e8f0;transition:all 0.3s ease">
+        <div style="display:flex;align-items:center;margin-bottom:16px;gap:12px">
+          <div style="background:#d0f0f0;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#2C8494;font-size:20px">ℹ️</div>
+          <h3 style="font-size:12px;font-weight:700;color:#201e1d;margin:0;text-transform:uppercase;letter-spacing:0.05em">What it provides</h3>
+        </div>
+        <p style="font-size:14px;color:#555;margin:0;line-height:1.6">{{ starterPrompt.summary }}</p>
+      </div>
+
+      <!-- Card 2: How it works -->
+      <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid #e2e8f0;transition:all 0.3s ease">
+        <div style="display:flex;align-items:center;margin-bottom:16px;gap:12px">
+          <div style="background:#dbeafe;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:20px">⚙️</div>
+          <h3 style="font-size:12px;font-weight:700;color:#201e1d;margin:0;text-transform:uppercase;letter-spacing:0.05em">How it works</h3>
+        </div>
+        <p style="font-size:14px;color:#555;margin:0;line-height:1.6">{{ starterPrompt.explanation }}</p>
+      </div>
+
+      <!-- Card 3: What to expect -->
+      <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid #e2e8f0;transition:all 0.3s ease">
+        <div style="display:flex;align-items:center;margin-bottom:16px;gap:12px">
+          <div style="background:#e9d5ff;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#7e22ce;font-size:20px">👁️</div>
+          <h3 style="font-size:12px;font-weight:700;color:#201e1d;margin:0;text-transform:uppercase;letter-spacing:0.05em">What to expect</h3>
+        </div>
+        <p style="font-size:14px;color:#555;margin:0;line-height:1.6">{{ starterPrompt.whatToExpect }}</p>
+      </div>
     </div>
 
-    <!-- What It Provides Card -->
-    <div class="starter-prompt-content-card">
-      <h2>What it provides</h2>
-      <p style="font-size:14px;color:#201e1d;margin:0 0 16px;line-height:1.6">{{ starterPrompt.summary }}</p>
+    <!-- Prompt Section -->
+    <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid #e2e8f0;overflow:hidden;margin-bottom:24px">
+      <!-- Prompt Header -->
+      <div style="background:#f1f5f9;border-bottom:1px solid #e2e8f0;padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:20px">📝</span>
+          <h3 style="font-size:12px;font-weight:700;color:#334155;margin:0;text-transform:uppercase;letter-spacing:0.05em">The Prompt</h3>
+        </div>
+        <button onClick="{{ showStarterPromptModal }}" class="btn-primary" style="display:flex;align-items:center;gap:8px">
+          <img src="./images/copy-link-icon.svg" style="width:16px;height:16px;filter:brightness(0) invert(1)" />
+          Copy Prompt
+        </button>
+      </div>
 
-      <h2 style="margin-top:20px">How it works</h2>
-      <p style="font-size:14px;color:#201e1d;margin:0 0 16px;line-height:1.6">{{ starterPrompt.explanation }}</p>
-
-      <h2 style="margin-top:20px">What to expect</h2>
-      <p style="font-size:14px;color:#201e1d;margin:0;line-height:1.6">{{ starterPrompt.whatToExpect }}</p>
-    </div>
-
-    <!-- Full Prompt Text (Always Visible) -->
-    <div class="starter-prompt-full-text">
-      <div class="starter-prompt-full-text-label">Prompt text</div>
-      <pre class="starter-prompt-full-text-content" readonly>{{ starterPrompt.prompt }}</pre>
+      <!-- Prompt Content -->
+      <div style="position:relative;background:#1e293b;padding:24px;border-top:3px solid #2C8494">
+        <pre style="font-family:'Courier New',monospace;font-size:13px;line-height:1.6;color:#e2e8f0;margin:0;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto">{{ starterPrompt.prompt }}</pre>
+      </div>
     </div>
 
     <!-- Disclaimer -->
-    <div class="disclaimer-notice">
-      <strong>Note:</strong> This is for educational purposes only. The prompt asks for factual information, not regulated financial advice. You should always speak to a qualified financial adviser about your personal circumstances.
+    <div style="background:#fef3c7;border-left:4px solid #f59e0b;border-radius:8px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start">
+      <span style="font-size:20px;flex-shrink:0">⚠️</span>
+      <div>
+        <p style="font-size:13px;color:#78350f;margin:0;line-height:1.6"><strong>Note:</strong> This is for educational purposes only. The prompt asks for factual information, not regulated financial advice. You should always speak to a qualified financial adviser about your personal circumstances.</p>
+      </div>
     </div>
   </div>
   </sc-if>
