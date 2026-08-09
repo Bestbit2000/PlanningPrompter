@@ -532,67 +532,9 @@
       <sc-if value="{{ browseHasOneSelection }}"><span class="count">1</span> question selected</sc-if>
       <sc-if value="{{ browseHasMultipleSelections }}"><span class="count">{{ browseSelectedCount }}</span> questions selected</sc-if>
     </span>
-    <button class="copy-button" data-copy-all="true" data-disabled="{{ browseHasNoSelection }}">Copy all selected</button>
+    <button class="copy-button" data-copy-all="true" data-disabled="{{ browseHasNoSelection }}">Use all selected</button>
   </div>
   </sc-if>
-
-  <!-- COPY MODAL -->
-  <div id="copy-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;pointer-events:auto;align-items:center;justify-content:center">
-    <div style="background:#fff;border-radius:8px;max-width:600px;width:90%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.3);pointer-events:auto;position:relative">
-      <!-- Close button -->
-      <button class="modal-close-btn" style="position:absolute;top:12px;right:12px;background:transparent;border:none;font-size:28px;cursor:pointer;color:#666;z-index:10;width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;transition:color 0.2s">×</button>
-
-      <!-- Modal content -->
-      <div style="padding:40px 32px;overflow-y:auto;padding-top:20px">
-        <!-- Header -->
-        <h2 id="modal-heading" style="font-size:24px;margin:0 0 8px;color:#201e1d;font-weight:800">questions copied</h2>
-        <p style="font-size:14px;color:#666;margin:0 0 24px">The prompt is on your clipboard. Either go to your preferred AI or use an option below to launch it:</p>
-
-        <!-- Chatbot selection -->
-        <fieldset style="border:none;padding:0;margin:0;margin-bottom:16px">
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:1px solid rgba(32,30,29,0.2);border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="claude" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
-              <span style="flex:1;font-weight:600;color:#201e1d">Claude</span>
-              <span style="font-size:12px;color:#999;font-weight:400">(includes the prompt)</span>
-            </label>
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:1px solid rgba(32,30,29,0.2);border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="chatgpt" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
-              <span style="flex:1;font-weight:600;color:#201e1d">ChatGPT</span>
-              <span style="font-size:12px;color:#999;font-weight:400">(includes the prompt)</span>
-            </label>
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:1px solid rgba(32,30,29,0.2);border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="copilot" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
-              <span style="flex:1;font-weight:600;color:#201e1d">Copilot</span>
-            </label>
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:1px solid rgba(32,30,29,0.2);border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="gemini" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
-              <span style="flex:1;font-weight:600;color:#201e1d">Gemini</span>
-            </label>
-          </div>
-        </fieldset>
-
-        <!-- Capability message -->
-        <div id="capability-message" style="font-size:13px;color:#666;margin-bottom:24px;display:none"></div>
-
-        <!-- Launch button -->
-        <button id="launch-chat-btn" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;border-radius:6px;width:100%;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:40px">Launch chat in new window <span style="font-size:12px">↗</span></button>
-
-        <!-- Prompt preview -->
-        <div style="margin-bottom:40px">
-          <p style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin:0 0 8px;font-weight:600">Your prompt</p>
-          <div id="modal-prompt" style="background:#f5f4f3;border:1px solid #ddd;border-radius:6px;padding:16px;max-height:200px;overflow-y:auto;font-size:13px;line-height:1.6;color:#333;white-space:pre-wrap;word-wrap:break-word;font-family:monospace"></div>
-        </div>
-
-        <!-- Want more tailored answer CTA -->
-        <div style="background:#f0f5f2;border:1px solid #2C8494;border-radius:8px;padding:20px">
-          <h3 style="font-size:16px;margin:0 0 8px;font-weight:600;color:#201e1d">Want a more tailored answer?</h3>
-          <p style="font-size:14px;color:#666;margin:0 0 16px">Add your age, pension, income and concerns, and get answers specific to your situation.</p>
-          <button class="modal-personalise-btn-secondary" id="personalise-btn" style="background:transparent;color:#2C8494;border:2px solid #2C8494;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:10px 22px;cursor:pointer;border-radius:6px;width:100%;transition:all 0.2s">Personalise the prompt →</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </div>
 </x-dc>
@@ -863,7 +805,7 @@ class Component extends DCLogic {
       })
       .filter(Boolean)
       .join('\n\n---\n\n');
-    this.copyText(text, ids.length === 1 ? '1 question copied' : `${ids.length} questions copied`);
+    window.showPromptModal(text);
   };
 
   getSources = () => {
@@ -1476,8 +1418,15 @@ window.PROMPTS_DATA = PROMPTS_DATA;
     if (!window.STARTER_PROMPT_DATA) {
       return;
     }
-
     const promptText = window.STARTER_PROMPT_DATA.prompt || '';
+    window.showPromptModal(promptText);
+  };
+
+  // Generic function to show prompt modal with any prompt data
+  window.showPromptModal = function(promptText) {
+    if (!promptText) {
+      return;
+    }
 
     // Ensure modal exists (create if needed)
     const modal = ensureModalExists();
