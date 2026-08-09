@@ -139,58 +139,32 @@
   <sc-if value="{{ isStarterPrompt }}">
   <div data-screen-label="Starter Prompt" class="starter-prompt-container">
 
-    <h1 class="starter-prompt-page-heading">{{ starterPrompt.title }}</h1>
-    <p class="starter-prompt-category">{{ starterPrompt.category }}</p>
+    <h1 class="starter-prompt-page-heading">Starter prompt</h1>
 
     <!-- Value Proposition Callout -->
     <div class="starter-prompt-value-prop">
       <p class="starter-prompt-value-prop-text">This prompt will get you going on your journey towards retirement.</p>
     </div>
 
-    <!-- Unified Content Card -->
+    <!-- Primary CTA Button -->
+    <div class="starter-prompt-actions" style="margin-bottom:28px">
+      <button data-copy-all="true" onClick="{{ showStarterPromptModal }}" class="btn-primary btn-lg">Use the starter prompt</button>
+    </div>
+
+    <!-- What It Provides Card -->
     <div class="starter-prompt-content-card">
       <h2>What it provides</h2>
-      <p style="font-size:14px;color:#201e1d;margin:0 0 16px;line-height:1.6">{{ starterPrompt.summary }}</p>
-
-      <h2 style="margin-top:20px">How it works</h2>
-      <p style="font-size:14px;color:#201e1d;margin:0 0 16px;line-height:1.6">{{ starterPrompt.explanation }}</p>
-
-      <h2 style="margin-top:20px">What to expect</h2>
-      <p style="font-size:14px;color:#201e1d;margin:0;line-height:1.6">{{ starterPrompt.whatToExpect }}</p>
+      <p style="font-size:14px;color:#201e1d;margin:0;line-height:1.6">{{ starterPrompt.summary }}</p>
     </div>
 
-    <!-- Action Buttons -->
-    <div class="starter-prompt-actions">
-      <div class="starter-prompt-primary-action">
-        <button onClick="{{ copyStarter }}" class="btn-primary" style="padding:12px 20px;font-size:14px">📋 Copy prompt</button>
-      </div>
-      <div class="starter-prompt-secondary-actions">
-        <div class="starter-prompt-secondary-action-group">
-          <button onClick="{{ openInChatGPT }}" class="btn-secondary">Open in ChatGPT</button>
-          <p class="starter-prompt-helper-text">Requires active account</p>
-        </div>
-        <div class="starter-prompt-secondary-action-group">
-          <button onClick="{{ openInClaude }}" class="btn-secondary">Open in Claude</button>
-          <p class="starter-prompt-helper-text">Requires active account</p>
-        </div>
-      </div>
+    <!-- Full Prompt Text (Always Visible) -->
+    <div class="starter-prompt-full-text">
+      <div class="starter-prompt-full-text-label">Prompt text</div>
+      <pre class="starter-prompt-full-text-content" readonly>{{ starterPrompt.prompt }}</pre>
     </div>
-
-    <!-- Toggle Full Text -->
-    <button onClick="{{ toggleStarterPromptText }}" class="btn-secondary" style="width:100%;margin-bottom:28px">
-      {{ showStarterPromptText ? '▼ Hide prompt text' : '▶ Show prompt text' }}
-    </button>
-
-    <!-- Full Prompt Text (Conditional) -->
-    <sc-if value="{{ showStarterPromptText }}">
-      <div class="starter-prompt-full-text">
-        <div class="starter-prompt-full-text-label">Full prompt text</div>
-        <pre class="starter-prompt-full-text-content">{{ starterPrompt.prompt }}</pre>
-      </div>
-    </sc-if>
 
     <!-- Disclaimer -->
-    <div class="starter-prompt-disclaimer">
+    <div class="disclaimer-notice">
       <strong>Note:</strong> This is for educational purposes only. The prompt asks for factual information, not regulated financial advice. You should always speak to a qualified financial adviser about your personal circumstances.
     </div>
   </div>
@@ -1315,6 +1289,51 @@ window.PROMPTS_DATA = PROMPTS_DATA;
 
     // Update chatbot links with encoded prompt URLs
     const encodedPrompt = encodeURIComponent(cleanText);
+
+    const chatgptLink = modal.querySelector('#modal-chatgpt-link');
+    if (chatgptLink) {
+      chatgptLink.href = `https://chatgpt.com/?q=${encodedPrompt}`;
+    }
+
+    const claudeLink = modal.querySelector('#modal-claude-link');
+    if (claudeLink) {
+      claudeLink.href = `https://claude.ai/new?q=${encodedPrompt}`;
+    }
+
+    const copilotLink = modal.querySelector('#modal-copilot-link');
+    if (copilotLink) {
+      copilotLink.href = `https://copilot.microsoft.com/?q=${encodedPrompt}`;
+    }
+
+    // Show modal
+    modal.style.display = 'flex';
+
+    // Initialize chatbot selection when modal opens
+    initializeChatbotSelection();
+  };
+
+  // Helper function to show copy modal for starter prompt
+  const showStarterPromptModal = () => {
+    if (!window.STARTER_PROMPT_DATA) return;
+
+    const promptText = STARTER_PROMPT_DATA.prompt || '';
+    const modal = document.getElementById('copy-modal');
+    if (!modal) return;
+
+    // Update modal heading
+    const heading = modal.querySelector('#modal-heading');
+    if (heading) {
+      heading.textContent = 'prompt copied';
+    }
+
+    // Update prompt display
+    const promptEl = modal.querySelector('#modal-prompt');
+    if (promptEl) {
+      promptEl.textContent = promptText;
+    }
+
+    // Update chatbot links with encoded prompt URLs
+    const encodedPrompt = encodeURIComponent(promptText);
 
     const chatgptLink = modal.querySelector('#modal-chatgpt-link');
     if (chatgptLink) {

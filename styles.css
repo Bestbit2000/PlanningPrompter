@@ -1087,7 +1087,7 @@ fieldset div > label:hover {
 
 /* ============ STARTER PROMPT PAGE ============ */
 .starter-prompt-container {
-  max-width: 800px;
+  max-width: 1120px;
   margin: 0 auto;
   padding: 48px 32px 80px;
 }
@@ -1209,32 +1209,40 @@ fieldset div > label:hover {
 }
 
 .starter-prompt-full-text {
-  background: #201e1d;
-  padding: 24px;
+  background: #fff;
+  border: 1px solid rgba(32, 30, 29, 0.12);
   border-radius: 8px;
   margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  height: 300px;
 }
 
 .starter-prompt-full-text-label {
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 12px;
+  color: rgba(32, 30, 29, 0.6);
+  margin: 0;
+  padding: 16px 20px 0;
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .starter-prompt-full-text-content {
   white-space: pre-wrap;
-  color: #f5f4f3;
+  color: #201e1d;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 13px;
   line-height: 1.6;
   margin: 0;
+  padding: 12px 20px;
+  overflow-y: auto;
+  flex: 1;
   word-break: break-word;
 }
 
-.starter-prompt-disclaimer {
+.disclaimer-notice {
   background: #fff;
   border: 1px solid rgba(32, 30, 29, 0.12);
   border-radius: 8px;
@@ -1244,7 +1252,7 @@ fieldset div > label:hover {
   line-height: 1.6;
 }
 
-.starter-prompt-disclaimer strong {
+.disclaimer-notice strong {
   font-weight: 600;
   color: #201e1d;
 }
