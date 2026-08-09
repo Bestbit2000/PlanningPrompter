@@ -1049,6 +1049,42 @@ window.PROMPTS_DATA = PROMPTS_DATA;
 </script>
 
 <script>
+  // Toast notification function - defined first to ensure global access
+  window.showSimpleToast = function(msg) {
+    const toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) return;
+
+    const id = Date.now() + Math.random();
+    const toastDiv = document.createElement('div');
+    toastDiv.style.cssText = 'background:#201e1d;color:#fff;padding:12px 16px;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);display:flex;align-items:center;gap:12px;border-radius:8px;pointer-events:auto;animation:slideIn 0.3s ease-out;max-width:350px';
+    toastDiv.dataset.toastId = id;
+
+    const msgSpan = document.createElement('span');
+    msgSpan.textContent = msg;
+    msgSpan.style.flex = '1';
+
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '×';
+    closeBtn.className = 'toast-close';
+    closeBtn.style.cssText = 'background:transparent;border:none;color:#fff;cursor:pointer;font-size:20px;padding:0;line-height:1;flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center';
+    closeBtn.title = 'Close';
+    closeBtn.addEventListener('click', function() {
+      toastDiv.style.animation = 'slideOut 0.3s ease-out forwards';
+      setTimeout(function() { toastDiv.remove(); }, 300);
+    });
+
+    toastDiv.appendChild(msgSpan);
+    toastDiv.appendChild(closeBtn);
+    toastContainer.appendChild(toastDiv);
+
+    setTimeout(function() {
+      if (toastDiv.parentNode) {
+        toastDiv.style.animation = 'slideOut 0.3s ease-out forwards';
+        setTimeout(function() { toastDiv.remove(); }, 300);
+      }
+    }, 5000);
+  };
+
   // Watch for toast close button clicks
   const attachToastListeners = () => {
     const buttons = document.querySelectorAll('.toast-close:not([data-listener-attached])');
@@ -1426,22 +1462,16 @@ window.PROMPTS_DATA = PROMPTS_DATA;
 
     // Set up copy-only button
     const copyOnlyBtn = modal.querySelector('#copy-only-btn');
-    console.log('Copy button found:', !!copyOnlyBtn, copyOnlyBtn?.className);
     if (copyOnlyBtn) {
       copyOnlyBtn.onclick = () => {
-        console.log('Copy button clicked, showSimpleToast:', typeof showSimpleToast);
+        // Try clipboard API but always show toast regardless
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(promptText).then(() => {
-            console.log('Clipboard write successful');
-            showSimpleToast('The prompt has been copied to your clipboard');
-          }).catch((err) => {
-            console.log('Clipboard write failed:', err);
-            showSimpleToast('The prompt has been copied to your clipboard');
+          navigator.clipboard.writeText(promptText).catch(() => {
+            // Silently fail - clipboard might not work with file:// protocol
           });
-        } else {
-          console.log('Clipboard not available');
-          showSimpleToast('The prompt has been copied to your clipboard');
         }
+        // Always show toast immediately
+        setTimeout(() => showSimpleToast('The prompt has been copied to your clipboard'), 10);
       };
     }
 
@@ -1470,45 +1500,6 @@ window.PROMPTS_DATA = PROMPTS_DATA;
     initializeChatbotSelection();
   };
 
-  // Helper function to show toast
-  const showSimpleToast = (msg) => {
-    const toastContainer = document.getElementById('toast-container');
-    if (!toastContainer) return;
-
-    const id = Date.now() + Math.random();
-    const toastDiv = document.createElement('div');
-    toastDiv.style.cssText = 'background:#201e1d;color:#fff;padding:12px 16px;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);display:flex;align-items:center;gap:12px;border-radius:8px;pointer-events:auto;animation:slideIn 0.3s ease-out;max-width:350px';
-    toastDiv.dataset.toastId = id;
-
-    const msgSpan = document.createElement('span');
-    msgSpan.textContent = msg;
-    msgSpan.style.flex = '1';
-
-    const closeBtn = document.createElement('button');
-    closeBtn.textContent = '×';
-    closeBtn.className = 'toast-close';
-    closeBtn.style.cssText = 'background:transparent;border:none;color:#fff;cursor:pointer;font-size:20px;padding:0;line-height:1;flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center';
-    closeBtn.title = 'Close';
-    closeBtn.addEventListener('click', () => {
-      removeToast(toastDiv);
-    });
-
-    toastDiv.appendChild(msgSpan);
-    toastDiv.appendChild(closeBtn);
-    toastContainer.appendChild(toastDiv);
-
-    const removeToast = (el) => {
-      el.style.animation = 'slideOut 0.3s ease-out forwards';
-      setTimeout(() => el.remove(), 300);
-    };
-
-    setTimeout(() => {
-      if (toastDiv.parentNode) {
-        removeToast(toastDiv);
-      }
-    }, 5000);
-  };
-
   // Attach listeners on page load
   attachToastListeners();
 
@@ -1526,5 +1517,44 @@ window.PROMPTS_DATA = PROMPTS_DATA;
     attachToastListeners();
   }, 1000);
 </script>
+
+<script>
+// Ensure showSimpleToast is defined and accessible globally
+if (!window.showSimpleToast) {
+  window.showSimpleToast = function(msg) {
+    const toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) return;
+
+    const toastDiv = document.createElement('div');
+    toastDiv.style.cssText = 'background:#201e1d;color:#fff;padding:12px 16px;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);display:flex;align-items:center;gap:12px;border-radius:8px;pointer-events:auto;animation:slideIn 0.3s ease-out;max-width:350px';
+
+    const msgSpan = document.createElement('span');
+    msgSpan.textContent = msg;
+    msgSpan.style.flex = '1';
+
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '×';
+    closeBtn.className = 'toast-close';
+    closeBtn.style.cssText = 'background:transparent;border:none;color:#fff;cursor:pointer;font-size:20px;padding:0;line-height:1;flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center';
+    closeBtn.title = 'Close';
+    closeBtn.addEventListener('click', function() {
+      toastDiv.style.animation = 'slideOut 0.3s ease-out forwards';
+      setTimeout(function() { toastDiv.remove(); }, 300);
+    });
+
+    toastDiv.appendChild(msgSpan);
+    toastDiv.appendChild(closeBtn);
+    toastContainer.appendChild(toastDiv);
+
+    setTimeout(function() {
+      if (toastDiv.parentNode) {
+        toastDiv.style.animation = 'slideOut 0.3s ease-out forwards';
+        setTimeout(function() { toastDiv.remove(); }, 300);
+      }
+    }, 5000);
+  };
+}
+</script>
+
 </body>
 </html>
