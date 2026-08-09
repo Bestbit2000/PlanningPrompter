@@ -60,245 +60,255 @@
     </div>
   </div>
 
-  <!-- ======= PAGE 2: DATA TEMPLATE ======= -->
+  <!-- ======= PAGE 2: YOUR DETAILS (STEPPED) ======= -->
   <div class="page" id="page1">
     <div class="page-title">Your personal details</div>
-    <div class="page-desc">Fill in what you know — leave anything blank that doesn't apply. The more you provide, the more personalised your generated prompt will be in step 3.</div>
+    <div class="page-desc">Giving more context to the prompt will help provide a more detailed and personalised response from the AI.</div>
 
-    <div class="benefit-bar">
-      ✦ Your data stays in your browser only — nothing is stored or sent anywhere. You can close and reopen this file and fill it in again at any time.
+    <!-- Step header with dots and tabs -->
+    <div class="step-header">
+      <!-- Step tabs -->
+      <div class="step-tabs" id="stepTabs"></div>
     </div>
 
-    <!-- Profile -->
-    <div class="card">
-      <div class="card-title">Profile</div>
-      <div class="grid-3">
-        <div class="field">
-          <label>Your age</label>
-          <input type="number" id="age" placeholder="e.g. 58" min="18" max="100">
-        </div>
-        <div class="field">
-          <label>Partner's age</label>
-          <input type="number" id="partnerAge" placeholder="Leave blank if none">
-        </div>
-        <div class="field">
-          <label>Target retirement age</label>
-          <input type="number" id="retireAge" placeholder="e.g. 65">
-        </div>
-        <div class="field">
-          <label>Country / region</label>
-          <input type="text" id="country" placeholder="e.g. United Kingdom">
-        </div>
-        <div class="field">
-          <label>Employment status</label>
-          <select id="employment">
-            <option value="">— select —</option>
-            <option>Employed (PAYE)</option>
-            <option>Self-employed</option>
-            <option>Director / business owner</option>
-            <option>Part-time employed</option>
-            <option>Already retired / semi-retired</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Health status</label>
-          <select id="health">
-            <option value="">— select —</option>
-            <option>Excellent</option>
-            <option>Good</option>
-            <option>Fair</option>
-            <option>Poor / chronic conditions</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Financial dependants</label>
-          <input type="number" id="dependants" placeholder="e.g. 0" min="0">
-          <span class="field-hint">Children, elderly parents, etc.</span>
+    <!-- STEP 1 -->
+    <div class="step-container active" id="step-1">
+      <div class="card">
+        <div class="card-title">Step 1: Profile & Timeline</div>
+        <div class="grid-3">
+          <div class="field">
+            <label>Your age</label>
+            <input type="number" id="age" placeholder="e.g. 58" min="18" max="100" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Partner's age</label>
+            <input type="number" id="partnerAge" placeholder="Leave blank if none" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Target retirement age</label>
+            <input type="number" id="retireAge" placeholder="e.g. 65" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Country / region</label>
+            <input type="text" id="country" placeholder="e.g. United Kingdom" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Employment status</label>
+            <select id="employment" onchange="updatePersonalisationScore()">
+              <option value="">— select —</option>
+              <option>Employed (PAYE)</option>
+              <option>Self-employed</option>
+              <option>Director / business owner</option>
+              <option>Part-time employed</option>
+              <option>Already retired / semi-retired</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Health status</label>
+            <select id="health" onchange="updatePersonalisationScore()">
+              <option value="">— select —</option>
+              <option>Excellent</option>
+              <option>Good</option>
+              <option>Fair</option>
+              <option>Poor / chronic conditions</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Financial dependants</label>
+            <input type="number" id="dependants" placeholder="e.g. 0" min="0" onchange="updatePersonalisationScore()">
+            <span class="field-hint">Children, elderly parents, etc.</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Finances -->
-    <div class="card">
-      <div class="card-title">Financial picture</div>
-      <div class="grid-2">
-        <div class="field">
-          <label>Annual household income (now)</label>
-          <input type="text" id="income" placeholder="e.g. £70,000">
-        </div>
-        <div class="field">
-          <label>Total pension / retirement savings</label>
-          <input type="text" id="pension" placeholder="e.g. £150,000">
-        </div>
-        <div class="field">
-          <label>Other savings &amp; investments</label>
-          <input type="text" id="savings" placeholder="e.g. £30,000 in ISA">
-        </div>
-        <div class="field">
-          <label>Property equity</label>
-          <input type="text" id="equity" placeholder="e.g. £200,000">
-        </div>
-        <div class="field">
-          <label>Outstanding debts</label>
-          <input type="text" id="debts" placeholder="e.g. £50k mortgage remaining">
-        </div>
-        <div class="field">
-          <label>Annual pension contributions (now)</label>
-          <input type="text" id="contributions" placeholder="e.g. £8,000/yr incl. employer">
+    <!-- STEP 2 -->
+    <div class="step-container" id="step-2">
+      <div class="card">
+        <div class="card-title">Step 2: Financial Picture</div>
+        <div class="grid-2">
+          <div class="field">
+            <label>Annual household income (now)</label>
+            <input type="text" id="income" placeholder="e.g. £70,000" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Total pension / retirement savings</label>
+            <input type="text" id="pension" placeholder="e.g. £150,000" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Other savings & investments</label>
+            <input type="text" id="savings" placeholder="e.g. £30,000 in ISA" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Property equity</label>
+            <input type="text" id="equity" placeholder="e.g. £200,000" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Outstanding debts</label>
+            <input type="text" id="debts" placeholder="e.g. £50k mortgage remaining" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Annual pension contributions (now)</label>
+            <input type="text" id="contributions" placeholder="e.g. £8,000/yr incl. employer" onchange="updatePersonalisationScore()">
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Goals -->
-    <div class="card">
-      <div class="card-title">Retirement goals</div>
-      <div class="grid-2">
-        <div class="field">
+    <!-- STEP 3 -->
+    <div class="step-container" id="step-3">
+      <div class="card">
+        <div class="card-title">Step 3: Retirement Goals</div>
+        <div class="grid-2">
+          <div class="field">
+            <label>Lifestyle expectation</label>
+            <select id="lifestyle" onchange="updatePersonalisationScore(); handleLifestyleChange()">
+              <option value="">— select —</option>
+              <option>Modest / essential needs</option>
+              <option>Comfortable / moderate</option>
+              <option>Affluent / active travel and leisure</option>
+              <option>High-end / luxury</option>
+              <option>Enter my own monthly amount</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Part-time work in retirement?</label>
+            <select id="partTime" onchange="updatePersonalisationScore()">
+              <option value="">— select —</option>
+              <option>Yes, for several years</option>
+              <option>Possibly / undecided</option>
+              <option>No — full stop at retirement</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Leave an estate / inheritance?</label>
+            <select id="estate" onchange="updatePersonalisationScore()">
+              <option value="">— select —</option>
+              <option>Yes, this is a clear priority</option>
+              <option>Nice to have if possible</option>
+              <option>No — plan to spend it all</option>
+            </select>
+          </div>
+        </div>
+        <div class="field" id="targetField" style="display: none; margin-top:12px;">
           <label>Target monthly income in retirement</label>
-          <input type="text" id="target" placeholder="e.g. £3,500/month net">
+          <input type="text" id="target" placeholder="e.g. £3,500/month net" onchange="updatePersonalisationScore()">
         </div>
-        <div class="field">
-          <label>Lifestyle expectation</label>
-          <select id="lifestyle">
-            <option value="">— select —</option>
-            <option>Modest / essential needs</option>
-            <option>Comfortable / moderate</option>
-            <option>Affluent / active travel and leisure</option>
-            <option>High-end / luxury</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Part-time work in retirement?</label>
-          <select id="partTime">
-            <option value="">— select —</option>
-            <option>Yes, for several years</option>
-            <option>Possibly / undecided</option>
-            <option>No — full stop at retirement</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Leave an estate / inheritance?</label>
-          <select id="estate">
-            <option value="">— select —</option>
-            <option>Yes, this is a clear priority</option>
-            <option>Nice to have if possible</option>
-            <option>No — plan to spend it all</option>
-          </select>
-        </div>
-      </div>
-      <div class="field" style="margin-top:12px;">
-        <label>Key plans or activities in retirement</label>
-        <textarea id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property, move abroad..."></textarea>
-      </div>
-    </div>
-
-    <!-- Income sources -->
-    <div class="card">
-      <div class="card-title">Expected income sources</div>
-      <div class="check-group" id="sourceGroup">
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_state"> State pension / Social Security</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_db"> Defined benefit / final salary pension</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_dc"> Defined contribution / personal pension</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_annuity"> Annuity</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_rental"> Rental income</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_invest"> Investment / dividend income</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_business"> Business / self-employed income</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_inherit"> Inheritance or windfall</label>
-      </div>
-      <div class="field" style="margin-top:12px;">
-        <label>Amounts or notes on any sources</label>
-        <textarea id="srcNotes" placeholder="e.g. State pension ~£10,500/yr from age 67. DB pension £8,000/yr from age 60..."></textarea>
-      </div>
-    </div>
-
-    <!-- Concerns -->
-    <div class="card">
-      <div class="card-title">Concerns &amp; risk appetite</div>
-      <div class="check-group" id="concernGroup">
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_runout"> Running out of money</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_inflation"> Inflation eroding income</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_care"> Long-term care costs</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_tax"> Tax efficiency</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_market"> Market volatility</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_early"> Dying too early / life cover</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_partner"> Partner survivorship</label>
-        <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_health"> Unexpected health costs</label>
-      </div>
-      <div class="grid-2" style="margin-top:12px;">
-        <div class="field">
-          <label>Investment risk tolerance</label>
-          <select id="risk">
-            <option value="">— select —</option>
-            <option>Very cautious — capital preservation first</option>
-            <option>Cautious — some growth, low risk</option>
-            <option>Balanced — mix of growth and security</option>
-            <option>Adventurous — higher growth, comfortable with volatility</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Emergency income buffer</label>
-          <select id="buffer">
-            <option value="">— select —</option>
-            <option>Less than 3 months</option>
-            <option>3–6 months</option>
-            <option>6–12 months</option>
-            <option>Over 1 year</option>
-          </select>
+        <div class="field" style="margin-top:12px;">
+          <label>Key plans or activities in retirement</label>
+          <textarea id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property, move abroad..." onchange="updatePersonalisationScore()"></textarea>
         </div>
       </div>
     </div>
 
-    <div style="text-align:right; margin-top:0.5rem;">
-      <button class="btn btn-primary" onclick="showPage(2)">Go to step 3 — generate prompt →</button>
+    <!-- STEP 4 -->
+    <div class="step-container" id="step-4">
+      <div class="card">
+        <div class="card-title">Step 4: Expected Income Sources</div>
+        <div class="check-group" id="sourceGroup" onclick="event.target.tagName === 'INPUT' && setTimeout(() => updatePersonalisationScore(), 0)">
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_state"> State pension / Social Security</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_db"> Defined benefit / final salary pension</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_dc"> Defined contribution / personal pension</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_annuity"> Annuity</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_rental"> Rental income</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_invest"> Investment / dividend income</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_business"> Business / self-employed income</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_inherit"> Inheritance or windfall</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_other" onchange="toggleOtherField('srcOtherField')"> Other</label>
+          <div class="field" id="srcOtherField" style="display: none; margin-left: 0; margin-top: 8px;">
+            <input type="text" id="srcOtherText" placeholder="Please describe the income source" onchange="updatePersonalisationScore()">
+          </div>
+        </div>
+        <div class="field" style="margin-top:12px;">
+          <label>Amounts or notes on any sources</label>
+          <textarea id="srcNotes" placeholder="e.g. State pension ~£10,500/yr from age 67. DB pension £8,000/yr from age 60..." onchange="updatePersonalisationScore()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step-container" id="step-5">
+      <div class="card">
+        <div class="card-title">Step 5: Concerns & Risk Appetite</div>
+        <div class="check-group" id="concernGroup" onclick="event.target.tagName === 'INPUT' && setTimeout(() => updatePersonalisationScore(), 0)">
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_runout"> Running out of money</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_inflation"> Inflation eroding income</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_care"> Long-term care costs</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_tax"> Tax efficiency</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_market"> Market volatility</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_early"> Dying too early / life cover</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_partner"> Partner survivorship</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_health"> Unexpected health costs</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_other" onchange="toggleOtherField('concernOtherField')"> Other concern</label>
+          <div class="field" id="concernOtherField" style="display: none; margin-left: 0; margin-top: 8px;">
+            <input type="text" id="concernOtherText" placeholder="Please describe the concern" onchange="updatePersonalisationScore()">
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top:12px;">
+          <div class="field">
+            <label>Investment risk tolerance</label>
+            <select id="risk" onchange="updatePersonalisationScore()">
+              <option value="">— select —</option>
+              <option>Very cautious — capital preservation first</option>
+              <option>Cautious — some growth, low risk</option>
+              <option>Balanced — mix of growth and security</option>
+              <option>Adventurous — higher growth, comfortable with volatility</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Emergency income buffer</label>
+            <select id="buffer" onchange="updatePersonalisationScore()">
+              <option value="">— select —</option>
+              <option>Less than 3 months</option>
+              <option>3–6 months</option>
+              <option>6–12 months</option>
+              <option>Over 1 year</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step-container" id="step-6">
+      <div class="card">
+        <div class="card-title">Step 6: Anything Else?</div>
+        <div class="field">
+          <label>Any additional context we should know?</label>
+          <textarea id="question" style="min-height:100px;" placeholder="Add anything specific you want the AI to address — e.g. 'Am I on track to retire at 62?' or 'Should I consolidate my three pension pots?'" onchange="updatePersonalisationScore()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step Navigation -->
+    <div class="step-nav">
+      <div class="step-nav-left">
+        <button class="btn-step" id="prevBtn" onclick="previousStep()" disabled>← Back</button>
+      </div>
+      <div class="step-nav-center" id="stepDotsNav"></div>
+      <div class="step-nav-right">
+        <button class="btn-step primary" id="nextBtn" onclick="nextStep()">Next →</button>
+      </div>
     </div>
   </div>
 
-  <!-- ======= PAGE 3: GENERATE ======= -->
+  <!-- ======= PAGE 3: GENERATE PERSONALISED PROMPT ======= -->
   <div class="page" id="page2">
-    <div class="page-title">Generate your personalised prompt</div>
-    <div class="page-desc">Your data from step 2, combined with the questions you selected in step 1, will be assembled into one rich prompt. Paste it into any AI for a genuinely personal response.</div>
+    <div class="page-title">Your personalised prompt</div>
+    <div class="page-desc">Copy and paste this into any AI for a genuinely personal response.</div>
+
+    <div class="copy-row" style="margin-bottom: 1.5rem;">
+      <button class="btn btn-primary" onclick="copyFinalPrompt()" id="copyFinalBtn">Copy prompt</button>
+      <button class="btn btn-secondary" onclick="adjustPromptInputs()">Adjust prompt inputs</button>
+    </div>
 
     <div class="disclaimer">
       ⚠️ This generates an educational prompt only. AI responses are not regulated financial advice. Always consult a qualified financial adviser for major decisions.
     </div>
 
-    <!-- Personalisation score -->
-    <div class="personalisation-bar" id="persBar">
-      <div class="pb-label">
-        <span>Personalisation level</span>
-        <span id="persScore">0%</span>
-      </div>
-      <div class="pb-track"><div class="pb-fill" id="persFill" style="width:0%"></div></div>
-      <div class="pb-note" id="persNote">Fill in your details in step 2 to increase this score.</div>
-    </div>
-
-    <!-- Selected prompts -->
-    <div class="card">
-      <div class="card-title">Questions selected from step 1</div>
-      <div id="selectedPromptsList"><span class="none" style="color:#bbb; font-style:italic; font-size:0.85rem;">No prompts selected yet — go to step 1 and click the checkbox on any prompt.</span></div>
-      <div style="margin-top:10px;">
-        <button class="btn btn-secondary" style="font-size:0.8rem;" onclick="showPage(0)">← Back to prompt library</button>
-      </div>
-    </div>
-
-    <!-- Custom question -->
-    <div class="card">
-      <div class="card-title">Your specific question (optional)</div>
-      <div class="field">
-        <textarea id="question" style="min-height:80px;" placeholder="Add anything specific you want the AI to address — e.g. 'Am I on track to retire at 62?' or 'Should I consolidate my three pension pots?'"></textarea>
-      </div>
-    </div>
-
-    <button class="btn-generate" onclick="generatePrompt()">Generate my personalised prompt</button>
-
-    <div class="output-box" id="outputBox" style="display:none; margin-top:1.5rem;">
-      <div class="output-label">Your prompt — copy and paste into any AI assistant</div>
+    <div class="output-box" id="outputBox">
+      <div class="output-label">Your complete prompt</div>
       <pre class="output-pre" id="outputText"></pre>
-      <div class="copy-row">
-        <button class="btn btn-primary" onclick="copyFinalPrompt()" id="copyFinalBtn">Copy prompt</button>
-        <button class="btn btn-secondary" onclick="clearAll()">Start over</button>
-      </div>
-      <div class="copied-msg" id="copiedFinalMsg">✓ Copied to clipboard</div>
     </div>
   </div>
 
@@ -310,6 +320,160 @@
 var selectedPrompts = {};
 var promptTexts = {};
 var questionTitles = {};
+var currentStep = 1;
+var completedSteps = new Set();
+
+const stepNames = [
+  'About me',
+  'Finances',
+  'Goals',
+  'Income',
+  'Concerns',
+  'Other'
+];
+
+// Initialize step indicators
+function initializeStepIndicators() {
+  const tabsContainer = document.getElementById('stepTabs');
+  const dotsNavContainer = document.getElementById('stepDotsNav');
+
+  for (let i = 1; i <= 6; i++) {
+    // Create dot for navigation area
+    const dotNav = document.createElement('div');
+    dotNav.className = 'step-dot step-dot-nav' + (i === 1 ? ' active' : '');
+    dotNav.id = 'dot-' + i;
+    dotNav.onclick = () => goToStep(i);
+    dotNav.title = 'Go to Step ' + i;
+    dotsNavContainer.appendChild(dotNav);
+
+    // Create tab (as div, not button - semantic navigation)
+    const tab = document.createElement('div');
+    tab.className = 'step-tab' + (i === 1 ? ' active' : '');
+    tab.id = 'tab-' + i;
+    tab.textContent = stepNames[i - 1];
+    tab.role = 'tab';
+    tab.tabIndex = 0;
+    tab.onclick = () => goToStep(i);
+    tab.onkeypress = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        goToStep(i);
+      }
+    };
+    tabsContainer.appendChild(tab);
+  }
+}
+
+// Navigate to specific step
+function goToStep(step) {
+  if (step >= 1 && step <= 6) {
+    currentStep = step;
+    showStep(currentStep);
+  }
+}
+
+// Step navigation
+function nextStep() {
+  if (currentStep < 6) {
+    markStepComplete(currentStep);
+    currentStep++;
+    showStep(currentStep);
+  }
+}
+
+function previousStep() {
+  if (currentStep > 1) {
+    currentStep--;
+    showStep(currentStep);
+  }
+}
+
+function markStepComplete(step) {
+  completedSteps.add(step);
+  updateStepIndicators();
+}
+
+function showStep(step) {
+  // Hide all containers
+  document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
+  // Show current step
+  document.getElementById('step-' + step).classList.add('active');
+
+  // Update dots - remove active from all, then add to current
+  document.querySelectorAll('.step-dot').forEach((dot, idx) => {
+    const dotStep = idx + 1;
+    dot.classList.remove('active');
+    if (dotStep === step) {
+      dot.classList.add('active');
+    }
+  });
+
+  // Update tabs - remove active from all, then add to current
+  document.querySelectorAll('.step-tab').forEach((tab, idx) => {
+    const tabStep = idx + 1;
+    tab.classList.remove('active');
+    if (tabStep === step) {
+      tab.classList.add('active');
+    }
+  });
+
+  // Update completed indicators
+  updateStepIndicators();
+
+  // Update buttons
+  document.getElementById('prevBtn').disabled = (step === 1);
+
+  const nextBtn = document.getElementById('nextBtn');
+  if (step === 6) {
+    nextBtn.textContent = 'Create prompt →';
+    nextBtn.disabled = false;
+    nextBtn.onclick = function() { markStepComplete(6); goToStep3(); };
+  } else {
+    nextBtn.textContent = 'Next →';
+    nextBtn.disabled = false;
+    nextBtn.onclick = function() { nextStep(); };
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  updatePersonalisationScore();
+}
+
+function updateStepIndicators() {
+  completedSteps.forEach(step => {
+    const dot = document.getElementById('dot-' + step);
+    const tab = document.getElementById('tab-' + step);
+    if (dot) {
+      dot.classList.add('completed');
+      if (!dot.classList.contains('active')) dot.classList.remove('active');
+    }
+    if (tab) {
+      tab.classList.add('completed');
+      if (!tab.classList.contains('active')) tab.classList.remove('active');
+    }
+  });
+}
+
+function handleLifestyleChange() {
+  const lifestyle = val('lifestyle');
+  const targetField = document.getElementById('targetField');
+  if (lifestyle === 'Enter my own monthly amount') {
+    targetField.style.display = 'block';
+  } else {
+    targetField.style.display = 'none';
+    v('target').value = '';
+  }
+}
+
+function goToStep3() {
+  generatePrompt();
+  showPage(2);
+}
+
+function adjustPromptInputs() {
+  currentStep = 1;
+  showPage(1);
+  showStep(1);
+}
 
 // Toast notification system
 function showToast(message, type = 'success') {
@@ -331,6 +495,7 @@ function showToast(message, type = 'success') {
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
   renderPromptLibrary();
+  initializeStepIndicators();
 });
 
 function renderPromptLibrary() {
@@ -353,7 +518,6 @@ function renderPromptLibrary() {
       <div class="section-actions">
         <button class="btn-section" onclick="selectAllInSection('${section.id}')">Select all</button>
         <button class="btn-section" onclick="deselectAllInSection('${section.id}')">Deselect</button>
-        <button class="btn-section" onclick="copyAllInSection('${section.id}')">Copy all</button>
       </div>
     `;
     sectionDiv.appendChild(headerDiv);
@@ -515,25 +679,6 @@ function deselectAllInSection(sectionId) {
   }
 }
 
-function copyAllInSection(sectionId) {
-  const section = promptsData.sections.find(s => s.id === sectionId);
-  if (section) {
-    const texts = section.questions
-      .map((q, i) => `${i + 1}. ${q.quickSummary}\n${q.aiOptimized}`)
-      .join('\n\n---\n\n');
-
-    const textarea = document.createElement('textarea');
-    textarea.value = texts;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
-
-    const count = section.questions.length;
-    const message = count === 1 ? `1 prompt from "${section.title}" copied` : `${count} prompts from "${section.title}" copied`;
-    showToast(message);
-  }
-}
 
 function updateSelectionBar() {
   const count = Object.keys(selectedPrompts).length;
@@ -602,32 +747,72 @@ function toggleCheck(label) {
   }, 0);
 }
 
+function toggleOtherField(fieldId) {
+  const checkbox = document.getElementById(fieldId === 'srcOtherField' ? 'src_other' : 'c_other');
+  const field = document.getElementById(fieldId);
+  if (checkbox.checked) {
+    field.style.display = 'block';
+  } else {
+    field.style.display = 'none';
+    const input = field.querySelector('input');
+    if (input) input.value = '';
+  }
+}
+
 function v(id) { return document.getElementById(id); }
 function val(id) { return v(id) ? v(id).value.trim() : ''; }
 function chk(id) { return v(id) ? v(id).checked : false; }
 
 function updatePersonalisationScore() {
-  const fields = ['age','retireAge','country','income','pension','target','risk'];
-  const bonus = ['partnerAge','health','savings','equity','debts','contributions','lifestyle','partTime','estate','plans','srcNotes','question'];
-  const sources = ['src_state','src_db','src_dc','src_annuity','src_rental','src_invest','src_business','src_inherit'];
-  const concerns = ['c_runout','c_inflation','c_care','c_tax','c_market','c_early','c_partner','c_health'];
+  let completedSections = 0;
+  let maxSections = 7; // 6 data sections + 1 for prompts
 
-  let score = 0;
-  let max = fields.length * 10 + bonus.length * 4 + 8 + 8 + (Object.keys(selectedPrompts).length > 0 ? 10 : 0);
-  fields.forEach(id => { if (val(id)) score += 10; });
-  bonus.forEach(id => { if (val(id)) score += 4; });
-  sources.forEach(id => { if (chk(id)) score += 1; });
-  concerns.forEach(id => { if (chk(id)) score += 1; });
-  if (Object.keys(selectedPrompts).length > 0) score += 10;
+  // Section 1: Profile & Timeline - at least one key field
+  if (val('age') || val('retireAge') || val('country')) {
+    completedSections++;
+  }
 
-  const pct = Math.min(100, Math.round((score / max) * 100));
+  // Section 2: Financial Picture - at least one field
+  if (val('income') || val('pension') || val('savings') || val('equity') || val('debts') || val('contributions')) {
+    completedSections++;
+  }
+
+  // Section 3: Retirement Goals - at least one field
+  if (val('target') || val('lifestyle') || val('partTime') || val('estate') || val('plans')) {
+    completedSections++;
+  }
+
+  // Section 4: Income Sources - at least one checked or notes provided
+  const sourceChecked = ['src_state','src_db','src_dc','src_annuity','src_rental','src_invest','src_business','src_inherit'].some(id => chk(id));
+  if (sourceChecked || val('srcNotes')) {
+    completedSections++;
+  }
+
+  // Section 5: Concerns & Risk - at least one concern checked or risk field filled
+  const concernChecked = ['c_runout','c_inflation','c_care','c_tax','c_market','c_early','c_partner','c_health'].some(id => chk(id));
+  if (concernChecked || val('risk') || val('buffer')) {
+    completedSections++;
+  }
+
+  // Section 6: Additional Context - any question provided
+  if (val('question')) {
+    completedSections++;
+  }
+
+  // Prompts selected
+  if (Object.keys(selectedPrompts).length > 0) {
+    completedSections++;
+  }
+
+  const pct = Math.round((completedSections / maxSections) * 100);
   v('persScore').textContent = pct + '%';
   v('persFill').style.width = pct + '%';
 
-  let note = pct < 30 ? 'Add more details in step 2 for a much more personalised result.'
-    : pct < 60 ? 'Good start — a few more fields will make a real difference.'
-    : pct < 85 ? 'Looking good. The AI will give you specific, relevant answers.'
-    : 'Excellent — the AI has everything it needs to give you highly personalised guidance.';
+  let note = pct === 0 ? 'Start filling in your details to increase this score.'
+    : pct < 30 ? 'Getting started — complete a few more sections.'
+    : pct < 60 ? 'Good progress — you\'re building a personalised picture.'
+    : pct < 85 ? 'Nearly there — a couple more sections will make it comprehensive.'
+    : 'Complete — you\'ve got all the elements for highly personalised guidance.';
   v('persNote').textContent = note;
 }
 

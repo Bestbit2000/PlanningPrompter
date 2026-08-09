@@ -352,6 +352,9 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
 .check-item.selected { background: #e6f9f3; border-color: #2db87f; }
 .check-item input { margin: 0; accent-color: #2db87f; }
 
+.check-group .field { gap: 0; margin: 0; width: 100%; }
+.check-group .field input { font-size: 0.82rem; padding: 0.5rem 0.7rem; }
+
 /* SECTION 3 */
 .personalisation-bar {
   background: #fff;
@@ -505,29 +508,122 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
 }
 
 /* STEPPED INTERFACE */
+.step-header {
+  margin-bottom: 2rem;
+}
+
+/* Step dots/progress indicator */
+.step-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+.step-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ddd;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+.step-dot:hover { transform: scale(1.2); }
+.step-dot.active {
+  background: #2db87f;
+  width: 24px !important;
+  height: 24px !important;
+}
+.step-dot.completed { background: #2db87f; position: relative; }
+.step-dot.completed::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+/* Larger dots in navigation */
+.step-dot-nav {
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 4px;
+}
+.step-dot-nav.active {
+  width: 24px !important;
+  height: 24px !important;
+  margin: 0 1px;
+}
+.step-dot-nav::after {
+  font-size: 0.85rem !important;
+}
+.step-dot-nav.active::after {
+  font-size: 1rem !important;
+}
+
+/* Step tabs/navigation */
+.step-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ddd;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.step-tab {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 0.8rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.step-tab:hover { color: #4a2c5e; }
+.step-tab.active { color: #2db87f; border-bottom-color: #2db87f; }
+.step-tab.completed { color: #2db87f; }
+.step-tab.completed::after {
+  content: ' ✓';
+  margin-left: 4px;
+}
+
+/* Step navigation buttons */
 .step-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   margin-bottom: 2rem;
   padding: 1rem;
   background: #f9f9f7;
   border-radius: 8px;
 }
-.step-indicator {
+.step-nav-left { flex: 1; }
+.step-nav-center {
+  text-align: center;
   font-size: 0.85rem;
   color: #666;
   font-weight: 500;
-}
-.step-buttons {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 8px;
+  flex-wrap: nowrap;
 }
+.step-nav-right { flex: 1; display: flex; justify-content: flex-end; gap: 8px; }
+
 .btn-step {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 6px;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   font-size: 0.85rem;
   cursor: pointer;
   font-family: inherit;
@@ -557,6 +653,26 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  /* Hide text tabs on tablets and mobile */
+  .step-tabs {
+    display: none;
+  }
+
+  /* Make dots larger on mobile */
+  .step-dot {
+    width: 24px;
+    height: 24px;
+  }
+  .step-dot::after {
+    font-size: 1rem !important;
+  }
+
+  .step-dots {
+    gap: 16px;
+  }
 }
 
 @media (max-width: 480px) {
