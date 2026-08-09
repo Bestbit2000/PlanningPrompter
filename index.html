@@ -1072,12 +1072,9 @@ class Component extends DCLogic {
   // Use event delegation for copy button (works with dynamically rendered content)
   document.addEventListener('click', (e) => {
     const copyButton = e.target.closest('[data-copy-all="true"]');
-    console.log('Document click detected. Copy button found via delegation:', !!copyButton);
     if (copyButton && copyButton.dataset.disabled !== 'true') {
-      console.log('Copy button clicked via delegation! disabled attr:', copyButton.dataset.disabled);
       // Get all checked checkboxes
       const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
-      console.log('Found checked boxes:', checkedBoxes.length);
       if (checkedBoxes.length === 0) return;
 
       // Extract text from each checked question
@@ -1120,52 +1117,39 @@ class Component extends DCLogic {
 
   // Helper function to show copy modal
   const showCopyModal = (count, promptText) => {
-    console.log('showCopyModal called with count:', count, 'promptText length:', promptText.length);
     const modal = document.getElementById('copy-modal');
-    console.log('Modal element found:', !!modal);
-    if (!modal) {
-      console.error('Copy modal element not found!');
-      return;
-    }
+    if (!modal) return;
 
     // Clean up the prompt text - remove extra whitespace and format it nicely
     const cleanText = promptText
       .split('\n\n---\n\n')
       .map(q => q.trim())
       .join('\n\n---\n\n');
-    console.log('Clean text:', cleanText.substring(0, 100) + '...');
 
     // Update modal heading
     const heading = modal.querySelector('#modal-heading');
-    console.log('Heading element found:', !!heading);
     if (heading) {
       heading.textContent = `${count} question${count > 1 ? 's' : ''} copied`;
-      console.log('Heading updated to:', heading.textContent);
     }
 
     // Update prompt display
     const promptEl = modal.querySelector('#modal-prompt');
-    console.log('Prompt element found:', !!promptEl);
     if (promptEl) {
       promptEl.textContent = cleanText;
-      console.log('Prompt updated, length:', cleanText.length);
     }
 
     // Update chatbot buttons with URLs
     const encodedPrompt = encodeURIComponent(cleanText);
     const buttons = modal.querySelectorAll('button[data-url]');
-    console.log('Chatbot buttons found:', buttons.length);
     if (buttons.length >= 4) {
       buttons[0].dataset.url = `https://chatgpt.com/?q=${encodedPrompt}`;
       buttons[1].dataset.url = `https://claude.ai/?q=${encodedPrompt}`;
       buttons[2].dataset.url = `https://gemini.google.com/?q=${encodedPrompt}`;
       buttons[3].dataset.url = `https://copilot.microsoft.com/?q=${encodedPrompt}`;
-      console.log('Button URLs updated');
     }
 
     // Show modal
     modal.style.display = 'flex';
-    console.log('Modal display set to flex');
   };
 
   // Helper function to show toast
