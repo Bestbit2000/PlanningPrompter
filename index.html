@@ -4,327 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Retirement AI Prompt Tool</title>
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #f4f4f1;
-  color: #1a1a1a;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-/* HEADER */
-header {
-  background: #12122a;
-  color: #fff;
-  padding: 2rem 1.5rem 1.5rem;
-  text-align: center;
-}
-header h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.35rem; letter-spacing: -0.01em; }
-header p { font-size: 0.875rem; color: #9090b0; max-width: 520px; margin: 0 auto 1rem; }
-.ai-badges { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
-.ai-badge { background: rgba(255,255,255,0.08); color: #b0b0cc; border: 1px solid rgba(255,255,255,0.12); border-radius: 99px; padding: 3px 12px; font-size: 0.75rem; }
-
-/* NAV TABS */
-.tab-bar {
-  display: flex;
-  background: #fff;
-  border-bottom: 1px solid #e2e2de;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.tab {
-  flex: 1;
-  padding: 0.9rem 0.5rem;
-  text-align: center;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #888;
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  transition: color 0.15s, border-color 0.15s;
-  user-select: none;
-}
-.tab:hover { color: #12122a; }
-.tab.active { color: #12122a; border-bottom-color: #12122a; }
-.tab .tab-num {
-  display: inline-block;
-  width: 20px; height: 20px;
-  background: #e8e8e8;
-  border-radius: 50%;
-  font-size: 0.7rem;
-  line-height: 20px;
-  text-align: center;
-  margin-right: 5px;
-  transition: background 0.15s, color 0.15s;
-}
-.tab.active .tab-num { background: #12122a; color: #fff; }
-
-/* MAIN */
-.main { max-width: 760px; margin: 0 auto; padding: 1.75rem 1rem 4rem; }
-
-.page { display: none; }
-.page.active { display: block; }
-
-/* TYPOGRAPHY */
-.page-title { font-size: 1.2rem; font-weight: 600; color: #12122a; margin-bottom: 0.25rem; }
-.page-desc { font-size: 0.875rem; color: #666; margin-bottom: 1.5rem; }
-
-/* TOPIC GROUP */
-.topic-group { margin-bottom: 1.5rem; }
-.topic-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #888;
-  margin-bottom: 0.6rem;
-  padding-left: 2px;
-}
-
-/* PROMPT CARD */
-.prompt-card {
-  background: #fff;
-  border: 1px solid #e2e2de;
-  border-radius: 10px;
-  padding: 1rem 1.1rem;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  transition: border-color 0.15s;
-}
-.prompt-card:hover { border-color: #bbb; }
-.prompt-text { flex: 1; font-size: 0.9rem; color: #1a1a1a; line-height: 1.5; }
-.prompt-actions { display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
-.btn-copy {
-  background: #f4f4f1;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 5px 12px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: inherit;
-  color: #333;
-  white-space: nowrap;
-  transition: background 0.12s;
-}
-.btn-copy:hover { background: #e8e8e4; }
-.btn-copy.copied { background: #e6f4ec; border-color: #9ecfb0; color: #1a6e3c; }
-.btn-use {
-  background: transparent;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 5px 10px;
-  font-size: 0.75rem;
-  cursor: pointer;
-  font-family: inherit;
-  color: #666;
-  white-space: nowrap;
-  transition: background 0.12s, border-color 0.12s;
-}
-.btn-use:hover { background: #f0f0f8; border-color: #aab; }
-.btn-use.selected { background: #e8e8f5; border-color: #7070b8; color: #333; }
-
-/* NUDGE BOX */
-.nudge-box {
-  background: #fff;
-  border: 1.5px solid #7070b8;
-  border-radius: 10px;
-  padding: 1.1rem 1.25rem;
-  margin-top: 2rem;
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-.nudge-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
-.nudge-content { flex: 1; }
-.nudge-content strong { font-size: 0.95rem; color: #12122a; display: block; margin-bottom: 0.3rem; }
-.nudge-content p { font-size: 0.85rem; color: #555; margin-bottom: 0.75rem; line-height: 1.5; }
-.btn-nudge {
-  background: #12122a;
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  padding: 0.55rem 1.2rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background 0.15s;
-}
-.btn-nudge:hover { background: #2a2a4e; }
-
-/* SECTION 2 - DATA TEMPLATE */
-.benefit-bar {
-  background: #eeeef8;
-  border: 1px solid #c8c8e8;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  font-size: 0.83rem;
-  color: #3a3a6a;
-  margin-bottom: 1.25rem;
-  line-height: 1.5;
-}
-
-.card {
-  background: #fff;
-  border: 1px solid #e2e2de;
-  border-radius: 10px;
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-}
-.card-title {
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #666;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid #f0f0ec;
-}
-.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 12px; }
-.field { display: flex; flex-direction: column; gap: 4px; }
-.field label { font-size: 0.77rem; font-weight: 500; color: #555; }
-.field input, .field select, .field textarea {
-  padding: 0.5rem 0.7rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-family: inherit;
-  color: #1a1a1a;
-  background: #fafaf8;
-  width: 100%;
-  transition: border-color 0.15s;
-}
-.field input:focus, .field select:focus, .field textarea:focus {
-  outline: none; border-color: #12122a; background: #fff;
-}
-.field textarea { resize: vertical; min-height: 68px; }
-.field-hint { font-size: 0.73rem; color: #999; margin-top: 2px; }
-
-.check-group { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 6px; }
-.check-item {
-  display: flex; align-items: center; gap: 5px;
-  background: #f4f4f1; border: 1px solid #e2e2de;
-  border-radius: 6px; padding: 5px 11px;
-  font-size: 0.82rem; cursor: pointer;
-  transition: background 0.12s, border-color 0.12s;
-  user-select: none;
-}
-.check-item:hover { background: #eaeae6; }
-.check-item.selected { background: #e8e8f5; border-color: #9090c0; }
-.check-item input { margin: 0; accent-color: #12122a; }
-
-/* SECTION 3 */
-.personalisation-bar {
-  background: #fff;
-  border: 1px solid #e2e2de;
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1.25rem;
-}
-.pb-label { font-size: 0.8rem; color: #555; margin-bottom: 6px; display: flex; justify-content: space-between; }
-.pb-track { background: #e8e8e4; border-radius: 99px; height: 6px; }
-.pb-fill { background: #12122a; border-radius: 99px; height: 6px; transition: width 0.4s; }
-.pb-note { font-size: 0.75rem; color: #888; margin-top: 6px; }
-
-.prompt-selector-label {
-  font-size: 0.8rem; color: #555; margin-bottom: 8px;
-}
-.selected-prompts-list {
-  background: #fff;
-  border: 1px solid #e2e2de;
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
-  font-size: 0.85rem;
-  color: #444;
-  min-height: 48px;
-}
-.selected-prompts-list .none { color: #bbb; font-style: italic; }
-.selected-prompt-pill {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: #e8e8f5; border: 1px solid #b0b0d8;
-  border-radius: 99px; padding: 3px 10px;
-  font-size: 0.78rem; color: #333;
-  margin: 3px;
-}
-
-.output-box {
-  background: #fff;
-  border: 1px solid #e2e2de;
-  border-radius: 10px;
-  padding: 1.25rem;
-  margin-top: 1rem;
-}
-.output-label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #666; margin-bottom: 10px; }
-.output-pre {
-  background: #f4f4f1;
-  border: 1px solid #e2e2de;
-  border-radius: 6px;
-  padding: 1rem;
-  font-family: 'Courier New', monospace;
-  font-size: 0.78rem;
-  line-height: 1.65;
-  color: #1a1a1a;
-  white-space: pre-wrap;
-  word-break: break-word;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-/* BUTTONS */
-.btn {
-  padding: 0.6rem 1.4rem;
-  border-radius: 7px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background 0.15s, transform 0.1s;
-  border: none;
-}
-.btn:active { transform: scale(0.98); }
-.btn-primary { background: #12122a; color: #fff; }
-.btn-primary:hover { background: #2a2a4e; }
-.btn-secondary { background: #fff; color: #1a1a1a; border: 1px solid #ddd; }
-.btn-secondary:hover { background: #f4f4f1; }
-.btn-generate {
-  background: #12122a; color: #fff;
-  font-size: 1rem; padding: 0.8rem 2rem;
-  border: none; border-radius: 8px;
-  cursor: pointer; font-family: inherit; font-weight: 500;
-  transition: background 0.15s;
-  width: 100%; margin-top: 0.5rem;
-}
-.btn-generate:hover { background: #2a2a4e; }
-
-.disclaimer {
-  background: #fffbea;
-  border: 1px solid #e8d878;
-  border-radius: 8px;
-  padding: 0.7rem 1rem;
-  font-size: 0.78rem;
-  color: #7a6000;
-  margin-bottom: 1rem;
-}
-
-.copy-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-.copied-msg { color: #1a6e3c; font-size: 0.82rem; margin-top: 6px; display: none; }
-
-@media (max-width: 480px) {
-  .tab span.tab-label { display: none; }
-  .prompt-card { flex-direction: column; }
-  .prompt-actions { flex-direction: row; }
-}
-</style>
+<link rel="stylesheet" href="styles.css">
+<script src="prompts.js"></script>
 </head>
 <body>
 
@@ -356,173 +37,16 @@ header p { font-size: 0.875rem; color: #9090b0; max-width: 520px; margin: 0 auto
   <!-- ======= PAGE 1: PROMPT LIBRARY ======= -->
   <div class="page active" id="page0">
     <div class="page-title">Prompt library</div>
-    <div class="page-desc">Copy any prompt and paste it straight into your AI. Or select prompts to combine with your personal details in step 2 for far better answers in step 3.</div>
+    <div class="page-desc">Select prompts, then copy individual AI versions or all selected prompts together. Or go to step 2 to personalise your selections with your own details.</div>
 
-    <!-- TOPIC: Getting started -->
-    <div class="topic-group">
-      <div class="topic-label">Getting started</div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">I am [age] years old and want to retire at [target age]. In simple terms, what are the key things I should be thinking about right now to make sure I have enough income in retirement?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'getting_started_1')">+ Select</button>
-        </div>
+    <div class="selection-bar" id="selectionBar" style="display: none;">
+      <div class="selection-bar-text">
+        <span class="selection-bar-count" id="selectionCount">0</span> questions selected
       </div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">What is a realistic monthly income I should aim to have in retirement, and what are the main ways people fund that income?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'getting_started_2')">+ Select</button>
-        </div>
-      </div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">What are the most common mistakes people make when planning for retirement income, and how can I avoid them?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'getting_started_3')">+ Select</button>
-        </div>
-      </div>
+      <button class="btn-copy-all" id="copyAllBtn" onclick="copyAllSelected()" style="display: none;">Copy all selected</button>
     </div>
 
-    <!-- TOPIC: Income planning -->
-    <div class="topic-group">
-      <div class="topic-label">Income planning</div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">What are the different ways I can turn my pension savings into a retirement income — such as drawdown, annuity, or a combination? What are the pros and cons of each?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'income_1')">+ Select</button>
-        </div>
-      </div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">How do I work out how much of my pension pot I can safely withdraw each year without running out of money? What is the "safe withdrawal rate" and does it apply to me?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'income_2')">+ Select</button>
-        </div>
-      </div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">If I have both a defined benefit (final salary) pension and a defined contribution pension, how should I think about using them together to create a reliable income?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'income_3')">+ Select</button>
-        </div>
-      </div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">What role should an annuity play in my retirement income plan? At what point does buying an annuity make more sense than keeping money invested?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'income_4')">+ Select</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- TOPIC: Tax -->
-    <div class="topic-group">
-      <div class="topic-label">Tax efficiency</div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">How can I take income from my pension and other savings in retirement in a tax-efficient way? What is the best order to draw down different accounts?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'tax_1')">+ Select</button>
-        </div>
-      </div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">What tax-free allowances and reliefs are available to retirees in the UK? How can I make sure I am using them fully each year?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'tax_2')">+ Select</button>
-        </div>
-      </div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">How does taking my pension tax-free lump sum affect my overall retirement income plan? Should I take it all at once or in stages?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'tax_3')">+ Select</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- TOPIC: Drawdown -->
-    <div class="topic-group">
-      <div class="topic-label">Pension drawdown</div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">What is pension drawdown and how does it work? What are the biggest risks I need to manage if I go into drawdown?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'drawdown_1')">+ Select</button>
-        </div>
-      </div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">What is "sequence of returns risk" in pension drawdown and what strategies exist to protect against it?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'drawdown_2')">+ Select</button>
-        </div>
-      </div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">How should my investment strategy change as I move from accumulation (saving) to decumulation (drawing income)? What type of portfolio is appropriate in drawdown?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'drawdown_3')">+ Select</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- TOPIC: State pension -->
-    <div class="topic-group">
-      <div class="topic-label">State pension &amp; benefits</div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">How does the UK State Pension work, how much can I expect to receive, and how does my National Insurance record affect it?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'state_1')">+ Select</button>
-        </div>
-      </div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">Does it make financial sense to defer my State Pension? What are the break-even points and when would deferral benefit me?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'state_2')">+ Select</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- TOPIC: Care costs -->
-    <div class="topic-group">
-      <div class="topic-label">Care costs &amp; longevity</div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">What are the potential costs of long-term care in later life, and how can I plan financially to cover them without it devastating my retirement income?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'care_1')">+ Select</button>
-        </div>
-      </div>
-
-      <div class="prompt-card">
-        <div class="prompt-text">How do I plan for the possibility of living much longer than I expect — say to 95 or 100 — without running out of money?</div>
-        <div class="prompt-actions">
-          <button class="btn-copy" onclick="copyPrompt(this)">Copy</button>
-          <button class="btn-use" onclick="selectPrompt(this, 'care_2')">+ Select</button>
-        </div>
-      </div>
-    </div>
+    <div id="sectionsContainer"></div>
 
     <!-- NUDGE BOX -->
     <div class="nudge-box">
@@ -751,7 +275,7 @@ header p { font-size: 0.875rem; color: #9090b0; max-width: 520px; margin: 0 auto
     <!-- Selected prompts -->
     <div class="card">
       <div class="card-title">Questions selected from step 1</div>
-      <div id="selectedPromptsList"><span class="none" style="color:#bbb; font-style:italic; font-size:0.85rem;">No prompts selected yet — go to step 1 and click "+ Select" on any prompt.</span></div>
+      <div id="selectedPromptsList"><span class="none" style="color:#bbb; font-style:italic; font-size:0.85rem;">No prompts selected yet — go to step 1 and click the checkbox on any prompt.</span></div>
       <div style="margin-top:10px;">
         <button class="btn btn-secondary" style="font-size:0.8rem;" onclick="showPage(0)">← Back to prompt library</button>
       </div>
@@ -780,23 +304,289 @@ header p { font-size: 0.875rem; color: #9090b0; max-width: 520px; margin: 0 auto
 
 </div><!-- /main -->
 
+<div class="toast-container" id="toastContainer"></div>
+
 <script>
 var selectedPrompts = {};
 var promptTexts = {};
+var questionTitles = {};
 
-// Store prompt text when page loads
-document.querySelectorAll('.prompt-card').forEach(function(card) {
-  var btn = card.querySelector('.btn-use');
-  var text = card.querySelector('.prompt-text').textContent.trim();
-  var id = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
-  promptTexts[id] = text;
+// Toast notification system
+function showToast(message, type = 'success') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <span class="toast-icon">${type === 'success' ? '✓' : '!'}</span>
+    <span class="toast-message">${message}</span>
+  `;
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add('removing');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  renderPromptLibrary();
 });
 
+function renderPromptLibrary() {
+  const container = document.getElementById('sectionsContainer');
+  container.innerHTML = '';
+
+  promptsData.sections.forEach(section => {
+    // Create section container
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section-container';
+
+    // Section header
+    const headerDiv = document.createElement('div');
+    headerDiv.className = 'section-header';
+    headerDiv.innerHTML = `
+      <div>
+        <div class="section-title">${section.title}</div>
+        <div class="section-subtitle">${section.subtitle}</div>
+      </div>
+      <div class="section-actions">
+        <button class="btn-section" onclick="selectAllInSection('${section.id}')">Select all</button>
+        <button class="btn-section" onclick="deselectAllInSection('${section.id}')">Deselect</button>
+        <button class="btn-section" onclick="copyAllInSection('${section.id}')">Copy all</button>
+      </div>
+    `;
+    sectionDiv.appendChild(headerDiv);
+
+    // Questions in section
+    const questionsDiv = document.createElement('div');
+    questionsDiv.id = 'section-' + section.id;
+    questionsDiv.className = 'questions-list';
+
+    section.questions.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question-card';
+      qDiv.id = 'card-' + q.id;
+      qDiv.innerHTML = `
+        <div class="question-row" onclick="toggleQuestionCheckbox('${q.id}')">
+          <input type="checkbox" class="question-checkbox" id="check-${q.id}" onchange="updateQuestion('${q.id}')">
+          <div class="question-content">
+            <div class="question-summary">${q.quickSummary}</div>
+            <div class="question-human">${q.humanVersion}</div>
+            <div class="question-ai-toggle-row">
+              <div class="question-ai-toggle" onclick="toggleAIPanel(event, '${q.id}')">
+                <span>Show AI version</span>
+                <span id="toggle-arrow-${q.id}">▼</span>
+              </div>
+              <button class="btn-copy-ai-inline" id="copy-btn-${q.id}" onclick="copyAIPrompt(event, '${q.id}')" title="Copy AI prompt to clipboard">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="question-ai-container" id="ai-container-${q.id}">
+              <div class="question-ai-label">AI-optimized prompt:</div>
+              <div class="question-ai-text">
+                <div class="question-ai-content">${q.aiOptimized}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      questionsDiv.appendChild(qDiv);
+
+      // Store prompt text and title for later use
+      promptTexts[q.id] = q.aiOptimized;
+      questionTitles[q.id] = q.quickSummary;
+    });
+
+    sectionDiv.appendChild(questionsDiv);
+    container.appendChild(sectionDiv);
+  });
+}
+
+function toggleQuestionCheckbox(id) {
+  const checkbox = document.getElementById('check-' + id);
+  checkbox.checked = !checkbox.checked;
+  updateQuestion(id);
+}
+
+function updateQuestion(id) {
+  const checkbox = document.getElementById('check-' + id);
+  const card = document.getElementById('card-' + id);
+  const aiContainer = document.getElementById('ai-container-' + id);
+
+  if (checkbox.checked) {
+    selectedPrompts[id] = promptTexts[id];
+    card.classList.add('selected');
+  } else {
+    delete selectedPrompts[id];
+    card.classList.remove('selected');
+    aiContainer.classList.remove('expanded');
+    document.getElementById('toggle-arrow-' + id).textContent = '▼';
+  }
+
+  updateSelectionBar();
+}
+
+function toggleAIPanel(event, id) {
+  event.stopPropagation();
+  const container = document.getElementById('ai-container-' + id);
+  const arrow = document.getElementById('toggle-arrow-' + id);
+  container.classList.toggle('expanded');
+  arrow.textContent = container.classList.contains('expanded') ? '▲' : '▼';
+}
+
+function copyAIPrompt(event, id) {
+  event.stopPropagation();
+  const text = promptTexts[id];
+  const title = questionTitles[id];
+  const btn = document.getElementById('copy-btn-' + id);
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      showToast(`'${title}' copied`);
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  } else {
+    fallbackCopy(text);
+    btn.classList.add('copied');
+    showToast(`'${title}' copied`);
+    setTimeout(() => btn.classList.remove('copied'), 2000);
+  }
+}
+
+function copyToClipboard(text, btn) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  } else {
+    fallbackCopy(text);
+    btn.textContent = '✓ Copied';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+}
+
+function selectAllInSection(sectionId) {
+  const section = promptsData.sections.find(s => s.id === sectionId);
+  if (section) {
+    section.questions.forEach(q => {
+      selectedPrompts[q.id] = promptTexts[q.id];
+      const checkbox = document.getElementById('check-' + q.id);
+      const card = document.getElementById('card-' + q.id);
+      checkbox.checked = true;
+      card.classList.add('selected');
+    });
+    updateSelectionBar();
+  }
+}
+
+function deselectAllInSection(sectionId) {
+  const section = promptsData.sections.find(s => s.id === sectionId);
+  if (section) {
+    section.questions.forEach(q => {
+      delete selectedPrompts[q.id];
+      const checkbox = document.getElementById('check-' + q.id);
+      const card = document.getElementById('card-' + q.id);
+      const aiContainer = document.getElementById('ai-container-' + q.id);
+      checkbox.checked = false;
+      card.classList.remove('selected');
+      aiContainer.classList.remove('expanded');
+      document.getElementById('toggle-arrow-' + q.id).textContent = '▼';
+    });
+    updateSelectionBar();
+  }
+}
+
+function copyAllInSection(sectionId) {
+  const section = promptsData.sections.find(s => s.id === sectionId);
+  if (section) {
+    const texts = section.questions
+      .map((q, i) => `${i + 1}. ${q.quickSummary}\n${q.aiOptimized}`)
+      .join('\n\n---\n\n');
+
+    const textarea = document.createElement('textarea');
+    textarea.value = texts;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+
+    const count = section.questions.length;
+    const message = count === 1 ? `1 prompt from "${section.title}" copied` : `${count} prompts from "${section.title}" copied`;
+    showToast(message);
+  }
+}
+
+function updateSelectionBar() {
+  const count = Object.keys(selectedPrompts).length;
+  const bar = document.getElementById('selectionBar');
+  const countEl = document.getElementById('selectionCount');
+  const copyBtn = document.getElementById('copyAllBtn');
+
+  if (count > 0) {
+    countEl.textContent = count;
+    bar.style.display = 'flex';
+    copyBtn.style.display = 'block';
+  } else {
+    bar.style.display = 'none';
+    copyBtn.style.display = 'none';
+  }
+}
+
+function copyAllSelected() {
+  const count = Object.keys(selectedPrompts).length;
+  if (count === 0) return;
+
+  const texts = Object.keys(selectedPrompts)
+    .map((id, i) => {
+      const q = findQuestionById(id);
+      return q ? `${i + 1}. ${q.quickSummary}\n${q.aiOptimized}` : '';
+    })
+    .filter(t => t)
+    .join('\n\n---\n\n');
+
+  const textarea = document.createElement('textarea');
+  textarea.value = texts;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+
+  const message = count === 1 ? '1 question copied' : `${count} questions copied`;
+  showToast(message);
+}
+
+function findQuestionById(id) {
+  for (const section of promptsData.sections) {
+    const q = section.questions.find(qq => qq.id === id);
+    if (q) return q;
+  }
+  return null;
+}
+
 function showPage(n) {
-  document.querySelectorAll('.page').forEach(function(p, i) {
+  document.querySelectorAll('.page').forEach((p, i) => {
     p.classList.toggle('active', i === n);
   });
-  document.querySelectorAll('.tab').forEach(function(t, i) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
     t.classList.toggle('active', i === n);
   });
   if (n === 2) {
@@ -807,55 +597,9 @@ function showPage(n) {
 }
 
 function toggleCheck(label) {
-  setTimeout(function() {
+  setTimeout(() => {
     label.classList.toggle('selected', label.querySelector('input').checked);
   }, 0);
-}
-
-function selectPrompt(btn, id) {
-  if (selectedPrompts[id]) {
-    delete selectedPrompts[id];
-    btn.textContent = '+ Select';
-    btn.classList.remove('selected');
-  } else {
-    selectedPrompts[id] = promptTexts[id];
-    btn.textContent = '✓ Selected';
-    btn.classList.add('selected');
-  }
-}
-
-function copyPrompt(btn) {
-  var text = btn.closest('.prompt-card').querySelector('.prompt-text').textContent.trim();
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(function() {
-      btn.textContent = '✓ Copied';
-      btn.classList.add('copied');
-      setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
-    });
-  } else {
-    fallbackCopy(text);
-    btn.textContent = '✓ Copied';
-    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
-  }
-}
-
-function fallbackCopy(text) {
-  var ta = document.createElement('textarea');
-  ta.value = text; document.body.appendChild(ta); ta.select();
-  document.execCommand('copy'); document.body.removeChild(ta);
-}
-
-function renderSelectedPrompts() {
-  var el = document.getElementById('selectedPromptsList');
-  var keys = Object.keys(selectedPrompts);
-  if (keys.length === 0) {
-    el.innerHTML = '<span style="color:#bbb; font-style:italic; font-size:0.85rem;">No prompts selected yet — go to step 1 and click "+ Select" on any prompt.</span>';
-    return;
-  }
-  el.innerHTML = keys.map(function(k) {
-    var short = selectedPrompts[k].substring(0, 80) + (selectedPrompts[k].length > 80 ? '…' : '');
-    return '<div class="selected-prompt-pill">' + short + '</div>';
-  }).join('');
 }
 
 function v(id) { return document.getElementById(id); }
@@ -863,66 +607,80 @@ function val(id) { return v(id) ? v(id).value.trim() : ''; }
 function chk(id) { return v(id) ? v(id).checked : false; }
 
 function updatePersonalisationScore() {
-  var fields = ['age','retireAge','country','income','pension','target','risk'];
-  var bonus = ['partnerAge','health','savings','equity','debts','contributions','lifestyle','partTime','estate','plans','srcNotes','question'];
-  var sources = ['src_state','src_db','src_dc','src_annuity','src_rental','src_invest','src_business','src_inherit'];
-  var concerns = ['c_runout','c_inflation','c_care','c_tax','c_market','c_early','c_partner','c_health'];
+  const fields = ['age','retireAge','country','income','pension','target','risk'];
+  const bonus = ['partnerAge','health','savings','equity','debts','contributions','lifestyle','partTime','estate','plans','srcNotes','question'];
+  const sources = ['src_state','src_db','src_dc','src_annuity','src_rental','src_invest','src_business','src_inherit'];
+  const concerns = ['c_runout','c_inflation','c_care','c_tax','c_market','c_early','c_partner','c_health'];
 
-  var score = 0;
-  var max = fields.length * 10 + bonus.length * 4 + 8 + 8 + (Object.keys(selectedPrompts).length > 0 ? 10 : 0);
-  fields.forEach(function(id) { if (val(id)) score += 10; });
-  bonus.forEach(function(id) { if (val(id)) score += 4; });
-  sources.forEach(function(id) { if (chk(id)) score += 1; });
-  concerns.forEach(function(id) { if (chk(id)) score += 1; });
+  let score = 0;
+  let max = fields.length * 10 + bonus.length * 4 + 8 + 8 + (Object.keys(selectedPrompts).length > 0 ? 10 : 0);
+  fields.forEach(id => { if (val(id)) score += 10; });
+  bonus.forEach(id => { if (val(id)) score += 4; });
+  sources.forEach(id => { if (chk(id)) score += 1; });
+  concerns.forEach(id => { if (chk(id)) score += 1; });
   if (Object.keys(selectedPrompts).length > 0) score += 10;
 
-  var pct = Math.min(100, Math.round((score / max) * 100));
+  const pct = Math.min(100, Math.round((score / max) * 100));
   v('persScore').textContent = pct + '%';
   v('persFill').style.width = pct + '%';
 
-  var note = pct < 30 ? 'Add more details in step 2 for a much more personalised result.'
+  let note = pct < 30 ? 'Add more details in step 2 for a much more personalised result.'
     : pct < 60 ? 'Good start — a few more fields will make a real difference.'
     : pct < 85 ? 'Looking good. The AI will give you specific, relevant answers.'
     : 'Excellent — the AI has everything it needs to give you highly personalised guidance.';
   v('persNote').textContent = note;
 }
 
+function renderSelectedPrompts() {
+  const el = document.getElementById('selectedPromptsList');
+  const keys = Object.keys(selectedPrompts);
+  if (keys.length === 0) {
+    el.innerHTML = '<span style="color:#bbb; font-style:italic; font-size:0.85rem;">No prompts selected yet — go to step 1 and select prompts.</span>';
+    return;
+  }
+  el.innerHTML = keys.map(k => {
+    const q = findQuestionById(k);
+    const short = q ? q.humanVersion.substring(0, 60) + (q.humanVersion.length > 60 ? '…' : '') : '';
+    return '<div class="selected-prompt-pill">' + short + '</div>';
+  }).join('');
+}
+
 function getSources() {
-  var map = {src_state:'State pension / Social Security', src_db:'Defined benefit / final salary pension', src_dc:'Defined contribution / personal pension', src_annuity:'Annuity', src_rental:'Rental income', src_invest:'Investment / dividend income', src_business:'Business / self-employed income', src_inherit:'Inheritance or windfall'};
-  return Object.keys(map).filter(function(id){ return chk(id); }).map(function(id){ return map[id]; });
+  const map = {src_state:'State pension / Social Security', src_db:'Defined benefit / final salary pension', src_dc:'Defined contribution / personal pension', src_annuity:'Annuity', src_rental:'Rental income', src_invest:'Investment / dividend income', src_business:'Business / self-employed income', src_inherit:'Inheritance or windfall'};
+  return Object.keys(map).filter(id => chk(id)).map(id => map[id]);
 }
 function getConcerns() {
-  var map = {c_runout:'Running out of money', c_inflation:'Inflation eroding purchasing power', c_care:'Long-term care costs', c_tax:'Tax efficiency', c_market:'Market volatility', c_early:'Dying prematurely / life cover', c_partner:'Partner survivorship', c_health:'Unexpected health costs'};
-  return Object.keys(map).filter(function(id){ return chk(id); }).map(function(id){ return map[id]; });
+  const map = {c_runout:'Running out of money', c_inflation:'Inflation eroding purchasing power', c_care:'Long-term care costs', c_tax:'Tax efficiency', c_market:'Market volatility', c_early:'Dying prematurely / life cover', c_partner:'Partner survivorship', c_health:'Unexpected health costs'};
+  return Object.keys(map).filter(id => chk(id)).map(id => map[id]);
 }
 
 function generatePrompt() {
-  var age = val('age'), partnerAge = val('partnerAge'), retireAge = val('retireAge');
-  var country = val('country') || 'not specified';
-  var employment = val('employment'), health = val('health'), dependants = val('dependants');
-  var income = val('income'), pension = val('pension'), savings = val('savings');
-  var equity = val('equity'), debts = val('debts'), contributions = val('contributions');
-  var target = val('target'), lifestyle = val('lifestyle'), partTime = val('partTime');
-  var estate = val('estate'), plans = val('plans'), srcNotes = val('srcNotes');
-  var risk = val('risk'), buffer = val('buffer'), question = val('question');
-  var sources = getSources(), concerns = getConcerns();
-  var selectedKeys = Object.keys(selectedPrompts);
+  const age = val('age'), partnerAge = val('partnerAge'), retireAge = val('retireAge');
+  const country = val('country') || 'not specified';
+  const employment = val('employment'), health = val('health'), dependants = val('dependants');
+  const income = val('income'), pension = val('pension'), savings = val('savings');
+  const equity = val('equity'), debts = val('debts'), contributions = val('contributions');
+  const target = val('target'), lifestyle = val('lifestyle'), partTime = val('partTime');
+  const estate = val('estate'), plans = val('plans'), srcNotes = val('srcNotes');
+  const risk = val('risk'), buffer = val('buffer'), question = val('question');
+  const sources = getSources(), concerns = getConcerns();
+  const selectedKeys = Object.keys(selectedPrompts);
 
-  var p = 'I would like your help understanding my retirement income situation. Please treat me as an individual and give me specific, practical guidance based on the details I am providing. Where you make assumptions, please state them clearly.\n\n';
+  let p = 'I would like your help understanding my retirement income situation. Please treat me as an individual and give me specific, practical guidance based on the details I am providing. Where you make assumptions, please state them clearly.\n\n';
 
   p += '--- MY PERSONAL DETAILS ---\n';
   if (age) p += 'My age: ' + age + '\n';
   if (partnerAge) p += "Partner's age: " + partnerAge + '\n';
   if (retireAge) {
     p += 'Target retirement age: ' + retireAge + '\n';
-    if (age) { var yrs = parseInt(retireAge) - parseInt(age); if (yrs > 0) p += 'Years to retirement: approximately ' + yrs + '\n'; }
+    if (age) { const yrs = parseInt(retireAge) - parseInt(age); if (yrs > 0) p += 'Years to retirement: approximately ' + yrs + '\n'; }
   }
   p += 'Country / region: ' + country + '\n';
   if (employment) p += 'Employment status: ' + employment + '\n';
   if (health) p += 'Health status: ' + health + '\n';
   if (dependants) p += 'Financial dependants: ' + dependants + '\n';
 
-  var hasFinance = income || pension || savings || equity || debts || contributions;
+  const hasFinance = income || pension || savings || equity || debts || contributions;
   if (hasFinance) {
     p += '\n--- MY FINANCIAL PICTURE ---\n';
     if (income) p += 'Current annual household income: ' + income + '\n';
@@ -933,7 +691,7 @@ function generatePrompt() {
     if (contributions) p += 'Annual pension contributions: ' + contributions + '\n';
   }
 
-  var hasGoals = target || lifestyle || partTime || estate || plans;
+  const hasGoals = target || lifestyle || partTime || estate || plans;
   if (hasGoals) {
     p += '\n--- MY RETIREMENT GOALS ---\n';
     if (target) p += 'Target monthly income in retirement: ' + target + '\n';
@@ -949,7 +707,7 @@ function generatePrompt() {
     if (srcNotes) p += 'Notes: ' + srcNotes + '\n';
   }
 
-  var hasConcerns = concerns.length > 0 || risk || buffer;
+  const hasConcerns = concerns.length > 0 || risk || buffer;
   if (hasConcerns) {
     p += '\n--- MY CONCERNS AND RISK PROFILE ---\n';
     if (concerns.length > 0) p += 'Main concerns: ' + concerns.join(', ') + '\n';
@@ -959,8 +717,9 @@ function generatePrompt() {
 
   if (selectedKeys.length > 0) {
     p += '\n--- MY QUESTIONS ---\n';
-    selectedKeys.forEach(function(k, i) {
-      p += (i + 1) + '. ' + selectedPrompts[k] + '\n\n';
+    selectedKeys.forEach((k, i) => {
+      const q = findQuestionById(k);
+      if (q) p += (i + 1) + '. ' + q.humanVersion + '\n\n';
     });
   }
 
@@ -980,28 +739,27 @@ function generatePrompt() {
 }
 
 function copyFinalPrompt() {
-  var text = v('outputText').textContent;
+  const text = v('outputText').textContent;
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(function() {
-      v('copyFinalBtn').textContent = '✓ Copied!';
-      v('copiedFinalMsg').style.display = 'block';
-      setTimeout(function() { v('copyFinalBtn').textContent = 'Copy prompt'; v('copiedFinalMsg').style.display = 'none'; }, 2500);
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Your personalised prompt copied');
     });
   } else {
     fallbackCopy(text);
-    v('copyFinalBtn').textContent = '✓ Copied!';
-    setTimeout(function() { v('copyFinalBtn').textContent = 'Copy prompt'; }, 2500);
+    showToast('Your personalised prompt copied');
   }
 }
 
 function clearAll() {
   selectedPrompts = {};
-  document.querySelectorAll('.btn-use').forEach(function(b) { b.textContent = '+ Select'; b.classList.remove('selected'); });
-  ['age','partnerAge','retireAge','country','income','pension','savings','equity','debts','contributions','target','plans','srcNotes','question'].forEach(function(id){ if(v(id)) v(id).value=''; });
-  ['health','lifestyle','partTime','estate','risk','buffer','employment'].forEach(function(id){ if(v(id)) v(id).value=''; });
-  ['src_state','src_db','src_dc','src_annuity','src_rental','src_invest','src_business','src_inherit','c_runout','c_inflation','c_care','c_tax','c_market','c_early','c_partner','c_health'].forEach(function(id){ if(v(id)) v(id).checked=false; });
-  document.querySelectorAll('.check-item').forEach(function(el){ el.classList.remove('selected'); });
+  document.querySelectorAll('.question-checkbox').forEach(checkbox => checkbox.checked = false);
+  document.querySelectorAll('.question-card').forEach(card => card.classList.remove('selected'));
+  ['age','partnerAge','retireAge','country','income','pension','savings','equity','debts','contributions','target','plans','srcNotes','question'].forEach(id => { if(v(id)) v(id).value=''; });
+  ['health','lifestyle','partTime','estate','risk','buffer','employment'].forEach(id => { if(v(id)) v(id).value=''; });
+  ['src_state','src_db','src_dc','src_annuity','src_rental','src_invest','src_business','src_inherit','c_runout','c_inflation','c_care','c_tax','c_market','c_early','c_partner','c_health'].forEach(id => { if(v(id)) v(id).checked=false; });
+  document.querySelectorAll('.check-item').forEach(el => el.classList.remove('selected'));
   v('outputBox').style.display = 'none';
+  updateSelectionBar();
   showPage(0);
 }
 </script>
