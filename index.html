@@ -17,14 +17,14 @@
 <div style="background:#f5f4f3;color:#201e1d;font-family:'Archivo',system-ui,sans-serif;min-height:100vh;line-height:1.55">
 
   <!-- ============ NAV ============ -->
-  <div style="border-bottom:2px solid rgba(32,30,29,0.4);background:#f5f4f3;position:sticky;top:0;z-index:20">
+  <div style="border-bottom:none;background:#2C8494;position:sticky;top:0;z-index:20">
     <div style="max-width:1120px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:14px">
       <div onClick="{{ goLanding }}" style="display:flex;flex-direction:column;line-height:1.2;cursor:pointer">
-        <span style="font-family:'Archivo',sans-serif;font-weight:800;font-size:15px">Retirement Income Taskforce</span>
-        <span style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(32,30,29,0.55)">Consumer Duty Alliance</span>
+        <span style="font-family:'Archivo',sans-serif;font-weight:800;font-size:15px;color:#fff">Retirement Income Taskforce</span>
+        <span style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.8)">Consumer Duty Alliance</span>
       </div>
       <div style="margin-left:auto;display:flex;align-items:center;gap:24px">
-        <a href="#" onClick="{{ goLanding }}" style="font-size:14px;color:#201e1d;text-decoration:none">Home</a>
+        <a href="#" onClick="{{ goLanding }}" style="font-size:14px;color:#fff;text-decoration:none">Home</a>
         <sc-if value="{{ isLanding }}">
           <button onClick="{{ goApp }}" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:10px 18px;cursor:pointer;text-align:left;white-space:nowrap">Try it now</button>
         </sc-if>
@@ -141,9 +141,8 @@
   <!-- ============ STARTER PROMPT ============ -->
   <sc-if value="{{ isStarterPrompt }}">
   <div data-screen-label="Starter Prompt" style="max-width:800px;margin:0 auto;padding:48px 32px 80px">
-    <a href="#" onClick="{{ goLanding }}" style="font-size:13px;color:#226B79;font-weight:600;text-decoration:none">&larr; Back to home</a>
 
-    <div style="margin-top:32px">
+    <div style="margin-top:0px">
       <h1 style="font-size:32px;font-weight:800;margin:0 0 16px;color:#201e1d">{{ starterPrompt.title }}</h1>
       <p style="font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#226B79;font-weight:800;margin:0 0 32px">{{ starterPrompt.category }}</p>
 
@@ -439,13 +438,12 @@
   <!-- ============ BROWSE (standalone prompt list) ============ -->
   <sc-if value="{{ isBrowse }}">
   <div data-screen-label="Browse Prompts" style="max-width:1120px;margin:0 auto;padding:32px 32px 120px">
-    <a href="#" onClick="{{ goLanding }}" style="font-size:13px;color:#226B79;font-weight:600">&larr; Back to home</a>
-    <h2 style="font-size:30px;margin:20px 0 8px">Prompt list</h2>
+    <h2 style="font-size:30px;margin:0 0 8px">Prompt list</h2>
     <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Browse every question and expand to see the full prompt. Select the ones you need, then copy them all at once to paste into your AI chatbot.</p>
 
     <sc-for list="{{ browseSections }}" as="section" hint-placeholder-count="3">
       <div style="margin-bottom:36px">
-        <div style="display:flex;align-items:flex-end;justify-content:space-between;border-bottom:2px solid rgba(32,30,29,0.4);padding-bottom:10px;margin-bottom:16px;gap:16px;flex-wrap:wrap;position:sticky;top:60px;background:#f5f4f3;z-index:10;padding-top:8px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;padding-bottom:10px;margin-bottom:16px;gap:16px;flex-wrap:wrap;position:sticky;top:60px;background:#f5f4f3;z-index:10;padding-top:8px">
           <div>
             <h3 style="font-size:19px;margin:0 0 4px">{{ section.title }}</h3>
             <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0">{{ section.subtitle }}</p>
@@ -516,14 +514,55 @@
   </div>
   </sc-if>
 
-  <!-- TOASTS -->
-  <div style="position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:8px;z-index:50;pointer-events:none" id="toast-container">
-    <sc-for list="{{ toasts }}" as="t" hint-placeholder-count="0">
-      <div style="background:#201e1d;color:#fff;padding:10px 16px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,0.25);display:flex;align-items:center;gap:12px;border-radius:4px;pointer-events:auto">
-        <span style="flex:1">{{ t.msg }}</span>
-        <button class="toast-close" style="background:transparent;border:none;color:#fff;cursor:pointer;font-size:18px;padding:0;line-height:1;flex-shrink:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center" title="Close">×</button>
+  <!-- COPY MODAL -->
+  <div id="copy-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;pointer-events:auto;align-items:center;justify-content:center">
+    <div style="background:#fff;border-radius:8px;max-width:600px;width:90%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.3);pointer-events:auto">
+      <!-- Close button -->
+      <button onclick="document.getElementById('copy-modal').style.display='none'" style="position:absolute;top:16px;right:16px;background:transparent;border:none;font-size:24px;cursor:pointer;color:#666;z-index:10">×</button>
+
+      <!-- Modal content -->
+      <div style="padding:40px 32px;overflow-y:auto">
+        <!-- Header -->
+        <h2 style="font-size:24px;margin:0 0 8px;color:#201e1d;font-weight:800">{{ copyModalCount }} question<sc-if value="{{ copyModalIsPlural }}">s</sc-if> copied</h2>
+        <p style="font-size:14px;color:#666;margin:0 0 32px">Ready to get answers? Open the prompt in your favourite AI chatbot:</p>
+
+        <!-- Chatbot buttons -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px">
+          <button onclick="window.open(this.dataset.url,'_blank')" data-url="{{ copyModalChatGPTUrl }}" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
+            <span style="display:inline-block;vertical-align:middle">ChatGPT</span>
+            <span style="display:inline-block;margin-left:6px;font-size:12px">↗</span>
+          </button>
+          <button onclick="window.open(this.dataset.url,'_blank')" data-url="{{ copyModalClaudeUrl }}" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
+            <span style="display:inline-block;vertical-align:middle">Claude</span>
+            <span style="display:inline-block;margin-left:6px;font-size:12px">↗</span>
+          </button>
+          <button onclick="window.open(this.dataset.url,'_blank')" data-url="{{ copyModalGeminiUrl }}" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
+            <span style="display:inline-block;vertical-align:middle">Gemini</span>
+            <span style="display:inline-block;margin-left:6px;font-size:12px">↗</span>
+          </button>
+          <button onclick="window.open(this.dataset.url,'_blank')" data-url="{{ copyModalCopilotUrl }}" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
+            <span style="display:inline-block;vertical-align:middle">Copilot</span>
+            <span style="display:inline-block;margin-left:6px;font-size:12px">↗</span>
+          </button>
+        </div>
+
+        <!-- Prompt preview -->
+        <div>
+          <p style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin:0 0 8px;font-weight:600">Your prompt</p>
+          <div style="background:#f5f4f3;border:1px solid #ddd;border-radius:6px;padding:16px;max-height:200px;overflow-y:auto;font-size:13px;line-height:1.6;color:#333;white-space:pre-wrap;word-wrap:break-word;font-family:monospace">{{ copyModalPromptText }}</div>
+        </div>
+
+        <!-- Divider -->
+        <div style="height:1px;background:#eee;margin:32px 0"></div>
+
+        <!-- Want more tailored answer CTA -->
+        <div>
+          <h3 style="font-size:16px;margin:0 0 8px;font-weight:600;color:#201e1d">Want a more tailored answer?</h3>
+          <p style="font-size:14px;color:#666;margin:0 0 16px">Add your age, pension, income and concerns, and get answers specific to your situation.</p>
+          <button onclick="document.getElementById('copy-modal').style.display='none'; window.location.hash='#app'" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;border-radius:6px;width:100%">Personalise the prompt →</button>
+        </div>
       </div>
-    </sc-for>
+    </div>
   </div>
 
 </div>
@@ -1056,14 +1095,14 @@ class Component extends DCLogic {
             // Copy to clipboard
             if (navigator.clipboard && navigator.clipboard.writeText) {
               navigator.clipboard.writeText(selectedText).then(() => {
-                showSimpleToast(`${checkedBoxes.length} question${checkedBoxes.length > 1 ? 's' : ''} copied`);
+                showCopyModal(checkedBoxes.length, selectedText);
               }).catch(() => {
                 fallbackCopy(selectedText);
-                showSimpleToast(`${checkedBoxes.length} question${checkedBoxes.length > 1 ? 's' : ''} copied`);
+                showCopyModal(checkedBoxes.length, selectedText);
               });
             } else {
               fallbackCopy(selectedText);
-              showSimpleToast(`${checkedBoxes.length} question${checkedBoxes.length > 1 ? 's' : ''} copied`);
+              showCopyModal(checkedBoxes.length, selectedText);
             }
           }
         }
@@ -1079,6 +1118,43 @@ class Component extends DCLogic {
     ta.select();
     try { document.execCommand('copy'); } catch (e) {}
     document.body.removeChild(ta);
+  };
+
+  // Helper function to show copy modal
+  const showCopyModal = (count, promptText) => {
+    const modal = document.getElementById('copy-modal');
+    if (!modal) return;
+
+    // Clean up the prompt text - remove extra whitespace and format it nicely
+    const cleanText = promptText
+      .split('\n\n---\n\n')
+      .map(q => q.trim())
+      .join('\n\n---\n\n');
+
+    // Update modal heading
+    const heading = modal.querySelector('h2');
+    if (heading) {
+      heading.textContent = `${count} question${count > 1 ? 's' : ''} copied`;
+    }
+
+    // Update prompt display
+    const promptEl = modal.querySelector('[style*="font-family:monospace"]');
+    if (promptEl) {
+      promptEl.textContent = cleanText;
+    }
+
+    // Update chatbot buttons with URLs
+    const encodedPrompt = encodeURIComponent(cleanText);
+    const buttons = modal.querySelectorAll('button[data-url]');
+    if (buttons.length >= 4) {
+      buttons[0].dataset.url = `https://chatgpt.com/?q=${encodedPrompt}`;
+      buttons[1].dataset.url = `https://claude.ai/?q=${encodedPrompt}`;
+      buttons[2].dataset.url = `https://gemini.google.com/?q=${encodedPrompt}`;
+      buttons[3].dataset.url = `https://copilot.microsoft.com/?q=${encodedPrompt}`;
+    }
+
+    // Show modal
+    modal.style.display = 'flex';
   };
 
   // Helper function to show toast
