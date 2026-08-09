@@ -1085,6 +1085,226 @@ fieldset div > label:hover {
   border-color: rgba(44, 132, 148, 0.3) !important;
 }
 
+/* ============ STARTER PROMPT PAGE ============ */
+.starter-prompt-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+.starter-prompt-page-heading {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1.2;
+  margin: 0 0 8px;
+  color: #201e1d;
+  letter-spacing: -0.01em;
+}
+
+.starter-prompt-category {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #226B79;
+  font-weight: 800;
+  margin: 0 0 32px;
+}
+
+.starter-prompt-value-prop {
+  background: #EAF3F3;
+  border-left: 4px solid #2C8494;
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  border-radius: 4px;
+}
+
+.starter-prompt-value-prop-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #164752;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.starter-prompt-content-card {
+  background: #fff;
+  border: 1px solid rgba(32, 30, 29, 0.12);
+  border-radius: 8px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.starter-prompt-content-card h2 {
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #226B79;
+  margin: 0 0 14px;
+}
+
+.starter-prompt-content-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.starter-prompt-content-list li {
+  font-size: 14px;
+  color: #201e1d;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.starter-prompt-content-list li:last-child {
+  margin-bottom: 0;
+}
+
+.starter-prompt-content-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #2C8494;
+  font-weight: bold;
+}
+
+.starter-prompt-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.starter-prompt-primary-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.starter-prompt-secondary-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.starter-prompt-secondary-action-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.starter-prompt-secondary-action-group .btn-secondary {
+  flex: 1;
+}
+
+.starter-prompt-helper-text {
+  font-size: 11px;
+  color: rgba(32, 30, 29, 0.6);
+  font-weight: 500;
+  text-align: center;
+}
+
+.starter-prompt-full-text {
+  background: #201e1d;
+  padding: 24px;
+  border-radius: 8px;
+  margin-bottom: 28px;
+}
+
+.starter-prompt-full-text-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.starter-prompt-full-text-content {
+  white-space: pre-wrap;
+  color: #f5f4f3;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+  word-break: break-word;
+}
+
+.starter-prompt-disclaimer {
+  background: #fff;
+  border: 1px solid rgba(32, 30, 29, 0.12);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 12px;
+  color: #201e1d;
+  line-height: 1.6;
+}
+
+.starter-prompt-disclaimer strong {
+  font-weight: 600;
+  color: #201e1d;
+}
+
+@media (max-width: 768px) {
+  .starter-prompt-container {
+    padding: 32px 20px 60px;
+  }
+
+  .starter-prompt-page-heading {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+
+  .starter-prompt-category {
+    margin-bottom: 24px;
+  }
+
+  .starter-prompt-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .starter-prompt-actions .btn-primary {
+    width: 100%;
+  }
+
+  .starter-prompt-secondary-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .starter-prompt-secondary-actions .btn-secondary {
+    width: 100%;
+  }
+
+  .starter-prompt-secondary-action-group {
+    width: 100%;
+  }
+
+  .starter-prompt-helper-text {
+    text-align: left;
+    font-size: 10px;
+  }
+
+  .starter-prompt-content-card {
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .starter-prompt-value-prop {
+    padding: 14px 16px;
+    margin-bottom: 24px;
+  }
+
+  .starter-prompt-value-prop-text {
+    font-size: 14px;
+  }
+}
+
 /* ============ SITE HEADER ============ */
 .site-header {
   background: #2C8494;

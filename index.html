@@ -137,44 +137,61 @@
 
   <!-- ============ STARTER PROMPT ============ -->
   <sc-if value="{{ isStarterPrompt }}">
-  <div data-screen-label="Starter Prompt" style="max-width:800px;margin:0 auto;padding:48px 32px 80px">
+  <div data-screen-label="Starter Prompt" class="starter-prompt-container">
 
-    <div style="margin-top:0px">
-      <h1 style="font-size:32px;font-weight:800;margin:0 0 16px;color:#201e1d">{{ starterPrompt.title }}</h1>
-      <p style="font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#226B79;font-weight:800;margin:0 0 32px">{{ starterPrompt.category }}</p>
+    <h1 class="starter-prompt-page-heading">{{ starterPrompt.title }}</h1>
+    <p class="starter-prompt-category">{{ starterPrompt.category }}</p>
 
-      <div style="background:#f0f5f2;border:1px solid #226B79;border-radius:8px;padding:24px;margin-bottom:32px">
-        <h2 style="font-size:16px;font-weight:800;margin:0 0 12px;color:#201e1d">What this prompt does</h2>
-        <p style="font-size:14px;color:rgba(32,30,29,0.8);margin:0;line-height:1.6">{{ starterPrompt.summary }}</p>
+    <!-- Value Proposition Callout -->
+    <div class="starter-prompt-value-prop">
+      <p class="starter-prompt-value-prop-text">This prompt will get you going on your journey towards retirement.</p>
+    </div>
+
+    <!-- Unified Content Card -->
+    <div class="starter-prompt-content-card">
+      <h2>What it provides</h2>
+      <p style="font-size:14px;color:#201e1d;margin:0 0 16px;line-height:1.6">{{ starterPrompt.summary }}</p>
+
+      <h2 style="margin-top:20px">How it works</h2>
+      <p style="font-size:14px;color:#201e1d;margin:0 0 16px;line-height:1.6">{{ starterPrompt.explanation }}</p>
+
+      <h2 style="margin-top:20px">What to expect</h2>
+      <p style="font-size:14px;color:#201e1d;margin:0;line-height:1.6">{{ starterPrompt.whatToExpect }}</p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="starter-prompt-actions">
+      <div class="starter-prompt-primary-action">
+        <button onClick="{{ copyStarter }}" class="btn-primary" style="padding:12px 20px;font-size:14px">📋 Copy prompt</button>
       </div>
-
-      <div style="background:#f9f9f7;border-left:4px solid #2C8494;padding:24px;margin-bottom:32px">
-        <h2 style="font-size:16px;font-weight:800;margin:0 0 12px;color:#201e1d">Why it works</h2>
-        <p style="font-size:14px;color:rgba(32,30,29,0.8);margin:0;line-height:1.6">{{ starterPrompt.explanation }}</p>
-      </div>
-
-      <div style="background:#fffbea;border:1px solid #e8d878;border-radius:8px;padding:24px;margin-bottom:32px">
-        <h2 style="font-size:16px;font-weight:800;margin:0 0 12px;color:#201e1d">What to expect</h2>
-        <p style="font-size:14px;color:rgba(32,30,29,0.8);margin:0;line-height:1.6">{{ starterPrompt.whatToExpect }}</p>
-      </div>
-
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px">
-        <button onClick="{{ copyStarter }}" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:14px 24px;cursor:pointer;text-align:left;white-space:nowrap;border-radius:6px">Copy prompt</button>
-        <button onClick="{{ toggleStarterPromptText }}" style="background:#fff;color:#201e1d;border:1px solid rgba(32,30,29,0.4);font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;padding:14px 24px;cursor:pointer;text-align:left;white-space:nowrap;border-radius:6px">{{ showStarterPromptText ? 'Hide prompt text' : 'Show prompt text' }}</button>
-        <button onClick="{{ openInChatGPT }}" style="background:#fff;color:#201e1d;border:1px solid rgba(32,30,29,0.4);font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;padding:14px 24px;cursor:pointer;text-align:left;white-space:nowrap;border-radius:6px">Open in ChatGPT</button>
-        <button onClick="{{ openInClaude }}" style="background:#fff;color:#201e1d;border:1px solid rgba(32,30,29,0.4);font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;padding:14px 24px;cursor:pointer;text-align:left;white-space:nowrap;border-radius:6px">Open in Claude</button>
-      </div>
-
-      <sc-if value="{{ showStarterPromptText }}">
-        <div style="background:#201e1d;padding:20px;border-radius:8px;margin-bottom:32px">
-          <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px">Full prompt text</div>
-          <pre style="white-space:pre-wrap;color:#f5f4f3;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.6;margin:0">{{ starterPrompt.prompt }}</pre>
+      <div class="starter-prompt-secondary-actions">
+        <div class="starter-prompt-secondary-action-group">
+          <button onClick="{{ openInChatGPT }}" class="btn-secondary">Open in ChatGPT</button>
+          <p class="starter-prompt-helper-text">Requires active account</p>
         </div>
-      </sc-if>
-
-      <div style="background:#eceae9;border:1px solid rgba(32,30,29,0.4);border-radius:8px;padding:16px;font-size:12px;color:rgba(32,30,29,0.65);line-height:1.6">
-        <strong>Note:</strong> This is for educational purposes only. The prompt asks for factual information, not regulated financial advice. You should always speak to a qualified financial adviser about your personal circumstances.
+        <div class="starter-prompt-secondary-action-group">
+          <button onClick="{{ openInClaude }}" class="btn-secondary">Open in Claude</button>
+          <p class="starter-prompt-helper-text">Requires active account</p>
+        </div>
       </div>
+    </div>
+
+    <!-- Toggle Full Text -->
+    <button onClick="{{ toggleStarterPromptText }}" class="btn-secondary" style="width:100%;margin-bottom:28px">
+      {{ showStarterPromptText ? '▼ Hide prompt text' : '▶ Show prompt text' }}
+    </button>
+
+    <!-- Full Prompt Text (Conditional) -->
+    <sc-if value="{{ showStarterPromptText }}">
+      <div class="starter-prompt-full-text">
+        <div class="starter-prompt-full-text-label">Full prompt text</div>
+        <pre class="starter-prompt-full-text-content">{{ starterPrompt.prompt }}</pre>
+      </div>
+    </sc-if>
+
+    <!-- Disclaimer -->
+    <div class="starter-prompt-disclaimer">
+      <strong>Note:</strong> This is for educational purposes only. The prompt asks for factual information, not regulated financial advice. You should always speak to a qualified financial adviser about your personal circumstances.
     </div>
   </div>
   </sc-if>
