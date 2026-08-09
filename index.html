@@ -622,6 +622,9 @@ const STARTER_PROMPT_DATA = {
   "prompt": "Act as an educational financial coach based in the UK. I am approaching retirement and want to understand the landscape of my retirement income options. Please note, I am seeking generic, factual education only, not regulated financial advice or personalised recommendations.\nPlease provide a comprehensive, easy-to-understand overview covering the following areas:\n\n1. Core Income Options: Explain the main ways to take income from a UK defined contribution pension (e.g., annuities, flexi-access drawdown, and taking lump sums/UFPLS).\n2. Pros and Cons: Outline the general advantages and disadvantages of each of these main options.\n3. The State Pension: Briefly explain how the UK State Pension operates and how it typically factors into a broader retirement income strategy.\n4. Key Risks to Consider: Detail the main risks I need to be aware of when planning my retirement income (such as inflation, longevity risk, and market volatility).\n5. Next Steps: Provide a sensible, actionable checklist of practical steps I should take to organise my financial information before I eventually speak to a regulated financial adviser.\n\nPlease ensure your response is structured clearly with headings and bullet points, uses plain British English, and maintains an objective, coaching tone throughout."
 };
 
+// Make STARTER_PROMPT_DATA globally available
+window.STARTER_PROMPT_DATA = STARTER_PROMPT_DATA;
+
 const GENERIC_PROMPT = STARTER_PROMPT_DATA.prompt;
 
 const STEP_NAMES = ['Select questions', 'Profile', 'Finances', 'Goals', 'Income', 'Concerns'];
@@ -1322,14 +1325,14 @@ window.PROMPTS_DATA = PROMPTS_DATA;
   // Helper function to show copy modal for starter prompt
   window.showStarterPromptModal = function() {
     console.log('[showStarterPromptModal] Function called');
-    console.log('[showStarterPromptModal] STARTER_PROMPT_DATA:', STARTER_PROMPT_DATA);
+    console.log('[showStarterPromptModal] window.STARTER_PROMPT_DATA:', window.STARTER_PROMPT_DATA);
 
-    if (!STARTER_PROMPT_DATA) {
+    if (!window.STARTER_PROMPT_DATA) {
       console.error('[showStarterPromptModal] STARTER_PROMPT_DATA not found');
       return;
     }
 
-    const promptText = STARTER_PROMPT_DATA.prompt || '';
+    const promptText = window.STARTER_PROMPT_DATA.prompt || '';
     console.log('[showStarterPromptModal] promptText length:', promptText.length);
 
     const modal = document.getElementById('copy-modal');
