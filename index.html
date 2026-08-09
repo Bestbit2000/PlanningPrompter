@@ -17,16 +17,16 @@
 <div style="background:#f5f4f3;color:#201e1d;font-family:'Archivo',system-ui,sans-serif;min-height:100vh;line-height:1.55">
 
   <!-- ============ NAV ============ -->
-  <div style="border-bottom:none;background:#2C8494;position:sticky;top:0;z-index:20">
-    <div style="max-width:1120px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:14px">
-      <div onClick="{{ goLanding }}" style="display:flex;flex-direction:column;line-height:1.2;cursor:pointer">
-        <span style="font-family:'Archivo',sans-serif;font-weight:800;font-size:15px;color:#fff">Retirement Income Taskforce</span>
-        <span style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.8)">Consumer Duty Alliance</span>
+  <div class="site-header">
+    <div class="site-header-inner">
+      <div onClick="{{ goLanding }}" class="site-brand">
+        <span class="site-brand-name">Retirement Income Taskforce</span>
+        <span class="site-brand-tagline">Consumer Duty Alliance</span>
       </div>
-      <div style="margin-left:auto;display:flex;align-items:center;gap:24px">
-        <a href="#" onClick="{{ goLanding }}" style="font-size:14px;color:#fff;text-decoration:none">Home</a>
+      <div class="site-nav-actions">
+        <a href="#" onClick="{{ goLanding }}" class="site-nav-link">Home</a>
         <sc-if value="{{ isLanding }}">
-          <button onClick="{{ goApp }}" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:10px 18px;cursor:pointer;text-align:left;white-space:nowrap">Try it now</button>
+          <button data-action="goApp" onClick="{{ goApp }}" class="btn-primary">Try it now</button>
         </sc-if>
       </div>
     </div>
@@ -37,101 +37,98 @@
   <div data-screen-label="Landing">
 
     <!-- HERO -->
-    <div style="max-width:1120px;margin:0 auto;padding:72px 32px 56px;display:grid;grid-template-columns:1.4fr 1fr;gap:56px;align-items:end">
+    <div class="landing-hero">
       <div>
-        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:16px">Retirement Income Taskforce &middot; Consumer Duty Alliance</div>
-        <h1 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:52px;line-height:1.06;letter-spacing:-0.02em;margin:0 0 20px;max-width:14ch">Ask AI better questions about your retirement income</h1>
-        <p style="font-size:18px;max-width:52ch;margin:0 0 28px;color:rgba(32,30,29,0.85)">AI chatbots can be a genuinely useful sounding board as you approach retirement &mdash; but only if you ask them well. This free tool gives you the right questions, ready-built prompts, and a way to add your own details, so the answer you get back is actually about you.</p>
-        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
-          <button onClick="{{ goApp }}" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:16px;padding:16px 28px;cursor:pointer;text-align:left;white-space:nowrap">Try it now &rarr;</button>
-          <a href="#how-it-works" style="font-size:14px;font-weight:600;color:#201e1d">See how it works &darr;</a>
+        <div class="landing-hero-eyebrow">Retirement Income Taskforce &middot; Consumer Duty Alliance</div>
+        <h1 class="landing-hero-title">Ask AI better questions about your retirement income</h1>
+        <p class="landing-hero-lead">AI chatbots can be a genuinely useful sounding board as you approach retirement &mdash; but only if you ask them well. This free tool gives you the right questions, ready-built prompts, and a way to add your own details, so the answer you get back is actually about you.</p>
+        <div class="landing-hero-actions">
+          <button data-action="goApp" onClick="{{ goApp }}" class="btn-primary btn-lg">Try it now &rarr;</button>
+          <a href="#how-it-works" class="landing-hero-link">See how it works &darr;</a>
         </div>
       </div>
-      <div style="border-left:2px solid rgba(32,30,29,0.4);padding-left:32px;padding-bottom:6px">
-        <div style="font-size:13px;color:rgba(32,30,29,0.65);margin-bottom:10px">Works alongside the AI chatbot you already use</div>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <span style="font-size:13px;border:1px solid rgba(32,30,29,0.4);padding:6px 12px;display:inline-block;width:fit-content">ChatGPT</span>
-          <span style="font-size:13px;border:1px solid rgba(32,30,29,0.4);padding:6px 12px;display:inline-block;width:fit-content">Claude</span>
-          <span style="font-size:13px;border:1px solid rgba(32,30,29,0.4);padding:6px 12px;display:inline-block;width:fit-content">Gemini</span>
-          <span style="font-size:13px;border:1px solid rgba(32,30,29,0.4);padding:6px 12px;display:inline-block;width:fit-content">Copilot</span>
+      <div class="landing-hero-aside">
+        <div class="landing-hero-aside-label">Works alongside the AI chatbot you already use</div>
+        <div class="landing-hero-badges">
+          <span class="landing-hero-badge">ChatGPT</span>
+          <span class="landing-hero-badge">Claude</span>
+          <span class="landing-hero-badge">Gemini</span>
+          <span class="landing-hero-badge">Copilot</span>
         </div>
       </div>
     </div>
 
-    <hr style="height:2px;border:0;background:rgba(32,30,29,0.4);margin:0" />
+    <hr class="landing-divider" />
 
     <!-- WHY THIS MATTERS -->
-    <div style="max-width:1120px;margin:0 auto;padding:64px 32px;display:grid;grid-template-columns:1fr 1.6fr;gap:56px">
-      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:30px;margin:0;max-width:10ch">Why this matters</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
-        <div>
-          <h3 style="font-size:18px;margin:0 0 8px">Retirement isn&rsquo;t one decision</h3>
-          <p style="font-size:15px;color:rgba(32,30,29,0.8);margin:0">It&rsquo;s no longer a single, one-off event. People retire early, move to part-time work, or never fully stop &mdash; and every path is shaped by things beyond the numbers, from health to family responsibilities.</p>
+    <div class="landing-why">
+      <h2 class="landing-why-title">Why this matters</h2>
+      <div class="landing-why-grid">
+        <div class="landing-why-item">
+          <h3>Retirement isn&rsquo;t one decision</h3>
+          <p>It&rsquo;s no longer a single, one-off event. People retire early, move to part-time work, or never fully stop &mdash; and every path is shaped by things beyond the numbers, from health to family responsibilities.</p>
         </div>
-        <div>
-          <h3 style="font-size:18px;margin:0 0 8px">Most of us are unprepared</h3>
-          <p style="font-size:15px;color:rgba(32,30,29,0.8);margin:0">Few people have an in-depth understanding of pensions, or how to make savings last 30 years or more. Decisions often get made late, without enough time to weigh up the options.</p>
+        <div class="landing-why-item">
+          <h3>Most of us are unprepared</h3>
+          <p>Few people have an in-depth understanding of pensions, or how to make savings last 30 years or more. Decisions often get made late, without enough time to weigh up the options.</p>
         </div>
-        <div>
-          <h3 style="font-size:18px;margin:0 0 8px">AI can help &mdash; if you ask well</h3>
-          <p style="font-size:15px;color:rgba(32,30,29,0.8);margin:0">A generic question to an AI chatbot gets a generic answer. Asking a well-structured, informed question &mdash; with context about your own situation &mdash; gets you something far more useful to actually act on.</p>
+        <div class="landing-why-item">
+          <h3>AI can help &mdash; if you ask well</h3>
+          <p>A generic question to an AI chatbot gets a generic answer. Asking a well-structured, informed question &mdash; with context about your own situation &mdash; gets you something far more useful to actually act on.</p>
         </div>
-        <div>
-          <h3 style="font-size:18px;margin:0 0 8px">This isn&rsquo;t financial advice</h3>
-          <p style="font-size:15px;color:rgba(32,30,29,0.8);margin:0">It&rsquo;s a way to think more clearly and arrive better prepared &mdash; whether that&rsquo;s for your own research or your next conversation with a qualified financial adviser.</p>
+        <div class="landing-why-item">
+          <h3>This isn&rsquo;t financial advice</h3>
+          <p>It&rsquo;s a way to think more clearly and arrive better prepared &mdash; whether that&rsquo;s for your own research or your next conversation with a qualified financial adviser.</p>
         </div>
       </div>
     </div>
 
-    <hr style="height:2px;border:0;background:rgba(32,30,29,0.4);margin:0" />
+    <hr class="landing-divider" />
 
     <!-- THREE LEVELS -->
-    <div id="how-it-works" style="max-width:1120px;margin:0 auto;padding:64px 32px">
-      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:30px;margin:0 0 8px">Three levels of support</h2>
-      <p style="font-size:15px;color:rgba(32,30,29,0.7);margin:0 0 40px;max-width:60ch">Each level builds on the last. Use whichever fits how much time you have &mdash; you can always come back and go further.</p>
+    <div id="how-it-works" class="landing-levels">
+      <h2 class="landing-levels-title">Choose a way to get your prompt</h2>
+      <p class="landing-levels-lead">Each option builds on the last. Use whichever fits how much time you have &mdash; you can always come back and go further.</p>
 
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid rgba(32,30,29,0.4);border-left:2px solid rgba(32,30,29,0.4)">
+      <div class="landing-levels-grid">
 
-        <div style="padding:28px;border-right:2px solid rgba(32,30,29,0.4);border-bottom:2px solid rgba(32,30,29,0.4);display:flex;flex-direction:column">
-          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:10px">Level 1</div>
-          <h3 style="font-size:20px;margin:0 0 10px">Don&rsquo;t know where to start?</h3>
-          <p style="font-size:14px;color:rgba(32,30,29,0.8);margin:0 0 16px;flex:1">If you&rsquo;re not sure what to ask yet, this single all-purpose prompt gets an AI to ask you the right clarifying questions and walk you through the essentials.</p>
-          <button onClick="{{ goStarterPrompt }}" style="background:transparent;border:1px solid #226B79;color:#226B79;font-weight:800;font-size:12px;padding:8px 14px;cursor:pointer;text-align:left;white-space:nowrap;width:fit-content">Copy the starter prompt</button>
+        <div class="landing-level-card">
+          <h3>Don&rsquo;t know where to start?</h3>
+          <p>If you&rsquo;re not sure what to ask yet, this single all-purpose prompt gets an AI to ask you the right clarifying questions and walk you through the essentials.</p>
+          <button onClick="{{ goStarterPrompt }}" class="btn-secondary">Use a starting prompt</button>
         </div>
 
-        <div style="padding:28px;border-right:2px solid rgba(32,30,29,0.4);border-bottom:2px solid rgba(32,30,29,0.4);display:flex;flex-direction:column">
-          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:10px">Level 2</div>
-          <h3 style="font-size:20px;margin:0 0 10px">Choose from a list of questions</h3>
-          <p style="font-size:14px;color:rgba(32,30,29,0.8);margin:0 0 16px;flex:1">Pick from a curated list of expert-written prompts covering the foundations of a plan, things to watch out for, and how to get the most from your pension.</p>
-          <button onClick="{{ goBrowse }}" style="background:transparent;border:1px solid #226B79;color:#226B79;font-weight:800;font-size:12px;padding:8px 14px;cursor:pointer;text-align:left;white-space:nowrap;width:fit-content">Browse the prompt list</button>
+        <div class="landing-level-card">
+          <h3>Choose from a list of questions</h3>
+          <p>Pick from a curated list of expert-written prompts covering the foundations of a plan, things to watch out for, and how to get the most from your pension.</p>
+          <button onClick="{{ goBrowse }}" class="btn-secondary">Choose from a prompt list</button>
         </div>
 
-        <div style="padding:28px;border-right:2px solid rgba(32,30,29,0.4);border-bottom:2px solid rgba(32,30,29,0.4);display:flex;flex-direction:column">
-          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:10px">Level 3</div>
-          <h3 style="font-size:20px;margin:0 0 10px">Personalise it to you</h3>
-          <p style="font-size:14px;color:rgba(32,30,29,0.8);margin:0 0 16px;flex:1">Select your questions first, then add details about your age, savings, income sources and concerns &mdash; so the answer speaks to your actual circumstances.</p>
-          <button onClick="{{ goApp }}" style="background:transparent;border:1px solid #226B79;color:#226B79;font-weight:800;font-size:12px;padding:8px 14px;cursor:pointer;text-align:left;white-space:nowrap;width:fit-content">Start with the prompt list</button>
+        <div class="landing-level-card">
+          <h3>Personalise it to you</h3>
+          <p>Select your questions first, then add details about your age, savings, income sources and concerns &mdash; so the answer speaks to your actual circumstances.</p>
+          <button data-action="goApp" onClick="{{ goApp }}" class="btn-secondary">Personalise a prompt</button>
         </div>
 
       </div>
     </div>
 
     <!-- CLOSING BANNER -->
-    <div style="background:#2C8494;color:#fff;padding:64px 32px">
-      <div style="max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap">
+    <div class="landing-cta-banner">
+      <div class="landing-cta-inner">
         <div>
-          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:30px;margin:0 0 8px;color:#fff">Ready to get a better answer?</h2>
-          <p style="margin:0;font-size:15px;color:rgba(255,255,255,0.85);max-width:50ch">It takes about a minute to browse the questions, and five more to personalise your prompt.</p>
+          <h2>Ready to get a better answer?</h2>
+          <p>It takes about a minute to browse the questions, and five more to personalise your prompt.</p>
         </div>
-        <button onClick="{{ goApp }}" style="background:#fff;color:#164752;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:16px;padding:16px 28px;cursor:pointer;text-align:left;flex:none;white-space:nowrap">Try it now &rarr;</button>
+        <button data-action="goApp" onClick="{{ goApp }}" class="btn-primary btn-primary-inverse btn-lg">Try it now &rarr;</button>
       </div>
     </div>
 
     <!-- FOOTER -->
-    <div style="border-top:2px solid rgba(32,30,29,0.4);padding:28px 32px">
-      <div style="max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(32,30,29,0.6)">
+    <div class="landing-footer">
+      <div class="landing-footer-inner">
         <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
-        <a href="https://consumerduty.org/working-groups/retirement-income-taskforce" style="color:rgba(32,30,29,0.6)">Retirement Income Taskforce, part of the Consumer Duty Alliance</a>
+        <a href="https://consumerduty.org/working-groups/retirement-income-taskforce">Retirement Income Taskforce, part of the Consumer Duty Alliance</a>
       </div>
     </div>
 
@@ -250,9 +247,9 @@
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
         <h3 style="font-size:16px;margin:0 0 18px">Step 2: Profile & timeline</h3>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Your age</label><input id="age" type="number" placeholder="e.g. 58" value="{{ fields.age }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Partner's age</label><input id="partnerAge" type="number" placeholder="Leave blank if none" value="{{ fields.partnerAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target retirement age</label><input id="retireAge" type="number" placeholder="e.g. 65" value="{{ fields.retireAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Your age</label><input id="age" type="text" placeholder="e.g. 58" value="{{ fields.age }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Partner's age</label><input id="partnerAge" type="text" placeholder="Leave blank if none" value="{{ fields.partnerAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target retirement age</label><input id="retireAge" type="text" placeholder="e.g. 65" value="{{ fields.retireAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
           <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Country / region</label><input id="country" type="text" placeholder="e.g. United Kingdom" value="{{ fields.country }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
           <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Employment status</label>
             <select id="employment" value="{{ fields.employment }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
@@ -273,7 +270,7 @@
               <option>Poor / chronic conditions</option>
             </select>
           </div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Financial dependants</label><input id="dependants" type="number" placeholder="e.g. 0" value="{{ fields.dependants }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Financial dependants</label><input id="dependants" type="text" placeholder="e.g. 0" value="{{ fields.dependants }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
         </div>
       </div>
       </sc-if>
@@ -497,7 +494,7 @@
           <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:26px;margin:0 0 8px;color:#fff">Want a more tailored answer?</h2>
           <p style="font-size:14px;color:rgba(255,255,255,0.9);margin:0;max-width:50ch">Add your age, pension, income and concerns, and these same questions produce answers specific to your situation.</p>
         </div>
-        <button onClick="{{ goApp }}" style="background:#fff;color:#164752;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;flex:none;white-space:nowrap;border-radius:4px">Personalise the prompt &rarr;</button>
+        <button data-action="goApp" onClick="{{ goApp }}" style="background:#fff;color:#164752;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;flex:none;white-space:nowrap;border-radius:4px">Personalise the prompt &rarr;</button>
       </div>
     </div>
   </div>
@@ -516,50 +513,57 @@
 
   <!-- COPY MODAL -->
   <div id="copy-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;pointer-events:auto;align-items:center;justify-content:center">
-    <div style="background:#fff;border-radius:8px;max-width:600px;width:90%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.3);pointer-events:auto">
+    <div style="background:#fff;border-radius:8px;max-width:600px;width:90%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.3);pointer-events:auto;position:relative">
       <!-- Close button -->
-      <button onclick="document.getElementById('copy-modal').style.display='none'" style="position:absolute;top:16px;right:16px;background:transparent;border:none;font-size:24px;cursor:pointer;color:#666;z-index:10">×</button>
+      <button class="modal-close-btn" style="position:absolute;top:12px;right:12px;background:transparent;border:none;font-size:28px;cursor:pointer;color:#666;z-index:10;width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:0;line-height:1;transition:color 0.2s">×</button>
 
       <!-- Modal content -->
-      <div style="padding:40px 32px;overflow-y:auto">
+      <div style="padding:40px 32px;overflow-y:auto;padding-top:20px">
         <!-- Header -->
         <h2 id="modal-heading" style="font-size:24px;margin:0 0 8px;color:#201e1d;font-weight:800">questions copied</h2>
-        <p style="font-size:14px;color:#666;margin:0 0 32px">Ready to get answers? Open the prompt in your favourite AI chatbot:</p>
+        <p style="font-size:14px;color:#666;margin:0 0 24px">The prompt is on your clipboard. Either go to your preferred AI or use an option below to launch it:</p>
 
-        <!-- Chatbot buttons -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px">
-          <button onclick="window.open(this.dataset.url,'_blank')" data-url="" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
-            <span style="display:inline-block;vertical-align:middle">ChatGPT</span>
-            <span style="display:inline-block;margin-left:6px;font-size:12px">↗</span>
-          </button>
-          <button onclick="window.open(this.dataset.url,'_blank')" data-url="" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
-            <span style="display:inline-block;vertical-align:middle">Claude</span>
-            <span style="display:inline-block;margin-left:6px;font-size:12px">↗</span>
-          </button>
-          <button onclick="window.open(this.dataset.url,'_blank')" data-url="" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
-            <span style="display:inline-block;vertical-align:middle">Gemini</span>
-            <span style="display:inline-block;margin-left:6px;font-size:12px">↗</span>
-          </button>
-          <button onclick="window.open(this.dataset.url,'_blank')" data-url="" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
-            <span style="display:inline-block;vertical-align:middle">Copilot</span>
-            <span style="display:inline-block;margin-left:6px;font-size:12px">↗</span>
-          </button>
-        </div>
+        <!-- Chatbot selection -->
+        <fieldset style="border:none;padding:0;margin:0;margin-bottom:16px">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:1px solid rgba(32,30,29,0.2);border-radius:6px;transition:all 0.2s;user-select:none">
+              <input type="radio" name="chatbot-select" value="claude" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
+              <span style="flex:1;font-weight:600;color:#201e1d">Claude</span>
+              <span style="font-size:12px;color:#999;font-weight:400">(includes the prompt)</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:1px solid rgba(32,30,29,0.2);border-radius:6px;transition:all 0.2s;user-select:none">
+              <input type="radio" name="chatbot-select" value="chatgpt" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
+              <span style="flex:1;font-weight:600;color:#201e1d">ChatGPT</span>
+              <span style="font-size:12px;color:#999;font-weight:400">(includes the prompt)</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:1px solid rgba(32,30,29,0.2);border-radius:6px;transition:all 0.2s;user-select:none">
+              <input type="radio" name="chatbot-select" value="copilot" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
+              <span style="flex:1;font-weight:600;color:#201e1d">Copilot</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:1px solid rgba(32,30,29,0.2);border-radius:6px;transition:all 0.2s;user-select:none">
+              <input type="radio" name="chatbot-select" value="gemini" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
+              <span style="flex:1;font-weight:600;color:#201e1d">Gemini</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Capability message -->
+        <div id="capability-message" style="font-size:13px;color:#666;margin-bottom:24px;display:none"></div>
+
+        <!-- Launch button -->
+        <button id="launch-chat-btn" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;border-radius:6px;width:100%;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:40px">Launch chat in new window <span style="font-size:12px">↗</span></button>
 
         <!-- Prompt preview -->
-        <div>
+        <div style="margin-bottom:40px">
           <p style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin:0 0 8px;font-weight:600">Your prompt</p>
           <div id="modal-prompt" style="background:#f5f4f3;border:1px solid #ddd;border-radius:6px;padding:16px;max-height:200px;overflow-y:auto;font-size:13px;line-height:1.6;color:#333;white-space:pre-wrap;word-wrap:break-word;font-family:monospace"></div>
         </div>
 
-        <!-- Divider -->
-        <div style="height:1px;background:#eee;margin:32px 0"></div>
-
         <!-- Want more tailored answer CTA -->
-        <div>
+        <div style="background:#f0f5f2;border:1px solid #2C8494;border-radius:8px;padding:20px">
           <h3 style="font-size:16px;margin:0 0 8px;font-weight:600;color:#201e1d">Want a more tailored answer?</h3>
           <p style="font-size:14px;color:#666;margin:0 0 16px">Add your age, pension, income and concerns, and get answers specific to your situation.</p>
-          <button onclick="document.getElementById('copy-modal').style.display='none'; window.location.hash='#app'" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;border-radius:6px;width:100%">Personalise the prompt →</button>
+          <button class="modal-personalise-btn-secondary" id="personalise-btn" style="background:transparent;color:#2C8494;border:2px solid #2C8494;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:10px 22px;cursor:pointer;border-radius:6px;width:100%;transition:all 0.2s">Personalise the prompt →</button>
         </div>
       </div>
     </div>
@@ -1035,6 +1039,9 @@ class Component extends DCLogic {
     };
   }
 }
+
+// Make PROMPTS_DATA globally accessible to other scripts
+window.PROMPTS_DATA = PROMPTS_DATA;
 </script>
 
 <script>
@@ -1069,21 +1076,172 @@ class Component extends DCLogic {
   // Also attach listeners periodically for safety
   setInterval(attachToastListeners, 1000);
 
+  // Close modal when close button is clicked
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.modal-close-btn')) {
+      console.log('[DEBUG] Close button clicked');
+      const modal = document.getElementById('copy-modal');
+      if (modal) {
+        modal.style.display = 'none';
+        console.log('[DEBUG] Modal closed');
+      }
+    }
+  });
+
+  // Handle chatbot selection and launch chat functionality
+  let chatbotSelectionInitialized = false;
+
+  const initializeChatbotSelection = () => {
+    const chatbotRadios = document.querySelectorAll('input[name="chatbot-select"]');
+    const launchBtn = document.getElementById('launch-chat-btn');
+
+    if (chatbotRadios.length === 0) return;
+
+    const updateLaunchButton = () => {
+      const selected = document.querySelector('input[name="chatbot-select"]:checked');
+      if (launchBtn) launchBtn.disabled = !selected;
+    };
+
+    // Default to the first chatbot in the list whenever none is selected,
+    // so a user can't click Launch without having picked one.
+    if (!document.querySelector('input[name="chatbot-select"]:checked')) {
+      chatbotRadios[0].checked = true;
+    }
+
+    if (!chatbotSelectionInitialized) {
+      chatbotSelectionInitialized = true;
+
+      // Add change listeners to radio buttons
+      chatbotRadios.forEach(radio => {
+        radio.addEventListener('change', updateLaunchButton);
+      });
+
+      // Handle launch chat button click
+      launchBtn.addEventListener('click', (e) => {
+        const selected = document.querySelector('input[name="chatbot-select"]:checked');
+        if (!selected) return;
+
+        let url = '';
+        const promptText = document.getElementById('modal-prompt')?.textContent || '';
+        const encodedPrompt = encodeURIComponent(promptText);
+
+        switch (selected.value) {
+          case 'chatgpt':
+            url = `https://chatgpt.com/?q=${encodedPrompt}`;
+            break;
+          case 'claude':
+            url = `https://claude.ai/new?q=${encodedPrompt}`;
+            break;
+          case 'gemini':
+            url = 'https://gemini.google.com';
+            break;
+          case 'copilot':
+            url = 'https://copilot.microsoft.com';
+            break;
+        }
+
+        if (url) {
+          window.open(url, '_blank');
+        }
+      });
+    }
+
+    // Initialize button state
+    updateLaunchButton();
+  };
+
+  // Handle personalise button click
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#personalise-btn') || e.target.closest('.modal-cta-btn')) {
+      console.log('[DEBUG] Personalise button clicked');
+      const modal = document.getElementById('copy-modal');
+      if (modal) {
+        console.log('[DEBUG] Modal found, closing it');
+        modal.style.display = 'none';
+      }
+
+      // Navigate to app by finding and clicking the goApp button
+      console.log('[DEBUG] Attempting to navigate to app');
+      setTimeout(() => {
+        const goAppButton = document.querySelector('button[data-action="goApp"]');
+
+        if (goAppButton) {
+          console.log('[DEBUG] Found goApp button, clicking it');
+          goAppButton.click();
+          console.log('[DEBUG] Navigation triggered');
+        } else {
+          console.log('[DEBUG] ERROR: Could not find button with data-action="goApp"');
+        }
+      }, 100);
+    }
+  });
+
   // Use event delegation for copy button (works with dynamically rendered content)
   document.addEventListener('click', (e) => {
-    const copyButton = e.target.closest('[data-copy-all="true"]');
+    const copyButton = e.target.closest('.copy-button') || e.target.closest('[data-copy-all]');
+
     if (copyButton && copyButton.dataset.disabled !== 'true') {
       // Get all checked checkboxes
       const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
-      if (checkedBoxes.length === 0) return;
+      if (checkedBoxes.length === 0) {
+        return;
+      }
 
-      // Extract text from each checked question
+      // Extract text from each checked question (title + AI-optimised version only)
       const selectedText = Array.from(checkedBoxes)
         .map((checkbox, idx) => {
           const card = checkbox.closest('[style*="border:2px"]') || checkbox.closest('div');
-          if (!card) return '';
-          const text = card.innerText;
-          return text;
+          if (!card) {
+            return '';
+          }
+
+          // Get the title (quickSummary) - look for divs containing text that's typically short
+          let titleEl = null;
+          const allDivs = card.querySelectorAll('div');
+          for (let div of allDivs) {
+            const text = div.textContent.trim();
+            // Title is typically short (under 100 chars) and doesn't include the full question text
+            if (text.length > 0 && text.length < 100 && !text.includes('?') && !text.includes('Show')) {
+              titleEl = div;
+              break;
+            }
+          }
+          const title = titleEl ? titleEl.textContent.trim() : '';
+
+          // Try to find AI prompt in expanded section first
+          let aiPromptEl = null;
+          const allCardDivs = card.querySelectorAll('div');
+          for (let div of allCardDivs) {
+            const style = div.getAttribute('style') || '';
+            if (style.includes('margin-top') && style.includes('background:')) {
+              aiPromptEl = div;
+              break;
+            }
+          }
+
+          let aiPrompt = aiPromptEl ? aiPromptEl.textContent.trim() : '';
+
+          // If AI prompt not found in expanded section, look it up from PROMPTS_DATA
+          if (!aiPrompt && title && typeof PROMPTS_DATA !== 'undefined') {
+            // Search through all sections and their questions
+            if (PROMPTS_DATA.sections && Array.isArray(PROMPTS_DATA.sections)) {
+              for (const section of PROMPTS_DATA.sections) {
+                if (section.questions && Array.isArray(section.questions)) {
+                  for (const question of section.questions) {
+                    // Match by quickSummary
+                    if (question.quickSummary && question.quickSummary.trim() === title.trim()) {
+                      aiPrompt = question.aiOptimised || '';
+                      break;
+                    }
+                  }
+                }
+                if (aiPrompt) break;
+              }
+            }
+          }
+
+          const result = title && aiPrompt ? `${title}\n${aiPrompt}` : '';
+          return result;
         })
         .filter(Boolean)
         .join('\n\n---\n\n');
@@ -1093,7 +1251,7 @@ class Component extends DCLogic {
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(selectedText).then(() => {
             showCopyModal(checkedBoxes.length, selectedText);
-          }).catch(() => {
+          }).catch((err) => {
             fallbackCopy(selectedText);
             showCopyModal(checkedBoxes.length, selectedText);
           });
@@ -1120,7 +1278,7 @@ class Component extends DCLogic {
     const modal = document.getElementById('copy-modal');
     if (!modal) return;
 
-    // Clean up the prompt text - remove extra whitespace and format it nicely
+    // Clean up the prompt text
     const cleanText = promptText
       .split('\n\n---\n\n')
       .map(q => q.trim())
@@ -1138,18 +1296,29 @@ class Component extends DCLogic {
       promptEl.textContent = cleanText;
     }
 
-    // Update chatbot buttons with URLs
+    // Update chatbot links with encoded prompt URLs
     const encodedPrompt = encodeURIComponent(cleanText);
-    const buttons = modal.querySelectorAll('button[data-url]');
-    if (buttons.length >= 4) {
-      buttons[0].dataset.url = `https://chatgpt.com/?q=${encodedPrompt}`;
-      buttons[1].dataset.url = `https://claude.ai/?q=${encodedPrompt}`;
-      buttons[2].dataset.url = `https://gemini.google.com/?q=${encodedPrompt}`;
-      buttons[3].dataset.url = `https://copilot.microsoft.com/?q=${encodedPrompt}`;
+
+    const chatgptLink = modal.querySelector('#modal-chatgpt-link');
+    if (chatgptLink) {
+      chatgptLink.href = `https://chatgpt.com/?q=${encodedPrompt}`;
+    }
+
+    const claudeLink = modal.querySelector('#modal-claude-link');
+    if (claudeLink) {
+      claudeLink.href = `https://claude.ai/new?q=${encodedPrompt}`;
+    }
+
+    const copilotLink = modal.querySelector('#modal-copilot-link');
+    if (copilotLink) {
+      copilotLink.href = `https://copilot.microsoft.com/?q=${encodedPrompt}`;
     }
 
     // Show modal
     modal.style.display = 'flex';
+
+    // Initialize chatbot selection when modal opens
+    initializeChatbotSelection();
   };
 
   // Helper function to show toast
