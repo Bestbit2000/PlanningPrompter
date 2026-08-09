@@ -1322,14 +1322,14 @@ window.PROMPTS_DATA = PROMPTS_DATA;
   // Helper function to show copy modal for starter prompt
   window.showStarterPromptModal = function() {
     console.log('[showStarterPromptModal] Function called');
-    console.log('[showStarterPromptModal] STARTER_PROMPT_DATA:', window.STARTER_PROMPT_DATA);
+    console.log('[showStarterPromptModal] STARTER_PROMPT_DATA:', STARTER_PROMPT_DATA);
 
-    if (!window.STARTER_PROMPT_DATA) {
+    if (!STARTER_PROMPT_DATA) {
       console.error('[showStarterPromptModal] STARTER_PROMPT_DATA not found');
       return;
     }
 
-    const promptText = window.STARTER_PROMPT_DATA.prompt || '';
+    const promptText = STARTER_PROMPT_DATA.prompt || '';
     console.log('[showStarterPromptModal] promptText length:', promptText.length);
 
     const modal = document.getElementById('copy-modal');
