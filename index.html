@@ -1069,46 +1069,44 @@ class Component extends DCLogic {
   // Also attach listeners periodically for safety
   setInterval(attachToastListeners, 1000);
 
-  // Attach listener to copy button
-  const attachCopyButtonListener = () => {
-    const copyButton = document.querySelector('[data-copy-all="true"]:not([data-listener-attached])');
-    if (copyButton) {
-      copyButton.dataset.listenerAttached = 'true';
-      copyButton.addEventListener('click', () => {
-        if (copyButton.dataset.disabled !== 'true') {
-          // Get all checked checkboxes
-          const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
-          if (checkedBoxes.length === 0) return;
+  // Use event delegation for copy button (works with dynamically rendered content)
+  document.addEventListener('click', (e) => {
+    const copyButton = e.target.closest('[data-copy-all="true"]');
+    console.log('Document click detected. Copy button found via delegation:', !!copyButton);
+    if (copyButton && copyButton.dataset.disabled !== 'true') {
+      console.log('Copy button clicked via delegation! disabled attr:', copyButton.dataset.disabled);
+      // Get all checked checkboxes
+      const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+      console.log('Found checked boxes:', checkedBoxes.length);
+      if (checkedBoxes.length === 0) return;
 
-          // Extract text from each checked question
-          const selectedText = Array.from(checkedBoxes)
-            .map((checkbox, idx) => {
-              const card = checkbox.closest('[style*="border:2px"]') || checkbox.closest('div');
-              if (!card) return '';
-              const text = card.innerText;
-              return text;
-            })
-            .filter(Boolean)
-            .join('\n\n---\n\n');
+      // Extract text from each checked question
+      const selectedText = Array.from(checkedBoxes)
+        .map((checkbox, idx) => {
+          const card = checkbox.closest('[style*="border:2px"]') || checkbox.closest('div');
+          if (!card) return '';
+          const text = card.innerText;
+          return text;
+        })
+        .filter(Boolean)
+        .join('\n\n---\n\n');
 
-          if (selectedText) {
-            // Copy to clipboard
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-              navigator.clipboard.writeText(selectedText).then(() => {
-                showCopyModal(checkedBoxes.length, selectedText);
-              }).catch(() => {
-                fallbackCopy(selectedText);
-                showCopyModal(checkedBoxes.length, selectedText);
-              });
-            } else {
-              fallbackCopy(selectedText);
-              showCopyModal(checkedBoxes.length, selectedText);
-            }
-          }
+      if (selectedText) {
+        // Copy to clipboard
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(selectedText).then(() => {
+            showCopyModal(checkedBoxes.length, selectedText);
+          }).catch(() => {
+            fallbackCopy(selectedText);
+            showCopyModal(checkedBoxes.length, selectedText);
+          });
+        } else {
+          fallbackCopy(selectedText);
+          showCopyModal(checkedBoxes.length, selectedText);
         }
-      });
+      }
     }
-  };
+  });
 
   // Helper function to copy text
   const fallbackCopy = (text) => {
@@ -1122,39 +1120,52 @@ class Component extends DCLogic {
 
   // Helper function to show copy modal
   const showCopyModal = (count, promptText) => {
+    console.log('showCopyModal called with count:', count, 'promptText length:', promptText.length);
     const modal = document.getElementById('copy-modal');
-    if (!modal) return;
+    console.log('Modal element found:', !!modal);
+    if (!modal) {
+      console.error('Copy modal element not found!');
+      return;
+    }
 
     // Clean up the prompt text - remove extra whitespace and format it nicely
     const cleanText = promptText
       .split('\n\n---\n\n')
       .map(q => q.trim())
       .join('\n\n---\n\n');
+    console.log('Clean text:', cleanText.substring(0, 100) + '...');
 
     // Update modal heading
-    const heading = modal.querySelector('h2');
+    const heading = modal.querySelector('#modal-heading');
+    console.log('Heading element found:', !!heading);
     if (heading) {
       heading.textContent = `${count} question${count > 1 ? 's' : ''} copied`;
+      console.log('Heading updated to:', heading.textContent);
     }
 
     // Update prompt display
-    const promptEl = modal.querySelector('[style*="font-family:monospace"]');
+    const promptEl = modal.querySelector('#modal-prompt');
+    console.log('Prompt element found:', !!promptEl);
     if (promptEl) {
       promptEl.textContent = cleanText;
+      console.log('Prompt updated, length:', cleanText.length);
     }
 
     // Update chatbot buttons with URLs
     const encodedPrompt = encodeURIComponent(cleanText);
     const buttons = modal.querySelectorAll('button[data-url]');
+    console.log('Chatbot buttons found:', buttons.length);
     if (buttons.length >= 4) {
       buttons[0].dataset.url = `https://chatgpt.com/?q=${encodedPrompt}`;
       buttons[1].dataset.url = `https://claude.ai/?q=${encodedPrompt}`;
       buttons[2].dataset.url = `https://gemini.google.com/?q=${encodedPrompt}`;
       buttons[3].dataset.url = `https://copilot.microsoft.com/?q=${encodedPrompt}`;
+      console.log('Button URLs updated');
     }
 
     // Show modal
     modal.style.display = 'flex';
+    console.log('Modal display set to flex');
   };
 
   // Helper function to show toast
@@ -1194,14 +1205,13 @@ class Component extends DCLogic {
   };
 
   // Attach listeners on page load
-  attachCopyButtonListener();
+  attachToastListeners();
 
-  // Use MutationObserver to watch for copy button changes
+  // Use MutationObserver to watch for toast close buttons
   const mainContent = document.body;
   if (mainContent) {
     const observer = new MutationObserver(() => {
       attachToastListeners();
-      attachCopyButtonListener();
     });
     observer.observe(mainContent, { childList: true, subtree: true });
   }
@@ -1209,7 +1219,6 @@ class Component extends DCLogic {
   // Also attach listeners periodically for safety
   setInterval(() => {
     attachToastListeners();
-    attachCopyButtonListener();
   }, 1000);
 </script>
 </body>
