@@ -568,6 +568,9 @@
 
 </div>
 </x-dc>
+
+<div id="toast-container" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;max-width:350px"></div>
+
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:1000},&quot;enableOpenInChatGPT&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
 const PROMPTS_DATA = {
   "sections": [
@@ -1096,11 +1099,6 @@ window.PROMPTS_DATA = PROMPTS_DATA;
 
     if (chatbotRadios.length === 0) return;
 
-    const updateLaunchButton = () => {
-      const selected = document.querySelector('input[name="chatbot-select"]:checked');
-      if (launchBtn) launchBtn.disabled = !selected;
-    };
-
     // Default to the first chatbot in the list whenever none is selected,
     // so a user can't click Launch without having picked one.
     if (!document.querySelector('input[name="chatbot-select"]:checked')) {
@@ -1112,7 +1110,9 @@ window.PROMPTS_DATA = PROMPTS_DATA;
 
       // Add change listeners to radio buttons
       chatbotRadios.forEach(radio => {
-        radio.addEventListener('change', updateLaunchButton);
+        radio.addEventListener('change', () => {
+          updateLaunchButton(launchBtn.closest('div')?.closest('div') || document);
+        });
       });
 
       // Handle launch chat button click
@@ -1144,9 +1144,6 @@ window.PROMPTS_DATA = PROMPTS_DATA;
         }
       });
     }
-
-    // Initialize button state
-    updateLaunchButton();
   };
 
   // Handle personalise button click
@@ -1331,7 +1328,7 @@ window.PROMPTS_DATA = PROMPTS_DATA;
       <div style="margin-bottom:24px">
         <p style="font-size:13px;font-weight:600;color:#201e1d;margin:0 0 12px">Your prompt</p>
         <div id="modal-prompt" style="background:#f5f4f3;border:1px solid #ddd;border-radius:6px;padding:12px;max-height:120px;overflow-y:auto;font-size:13px;line-height:1.5;color:#333;white-space:pre-wrap;word-wrap:break-word;font-family:monospace;margin-bottom:12px"></div>
-        <button id="copy-only-btn" style="background:transparent;color:#2C8494;border:1px solid #2C8494;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px;padding:8px 16px;cursor:pointer;border-radius:4px;width:100%;transition:all 0.2s">📋 Copy prompt only</button>
+        <button id="copy-only-btn" class="btn-secondary" style="width:100%">📋 Copy prompt only</button>
       </div>
 
       <div style="margin-bottom:24px">
@@ -1429,11 +1426,22 @@ window.PROMPTS_DATA = PROMPTS_DATA;
 
     // Set up copy-only button
     const copyOnlyBtn = modal.querySelector('#copy-only-btn');
+    console.log('Copy button found:', !!copyOnlyBtn, copyOnlyBtn?.className);
     if (copyOnlyBtn) {
       copyOnlyBtn.onclick = () => {
-        navigator.clipboard.writeText(promptText).then(() => {
-          showSimpleToast('The prompt has been copied');
-        });
+        console.log('Copy button clicked, showSimpleToast:', typeof showSimpleToast);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(promptText).then(() => {
+            console.log('Clipboard write successful');
+            showSimpleToast('The prompt has been copied to your clipboard');
+          }).catch((err) => {
+            console.log('Clipboard write failed:', err);
+            showSimpleToast('The prompt has been copied to your clipboard');
+          });
+        } else {
+          console.log('Clipboard not available');
+          showSimpleToast('The prompt has been copied to your clipboard');
+        }
       };
     }
 
@@ -1447,6 +1455,13 @@ window.PROMPTS_DATA = PROMPTS_DATA;
 
     // Update button on initial load
     updateLaunchButton(modal);
+
+    // Click outside modal to close it
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
 
     // Show modal
     modal.style.display = 'flex';
@@ -1462,7 +1477,7 @@ window.PROMPTS_DATA = PROMPTS_DATA;
 
     const id = Date.now() + Math.random();
     const toastDiv = document.createElement('div');
-    toastDiv.style.cssText = 'background:#201e1d;color:#fff;padding:10px 16px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,0.25);display:flex;align-items:center;gap:12px;border-radius:4px;pointer-events:auto';
+    toastDiv.style.cssText = 'background:#201e1d;color:#fff;padding:12px 16px;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);display:flex;align-items:center;gap:12px;border-radius:8px;pointer-events:auto;animation:slideIn 0.3s ease-out;max-width:350px';
     toastDiv.dataset.toastId = id;
 
     const msgSpan = document.createElement('span');
@@ -1472,21 +1487,24 @@ window.PROMPTS_DATA = PROMPTS_DATA;
     const closeBtn = document.createElement('button');
     closeBtn.textContent = '×';
     closeBtn.className = 'toast-close';
-    closeBtn.style.cssText = 'background:transparent;border:none;color:#fff;cursor:pointer;font-size:18px;padding:0;line-height:1;flex-shrink:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center';
+    closeBtn.style.cssText = 'background:transparent;border:none;color:#fff;cursor:pointer;font-size:20px;padding:0;line-height:1;flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center';
     closeBtn.title = 'Close';
     closeBtn.addEventListener('click', () => {
-      toastDiv.style.display = 'none';
-      setTimeout(() => toastDiv.remove(), 300);
+      removeToast(toastDiv);
     });
 
     toastDiv.appendChild(msgSpan);
     toastDiv.appendChild(closeBtn);
     toastContainer.appendChild(toastDiv);
 
+    const removeToast = (el) => {
+      el.style.animation = 'slideOut 0.3s ease-out forwards';
+      setTimeout(() => el.remove(), 300);
+    };
+
     setTimeout(() => {
       if (toastDiv.parentNode) {
-        toastDiv.style.display = 'none';
-        setTimeout(() => toastDiv.remove(), 300);
+        removeToast(toastDiv);
       }
     }, 5000);
   };
