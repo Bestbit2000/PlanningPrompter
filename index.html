@@ -523,24 +523,24 @@
       <!-- Modal content -->
       <div style="padding:40px 32px;overflow-y:auto">
         <!-- Header -->
-        <h2 style="font-size:24px;margin:0 0 8px;color:#201e1d;font-weight:800">{{ copyModalCount }} question<sc-if value="{{ copyModalIsPlural }}">s</sc-if> copied</h2>
+        <h2 id="modal-heading" style="font-size:24px;margin:0 0 8px;color:#201e1d;font-weight:800">questions copied</h2>
         <p style="font-size:14px;color:#666;margin:0 0 32px">Ready to get answers? Open the prompt in your favourite AI chatbot:</p>
 
         <!-- Chatbot buttons -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px">
-          <button onclick="window.open(this.dataset.url,'_blank')" data-url="{{ copyModalChatGPTUrl }}" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
+          <button onclick="window.open(this.dataset.url,'_blank')" data-url="" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
             <span style="display:inline-block;vertical-align:middle">ChatGPT</span>
             <span style="display:inline-block;margin-left:6px;font-size:12px">↗</span>
           </button>
-          <button onclick="window.open(this.dataset.url,'_blank')" data-url="{{ copyModalClaudeUrl }}" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
+          <button onclick="window.open(this.dataset.url,'_blank')" data-url="" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
             <span style="display:inline-block;vertical-align:middle">Claude</span>
             <span style="display:inline-block;margin-left:6px;font-size:12px">↗</span>
           </button>
-          <button onclick="window.open(this.dataset.url,'_blank')" data-url="{{ copyModalGeminiUrl }}" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
+          <button onclick="window.open(this.dataset.url,'_blank')" data-url="" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
             <span style="display:inline-block;vertical-align:middle">Gemini</span>
             <span style="display:inline-block;margin-left:6px;font-size:12px">↗</span>
           </button>
-          <button onclick="window.open(this.dataset.url,'_blank')" data-url="{{ copyModalCopilotUrl }}" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
+          <button onclick="window.open(this.dataset.url,'_blank')" data-url="" style="background:#fff;border:1px solid #ddd;padding:12px;border-radius:6px;cursor:pointer;text-align:center;font-weight:600;font-size:13px;transition:all 0.2s">
             <span style="display:inline-block;vertical-align:middle">Copilot</span>
             <span style="display:inline-block;margin-left:6px;font-size:12px">↗</span>
           </button>
@@ -549,7 +549,7 @@
         <!-- Prompt preview -->
         <div>
           <p style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:#999;margin:0 0 8px;font-weight:600">Your prompt</p>
-          <div style="background:#f5f4f3;border:1px solid #ddd;border-radius:6px;padding:16px;max-height:200px;overflow-y:auto;font-size:13px;line-height:1.6;color:#333;white-space:pre-wrap;word-wrap:break-word;font-family:monospace">{{ copyModalPromptText }}</div>
+          <div id="modal-prompt" style="background:#f5f4f3;border:1px solid #ddd;border-radius:6px;padding:16px;max-height:200px;overflow-y:auto;font-size:13px;line-height:1.6;color:#333;white-space:pre-wrap;word-wrap:break-word;font-family:monospace"></div>
         </div>
 
         <!-- Divider -->
