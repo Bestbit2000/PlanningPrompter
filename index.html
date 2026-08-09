@@ -1080,11 +1080,9 @@ window.PROMPTS_DATA = PROMPTS_DATA;
   // Close modal when close button is clicked
   document.addEventListener('click', (e) => {
     if (e.target.closest('.modal-close-btn')) {
-      console.log('[DEBUG] Close button clicked');
       const modal = document.getElementById('copy-modal');
       if (modal) {
         modal.style.display = 'none';
-        console.log('[DEBUG] Modal closed');
       }
     }
   });
@@ -1154,24 +1152,16 @@ window.PROMPTS_DATA = PROMPTS_DATA;
   // Handle personalise button click
   document.addEventListener('click', (e) => {
     if (e.target.closest('#personalise-btn') || e.target.closest('.modal-cta-btn')) {
-      console.log('[DEBUG] Personalise button clicked');
       const modal = document.getElementById('copy-modal');
       if (modal) {
-        console.log('[DEBUG] Modal found, closing it');
         modal.style.display = 'none';
       }
 
       // Navigate to app by finding and clicking the goApp button
-      console.log('[DEBUG] Attempting to navigate to app');
       setTimeout(() => {
         const goAppButton = document.querySelector('button[data-action="goApp"]');
-
         if (goAppButton) {
-          console.log('[DEBUG] Found goApp button, clicking it');
           goAppButton.click();
-          console.log('[DEBUG] Navigation triggered');
-        } else {
-          console.log('[DEBUG] ERROR: Could not find button with data-action="goApp"');
         }
       }, 100);
     }
@@ -1322,66 +1312,147 @@ window.PROMPTS_DATA = PROMPTS_DATA;
     initializeChatbotSelection();
   };
 
+  // Expose showCopyModal globally so other pages can use it
+  window.showCopyModal = showCopyModal;
+
+  // Helper function to create modal if it doesn't exist
+  const ensureModalExists = () => {
+    let modal = document.getElementById('copy-modal');
+    if (modal) return modal;
+
+    // Modal doesn't exist, create it dynamically
+    const modalHTML = `<div id="copy-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;pointer-events:auto;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:8px;max-width:520px;width:90%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.3);pointer-events:auto;position:relative">
+    <button class="modal-close-btn" style="position:absolute;top:16px;right:16px;background:transparent;border:none;font-size:24px;cursor:pointer;color:#999;z-index:10;width:32px;height:32px;display:flex;align-items:center;justify-content:center;padding:0;line-height:1">×</button>
+    <div style="padding:32px;overflow-y:auto">
+      <h2 style="font-size:20px;margin:0 0 8px;color:#201e1d;font-weight:800">Your prompt is ready</h2>
+      <p style="font-size:14px;color:#666;margin:0 0 24px">Copy your text below, or select an AI to launch it automatically.</p>
+
+      <div style="margin-bottom:24px">
+        <p style="font-size:13px;font-weight:600;color:#201e1d;margin:0 0 12px">Your prompt</p>
+        <div id="modal-prompt" style="background:#f5f4f3;border:1px solid #ddd;border-radius:6px;padding:12px;max-height:120px;overflow-y:auto;font-size:13px;line-height:1.5;color:#333;white-space:pre-wrap;word-wrap:break-word;font-family:monospace;margin-bottom:12px"></div>
+        <button id="copy-only-btn" style="background:transparent;color:#2C8494;border:1px solid #2C8494;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px;padding:8px 16px;cursor:pointer;border-radius:4px;width:100%;transition:all 0.2s">📋 Copy prompt only</button>
+      </div>
+
+      <div style="margin-bottom:24px">
+        <p style="font-size:13px;font-weight:600;color:#201e1d;margin:0 0 12px">Quick launch</p>
+        <p style="font-size:12px;color:#666;margin:0 0 12px">Select your preferred AI and it will open with your prompt ready to go.</p>
+
+        <fieldset style="border:none;padding:0;margin:0;margin-bottom:16px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid transparent;border-radius:6px;transition:all 0.2s;user-select:none">
+              <input type="radio" name="chatbot-select" value="claude" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" checked />
+              <span style="flex:1;min-width:0">
+                <img src="./images/claude.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
+                <span style="font-weight:600;color:#201e1d;font-size:14px">Claude</span>
+              </span>
+              <span style="font-size:10px;color:#999;font-weight:400;white-space:nowrap">Auto-fill</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid transparent;border-radius:6px;transition:all 0.2s;user-select:none">
+              <input type="radio" name="chatbot-select" value="chatgpt" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
+              <span style="flex:1;min-width:0">
+                <img src="./images/chatgpt.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
+                <span style="font-weight:600;color:#201e1d;font-size:14px">ChatGPT</span>
+              </span>
+              <span style="font-size:10px;color:#999;font-weight:400;white-space:nowrap">Auto-fill</span>
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid transparent;border-radius:6px;transition:all 0.2s;user-select:none">
+              <input type="radio" name="chatbot-select" value="copilot" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
+              <span style="flex:1;min-width:0">
+                <img src="./images/copilot.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
+                <span style="font-weight:600;color:#201e1d;font-size:14px">Copilot</span>
+              </span>
+            </label>
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid transparent;border-radius:6px;transition:all 0.2s;user-select:none">
+              <input type="radio" name="chatbot-select" value="gemini" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
+              <span style="flex:1;min-width:0">
+                <img src="./images/gemini.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
+                <span style="font-weight:600;color:#201e1d;font-size:14px">Gemini</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div id="capability-message" style="font-size:12px;color:#666;background:#f0f5f2;border:1px solid #2C8494;border-radius:4px;padding:8px 12px;margin-bottom:12px;display:none"></div>
+
+        <button id="launch-chat-btn" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:700;font-size:14px;padding:12px 20px;cursor:pointer;border-radius:4px;width:100%;transition:all 0.2s">Copy and launch Claude</button>
+      </div>
+    </div>
+  </div>
+</div>`;
+
+    const temp = document.createElement('div');
+    temp.innerHTML = modalHTML;
+    document.body.appendChild(temp.firstElementChild);
+
+    modal = document.getElementById('copy-modal');
+    return modal;
+  };
+
+  // Helper function to update button text based on selected AI
+  const updateLaunchButton = (modal) => {
+    const selected = modal.querySelector('input[name="chatbot-select"]:checked');
+    const launchBtn = modal.querySelector('#launch-chat-btn');
+    const capabilityMsg = modal.querySelector('#capability-message');
+
+    if (selected && launchBtn) {
+      const aiName = selected.value.charAt(0).toUpperCase() + selected.value.slice(1);
+      launchBtn.textContent = `Copy and launch ${aiName}`;
+
+      if (selected.value === 'copilot' || selected.value === 'gemini') {
+        capabilityMsg.textContent = "Note: You'll need to paste the prompt into " + aiName + " as it cannot auto-fill the prompt.";
+        capabilityMsg.style.display = 'block';
+      } else {
+        capabilityMsg.style.display = 'none';
+      }
+    }
+  };
+
   // Helper function to show copy modal for starter prompt
   window.showStarterPromptModal = function() {
-    console.log('[showStarterPromptModal] Function called');
-    console.log('[showStarterPromptModal] window.STARTER_PROMPT_DATA:', window.STARTER_PROMPT_DATA);
-
     if (!window.STARTER_PROMPT_DATA) {
-      console.error('[showStarterPromptModal] STARTER_PROMPT_DATA not found');
       return;
     }
 
     const promptText = window.STARTER_PROMPT_DATA.prompt || '';
-    console.log('[showStarterPromptModal] promptText length:', promptText.length);
 
-    const modal = document.getElementById('copy-modal');
-    console.log('[showStarterPromptModal] modal element:', modal);
+    // Ensure modal exists (create if needed)
+    const modal = ensureModalExists();
     if (!modal) {
-      console.error('[showStarterPromptModal] Modal element not found');
       return;
     }
 
-    // Update modal heading
-    const heading = modal.querySelector('#modal-heading');
-    console.log('[showStarterPromptModal] heading element:', heading);
-    if (heading) {
-      heading.textContent = 'prompt copied';
-    }
-
-    // Update prompt display
     const promptEl = modal.querySelector('#modal-prompt');
-    console.log('[showStarterPromptModal] promptEl element:', promptEl);
     if (promptEl) {
       promptEl.textContent = promptText;
     }
 
-    // Update chatbot links with encoded prompt URLs
-    const encodedPrompt = encodeURIComponent(promptText);
-
-    const chatgptLink = modal.querySelector('#modal-chatgpt-link');
-    if (chatgptLink) {
-      chatgptLink.href = `https://chatgpt.com/?q=${encodedPrompt}`;
+    // Set up copy-only button
+    const copyOnlyBtn = modal.querySelector('#copy-only-btn');
+    if (copyOnlyBtn) {
+      copyOnlyBtn.onclick = () => {
+        navigator.clipboard.writeText(promptText).then(() => {
+          showSimpleToast('The prompt has been copied');
+        });
+      };
     }
 
-    const claudeLink = modal.querySelector('#modal-claude-link');
-    if (claudeLink) {
-      claudeLink.href = `https://claude.ai/new?q=${encodedPrompt}`;
-    }
+    // Set up radio button change handler
+    const radios = modal.querySelectorAll('input[name="chatbot-select"]');
+    radios.forEach(radio => {
+      radio.onchange = () => {
+        updateLaunchButton(modal);
+      };
+    });
 
-    const copilotLink = modal.querySelector('#modal-copilot-link');
-    if (copilotLink) {
-      copilotLink.href = `https://copilot.microsoft.com/?q=${encodedPrompt}`;
-    }
+    // Update button on initial load
+    updateLaunchButton(modal);
 
     // Show modal
-    console.log('[showStarterPromptModal] Showing modal');
     modal.style.display = 'flex';
 
-    // Initialize chatbot selection when modal opens
-    console.log('[showStarterPromptModal] Initializing chatbot selection');
+    // Initialize chatbot selection
     initializeChatbotSelection();
-    console.log('[showStarterPromptModal] Modal displayed');
   };
 
   // Helper function to show toast
