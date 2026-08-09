@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap">
+<style>
+  body{margin:0}
+  a{color:#226B79;text-decoration:underline;text-underline-offset:3px}
+  a:hover{color:#164752}
+  ::selection{background:rgba(44,132,148,0.25)}
+  input,textarea,select,button{font-family:'Archivo',system-ui,sans-serif}
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div style="background:#f5f4f3;color:#201e1d;font-family:'Archivo',system-ui,sans-serif;min-height:100vh;line-height:1.55">
+
+  <!-- ============ NAV ============ -->
+  <div style="border-bottom:2px solid rgba(32,30,29,0.4);background:#f5f4f3;position:sticky;top:0;z-index:20">
+    <div style="max-width:1120px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:14px">
+      <image-slot id="brand-logo" shape="rect" style="width:40px;height:40px;flex:none" placeholder="Alliance logo"></image-slot>
+      <div style="display:flex;flex-direction:column;line-height:1.2">
+        <span style="font-family:'Archivo',sans-serif;font-weight:800;font-size:15px">Retirement Income Taskforce</span>
+        <span style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(32,30,29,0.55)">Consumer Duty Alliance</span>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:24px">
+        <a href="#" onClick="{{ goLanding }}" style="font-size:14px;color:#201e1d;text-decoration:none">Home</a>
+        <a href="#" onClick="{{ goBrowse }}" style="font-size:14px;color:#201e1d;text-decoration:none">Browse prompts</a>
+        <a href="https://consumerduty.org/working-groups/retirement-income-taskforce" style="font-size:14px;color:#201e1d;text-decoration:none">About the taskforce</a>
+        <sc-if value="{{ isLanding }}">
+          <button onClick="{{ goApp }}" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:10px 18px;cursor:pointer;text-align:left;white-space:nowrap">Try it now</button>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ LANDING ============ -->
+  <sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
+  <div data-screen-label="Landing">
+
+    <!-- HERO -->
+    <div style="max-width:1120px;margin:0 auto;padding:72px 32px 56px;display:grid;grid-template-columns:1.4fr 1fr;gap:56px;align-items:end">
+      <div>
+        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:16px">Retirement Income Taskforce &middot; Consumer Duty Alliance</div>
+        <h1 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:52px;line-height:1.06;letter-spacing:-0.02em;margin:0 0 20px;max-width:14ch">Ask AI better questions about your retirement income</h1>
+        <p style="font-size:18px;max-width:52ch;margin:0 0 28px;color:rgba(32,30,29,0.85)">AI chatbots can be a genuinely useful sounding board as you approach retirement &mdash; but only if you ask them well. This free tool gives you the right questions, ready-built prompts, and a way to add your own details, so the answer you get back is actually about you.</p>
+        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+          <button onClick="{{ goApp }}" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:16px;padding:16px 28px;cursor:pointer;text-align:left;white-space:nowrap">Try it now &rarr;</button>
+          <a href="#how-it-works" style="font-size:14px;font-weight:600;color:#201e1d">See how it works &darr;</a>
+        </div>
+      </div>
+      <div style="border-left:2px solid rgba(32,30,29,0.4);padding-left:32px;padding-bottom:6px">
+        <div style="font-size:13px;color:rgba(32,30,29,0.65);margin-bottom:10px">Works alongside the AI chatbot you already use</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:13px;border:1px solid rgba(32,30,29,0.4);padding:6px 12px;display:inline-block;width:fit-content">ChatGPT</span>
+          <span style="font-size:13px;border:1px solid rgba(32,30,29,0.4);padding:6px 12px;display:inline-block;width:fit-content">Claude</span>
+          <span style="font-size:13px;border:1px solid rgba(32,30,29,0.4);padding:6px 12px;display:inline-block;width:fit-content">Gemini</span>
+          <span style="font-size:13px;border:1px solid rgba(32,30,29,0.4);padding:6px 12px;display:inline-block;width:fit-content">Copilot</span>
+        </div>
+      </div>
+    </div>
+
+    <hr style="height:2px;border:0;background:rgba(32,30,29,0.4);margin:0" />
+
+    <!-- WHY THIS MATTERS -->
+    <div style="max-width:1120px;margin:0 auto;padding:64px 32px;display:grid;grid-template-columns:1fr 1.6fr;gap:56px">
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:30px;margin:0;max-width:10ch">Why this matters</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+        <div>
+          <h3 style="font-size:18px;margin:0 0 8px">Retirement isn&rsquo;t one decision</h3>
+          <p style="font-size:15px;color:rgba(32,30,29,0.8);margin:0">It&rsquo;s no longer a single, one-off event. People retire early, move to part-time work, or never fully stop &mdash; and every path is shaped by things beyond the numbers, from health to family responsibilities.</p>
+        </div>
+        <div>
+          <h3 style="font-size:18px;margin:0 0 8px">Most of us are unprepared</h3>
+          <p style="font-size:15px;color:rgba(32,30,29,0.8);margin:0">Few people have an in-depth understanding of pensions, or how to make savings last 30 years or more. Decisions often get made late, without enough time to weigh up the options.</p>
+        </div>
+        <div>
+          <h3 style="font-size:18px;margin:0 0 8px">AI can help &mdash; if you ask well</h3>
+          <p style="font-size:15px;color:rgba(32,30,29,0.8);margin:0">A generic question to an AI chatbot gets a generic answer. Asking a well-structured, informed question &mdash; with context about your own situation &mdash; gets you something far more useful to actually act on.</p>
+        </div>
+        <div>
+          <h3 style="font-size:18px;margin:0 0 8px">This isn&rsquo;t financial advice</h3>
+          <p style="font-size:15px;color:rgba(32,30,29,0.8);margin:0">It&rsquo;s a way to think more clearly and arrive better prepared &mdash; whether that&rsquo;s for your own research or your next conversation with a qualified financial adviser.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr style="height:2px;border:0;background:rgba(32,30,29,0.4);margin:0" />
+
+    <!-- THREE LEVELS -->
+    <div id="how-it-works" style="max-width:1120px;margin:0 auto;padding:64px 32px">
+      <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:30px;margin:0 0 8px">Three levels of support</h2>
+      <p style="font-size:15px;color:rgba(32,30,29,0.7);margin:0 0 40px;max-width:60ch">Each level builds on the last. Use whichever fits how much time you have &mdash; you can always come back and go further.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid rgba(32,30,29,0.4);border-left:2px solid rgba(32,30,29,0.4)">
+
+        <div style="padding:28px;border-right:2px solid rgba(32,30,29,0.4);border-bottom:2px solid rgba(32,30,29,0.4);display:flex;flex-direction:column">
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:10px">Level 1</div>
+          <h3 style="font-size:20px;margin:0 0 10px">Don&rsquo;t know where to start?</h3>
+          <p style="font-size:14px;color:rgba(32,30,29,0.8);margin:0 0 16px;flex:1">If you&rsquo;re not sure what to ask yet, this single all-purpose prompt gets an AI to ask you the right clarifying questions and walk you through the essentials.</p>
+          <button onClick="{{ copyGeneric }}" style="background:transparent;border:1px solid #226B79;color:#226B79;font-weight:800;font-size:12px;padding:8px 14px;cursor:pointer;text-align:left;white-space:nowrap;width:fit-content">Copy the starter prompt</button>
+        </div>
+
+        <div style="padding:28px;border-right:2px solid rgba(32,30,29,0.4);border-bottom:2px solid rgba(32,30,29,0.4);display:flex;flex-direction:column">
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:10px">Level 2</div>
+          <h3 style="font-size:20px;margin:0 0 10px">Choose from a list of questions</h3>
+          <p style="font-size:14px;color:rgba(32,30,29,0.8);margin:0 0 16px;flex:1">Pick from a curated list of expert-written prompts covering the foundations of a plan, things to watch out for, and how to get the most from your pension.</p>
+          <button onClick="{{ goBrowse }}" style="background:transparent;border:1px solid #226B79;color:#226B79;font-weight:800;font-size:12px;padding:8px 14px;cursor:pointer;text-align:left;white-space:nowrap;width:fit-content">Browse the prompt list</button>
+        </div>
+
+        <div style="padding:28px;border-bottom:2px solid rgba(32,30,29,0.4);display:flex;flex-direction:column">
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:10px">Level 3</div>
+          <h3 style="font-size:20px;margin:0 0 10px">Personalise it to you</h3>
+          <p style="font-size:14px;color:rgba(32,30,29,0.8);margin:0 0 16px;flex:1">Select your questions first, then add details about your age, savings, income sources and concerns &mdash; so the answer speaks to your actual circumstances.</p>
+          <button onClick="{{ goApp }}" style="background:transparent;border:1px solid #226B79;color:#226B79;font-weight:800;font-size:12px;padding:8px 14px;cursor:pointer;text-align:left;white-space:nowrap;width:fit-content">Start with the prompt list</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CLOSING BANNER -->
+    <div style="background:#2C8494;color:#fff;padding:64px 32px">
+      <div style="max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap">
+        <div>
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:30px;margin:0 0 8px;color:#fff">Ready to get a better answer?</h2>
+          <p style="margin:0;font-size:15px;color:rgba(255,255,255,0.85);max-width:50ch">It takes about a minute to browse the questions, and five more to personalise your prompt.</p>
+        </div>
+        <button onClick="{{ goApp }}" style="background:#fff;color:#164752;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:16px;padding:16px 28px;cursor:pointer;text-align:left;flex:none;white-space:nowrap">Try it now &rarr;</button>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div style="border-top:2px solid rgba(32,30,29,0.4);padding:28px 32px">
+      <div style="max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:rgba(32,30,29,0.6)">
+        <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
+        <a href="https://consumerduty.org/working-groups/retirement-income-taskforce" style="color:rgba(32,30,29,0.6)">Retirement Income Taskforce, part of the Consumer Duty Alliance</a>
+      </div>
+    </div>
+
+  </div>
+  </sc-if>
+
+  <!-- ============ APP ============ -->
+  <sc-if value="{{ isApp }}">
+  <div data-screen-label="App" style="max-width:1120px;margin:0 auto;padding:0 32px 80px">
+
+    <sc-if value="{{ isWizard }}">
+    <div style="padding-top:32px">
+      <h2 style="font-size:26px;margin:0 0 6px">Build your prompt</h2>
+      <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Select the questions you want answered, then add as much or as little detail about yourself as you like. Nothing here is saved or sent anywhere &mdash; it only builds the text of your prompt.</p>
+
+      <div style="display:flex;gap:0;border-bottom:2px solid rgba(32,30,29,0.4);margin-bottom:28px;flex-wrap:wrap">
+        <sc-for list="{{ steps }}" as="st" hint-placeholder-count="6">
+          <div onClick="{{ st.goTo }}" style="padding:10px 16px;font-size:13px;cursor:pointer;white-space:nowrap;flex:none;{{ st.tabStyle }}">{{ st.n }}. {{ st.label }}</div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ isStep1 }}">
+      <div style="margin-bottom:24px">
+        <h3 style="font-size:16px;margin:0 0 6px">Step 1: Select your questions</h3>
+        <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0 0 16px">Pick at least one question to continue &mdash; you'll add your own details on the next steps.</p>
+
+        <sc-if value="{{ showSelectionWarning }}">
+          <div style="background:#EAF3F3;border:1px solid #2C8494;padding:12px 16px;margin-bottom:20px;font-size:13px;font-weight:600;color:#164752">Select at least one question below to continue.</div>
+        </sc-if>
+
+        <sc-if value="{{ hasSelection }}">
+          <div style="display:flex;align-items:center;gap:16px;background:#EAF3F3;border:1px solid #2C8494;padding:12px 16px;margin-bottom:20px">
+            <span style="font-size:13px;font-weight:600"><span style="font-weight:800;color:#164752">{{ selectedCount }}</span> question(s) selected in total</span>
+          </div>
+        </sc-if>
+
+        <div style="margin-bottom:32px">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;border-bottom:2px solid rgba(32,30,29,0.4);padding-bottom:10px;margin-bottom:16px;gap:16px;flex-wrap:wrap">
+            <div>
+              <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:4px">Topic {{ sectionNumber }} of {{ totalSections }}</div>
+              <h4 style="font-size:19px;margin:0 0 4px">{{ currentSection.title }}</h4>
+              <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0">{{ currentSection.subtitle }}</p>
+            </div>
+            <div style="display:flex;gap:8px;flex:none">
+              <button onClick="{{ currentSection.onSelectAll }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer;text-align:left;white-space:nowrap">Select all</button>
+              <button onClick="{{ currentSection.onDeselectAll }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer;text-align:left;white-space:nowrap">Deselect</button>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ currentSection.questions }}" as="q" hint-placeholder-count="5">
+              <div onClick="{{ q.onRowClick }}" style="{{ q.cardStyle }}">
+                <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;cursor:pointer">
+                  <input type="checkbox" onClick="{{ q.onCheckboxClick }}" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:16px;height:16px;accent-color:#2C8494;flex:none" />
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:4px">{{ q.quickSummary }}</div>
+                    <div style="font-size:15px;margin-bottom:8px">{{ q.humanVersion }}</div>
+                    <span onClick="{{ q.onToggleExpand }}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer">{{ q.toggleLabel }}</span>
+                    <sc-if value="{{ q.expanded }}">
+                      <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap">{{ q.aiOptimized }}</div>
+                    </sc-if>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep2 }}">
+      <div style="background:#eceae9;padding:24px;margin-bottom:24px">
+        <h3 style="font-size:16px;margin:0 0 18px">Step 2: Profile & timeline</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Your age</label><input id="age" type="number" placeholder="e.g. 58" value="{{ fields.age }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Partner's age</label><input id="partnerAge" type="number" placeholder="Leave blank if none" value="{{ fields.partnerAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target retirement age</label><input id="retireAge" type="number" placeholder="e.g. 65" value="{{ fields.retireAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Country / region</label><input id="country" type="text" placeholder="e.g. United Kingdom" value="{{ fields.country }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Employment status</label>
+            <select id="employment" value="{{ fields.employment }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>Employed (PAYE)</option>
+              <option>Self-employed</option>
+              <option>Director / business owner</option>
+              <option>Part-time employed</option>
+              <option>Already retired / semi-retired</option>
+            </select>
+          </div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Health status</label>
+            <select id="health" value="{{ fields.health }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>Excellent</option>
+              <option>Good</option>
+              <option>Fair</option>
+              <option>Poor / chronic conditions</option>
+            </select>
+          </div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Financial dependants</label><input id="dependants" type="number" placeholder="e.g. 0" value="{{ fields.dependants }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep3 }}">
+      <div style="background:#eceae9;padding:24px;margin-bottom:24px">
+        <h3 style="font-size:16px;margin:0 0 18px">Step 3: Financial picture</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual household income (now)</label><input id="income" type="text" placeholder="e.g. \u00a370,000" value="{{ fields.income }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Total pension / retirement savings</label><input id="pension" type="text" placeholder="e.g. \u00a3150,000" value="{{ fields.pension }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Other savings & investments</label><input id="savings" type="text" placeholder="e.g. \u00a330,000 in ISA" value="{{ fields.savings }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Property equity</label><input id="equity" type="text" placeholder="e.g. \u00a3200,000" value="{{ fields.equity }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Outstanding debts</label><input id="debts" type="text" placeholder="e.g. \u00a350k mortgage remaining" value="{{ fields.debts }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual pension contributions (now)</label><input id="contributions" type="text" placeholder="e.g. \u00a38,000/yr incl. employer" value="{{ fields.contributions }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep4 }}">
+      <div style="background:#eceae9;padding:24px;margin-bottom:24px">
+        <h3 style="font-size:16px;margin:0 0 18px">Step 4: Retirement goals</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Lifestyle expectation</label>
+            <select id="lifestyle" value="{{ fields.lifestyle }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>Modest / essential needs</option>
+              <option>Comfortable / moderate</option>
+              <option>Affluent / active travel and leisure</option>
+              <option>High-end / luxury</option>
+              <option>Enter my own monthly amount</option>
+            </select>
+          </div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Part-time work in retirement?</label>
+            <select id="partTime" value="{{ fields.partTime }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>Yes, for several years</option>
+              <option>Possibly / undecided</option>
+              <option>No &mdash; full stop at retirement</option>
+            </select>
+          </div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Leave an estate / inheritance?</label>
+            <select id="estate" value="{{ fields.estate }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>Yes, this is a clear priority</option>
+              <option>Nice to have if possible</option>
+              <option>No &mdash; plan to spend it all</option>
+            </select>
+          </div>
+        </div>
+        <sc-if value="{{ lifestyleIsCustom }}">
+          <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target monthly income in retirement</label><input id="target" type="text" placeholder="e.g. \u00a33,500/month net" value="{{ fields.target }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+        </sc-if>
+        <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Key plans or activities in retirement</label><textarea id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property..." value="{{ fields.plans }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px;resize:vertical"></textarea></div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep5 }}">
+      <div style="background:#eceae9;padding:24px;margin-bottom:24px">
+        <h3 style="font-size:16px;margin:0 0 18px">Step 5: Expected income sources</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px">
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_state" type="checkbox" checked="{{ fields.src_state }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> State pension / Social Security</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_db" type="checkbox" checked="{{ fields.src_db }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Defined benefit / final salary pension</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_dc" type="checkbox" checked="{{ fields.src_dc }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Defined contribution / personal pension</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_annuity" type="checkbox" checked="{{ fields.src_annuity }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Annuity</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_rental" type="checkbox" checked="{{ fields.src_rental }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Rental income</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_invest" type="checkbox" checked="{{ fields.src_invest }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Investment / dividend income</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_business" type="checkbox" checked="{{ fields.src_business }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Business / self-employed income</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_inherit" type="checkbox" checked="{{ fields.src_inherit }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Inheritance or windfall</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_other" type="checkbox" checked="{{ fields.src_other }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Other</label>
+        </div>
+        <sc-if value="{{ fields.src_other }}">
+          <div style="margin-top:12px"><input id="srcOtherText" type="text" placeholder="Please describe the income source" value="{{ fields.srcOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+        </sc-if>
+        <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Amounts or notes on any sources</label><textarea id="srcNotes" placeholder="e.g. State pension ~\u00a310,500/yr from age 67..." value="{{ fields.srcNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px;resize:vertical"></textarea></div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep6 }}">
+      <div style="background:#eceae9;padding:24px;margin-bottom:24px">
+        <h3 style="font-size:16px;margin:0 0 18px">Step 6: Concerns, risk & anything else</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px">
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_runout" type="checkbox" checked="{{ fields.c_runout }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Running out of money</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_inflation" type="checkbox" checked="{{ fields.c_inflation }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Inflation eroding income</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_care" type="checkbox" checked="{{ fields.c_care }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Long-term care costs</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_tax" type="checkbox" checked="{{ fields.c_tax }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Tax efficiency</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_market" type="checkbox" checked="{{ fields.c_market }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Market volatility</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_early" type="checkbox" checked="{{ fields.c_early }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Dying too early / life cover</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_partner" type="checkbox" checked="{{ fields.c_partner }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Partner survivorship</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_health" type="checkbox" checked="{{ fields.c_health }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Unexpected health costs</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_other" type="checkbox" checked="{{ fields.c_other }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Other concern</label>
+        </div>
+        <sc-if value="{{ fields.c_other }}">
+          <div style="margin-top:12px"><input id="concernOtherText" type="text" placeholder="Please describe the concern" value="{{ fields.concernOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+        </sc-if>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Investment risk tolerance</label>
+            <select id="risk" value="{{ fields.risk }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>Very cautious &mdash; capital preservation first</option>
+              <option>Cautious &mdash; some growth, low risk</option>
+              <option>Balanced &mdash; mix of growth and security</option>
+              <option>Adventurous &mdash; higher growth, comfortable with volatility</option>
+            </select>
+          </div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Emergency income buffer</label>
+            <select id="buffer" value="{{ fields.buffer }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>Less than 3 months</option>
+              <option>3&ndash;6 months</option>
+              <option>6&ndash;12 months</option>
+              <option>Over 1 year</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else we should know?</label><textarea id="question" placeholder="e.g. 'Am I on track to retire at 62?' or 'Should I consolidate my three pension pots?'" value="{{ fields.question }}" onChange="{{ handleChange }}" style="width:100%;min-height:90px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px;resize:vertical"></textarea></div>
+      </div>
+      </sc-if>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;border-top:2px solid rgba(32,30,29,0.4);padding-top:20px">
+        <button onClick="{{ prevStep }}" disabled="{{ backDisabled }}" style="white-space:nowrap;{{ prevBtnStyle }}">{{ backLabel }}</button>
+        <div style="display:flex;gap:6px">
+          <sc-for list="{{ steps }}" as="st" hint-placeholder-count="6">
+            <span onClick="{{ st.goTo }}" style="width:9px;height:9px;border-radius:50%;cursor:pointer;{{ st.dotStyle }}"></span>
+          </sc-for>
+        </div>
+        <sc-if value="{{ isStep6 }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ finishWizard }}" style="background:#2C8494;color:#fff;border:none;font-weight:800;font-size:14px;padding:12px 22px;cursor:pointer;text-align:left;white-space:nowrap">Create prompt &rarr;</button>
+        </sc-if>
+        <sc-if value="{{ isNotStep6 }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ nextStep }}" style="background:#2C8494;color:#fff;border:none;font-weight:800;font-size:14px;padding:12px 22px;cursor:pointer;text-align:left;white-space:nowrap">{{ nextLabel }}</button>
+        </sc-if>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- RESULT: PERSONALISED PROMPT -->
+    <sc-if value="{{ isResult }}">
+    <div style="padding-top:32px" data-screen-label="Personalised Prompt">
+      <h2 style="font-size:26px;margin:0 0 6px">Your personalised prompt</h2>
+      <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 20px;max-width:70ch">Copy this into any AI chatbot for a response built around your own situation.</p>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+        <button onClick="{{ copyFinal }}" style="background:#2C8494;color:#fff;border:none;font-weight:800;font-size:14px;padding:12px 20px;cursor:pointer;text-align:left;white-space:nowrap">Copy prompt</button>
+        <sc-if value="{{ enableOpenInChatGPT }}">
+          <button onClick="{{ openInChatGPT }}" style="background:transparent;color:#201e1d;border:1px solid rgba(32,30,29,0.4);font-weight:600;font-size:14px;padding:12px 20px;cursor:pointer;text-align:left;white-space:nowrap">Open in ChatGPT &rarr;</button>
+        </sc-if>
+        <button onClick="{{ adjustInputs }}" style="background:transparent;color:#201e1d;border:1px solid rgba(32,30,29,0.4);font-weight:600;font-size:14px;padding:12px 20px;cursor:pointer;text-align:left;white-space:nowrap">Adjust prompt inputs</button>
+      </div>
+
+      <div style="border:1px solid rgba(32,30,29,0.4);background:#eceae9;padding:14px 16px;font-size:13px;color:rgba(32,30,29,0.8);margin-bottom:20px">This generates an educational prompt only. AI responses are not regulated financial advice. Always consult a qualified financial adviser for major decisions.</div>
+
+      <div style="background:#201e1d;padding:20px">
+        <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px">Your complete prompt</div>
+        <pre style="white-space:pre-wrap;color:#f5f4f3;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.6;margin:0">{{ outputText }}</pre>
+      </div>
+    </div>
+    </sc-if>
+
+  </div>
+  </sc-if>
+
+  <!-- ============ BROWSE (standalone prompt list) ============ -->
+  <sc-if value="{{ isBrowse }}">
+  <div data-screen-label="Browse Prompts" style="max-width:1120px;margin:0 auto;padding:32px 32px 80px">
+    <a href="#" onClick="{{ goLanding }}" style="font-size:13px;color:#226B79;font-weight:600">&larr; Back to home</a>
+    <h2 style="font-size:30px;margin:20px 0 8px">Prompt list</h2>
+    <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Browse every question, expand to preview the full AI-optimized wording, and copy any prompt &mdash; individually or several at once &mdash; straight into your AI chatbot of choice.</p>
+
+    <sc-if value="{{ hasBrowseSelection }}">
+      <div style="display:flex;align-items:center;gap:16px;background:#EAF3F3;border:1px solid #2C8494;padding:12px 16px;margin-bottom:24px">
+        <span style="font-size:13px;font-weight:600"><span style="font-weight:800;color:#164752">{{ browseSelectedCount }}</span> question(s) selected</span>
+        <button onClick="{{ copyAllSelected }}" style="margin-left:auto;background:#2C8494;color:#fff;border:none;font-weight:800;font-size:13px;padding:8px 16px;cursor:pointer;text-align:left;white-space:nowrap">Copy all selected</button>
+      </div>
+    </sc-if>
+
+    <sc-for list="{{ browseSections }}" as="section" hint-placeholder-count="3">
+      <div style="margin-bottom:36px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;border-bottom:2px solid rgba(32,30,29,0.4);padding-bottom:10px;margin-bottom:16px;gap:16px;flex-wrap:wrap">
+          <div>
+            <h3 style="font-size:19px;margin:0 0 4px">{{ section.title }}</h3>
+            <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0">{{ section.subtitle }}</p>
+          </div>
+          <div style="display:flex;gap:8px;flex:none">
+            <button onClick="{{ section.onSelectAll }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer;text-align:left;white-space:nowrap">Select all</button>
+            <button onClick="{{ section.onDeselectAll }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer;text-align:left;white-space:nowrap">Deselect</button>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ section.questions }}" as="q" hint-placeholder-count="4">
+            <div onClick="{{ q.onRowClick }}" style="{{ q.cardStyle }}">
+              <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;cursor:pointer">
+                <input type="checkbox" onClick="{{ q.onCheckboxClick }}" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:16px;height:16px;accent-color:#2C8494;flex:none" />
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:4px">{{ q.quickSummary }}</div>
+                  <div style="font-size:15px;margin-bottom:8px">{{ q.humanVersion }}</div>
+                  <div style="display:flex;align-items:center;gap:16px">
+                    <span onClick="{{ q.onToggleExpand }}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer">{{ q.toggleLabel }}</span>
+                    <span onClick="{{ q.onCopy }}" style="font-size:12px;font-weight:600;border:1px solid rgba(32,30,29,0.4);padding:4px 10px;cursor:pointer;white-space:nowrap">{{ q.copyLabel }}</span>
+                  </div>
+                  <sc-if value="{{ q.expanded }}">
+                    <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap">{{ q.aiOptimized }}</div>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+
+    <div style="display:flex;gap:16px;background:#eceae9;border:2px solid rgba(32,30,29,0.4);padding:22px;margin-top:8px">
+      <div>
+        <strong style="font-size:15px">Want a more tailored answer?</strong>
+        <p style="font-size:13px;color:rgba(32,30,29,0.8);margin:8px 0">Add your age, pension, income and concerns, and these same questions produce answers specific to your situation.</p>
+        <button onClick="{{ goApp }}" style="background:#2C8494;color:#fff;border:none;font-weight:800;font-size:13px;padding:10px 18px;cursor:pointer;text-align:left;margin-top:4px;white-space:nowrap">Personalise it instead &rarr;</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- TOASTS -->
+  <div style="position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:8px;z-index:50">
+    <sc-for list="{{ toasts }}" as="t" hint-placeholder-count="0">
+      <div style="background:#201e1d;color:#fff;padding:10px 16px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,0.25)">{{ t.msg }}</div>
+    </sc-for>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:1000},&quot;enableOpenInChatGPT&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+const PROMPTS_DATA = {
+  "sections": [
+    {
+      "id": "foundation",
+      "title": "Foundation of a plan",
+      "subtitle": "The essential building blocks everyone needs to understand first",
+      "questions": [
+        { "id": "foundation_1", "quickSummary": "Target retirement income", "humanVersion": "What should I aim for as a realistic monthly retirement income, and what are the main ways people fund that?", "aiOptimized": "I'm planning my retirement income and need help understanding realistic targets. Please help me think through: (1) What factors should I consider when setting a monthly retirement income goal (e.g., current lifestyle, cost of living, inflation, longevity expectations)? (2) What is a realistic income target for different lifestyle scenarios (modest, comfortable, affluent)? (3) What are the main ways people fund retirement income (pension drawdown, annuities, investments, state benefits, part-time work, rental income)? For each funding method, explain the basic mechanics and typical contribution to overall income. Please be specific about UK context where relevant, and provide realistic examples of monthly income targets for different circumstances." },
+        { "id": "foundation_2", "quickSummary": "State Pension basics", "humanVersion": "How does the UK State Pension work, and how much can I realistically expect to receive?", "aiOptimized": "I need to understand the UK State Pension and how much I can expect from it. Please explain: (1) How does the modern UK State Pension system work (New State Pension vs. legacy systems)? (2) What factors determine the amount I'll receive (National Insurance contributions record, gaps in contributions, years worked)? (3) How much can I realistically expect (provide current rates and examples for different contribution histories)? (4) How do I check my own State Pension forecast? (5) What happens if I have gaps in my National Insurance record, and can they be filled? Please structure this for someone who doesn't understand pensions and provide specific 2025 figures where possible." },
+        { "id": "foundation_3", "quickSummary": "Pension income mechanisms", "humanVersion": "What are the different ways I can turn my pension savings into retirement income — drawdown, annuity, or a combination — and what are the pros and cons of each?", "aiOptimized": "I need to understand the different ways to convert pension savings into retirement income. Please explain each option clearly: (1) Pension drawdown — how it works, flexibility, risks, and best-case/worst-case scenarios. (2) Annuity — what you get, security, irreversibility, and value factors. (3) Hybrid approaches — combining drawdown and annuity, staged annuity purchases, and phased retirement. (4) For each option, provide: key benefits, main risks, who it suits best, and realistic examples. (5) What questions should I ask myself to decide which approach fits my situation? Please assume I'm unfamiliar with these concepts and provide detailed explanations without jargon." },
+        { "id": "foundation_4", "quickSummary": "Partner coordination", "humanVersion": "If I have a partner, how should we coordinate our pensions and retirement income across both of us?", "aiOptimized": "My partner and I are planning retirement together but we may retire at different ages or have different pension arrangements. Please help me understand: (1) What coordination strategies exist for couples with different retirement ages? (2) How do spouse/civil partner pensions work (death benefits, survivor pensions)? (3) What is the best order to claim State Pensions for both of us, and does one person's decision affect the other? (4) How should we coordinate drawing from pensions if we have different amounts saved? (5) What tax implications are there for couples, and how can we minimize joint tax? (6) Are there any key risks or pitfalls we should be aware of (e.g., survivor's pension not covering enough)? Please provide worked examples for couples retiring at different ages with different pension pots." },
+        { "id": "foundation_5", "quickSummary": "Calculate required savings", "humanVersion": "How much pension savings do I actually need to achieve my target retirement income?", "aiOptimized": "I need to work out whether I have enough pension savings for my retirement income goal. Please walk me through: (1) What is the basic formula or approach for calculating required pension savings (working backwards from income target)? (2) What assumptions go into this calculation (life expectancy, investment returns, inflation, withdrawals)? (3) What is a realistic investment return assumption for pension money in drawdown (taking into account current conditions)? (4) How do I factor in State Pension, other income sources, and part-time work into this calculation? (5) Give me a practical worked example: assume I want £3,000/month net income at age 65, expect State Pension of £10,000/year from age 67, and plan to live to 95. How much pension savings would I need to have at 65? (6) What happens if my calculation shows a shortfall — what options do I have? Please show the step-by-step thinking." }
+      ]
+    },
+    {
+      "id": "awareness",
+      "title": "Things to be aware of",
+      "subtitle": "Risks and considerations that could derail your plan if ignored",
+      "questions": [
+        { "id": "awareness_1", "quickSummary": "Safe withdrawal rate", "humanVersion": "How much can I safely withdraw each year from my pension without running out of money? What is the 'safe withdrawal rate'?", "aiOptimized": "I'm concerned about how much I can safely spend from my pension each year without running out of money in retirement. Please explain: (1) What is the 'safe withdrawal rate' and how is it calculated? (2) What are the most common safe withdrawal rate percentages (e.g., 4% rule) and what assumptions do they make? (3) What factors affect how much is 'safe' for my specific situation (pension pot size, age at retirement, expected lifespan, investment returns, inflation, withdrawal flexibility)? (4) How do I work out my personal safe withdrawal rate? (5) What happens if actual investment returns are lower than assumed — what's my contingency? (6) Should I adjust my withdrawals based on investment performance, and if so, how? Please explain the thinking step-by-step with practical examples. Assume I'm in the UK, retiring at 65, with a pension pot of £200,000, expecting to live to 95." },
+        { "id": "awareness_2", "quickSummary": "Sequence of returns risk", "humanVersion": "What is 'sequence of returns risk' and how can I protect my pension from poor investment returns early in retirement?", "aiOptimized": "I want to understand sequence of returns risk and why it matters in retirement. Please explain: (1) What is 'sequence of returns risk' and why is it a bigger problem in retirement than during working years? (2) Give a specific example showing how two people with identical pension pots and identical average returns can end up with very different outcomes based on when returns occur. (3) What is the 'critical period' and why is it important? (4) What strategies exist to protect against sequence risk (cash buffers, portfolio diversification, flexible spending, annuities, bucketing strategies)? (5) For each strategy, explain how it works and what trade-offs it involves. (6) If I'm entering drawdown in 2025-2026, how concerned should I be about current market conditions? Please provide practical examples and actionable strategies I can implement." },
+        { "id": "awareness_3", "quickSummary": "Inflation impact", "humanVersion": "How much should I expect inflation to reduce my purchasing power, and what strategies protect against it?", "aiOptimized": "I'm worried that inflation will erode my retirement income over time. Please help me understand: (1) What is a realistic long-term inflation assumption for planning purposes (historical rates vs. current conditions)? (2) How much will my purchasing power decline over a 30-year retirement at different inflation rates? (3) What is the difference between nominal returns (what the numbers say) and real returns (what you can actually buy), and why does it matter? (4) What strategies protect against inflation (inflation-linked annuities, equity-heavy portfolios, adjusting spending, part-time work)? (5) For each strategy, explain the benefits and trade-offs. (6) How should I think about this if I'm receiving defined benefit pension income (which may or may not be inflation-protected)? Please provide a worked example showing purchasing power loss over 30 years at 2.5%, 3%, and 4% inflation, and recommend a practical mix of inflation protection strategies." },
+        { "id": "awareness_4", "quickSummary": "Long-term care costs", "humanVersion": "What are the potential costs of long-term care in later life, and how can I plan financially to cover them?", "aiOptimized": "I'm concerned about how long-term care costs might affect my retirement plan. Please explain: (1) What are realistic costs for different levels of care (home care, residential care, nursing care) in the UK today? (2) How do these costs vary by region and quality of care? (3) What are the different care funding scenarios (self-funded, means-tested support, care cap)? (4) How do I estimate the likelihood and timing of needing care (age, health status factors)? (5) What strategies exist to protect against catastrophic care costs (insurance, pre-funding, downsizing, family support, local authority support)? (6) For each strategy, what are the pros, cons, and costs? (7) Should I assume I need to set aside money for care now, and if so, how much? Please provide a worked example of someone needing 3 years of residential care starting at age 82, and show different funding options and their impact on retirement income." },
+        { "id": "awareness_5", "quickSummary": "Common retirement mistakes", "humanVersion": "What are the most common mistakes people make when planning for retirement income, and how can I avoid them?", "aiOptimized": "I want to learn from others' mistakes when planning retirement income. Please explain: (1) What are the 10-15 most common mistakes people make (e.g., not accounting for inflation, underestimating care costs, poor investment decisions, tax inefficiency, not coordinating with partner)? (2) For each mistake, explain: why people make it, what the consequences typically are, and how to avoid it. (3) Which mistakes are most costly (in terms of money lost or retirement delayed)? (4) Which mistakes do people regret most, and why? (5) Are there different mistakes that commonly trip up people at different income levels? Please frame this as 'lessons learned' from real situations, be specific about financial impact where possible, and provide checklists for avoiding the major pitfalls." },
+        { "id": "awareness_6", "quickSummary": "Contingency planning", "humanVersion": "What should I do if circumstances change — if I need to retire earlier, investments underperform, or I live much longer than expected?", "aiOptimized": "I want to build flexibility into my retirement plan in case circumstances change. Please explain: (1) What are the main scenarios that could disrupt my retirement plan (forced early retirement due to health/redundancy, investment underperformance, living much longer than expected, inflation higher than assumed)? (2) For each scenario, what are my options to recover (delay claiming pensions, adjust spending, work part-time, use property equity, review investments)? (3) How much early retirement would cost me — what income reduction might I face if I had to stop work 2-5 years earlier? (4) If investments underperform for 5 years after I retire, what happens to my plan, and what should I do? (5) How should I design my pension allocation and withdrawal strategy to have 'outs' if things go wrong? (6) What's the minimum I could live on if needed, and how would I adjust? Please provide specific action plans for 3-4 realistic scenarios with numbers, and recommend a resilient strategy that handles multiple risks." }
+      ]
+    },
+    {
+      "id": "optimize",
+      "title": "How to get the most out of your pension",
+      "subtitle": "Optimization strategies to maximize what you have",
+      "questions": [
+        { "id": "optimize_1", "quickSummary": "Tax-efficient withdrawal strategy", "humanVersion": "How can I take income from my pension and savings in a tax-efficient way? What is the best order to draw from different accounts, and how do I maximize tax-free allowances and my tax-free lump sum?", "aiOptimized": "I need to understand how to withdraw income from my retirement savings in a tax-efficient way. Please walk me through: (1) What are the main types of accounts I might have (pension, ISA, general savings, investment accounts, property) and how is income from each taxed differently? (2) What are the current tax-free allowances I should be aware of in 2025 (personal allowance, dividend allowance, capital gains allowance, trading allowance, pension allowance)? (3) In what order should I draw from different accounts to minimize tax over my lifetime (sequencing strategy)? (4) How should I time taking my pension tax-free lump sum (all at once vs. in stages over years) and why does timing matter for tax? (5) How does taking pension income affect my tax position for other income sources (state pension, rental income, dividends)? (6) Give me a practical worked example: I'm retiring at 65 with £200k pension, £50k ISA, £30k general savings, and will receive £10k state pension. How should I structure withdrawals year 1-5 to minimize tax? Please show the year-by-year breakdown and total tax paid under different strategies." },
+        { "id": "optimize_2", "quickSummary": "Pension consolidation", "humanVersion": "Should I consolidate my multiple pensions into one plan, or keep them separate? What are the trade-offs?", "aiOptimized": "I have multiple pensions from different employers and I'm considering whether to consolidate them. Please explain: (1) What are the main reasons to consolidate pensions (simplicity, fees, investment choice, withdrawal flexibility)? (2) What are the main reasons to keep pensions separate (protection, different pension types, special terms, simplicity in some cases)? (3) What are the practical steps to consolidate (transfer process, timelines, costs)? (4) What risks exist in consolidation (transfer delays, loss of guarantees, pension transfers to unsuitable funds)? (5) What questions should I ask my existing pension providers before transferring (fees, investment options, death benefits, guarantees, withdrawal terms)? (6) For someone with 4-5 smaller pensions from previous jobs, what's the typical impact on fees and investment flexibility? Please provide a worked example showing the cost/benefit analysis of consolidating vs. keeping separate, and a decision-making flowchart for someone uncertain." },
+        { "id": "optimize_3", "quickSummary": "DB and DC coordination", "humanVersion": "If I have both a defined benefit (final salary) pension and defined contribution pensions, how should I coordinate them?", "aiOptimized": "I have both a defined benefit (DB) pension from an old employer and defined contribution (DC) pensions from other roles. Please help me think this through: (1) What are the key differences between DB and DC pensions (guaranteed income vs. pot-based, investment risk, flexibility, death benefits)? (2) What is my strategy for claiming them — should I claim DB first and leave DC untouched, claim both in parallel, or some other approach? (3) How does claiming one type affect taxation or means-testing of the other? (4) How do the death benefits differ, and does this affect my strategy? (5) Should I consider taking a transfer value on the DB pension (if available) and consolidating into DC — what are the pros and cons? (6) How should my overall investment strategy account for having 'guaranteed' DB income plus variable DC income? Please provide examples for someone with (a) small DB pension + larger DC pot, (b) generous DB pension + small DC, and (c) roughly equal amounts, showing withdrawal strategies for each." },
+        { "id": "optimize_4", "quickSummary": "Annuity decision point", "humanVersion": "At what point does buying an annuity make financial sense, and should it be part of my overall strategy?", "aiOptimized": "I'm trying to decide whether an annuity makes financial sense for me. Please explain: (1) What is an annuity and how does it work (payment structure, guarantees, death benefits, types — fixed, escalating, joint life)? (2) How much income would I get from different types of annuities, and how do annuity rates compare to historical levels? (3) What are the break-even points — at what age does an annuity typically make financial sense (life expectancy, discount rates)? (4) What are the key factors that affect whether an annuity suits my situation (health, life expectancy, other income sources, bequest goals, risk tolerance)? (5) What are the alternatives to a full annuity (drawdown, hybrid approaches, delayed annuity purchase, longevity insurance)? (6) If I buy an annuity, what type would suit me best (fixed, escalating, joint-life)? (7) What are the latest annuity rates (2025) and how have they changed? Please provide a detailed comparison for someone turning 65 with £150k pension pot — show annuity income vs. drawdown income over different scenarios (living to 80, 85, 90, 95), including tax implications." },
+        { "id": "optimize_5", "quickSummary": "Investment strategy for drawdown", "humanVersion": "How should my investment strategy change as I move from accumulation to living off my pension? What portfolio type is appropriate?", "aiOptimized": "I need to rethink my investment strategy now that I'm retiring and will be drawing income. Please explain: (1) Why does investment strategy need to change from accumulation (saving) to decumulation (drawing income)? (2) What are the main portfolio types for retirement (cautious, balanced, growth, etc.) and who does each suit? (3) What should my asset allocation be (stocks vs. bonds vs. cash) and does it depend on my age, life expectancy, or income needs? (4) How important is ongoing growth in retirement — shouldn't I be 100% in safe investments? (5) What role should bonds play, and what duration should I target? (6) How much cash should I hold, and how does this relate to sequence of returns risk? (7) What about defensive/alternative investments, and do they help? (8) Should my portfolio change over time (getting more cautious as I age), and if so, how? Please provide specific portfolio allocation recommendations for someone aged 60-70, 70-80, and 80+ retiring with different income needs and risk tolerances. Include discussion of current yield and growth prospects (2025 context)." },
+        { "id": "optimize_6", "quickSummary": "Part-time work impact", "humanVersion": "How does part-time work in early retirement affect my pension tax, state pension eligibility, and overall income strategy?", "aiOptimized": "I'm considering part-time work in early retirement and need to understand the implications. Please explain: (1) How does earning additional income affect my tax position (personal allowance, higher rate tax, National Insurance)? (2) If I have both pension income and earned income, how does this affect my overall tax bill (different allowances, marginal rates)? (3) Can earning money reduce my State Pension (does it mean deferring is worse value)? (4) What is the 'earnings limit' for benefits or means-testing, and does any apply to me? (5) What income level starts to make additional tax bands relevant? (6) What are the National Insurance implications of part-time work (do I pay NI, does it affect my NI record, do I care)? (7) How much part-time work 'pays for itself' after tax and National Insurance? (8) Should I structure any work differently (employed vs. self-employed, consulting vs. salary)? Please provide worked examples: someone aged 62 earning £200/week, someone aged 60 earning £300/week, and someone aged 58 earning £500/week — for each show total tax/NI paid and net income received. Also show how this affects their retirement income needs from pension." }
+      ]
+    }
+  ]
+};
+
+const GENERIC_PROMPT = "I'm starting to think about retirement income and don't yet know what the right questions are. Please act as a knowledgeable, impartial guide: (1) Ask me a short set of clarifying questions about my age, savings, pension arrangements and goals so you understand my situation. (2) Based on my answers, explain the key retirement income options available to me in plain English. (3) Highlight the most important risks or things I should be aware of given my situation. (4) Suggest practical next steps, including when it makes sense to speak to a regulated financial adviser. Please avoid jargon, and clearly flag any assumptions you make.\n\nNote: this is for general educational purposes only, not regulated financial advice.";
+
+const STEP_NAMES = ['Select questions', 'Profile', 'Finances', 'Goals', 'Income', 'Concerns'];
+const ACCENT = '#2C8494', ACCENT_DARK = '#1B5560', ACCENT_TINT = '#EAF3F3', SURFACE = '#eceae9', TEXT = '#201e1d', TEXT_MUTED = 'rgba(32,30,29,0.65)', DIVIDER = 'rgba(32,30,29,0.4)';
+
+class Component extends DCLogic {
+  // v2
+  state = {
+    view: 'landing',
+    phase: 'wizard',
+    step: 1,
+    sectionIndex: 0,
+    completedSteps: [],
+    selected: {},
+    expanded: {},
+    browseSelected: {},
+    browseExpanded: {},
+    fields: {},
+    toasts: [],
+    outputText: '',
+    showSelectionWarning: false
+  };
+
+  goApp = () => this.setState({ view: 'app', phase: 'wizard', step: 1, sectionIndex: 0 });
+  goBrowse = () => this.setState({ view: 'browse' });
+  goLanding = () => this.setState({ view: 'landing' });
+  copyGeneric = () => this.copyText(GENERIC_PROMPT, 'Starter prompt copied');
+
+  goStep = (n) => {
+    if (n > 1 && Object.keys(this.state.selected).length === 0) {
+      this.setState({ step: 1, sectionIndex: 0, showSelectionWarning: true });
+      return;
+    }
+    this.setState({ step: n, sectionIndex: 0, showSelectionWarning: false });
+  };
+
+  nextStep = () => {
+    const s = this.state;
+    if (s.step === 1) {
+      if (s.sectionIndex < PROMPTS_DATA.sections.length - 1) {
+        this.setState({ sectionIndex: s.sectionIndex + 1 });
+        return;
+      }
+      if (Object.keys(s.selected).length === 0) {
+        this.setState({ showSelectionWarning: true });
+        return;
+      }
+    }
+    this.setState((s2) => ({
+      completedSteps: s2.completedSteps.includes(s2.step) ? s2.completedSteps : [...s2.completedSteps, s2.step],
+      step: Math.min(6, s2.step + 1)
+    }));
+  };
+  prevStep = () => {
+    const s = this.state;
+    if (s.step === 1) {
+      if (s.sectionIndex > 0) this.setState({ sectionIndex: s.sectionIndex - 1 });
+      return;
+    }
+    this.setState((s2) => ({ step: Math.max(1, s2.step - 1) }));
+  };
+
+  finishWizard = () => {
+    if (Object.keys(this.state.selected).length === 0) {
+      this.setState({ step: 1, showSelectionWarning: true });
+      return;
+    }
+    this.setState((s) => ({ completedSteps: s.completedSteps.includes(6) ? s.completedSteps : [...s.completedSteps, 6] }));
+    this.generatePrompt();
+    this.setState({ phase: 'result' });
+  };
+
+  handleChange = (e) => {
+    const id = e.target.id;
+    const val = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    this.setState((s) => ({ fields: { ...s.fields, [id]: val } }));
+  };
+
+  toggleQuestion = (id) => {
+    this.setState((s) => {
+      const sel = { ...s.selected };
+      if (sel[id]) delete sel[id]; else sel[id] = true;
+      return { selected: sel, showSelectionWarning: Object.keys(sel).length > 0 ? false : s.showSelectionWarning };
+    });
+  };
+  toggleExpand = (id) => {
+    this.setState((s) => ({ expanded: { ...s.expanded, [id]: !s.expanded[id] } }));
+  };
+
+  selectAllSection = (sectionId) => {
+    const section = PROMPTS_DATA.sections.find((s) => s.id === sectionId);
+    this.setState((s) => {
+      const sel = { ...s.selected };
+      section.questions.forEach((q) => (sel[q.id] = true));
+      return { selected: sel, showSelectionWarning: false };
+    });
+  };
+  deselectSection = (sectionId) => {
+    const section = PROMPTS_DATA.sections.find((s) => s.id === sectionId);
+    this.setState((s) => {
+      const sel = { ...s.selected };
+      section.questions.forEach((q) => delete sel[q.id]);
+      return { selected: sel };
+    });
+  };
+
+  toggleBrowseQuestion = (id) => {
+    this.setState((s) => {
+      const sel = { ...s.browseSelected };
+      if (sel[id]) delete sel[id]; else sel[id] = true;
+      return { browseSelected: sel };
+    });
+  };
+  toggleBrowseExpand = (id) => {
+    this.setState((s) => ({ browseExpanded: { ...s.browseExpanded, [id]: !s.browseExpanded[id] } }));
+  };
+  browseSelectAllSection = (sectionId) => {
+    const section = PROMPTS_DATA.sections.find((s) => s.id === sectionId);
+    this.setState((s) => {
+      const sel = { ...s.browseSelected };
+      section.questions.forEach((q) => (sel[q.id] = true));
+      return { browseSelected: sel };
+    });
+  };
+  browseDeselectSection = (sectionId) => {
+    const section = PROMPTS_DATA.sections.find((s) => s.id === sectionId);
+    this.setState((s) => {
+      const sel = { ...s.browseSelected };
+      section.questions.forEach((q) => delete sel[q.id]);
+      return { browseSelected: sel };
+    });
+  };
+
+  findQuestion = (id) => {
+    for (const s of PROMPTS_DATA.sections) {
+      const q = s.questions.find((qq) => qq.id === id);
+      if (q) return q;
+    }
+    return null;
+  };
+
+  showToast = (msg) => {
+    const id = Date.now() + Math.random();
+    this.setState((s) => ({ toasts: [...s.toasts, { id, msg }] }));
+    setTimeout(() => {
+      this.setState((s) => ({ toasts: s.toasts.filter((t) => t.id !== id) }));
+    }, 2600);
+  };
+
+  copyText = (text, msg) => {
+    const done = () => this.showToast(msg);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(() => {
+        this.fallbackCopy(text);
+        done();
+      });
+    } else {
+      this.fallbackCopy(text);
+      done();
+    }
+  };
+  fallbackCopy = (text) => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  };
+
+  copyQuestionText = (id) => {
+    const q = this.findQuestion(id);
+    if (q) this.copyText(q.aiOptimized, `"${q.quickSummary}" copied`);
+  };
+
+  copyAllSelected = () => {
+    const ids = Object.keys(this.state.browseSelected);
+    if (!ids.length) return;
+    const text = ids
+      .map((id, i) => {
+        const q = this.findQuestion(id);
+        return q ? `${i + 1}. ${q.quickSummary}\n${q.aiOptimized}` : '';
+      })
+      .filter(Boolean)
+      .join('\n\n---\n\n');
+    this.copyText(text, ids.length === 1 ? '1 question copied' : `${ids.length} questions copied`);
+  };
+
+  getSources = () => {
+    const map = { src_state: 'State pension / Social Security', src_db: 'Defined benefit / final salary pension', src_dc: 'Defined contribution / personal pension', src_annuity: 'Annuity', src_rental: 'Rental income', src_invest: 'Investment / dividend income', src_business: 'Business / self-employed income', src_inherit: 'Inheritance or windfall' };
+    const f = this.state.fields;
+    return Object.keys(map).filter((id) => f[id]).map((id) => map[id]);
+  };
+  getConcerns = () => {
+    const map = { c_runout: 'Running out of money', c_inflation: 'Inflation eroding purchasing power', c_care: 'Long-term care costs', c_tax: 'Tax efficiency', c_market: 'Market volatility', c_early: 'Dying prematurely / life cover', c_partner: 'Partner survivorship', c_health: 'Unexpected health costs' };
+    const f = this.state.fields;
+    return Object.keys(map).filter((id) => f[id]).map((id) => map[id]);
+  };
+
+  generatePrompt = () => {
+    const f = this.state.fields;
+    const sources = this.getSources(), concerns = this.getConcerns();
+    const selectedKeys = Object.keys(this.state.selected);
+    let p = 'I would like your help understanding my retirement income situation. Please treat me as an individual and give me specific, practical guidance based on the details I am providing. Where you make assumptions, please state them clearly.\n\n';
+    p += '--- MY PERSONAL DETAILS ---\n';
+    if (f.age) p += 'My age: ' + f.age + '\n';
+    if (f.partnerAge) p += "Partner's age: " + f.partnerAge + '\n';
+    if (f.retireAge) {
+      p += 'Target retirement age: ' + f.retireAge + '\n';
+      if (f.age) {
+        const yrs = parseInt(f.retireAge) - parseInt(f.age);
+        if (yrs > 0) p += 'Years to retirement: approximately ' + yrs + '\n';
+      }
+    }
+    p += 'Country / region: ' + (f.country || 'not specified') + '\n';
+    if (f.employment) p += 'Employment status: ' + f.employment + '\n';
+    if (f.health) p += 'Health status: ' + f.health + '\n';
+    if (f.dependants) p += 'Financial dependants: ' + f.dependants + '\n';
+
+    const hasFinance = f.income || f.pension || f.savings || f.equity || f.debts || f.contributions;
+    if (hasFinance) {
+      p += '\n--- MY FINANCIAL PICTURE ---\n';
+      if (f.income) p += 'Current annual household income: ' + f.income + '\n';
+      if (f.pension) p += 'Total pension / retirement savings: ' + f.pension + '\n';
+      if (f.savings) p += 'Other savings and investments: ' + f.savings + '\n';
+      if (f.equity) p += 'Property equity: ' + f.equity + '\n';
+      if (f.debts) p += 'Outstanding debts: ' + f.debts + '\n';
+      if (f.contributions) p += 'Annual pension contributions: ' + f.contributions + '\n';
+    }
+    const hasGoals = f.target || f.lifestyle || f.partTime || f.estate || f.plans;
+    if (hasGoals) {
+      p += '\n--- MY RETIREMENT GOALS ---\n';
+      if (f.target) p += 'Target monthly income in retirement: ' + f.target + '\n';
+      if (f.lifestyle) p += 'Lifestyle expectation: ' + f.lifestyle + '\n';
+      if (f.partTime) p += 'Part-time work in retirement: ' + f.partTime + '\n';
+      if (f.estate) p += 'Estate / inheritance priority: ' + f.estate + '\n';
+      if (f.plans) p += 'Key plans: ' + f.plans + '\n';
+    }
+    if (sources.length) {
+      p += '\n--- EXPECTED INCOME SOURCES ---\n';
+      p += 'Sources I expect: ' + sources.join(', ') + '\n';
+      if (f.srcNotes) p += 'Notes: ' + f.srcNotes + '\n';
+    }
+    const hasConcerns = concerns.length || f.risk || f.buffer;
+    if (hasConcerns) {
+      p += '\n--- MY CONCERNS AND RISK PROFILE ---\n';
+      if (concerns.length) p += 'Main concerns: ' + concerns.join(', ') + '\n';
+      if (f.risk) p += 'Risk tolerance: ' + f.risk + '\n';
+      if (f.buffer) p += 'Emergency buffer: ' + f.buffer + '\n';
+    }
+    if (selectedKeys.length) {
+      p += '\n--- MY QUESTIONS ---\n';
+      selectedKeys.forEach((k, i) => {
+        const q = this.findQuestion(k);
+        if (q) p += (i + 1) + '. ' + q.humanVersion + '\n\n';
+      });
+    }
+    if (f.question) {
+      p += (selectedKeys.length ? '' : '\n--- MY QUESTION ---\n') + f.question + '\n';
+    }
+    if (!selectedKeys.length && !f.question) {
+      p += '\n--- MY QUESTION ---\nBased on my details above, what is your honest assessment of my retirement income situation? What are the key risks I face, and what practical steps should I be taking now?\n';
+    }
+    p += '\nPlease structure your response with: (1) an honest assessment of my current position, (2) the key gaps or risks I should address, (3) practical options or strategies to consider, and (4) questions I should be asking a qualified financial adviser.\n\nNote: I understand this is educational guidance only, not regulated financial advice.';
+    this.setState({ outputText: p });
+  };
+
+  copyFinal = () => this.copyText(this.state.outputText, 'Your personalised prompt copied');
+  openInChatGPT = () => window.open('https://chatgpt.com/?q=' + encodeURIComponent(this.state.outputText), '_blank');
+  adjustInputs = () => this.setState({ phase: 'wizard', step: 1 });
+
+  renderVals() {
+    const s = this.state;
+    const isLanding = s.view === 'landing';
+    const isApp = s.view === 'app';
+    const isWizard = s.phase === 'wizard';
+    const isResult = s.phase === 'result';
+
+    const buildQuestionView = (q, selectedMap, expandedMap, toggleFn, toggleExpandFn, showCopy) => {
+      const selected = !!selectedMap[q.id];
+      const expanded = !!expandedMap[q.id];
+      return {
+        id: q.id,
+        quickSummary: q.quickSummary,
+        humanVersion: q.humanVersion,
+        aiOptimized: q.aiOptimized,
+        selected,
+        expanded,
+        showCopy,
+        toggleLabel: expanded ? 'Hide AI-optimized prompt' : 'Show AI-optimized prompt',
+        copyLabel: 'Copy prompt',
+        cardStyle: { border: selected ? '2px solid ' + ACCENT : '2px solid ' + DIVIDER, background: selected ? ACCENT_TINT : SURFACE },
+        onRowClick: () => toggleFn(q.id),
+        onCheckboxClick: (e) => { e.stopPropagation(); toggleFn(q.id); },
+        onToggleExpand: (e) => { e.stopPropagation(); toggleExpandFn(q.id); },
+        onCopy: (e) => { e.stopPropagation(); this.copyQuestionText(q.id); }
+      };
+    };
+
+    const currentSectionData = PROMPTS_DATA.sections[s.sectionIndex] || PROMPTS_DATA.sections[0];
+    const currentSection = {
+      id: currentSectionData.id,
+      title: currentSectionData.title,
+      subtitle: currentSectionData.subtitle,
+      onSelectAll: () => this.selectAllSection(currentSectionData.id),
+      onDeselectAll: () => this.deselectSection(currentSectionData.id),
+      questions: currentSectionData.questions.map((q) => buildQuestionView(q, s.selected, s.expanded, this.toggleQuestion, this.toggleExpand, false))
+    };
+
+    const browseSections = PROMPTS_DATA.sections.map((sec) => ({
+      id: sec.id,
+      title: sec.title,
+      subtitle: sec.subtitle,
+      onSelectAll: () => this.browseSelectAllSection(sec.id),
+      onDeselectAll: () => this.browseDeselectSection(sec.id),
+      questions: sec.questions.map((q) => buildQuestionView(q, s.browseSelected, s.browseExpanded, this.toggleBrowseQuestion, this.toggleBrowseExpand, true))
+    }));
+
+    const steps = STEP_NAMES.map((label, i) => {
+      const n = i + 1;
+      const active = s.step === n;
+      const completed = s.completedSteps.includes(n);
+      return {
+        n,
+        label,
+        goTo: () => this.goStep(n),
+        tabStyle: { borderBottom: active ? '3px solid ' + ACCENT : '3px solid transparent', color: active ? ACCENT_DARK : completed ? TEXT : TEXT_MUTED, fontWeight: active ? 800 : 600 },
+        dotStyle: { background: active ? ACCENT : completed ? ACCENT_DARK : DIVIDER }
+      };
+    });
+
+    const selectedCount = Object.keys(s.selected).length;
+    const browseSelectedCount = Object.keys(s.browseSelected).length;
+    const totalSections = PROMPTS_DATA.sections.length;
+    const backDisabled = s.step === 1 && s.sectionIndex === 0;
+    const nextLabel = s.step === 1 && s.sectionIndex < totalSections - 1 ? 'Next section \u2192' : s.step === 6 ? 'Create prompt \u2192' : 'Next \u2192';
+    const backLabel = s.step === 1 && s.sectionIndex > 0 ? '\u2190 Previous section' : '\u2190 Back';
+
+    return {
+      isLanding, isApp, isWizard, isResult,
+      isBrowse: s.view === 'browse',
+      goLanding: this.goLanding, goApp: this.goApp, goBrowse: this.goBrowse,
+      showSelectionWarning: s.showSelectionWarning && Object.keys(s.selected).length === 0,
+      copyGeneric: this.copyGeneric,
+      currentSection,
+      sectionNumber: s.sectionIndex + 1,
+      totalSections,
+      hasSelection: selectedCount > 0,
+      selectedCount,
+      browseSections,
+      hasBrowseSelection: browseSelectedCount > 0,
+      browseSelectedCount,
+      copyAllSelected: this.copyAllSelected,
+      steps,
+      isStep1: s.step === 1, isStep2: s.step === 2, isStep3: s.step === 3, isStep4: s.step === 4, isStep5: s.step === 5, isStep6: s.step === 6,
+      isNotStep6: s.step !== 6,
+      lifestyleIsCustom: s.fields.lifestyle === 'Enter my own monthly amount',
+      fields: s.fields,
+      handleChange: this.handleChange,
+      prevStep: this.prevStep, nextStep: this.nextStep, finishWizard: this.finishWizard,
+      backDisabled,
+      nextLabel,
+      backLabel,
+      prevBtnStyle: { background: 'transparent', border: '1px solid ' + DIVIDER, fontSize: '14px', padding: '12px 20px', cursor: backDisabled ? 'not-allowed' : 'pointer', textAlign: 'left', opacity: backDisabled ? 0.45 : 1 },
+      outputText: s.outputText,
+      copyFinal: this.copyFinal,
+      openInChatGPT: this.openInChatGPT,
+      adjustInputs: this.adjustInputs,
+      enableOpenInChatGPT: this.props.enableOpenInChatGPT ?? true,
+      toasts: s.toasts
+    };
+  }
+}
+</script>
+</body>
+</html>

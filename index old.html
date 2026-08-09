@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retirement AI Prompt Tool</title>
+<link rel="stylesheet" href="styles.css">
+<script src="prompts.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>Retirement AI Prompt Tool</h1>
+  <p>Ready-made questions to ask any AI — and a way to make those answers truly personal to you.</p>
+  <div class="ai-badges">
+    <span class="ai-badge">ChatGPT</span>
+    <span class="ai-badge">Claude</span>
+    <span class="ai-badge">Gemini</span>
+    <span class="ai-badge">Copilot</span>
+  </div>
+</header>
+
+<div class="tab-bar">
+  <div class="tab active" onclick="showPage(0)">
+    <span class="tab-num">1</span><span class="tab-label">Prompt library</span>
+  </div>
+  <div class="tab" onclick="showPage(1)">
+    <span class="tab-num">2</span><span class="tab-label">Your details</span>
+  </div>
+  <div class="tab" onclick="showPage(2)">
+    <span class="tab-num">3</span><span class="tab-label">Personalised prompt</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ======= PAGE 1: PROMPT LIBRARY ======= -->
+  <div class="page active" id="page0">
+    <div class="page-title">Prompt library</div>
+    <div class="page-desc">Select prompts, then copy individual AI versions or all selected prompts together. Or go to step 2 to personalise your selections with your own details.</div>
+
+    <div class="selection-bar" id="selectionBar" style="display: none;">
+      <div class="selection-bar-text">
+        <span class="selection-bar-count" id="selectionCount">0</span> questions selected
+      </div>
+      <button class="btn-copy-all" id="copyAllBtn" onclick="copyAllSelected()" style="display: none;">Copy all selected</button>
+    </div>
+
+    <div id="sectionsContainer"></div>
+
+    <!-- NUDGE BOX -->
+    <div class="nudge-box">
+      <div class="nudge-icon">💡</div>
+      <div class="nudge-content">
+        <strong>Getting generic answers? There's a better way.</strong>
+        <p>The prompts above will give you useful general information — but every AI's answers are only as good as the context you give it. When you add your actual age, pension pot, income target, and concerns, the same questions produce answers that are specific to your situation, not everyone's situation.</p>
+        <p>It takes about 5 minutes. The difference in quality is significant.</p>
+        <button class="btn-nudge" onclick="showPage(1)">Add my details — step 2 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= PAGE 2: YOUR DETAILS (STEPPED) ======= -->
+  <div class="page" id="page1">
+    <div class="page-title">Your personal details</div>
+    <div class="page-desc">Giving more context to the prompt will help provide a more detailed and personalised response from the AI.</div>
+
+    <!-- Step header with dots and tabs -->
+    <div class="step-header">
+      <!-- Step tabs -->
+      <div class="step-tabs" id="stepTabs"></div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step-container active" id="step-1">
+      <div class="card">
+        <div class="card-title">Step 1: Profile & Timeline</div>
+        <div class="grid-3">
+          <div class="field">
+            <label>Your age</label>
+            <input type="number" id="age" placeholder="e.g. 58" min="18" max="100" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Partner's age</label>
+            <input type="number" id="partnerAge" placeholder="Leave blank if none" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Target retirement age</label>
+            <input type="number" id="retireAge" placeholder="e.g. 65" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Country / region</label>
+            <input type="text" id="country" placeholder="e.g. United Kingdom" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Employment status</label>
+            <select id="employment" onchange="updatePersonalisationScore()">
+              <option value="">— select —</option>
+              <option>Employed (PAYE)</option>
+              <option>Self-employed</option>
+              <option>Director / business owner</option>
+              <option>Part-time employed</option>
+              <option>Already retired / semi-retired</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Health status</label>
+            <select id="health" onchange="updatePersonalisationScore()">
+              <option value="">— select —</option>
+              <option>Excellent</option>
+              <option>Good</option>
+              <option>Fair</option>
+              <option>Poor / chronic conditions</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Financial dependants</label>
+            <input type="number" id="dependants" placeholder="e.g. 0" min="0" onchange="updatePersonalisationScore()">
+            <span class="field-hint">Children, elderly parents, etc.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-container" id="step-2">
+      <div class="card">
+        <div class="card-title">Step 2: Financial Picture</div>
+        <div class="grid-2">
+          <div class="field">
+            <label>Annual household income (now)</label>
+            <input type="text" id="income" placeholder="e.g. £70,000" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Total pension / retirement savings</label>
+            <input type="text" id="pension" placeholder="e.g. £150,000" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Other savings & investments</label>
+            <input type="text" id="savings" placeholder="e.g. £30,000 in ISA" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Property equity</label>
+            <input type="text" id="equity" placeholder="e.g. £200,000" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Outstanding debts</label>
+            <input type="text" id="debts" placeholder="e.g. £50k mortgage remaining" onchange="updatePersonalisationScore()">
+          </div>
+          <div class="field">
+            <label>Annual pension contributions (now)</label>
+            <input type="text" id="contributions" placeholder="e.g. £8,000/yr incl. employer" onchange="updatePersonalisationScore()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-container" id="step-3">
+      <div class="card">
+        <div class="card-title">Step 3: Retirement Goals</div>
+        <div class="grid-2">
+          <div class="field">
+            <label>Lifestyle expectation</label>
+            <select id="lifestyle" onchange="updatePersonalisationScore(); handleLifestyleChange()">
+              <option value="">— select —</option>
+              <option>Modest / essential needs</option>
+              <option>Comfortable / moderate</option>
+              <option>Affluent / active travel and leisure</option>
+              <option>High-end / luxury</option>
+              <option>Enter my own monthly amount</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Part-time work in retirement?</label>
+            <select id="partTime" onchange="updatePersonalisationScore()">
+              <option value="">— select —</option>
+              <option>Yes, for several years</option>
+              <option>Possibly / undecided</option>
+              <option>No — full stop at retirement</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Leave an estate / inheritance?</label>
+            <select id="estate" onchange="updatePersonalisationScore()">
+              <option value="">— select —</option>
+              <option>Yes, this is a clear priority</option>
+              <option>Nice to have if possible</option>
+              <option>No — plan to spend it all</option>
+            </select>
+          </div>
+        </div>
+        <div class="field" id="targetField" style="display: none; margin-top:12px;">
+          <label>Target monthly income in retirement</label>
+          <input type="text" id="target" placeholder="e.g. £3,500/month net" onchange="updatePersonalisationScore()">
+        </div>
+        <div class="field" style="margin-top:12px;">
+          <label>Key plans or activities in retirement</label>
+          <textarea id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property, move abroad..." onchange="updatePersonalisationScore()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step-container" id="step-4">
+      <div class="card">
+        <div class="card-title">Step 4: Expected Income Sources</div>
+        <div class="check-group" id="sourceGroup" onclick="event.target.tagName === 'INPUT' && setTimeout(() => updatePersonalisationScore(), 0)">
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_state"> State pension / Social Security</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_db"> Defined benefit / final salary pension</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_dc"> Defined contribution / personal pension</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_annuity"> Annuity</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_rental"> Rental income</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_invest"> Investment / dividend income</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_business"> Business / self-employed income</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_inherit"> Inheritance or windfall</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="src_other" onchange="toggleOtherField('srcOtherField')"> Other</label>
+          <div class="field" id="srcOtherField" style="display: none; margin-left: 0; margin-top: 8px;">
+            <input type="text" id="srcOtherText" placeholder="Please describe the income source" onchange="updatePersonalisationScore()">
+          </div>
+        </div>
+        <div class="field" style="margin-top:12px;">
+          <label>Amounts or notes on any sources</label>
+          <textarea id="srcNotes" placeholder="e.g. State pension ~£10,500/yr from age 67. DB pension £8,000/yr from age 60..." onchange="updatePersonalisationScore()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step-container" id="step-5">
+      <div class="card">
+        <div class="card-title">Step 5: Concerns & Risk Appetite</div>
+        <div class="check-group" id="concernGroup" onclick="event.target.tagName === 'INPUT' && setTimeout(() => updatePersonalisationScore(), 0)">
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_runout"> Running out of money</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_inflation"> Inflation eroding income</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_care"> Long-term care costs</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_tax"> Tax efficiency</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_market"> Market volatility</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_early"> Dying too early / life cover</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_partner"> Partner survivorship</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_health"> Unexpected health costs</label>
+          <label class="check-item" onclick="toggleCheck(this)"><input type="checkbox" id="c_other" onchange="toggleOtherField('concernOtherField')"> Other concern</label>
+          <div class="field" id="concernOtherField" style="display: none; margin-left: 0; margin-top: 8px;">
+            <input type="text" id="concernOtherText" placeholder="Please describe the concern" onchange="updatePersonalisationScore()">
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top:12px;">
+          <div class="field">
+            <label>Investment risk tolerance</label>
+            <select id="risk" onchange="updatePersonalisationScore()">
+              <option value="">— select —</option>
+              <option>Very cautious — capital preservation first</option>
+              <option>Cautious — some growth, low risk</option>
+              <option>Balanced — mix of growth and security</option>
+              <option>Adventurous — higher growth, comfortable with volatility</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Emergency income buffer</label>
+            <select id="buffer" onchange="updatePersonalisationScore()">
+              <option value="">— select —</option>
+              <option>Less than 3 months</option>
+              <option>3–6 months</option>
+              <option>6–12 months</option>
+              <option>Over 1 year</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step-container" id="step-6">
+      <div class="card">
+        <div class="card-title">Step 6: Anything Else?</div>
+        <div class="field">
+          <label>Any additional context we should know?</label>
+          <textarea id="question" style="min-height:100px;" placeholder="Add anything specific you want the AI to address — e.g. 'Am I on track to retire at 62?' or 'Should I consolidate my three pension pots?'" onchange="updatePersonalisationScore()"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step Navigation -->
+    <div class="step-nav">
+      <div class="step-nav-left">
+        <button class="btn-step" id="prevBtn" onclick="previousStep()" disabled>← Back</button>
+      </div>
+      <div class="step-nav-center" id="stepDotsNav"></div>
+      <div class="step-nav-right">
+        <button class="btn-step primary" id="nextBtn" onclick="nextStep()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= PAGE 3: GENERATE PERSONALISED PROMPT ======= -->
+  <div class="page" id="page2">
+    <div class="page-title">Your personalised prompt</div>
+    <div class="page-desc">Copy and paste this into any AI for a genuinely personal response.</div>
+
+    <div class="copy-row" style="margin-bottom: 1.5rem;">
+      <button class="btn btn-primary" onclick="copyFinalPrompt()" id="copyFinalBtn">Copy prompt</button>
+      <button class="btn btn-secondary" onclick="adjustPromptInputs()">Adjust prompt inputs</button>
+    </div>
+
+    <div class="disclaimer">
+      ⚠️ This generates an educational prompt only. AI responses are not regulated financial advice. Always consult a qualified financial adviser for major decisions.
+    </div>
+
+    <div class="output-box" id="outputBox">
+      <div class="output-label">Your complete prompt</div>
+      <pre class="output-pre" id="outputText"></pre>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+var selectedPrompts = {};
+var promptTexts = {};
+var questionTitles = {};
+var currentStep = 1;
+var completedSteps = new Set();
+
+const stepNames = [
+  'About me',
+  'Finances',
+  'Goals',
+  'Income',
+  'Concerns',
+  'Other'
+];
+
+// Initialize step indicators
+function initializeStepIndicators() {
+  const tabsContainer = document.getElementById('stepTabs');
+  const dotsNavContainer = document.getElementById('stepDotsNav');
+
+  for (let i = 1; i <= 6; i++) {
+    // Create dot for navigation area
+    const dotNav = document.createElement('div');
+    dotNav.className = 'step-dot step-dot-nav' + (i === 1 ? ' active' : '');
+    dotNav.id = 'dot-' + i;
+    dotNav.onclick = () => goToStep(i);
+    dotNav.title = 'Go to Step ' + i;
+    dotsNavContainer.appendChild(dotNav);
+
+    // Create tab (as div, not button - semantic navigation)
+    const tab = document.createElement('div');
+    tab.className = 'step-tab' + (i === 1 ? ' active' : '');
+    tab.id = 'tab-' + i;
+    tab.textContent = stepNames[i - 1];
+    tab.role = 'tab';
+    tab.tabIndex = 0;
+    tab.onclick = () => goToStep(i);
+    tab.onkeypress = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        goToStep(i);
+      }
+    };
+    tabsContainer.appendChild(tab);
+  }
+}
+
+// Navigate to specific step
+function goToStep(step) {
+  if (step >= 1 && step <= 6) {
+    currentStep = step;
+    showStep(currentStep);
+  }
+}
+
+// Step navigation
+function nextStep() {
+  if (currentStep < 6) {
+    markStepComplete(currentStep);
+    currentStep++;
+    showStep(currentStep);
+  }
+}
+
+function previousStep() {
+  if (currentStep > 1) {
+    currentStep--;
+    showStep(currentStep);
+  }
+}
+
+function markStepComplete(step) {
+  completedSteps.add(step);
+  updateStepIndicators();
+}
+
+function showStep(step) {
+  // Hide all containers
+  document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
+  // Show current step
+  document.getElementById('step-' + step).classList.add('active');
+
+  // Update dots - remove active from all, then add to current
+  document.querySelectorAll('.step-dot').forEach((dot, idx) => {
+    const dotStep = idx + 1;
+    dot.classList.remove('active');
+    if (dotStep === step) {
+      dot.classList.add('active');
+    }
+  });
+
+  // Update tabs - remove active from all, then add to current
+  document.querySelectorAll('.step-tab').forEach((tab, idx) => {
+    const tabStep = idx + 1;
+    tab.classList.remove('active');
+    if (tabStep === step) {
+      tab.classList.add('active');
+    }
+  });
+
+  // Update completed indicators
+  updateStepIndicators();
+
+  // Update buttons
+  document.getElementById('prevBtn').disabled = (step === 1);
+
+  const nextBtn = document.getElementById('nextBtn');
+  if (step === 6) {
+    nextBtn.textContent = 'Create prompt →';
+    nextBtn.disabled = false;
+    nextBtn.onclick = function() { markStepComplete(6); goToStep3(); };
+  } else {
+    nextBtn.textContent = 'Next →';
+    nextBtn.disabled = false;
+    nextBtn.onclick = function() { nextStep(); };
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  updatePersonalisationScore();
+}
+
+function updateStepIndicators() {
+  completedSteps.forEach(step => {
+    const dot = document.getElementById('dot-' + step);
+    const tab = document.getElementById('tab-' + step);
+    if (dot) {
+      dot.classList.add('completed');
+      if (!dot.classList.contains('active')) dot.classList.remove('active');
+    }
+    if (tab) {
+      tab.classList.add('completed');
+      if (!tab.classList.contains('active')) tab.classList.remove('active');
+    }
+  });
+}
+
+function handleLifestyleChange() {
+  const lifestyle = val('lifestyle');
+  const targetField = document.getElementById('targetField');
+  if (lifestyle === 'Enter my own monthly amount') {
+    targetField.style.display = 'block';
+  } else {
+    targetField.style.display = 'none';
+    v('target').value = '';
+  }
+}
+
+function goToStep3() {
+  generatePrompt();
+  showPage(2);
+}
+
+function adjustPromptInputs() {
+  currentStep = 1;
+  showPage(1);
+  showStep(1);
+}
+
+// Toast notification system
+function showToast(message, type = 'success') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <span class="toast-icon">${type === 'success' ? '✓' : '!'}</span>
+    <span class="toast-message">${message}</span>
+  `;
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add('removing');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  renderPromptLibrary();
+  initializeStepIndicators();
+});
+
+function renderPromptLibrary() {
+  const container = document.getElementById('sectionsContainer');
+  container.innerHTML = '';
+
+  promptsData.sections.forEach(section => {
+    // Create section container
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section-container';
+
+    // Section header
+    const headerDiv = document.createElement('div');
+    headerDiv.className = 'section-header';
+    headerDiv.innerHTML = `
+      <div>
+        <div class="section-title">${section.title}</div>
+        <div class="section-subtitle">${section.subtitle}</div>
+      </div>
+      <div class="section-actions">
+        <button class="btn-section" onclick="selectAllInSection('${section.id}')">Select all</button>
+        <button class="btn-section" onclick="deselectAllInSection('${section.id}')">Deselect</button>
+      </div>
+    `;
+    sectionDiv.appendChild(headerDiv);
+
+    // Questions in section
+    const questionsDiv = document.createElement('div');
+    questionsDiv.id = 'section-' + section.id;
+    questionsDiv.className = 'questions-list';
+
+    section.questions.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question-card';
+      qDiv.id = 'card-' + q.id;
+      qDiv.innerHTML = `
+        <div class="question-row" onclick="toggleQuestionCheckbox('${q.id}')">
+          <input type="checkbox" class="question-checkbox" id="check-${q.id}" onchange="updateQuestion('${q.id}')">
+          <div class="question-content">
+            <div class="question-summary">${q.quickSummary}</div>
+            <div class="question-human">${q.humanVersion}</div>
+            <div class="question-ai-toggle-row">
+              <div class="question-ai-toggle" onclick="toggleAIPanel(event, '${q.id}')">
+                <span>Show AI version</span>
+                <span id="toggle-arrow-${q.id}">▼</span>
+              </div>
+              <button class="btn-copy-ai-inline" id="copy-btn-${q.id}" onclick="copyAIPrompt(event, '${q.id}')" title="Copy AI prompt to clipboard">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="question-ai-container" id="ai-container-${q.id}">
+              <div class="question-ai-label">AI-optimized prompt:</div>
+              <div class="question-ai-text">
+                <div class="question-ai-content">${q.aiOptimized}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      questionsDiv.appendChild(qDiv);
+
+      // Store prompt text and title for later use
+      promptTexts[q.id] = q.aiOptimized;
+      questionTitles[q.id] = q.quickSummary;
+    });
+
+    sectionDiv.appendChild(questionsDiv);
+    container.appendChild(sectionDiv);
+  });
+}
+
+function toggleQuestionCheckbox(id) {
+  const checkbox = document.getElementById('check-' + id);
+  checkbox.checked = !checkbox.checked;
+  updateQuestion(id);
+}
+
+function updateQuestion(id) {
+  const checkbox = document.getElementById('check-' + id);
+  const card = document.getElementById('card-' + id);
+  const aiContainer = document.getElementById('ai-container-' + id);
+
+  if (checkbox.checked) {
+    selectedPrompts[id] = promptTexts[id];
+    card.classList.add('selected');
+  } else {
+    delete selectedPrompts[id];
+    card.classList.remove('selected');
+    aiContainer.classList.remove('expanded');
+    document.getElementById('toggle-arrow-' + id).textContent = '▼';
+  }
+
+  updateSelectionBar();
+}
+
+function toggleAIPanel(event, id) {
+  event.stopPropagation();
+  const container = document.getElementById('ai-container-' + id);
+  const arrow = document.getElementById('toggle-arrow-' + id);
+  container.classList.toggle('expanded');
+  arrow.textContent = container.classList.contains('expanded') ? '▲' : '▼';
+}
+
+function copyAIPrompt(event, id) {
+  event.stopPropagation();
+  const text = promptTexts[id];
+  const title = questionTitles[id];
+  const btn = document.getElementById('copy-btn-' + id);
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      showToast(`'${title}' copied`);
+      setTimeout(() => btn.classList.remove('copied'), 2000);
+    });
+  } else {
+    fallbackCopy(text);
+    btn.classList.add('copied');
+    showToast(`'${title}' copied`);
+    setTimeout(() => btn.classList.remove('copied'), 2000);
+  }
+}
+
+function copyToClipboard(text, btn) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  } else {
+    fallbackCopy(text);
+    btn.textContent = '✓ Copied';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+}
+
+function selectAllInSection(sectionId) {
+  const section = promptsData.sections.find(s => s.id === sectionId);
+  if (section) {
+    section.questions.forEach(q => {
+      selectedPrompts[q.id] = promptTexts[q.id];
+      const checkbox = document.getElementById('check-' + q.id);
+      const card = document.getElementById('card-' + q.id);
+      checkbox.checked = true;
+      card.classList.add('selected');
+    });
+    updateSelectionBar();
+  }
+}
+
+function deselectAllInSection(sectionId) {
+  const section = promptsData.sections.find(s => s.id === sectionId);
+  if (section) {
+    section.questions.forEach(q => {
+      delete selectedPrompts[q.id];
+      const checkbox = document.getElementById('check-' + q.id);
+      const card = document.getElementById('card-' + q.id);
+      const aiContainer = document.getElementById('ai-container-' + q.id);
+      checkbox.checked = false;
+      card.classList.remove('selected');
+      aiContainer.classList.remove('expanded');
+      document.getElementById('toggle-arrow-' + q.id).textContent = '▼';
+    });
+    updateSelectionBar();
+  }
+}
+
+
+function updateSelectionBar() {
+  const count = Object.keys(selectedPrompts).length;
+  const bar = document.getElementById('selectionBar');
+  const countEl = document.getElementById('selectionCount');
+  const copyBtn = document.getElementById('copyAllBtn');
+
+  if (count > 0) {
+    countEl.textContent = count;
+    bar.style.display = 'flex';
+    copyBtn.style.display = 'block';
+  } else {
+    bar.style.display = 'none';
+    copyBtn.style.display = 'none';
+  }
+}
+
+function copyAllSelected() {
+  const count = Object.keys(selectedPrompts).length;
+  if (count === 0) return;
+
+  const texts = Object.keys(selectedPrompts)
+    .map((id, i) => {
+      const q = findQuestionById(id);
+      return q ? `${i + 1}. ${q.quickSummary}\n${q.aiOptimized}` : '';
+    })
+    .filter(t => t)
+    .join('\n\n---\n\n');
+
+  const textarea = document.createElement('textarea');
+  textarea.value = texts;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+
+  const message = count === 1 ? '1 question copied' : `${count} questions copied`;
+  showToast(message);
+}
+
+function findQuestionById(id) {
+  for (const section of promptsData.sections) {
+    const q = section.questions.find(qq => qq.id === id);
+    if (q) return q;
+  }
+  return null;
+}
+
+function showPage(n) {
+  document.querySelectorAll('.page').forEach((p, i) => {
+    p.classList.toggle('active', i === n);
+  });
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', i === n);
+  });
+  if (n === 2) {
+    updatePersonalisationScore();
+    renderSelectedPrompts();
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleCheck(label) {
+  setTimeout(() => {
+    label.classList.toggle('selected', label.querySelector('input').checked);
+  }, 0);
+}
+
+function toggleOtherField(fieldId) {
+  const checkbox = document.getElementById(fieldId === 'srcOtherField' ? 'src_other' : 'c_other');
+  const field = document.getElementById(fieldId);
+  if (checkbox.checked) {
+    field.style.display = 'block';
+  } else {
+    field.style.display = 'none';
+    const input = field.querySelector('input');
+    if (input) input.value = '';
+  }
+}
+
+function v(id) { return document.getElementById(id); }
+function val(id) { return v(id) ? v(id).value.trim() : ''; }
+function chk(id) { return v(id) ? v(id).checked : false; }
+
+function updatePersonalisationScore() {
+  let completedSections = 0;
+  let maxSections = 7; // 6 data sections + 1 for prompts
+
+  // Section 1: Profile & Timeline - at least one key field
+  if (val('age') || val('retireAge') || val('country')) {
+    completedSections++;
+  }
+
+  // Section 2: Financial Picture - at least one field
+  if (val('income') || val('pension') || val('savings') || val('equity') || val('debts') || val('contributions')) {
+    completedSections++;
+  }
+
+  // Section 3: Retirement Goals - at least one field
+  if (val('target') || val('lifestyle') || val('partTime') || val('estate') || val('plans')) {
+    completedSections++;
+  }
+
+  // Section 4: Income Sources - at least one checked or notes provided
+  const sourceChecked = ['src_state','src_db','src_dc','src_annuity','src_rental','src_invest','src_business','src_inherit'].some(id => chk(id));
+  if (sourceChecked || val('srcNotes')) {
+    completedSections++;
+  }
+
+  // Section 5: Concerns & Risk - at least one concern checked or risk field filled
+  const concernChecked = ['c_runout','c_inflation','c_care','c_tax','c_market','c_early','c_partner','c_health'].some(id => chk(id));
+  if (concernChecked || val('risk') || val('buffer')) {
+    completedSections++;
+  }
+
+  // Section 6: Additional Context - any question provided
+  if (val('question')) {
+    completedSections++;
+  }
+
+  // Prompts selected
+  if (Object.keys(selectedPrompts).length > 0) {
+    completedSections++;
+  }
+
+  const pct = Math.round((completedSections / maxSections) * 100);
+  v('persScore').textContent = pct + '%';
+  v('persFill').style.width = pct + '%';
+
+  let note = pct === 0 ? 'Start filling in your details to increase this score.'
+    : pct < 30 ? 'Getting started — complete a few more sections.'
+    : pct < 60 ? 'Good progress — you\'re building a personalised picture.'
+    : pct < 85 ? 'Nearly there — a couple more sections will make it comprehensive.'
+    : 'Complete — you\'ve got all the elements for highly personalised guidance.';
+  v('persNote').textContent = note;
+}
+
+function renderSelectedPrompts() {
+  const el = document.getElementById('selectedPromptsList');
+  const keys = Object.keys(selectedPrompts);
+  if (keys.length === 0) {
+    el.innerHTML = '<span style="color:#bbb; font-style:italic; font-size:0.85rem;">No prompts selected yet — go to step 1 and select prompts.</span>';
+    return;
+  }
+  el.innerHTML = keys.map(k => {
+    const q = findQuestionById(k);
+    const short = q ? q.humanVersion.substring(0, 60) + (q.humanVersion.length > 60 ? '…' : '') : '';
+    return '<div class="selected-prompt-pill">' + short + '</div>';
+  }).join('');
+}
+
+function getSources() {
+  const map = {src_state:'State pension / Social Security', src_db:'Defined benefit / final salary pension', src_dc:'Defined contribution / personal pension', src_annuity:'Annuity', src_rental:'Rental income', src_invest:'Investment / dividend income', src_business:'Business / self-employed income', src_inherit:'Inheritance or windfall'};
+  return Object.keys(map).filter(id => chk(id)).map(id => map[id]);
+}
+function getConcerns() {
+  const map = {c_runout:'Running out of money', c_inflation:'Inflation eroding purchasing power', c_care:'Long-term care costs', c_tax:'Tax efficiency', c_market:'Market volatility', c_early:'Dying prematurely / life cover', c_partner:'Partner survivorship', c_health:'Unexpected health costs'};
+  return Object.keys(map).filter(id => chk(id)).map(id => map[id]);
+}
+
+function generatePrompt() {
+  const age = val('age'), partnerAge = val('partnerAge'), retireAge = val('retireAge');
+  const country = val('country') || 'not specified';
+  const employment = val('employment'), health = val('health'), dependants = val('dependants');
+  const income = val('income'), pension = val('pension'), savings = val('savings');
+  const equity = val('equity'), debts = val('debts'), contributions = val('contributions');
+  const target = val('target'), lifestyle = val('lifestyle'), partTime = val('partTime');
+  const estate = val('estate'), plans = val('plans'), srcNotes = val('srcNotes');
+  const risk = val('risk'), buffer = val('buffer'), question = val('question');
+  const sources = getSources(), concerns = getConcerns();
+  const selectedKeys = Object.keys(selectedPrompts);
+
+  let p = 'I would like your help understanding my retirement income situation. Please treat me as an individual and give me specific, practical guidance based on the details I am providing. Where you make assumptions, please state them clearly.\n\n';
+
+  p += '--- MY PERSONAL DETAILS ---\n';
+  if (age) p += 'My age: ' + age + '\n';
+  if (partnerAge) p += "Partner's age: " + partnerAge + '\n';
+  if (retireAge) {
+    p += 'Target retirement age: ' + retireAge + '\n';
+    if (age) { const yrs = parseInt(retireAge) - parseInt(age); if (yrs > 0) p += 'Years to retirement: approximately ' + yrs + '\n'; }
+  }
+  p += 'Country / region: ' + country + '\n';
+  if (employment) p += 'Employment status: ' + employment + '\n';
+  if (health) p += 'Health status: ' + health + '\n';
+  if (dependants) p += 'Financial dependants: ' + dependants + '\n';
+
+  const hasFinance = income || pension || savings || equity || debts || contributions;
+  if (hasFinance) {
+    p += '\n--- MY FINANCIAL PICTURE ---\n';
+    if (income) p += 'Current annual household income: ' + income + '\n';
+    if (pension) p += 'Total pension / retirement savings: ' + pension + '\n';
+    if (savings) p += 'Other savings and investments: ' + savings + '\n';
+    if (equity) p += 'Property equity: ' + equity + '\n';
+    if (debts) p += 'Outstanding debts: ' + debts + '\n';
+    if (contributions) p += 'Annual pension contributions: ' + contributions + '\n';
+  }
+
+  const hasGoals = target || lifestyle || partTime || estate || plans;
+  if (hasGoals) {
+    p += '\n--- MY RETIREMENT GOALS ---\n';
+    if (target) p += 'Target monthly income in retirement: ' + target + '\n';
+    if (lifestyle) p += 'Lifestyle expectation: ' + lifestyle + '\n';
+    if (partTime) p += 'Part-time work in retirement: ' + partTime + '\n';
+    if (estate) p += 'Estate / inheritance priority: ' + estate + '\n';
+    if (plans) p += 'Key plans: ' + plans + '\n';
+  }
+
+  if (sources.length > 0) {
+    p += '\n--- EXPECTED INCOME SOURCES ---\n';
+    p += 'Sources I expect: ' + sources.join(', ') + '\n';
+    if (srcNotes) p += 'Notes: ' + srcNotes + '\n';
+  }
+
+  const hasConcerns = concerns.length > 0 || risk || buffer;
+  if (hasConcerns) {
+    p += '\n--- MY CONCERNS AND RISK PROFILE ---\n';
+    if (concerns.length > 0) p += 'Main concerns: ' + concerns.join(', ') + '\n';
+    if (risk) p += 'Risk tolerance: ' + risk + '\n';
+    if (buffer) p += 'Emergency buffer: ' + buffer + '\n';
+  }
+
+  if (selectedKeys.length > 0) {
+    p += '\n--- MY QUESTIONS ---\n';
+    selectedKeys.forEach((k, i) => {
+      const q = findQuestionById(k);
+      if (q) p += (i + 1) + '. ' + q.humanVersion + '\n\n';
+    });
+  }
+
+  if (question) {
+    p += (selectedKeys.length > 0 ? '' : '\n--- MY QUESTION ---\n') + question + '\n';
+  }
+
+  if (selectedKeys.length === 0 && !question) {
+    p += '\n--- MY QUESTION ---\nBased on my details above, what is your honest assessment of my retirement income situation? What are the key risks I face, and what practical steps should I be taking now?\n';
+  }
+
+  p += '\nPlease structure your response with: (1) an honest assessment of my current position, (2) the key gaps or risks I should address, (3) practical options or strategies to consider, and (4) questions I should be asking a qualified financial adviser.\n\nNote: I understand this is educational guidance only, not regulated financial advice.';
+
+  v('outputText').textContent = p;
+  v('outputBox').style.display = 'block';
+  v('outputBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function copyFinalPrompt() {
+  const text = v('outputText').textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Your personalised prompt copied');
+    });
+  } else {
+    fallbackCopy(text);
+    showToast('Your personalised prompt copied');
+  }
+}
+
+function clearAll() {
+  selectedPrompts = {};
+  document.querySelectorAll('.question-checkbox').forEach(checkbox => checkbox.checked = false);
+  document.querySelectorAll('.question-card').forEach(card => card.classList.remove('selected'));
+  ['age','partnerAge','retireAge','country','income','pension','savings','equity','debts','contributions','target','plans','srcNotes','question'].forEach(id => { if(v(id)) v(id).value=''; });
+  ['health','lifestyle','partTime','estate','risk','buffer','employment'].forEach(id => { if(v(id)) v(id).value=''; });
+  ['src_state','src_db','src_dc','src_annuity','src_rental','src_invest','src_business','src_inherit','c_runout','c_inflation','c_care','c_tax','c_market','c_early','c_partner','c_health'].forEach(id => { if(v(id)) v(id).checked=false; });
+  document.querySelectorAll('.check-item').forEach(el => el.classList.remove('selected'));
+  v('outputBox').style.display = 'none';
+  updateSelectionBar();
+  showPage(0);
+}
+</script>
+</body>
+</html>
