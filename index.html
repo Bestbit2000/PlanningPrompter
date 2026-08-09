@@ -1373,7 +1373,7 @@ window.PROMPTS_DATA = PROMPTS_DATA;
 
         <fieldset style="border:none;padding:0;margin:0;margin-bottom:16px">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid transparent;border-radius:6px;transition:all 0.2s;user-select:none">
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
               <input type="radio" name="chatbot-select" value="claude" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" checked />
               <span style="flex:1;min-width:0">
                 <img src="./images/claude.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
@@ -1381,7 +1381,7 @@ window.PROMPTS_DATA = PROMPTS_DATA;
               </span>
               <span style="font-size:10px;color:#999;font-weight:400;white-space:nowrap">Auto-fill</span>
             </label>
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid transparent;border-radius:6px;transition:all 0.2s;user-select:none">
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
               <input type="radio" name="chatbot-select" value="chatgpt" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
               <span style="flex:1;min-width:0">
                 <img src="./images/chatgpt.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
@@ -1389,14 +1389,14 @@ window.PROMPTS_DATA = PROMPTS_DATA;
               </span>
               <span style="font-size:10px;color:#999;font-weight:400;white-space:nowrap">Auto-fill</span>
             </label>
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid transparent;border-radius:6px;transition:all 0.2s;user-select:none">
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
               <input type="radio" name="chatbot-select" value="copilot" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
               <span style="flex:1;min-width:0">
                 <img src="./images/copilot.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
                 <span style="font-weight:600;color:#201e1d;font-size:14px">Copilot</span>
               </span>
             </label>
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid transparent;border-radius:6px;transition:all 0.2s;user-select:none">
+            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
               <input type="radio" name="chatbot-select" value="gemini" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
               <span style="flex:1;min-width:0">
                 <img src="./images/gemini.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
@@ -1408,7 +1408,7 @@ window.PROMPTS_DATA = PROMPTS_DATA;
 
         <div id="capability-message" style="font-size:12px;color:#666;background:#f0f5f2;border:1px solid #2C8494;border-radius:4px;padding:8px 12px;margin-bottom:12px;display:none"></div>
 
-        <button id="launch-chat-btn" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:700;font-size:14px;padding:12px 20px;cursor:pointer;border-radius:4px;width:100%;transition:all 0.2s">Copy and launch Claude</button>
+        <button id="launch-chat-btn" style="background:#2C8494;color:#fff;border:none;font-family:'Archivo',sans-serif;font-weight:700;font-size:14px;padding:12px 20px;cursor:pointer;border-radius:8px;width:100%;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px">Copy and launch Claude<img src="./images/external_link.svg" style="width:16px;height:16px" /></button>
       </div>
     </div>
   </div>
@@ -1430,10 +1430,12 @@ window.PROMPTS_DATA = PROMPTS_DATA;
 
     if (selected && launchBtn) {
       const aiName = selected.value.charAt(0).toUpperCase() + selected.value.slice(1);
-      launchBtn.textContent = `Copy and launch ${aiName}`;
+      // Update button text while preserving the icon
+      const iconHTML = launchBtn.innerHTML.includes('external_link') ? launchBtn.querySelector('img').outerHTML : '';
+      launchBtn.innerHTML = `Copy and launch ${aiName}${iconHTML ? '<img src="./images/external_link.svg" style="width:16px;height:16px" />' : ''}`;
 
       if (selected.value === 'copilot' || selected.value === 'gemini') {
-        capabilityMsg.textContent = "Note: You'll need to paste the prompt into " + aiName + " as it cannot auto-fill the prompt.";
+        capabilityMsg.textContent = "Note: You'll need to paste the prompt into " + aiName + " as they can't accept the words in a link.";
         capabilityMsg.style.display = 'block';
       } else {
         capabilityMsg.style.display = 'none';
