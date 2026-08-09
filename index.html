@@ -148,13 +148,19 @@
 
     <!-- Primary CTA Button -->
     <div class="starter-prompt-actions" style="margin-bottom:28px">
-      <button data-copy-all="true" onClick="{{ showStarterPromptModal }}" class="btn-primary btn-lg">Use the starter prompt</button>
+      <button class="btn-primary btn-lg starter-prompt-use-btn">Use the starter prompt</button>
     </div>
 
     <!-- What It Provides Card -->
     <div class="starter-prompt-content-card">
       <h2>What it provides</h2>
-      <p style="font-size:14px;color:#201e1d;margin:0;line-height:1.6">{{ starterPrompt.summary }}</p>
+      <p style="font-size:14px;color:#201e1d;margin:0 0 16px;line-height:1.6">{{ starterPrompt.summary }}</p>
+
+      <h2 style="margin-top:20px">How it works</h2>
+      <p style="font-size:14px;color:#201e1d;margin:0 0 16px;line-height:1.6">{{ starterPrompt.explanation }}</p>
+
+      <h2 style="margin-top:20px">What to expect</h2>
+      <p style="font-size:14px;color:#201e1d;margin:0;line-height:1.6">{{ starterPrompt.whatToExpect }}</p>
     </div>
 
     <!-- Full Prompt Text (Always Visible) -->
@@ -1076,6 +1082,13 @@ window.PROMPTS_DATA = PROMPTS_DATA;
         modal.style.display = 'none';
         console.log('[DEBUG] Modal closed');
       }
+    }
+  });
+
+  // Handle starter prompt use button
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.starter-prompt-use-btn')) {
+      showStarterPromptModal();
     }
   });
 
