@@ -6,6 +6,25 @@ body {
   color: #1a1a1a;
   font-size: 15px;
   line-height: 1.6;
+  margin: 0;
+}
+
+a {
+  color: #226B79;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: #164752;
+}
+
+::selection {
+  background: rgba(44, 132, 148, 0.25);
+}
+
+input, textarea, select, button {
+  font-family: 'Archivo', system-ui, sans-serif;
 }
 
 /* HEADER */
@@ -655,6 +674,72 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   to { opacity: 1; }
 }
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+/* Sticky copy bar for prompt list */
+.sticky-copy-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-top: 1px solid rgba(32, 30, 29, 0.2);
+  padding: 12px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  z-index: 100;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.selection-text {
+  font-size: 14px;
+  color: #201e1d;
+  font-weight: 600;
+}
+
+.selection-text .count {
+  color: #2C8494;
+  font-weight: 800;
+}
+
+.copy-button {
+  background: #2C8494;
+  color: #fff;
+  border: none;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.copy-button:hover:not([data-disabled="true"]) {
+  background: #1f6b7a;
+  cursor: pointer;
+}
+
+.copy-button[data-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 @media (max-width: 768px) {
   /* Hide text tabs on tablets and mobile */
   .step-tabs {
@@ -675,6 +760,60 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   }
 }
 
+@media (max-width: 768px) {
+  /* Hero section mobile */
+  [data-screen-label="Landing"] > div > div:first-child {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    padding: 40px 16px !important;
+  }
+
+  /* Why this matters section */
+  [data-screen-label="Landing"] > div > div:nth-child(3) {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    padding: 40px 16px !important;
+  }
+
+  /* Three levels of support - convert to vertical cards */
+  [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    border-left: none !important;
+    border-right: none !important;
+  }
+
+  [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] > div {
+    border-right: none !important;
+    border-bottom: 2px solid rgba(32,30,29,0.4) !important;
+    padding: 20px !important;
+  }
+
+  [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] > div:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Closing banner mobile */
+  [style*="background:#2C8494"] {
+    padding: 40px 16px !important;
+  }
+
+  [style*="background:#2C8494"] > div {
+    flex-direction: column !important;
+  }
+
+  [style*="background:#2C8494"] button {
+    width: 100% !important;
+    flex: none !important;
+  }
+
+  /* Want tailored answer box mobile */
+  [style*="background:#eceae9"][style*="border:2px"] {
+    padding: 16px !important;
+    margin: 16px !important;
+  }
+}
+
 @media (max-width: 480px) {
   .tab span.tab-label { display: none; }
   .section-header { flex-direction: column; gap: 8px; }
@@ -683,4 +822,47 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   .step-nav { flex-direction: column; gap: 1rem; }
   .step-buttons { width: 100%; }
   .btn-step { flex: 1; }
+
+  /* Mobile sticky bar */
+  [style*="position:fixed"][style*="bottom:0"] {
+    flex-direction: column;
+    padding: 12px 16px !important;
+    gap: 8px !important;
+  }
+  [style*="position:fixed"][style*="bottom:0"] > span {
+    width: 100%;
+    text-align: center;
+  }
+  [style*="position:fixed"][style*="bottom:0"] > button {
+    width: 100%;
+  }
+
+  /* Hero on small mobile */
+  [data-screen-label="Landing"] h1 {
+    font-size: 28px !important;
+    line-height: 1.1 !important;
+  }
+
+  [data-screen-label="Landing"] h2 {
+    font-size: 22px !important;
+  }
+
+  [data-screen-label="Landing"] h3 {
+    font-size: 16px !important;
+  }
+
+  /* Adjust padding on very small screens */
+  [data-screen-label="Landing"] > div > div {
+    padding: 24px 12px !important;
+  }
+
+  /* Hero section right side - hide on mobile */
+  [data-screen-label="Landing"] > div > div:first-child > div:last-child {
+    display: none !important;
+  }
+
+  /* Ensure buttons are full width on mobile */
+  [data-screen-label="Landing"] button {
+    width: 100% !important;
+  }
 }
