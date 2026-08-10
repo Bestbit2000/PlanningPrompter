@@ -766,21 +766,30 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
 
 @media (max-width: 768px) {
   /* Any 3-equal-column grid (e.g. wizard step 2 fields) collapses to one column on mobile */
-  [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] {
+  [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"],
+  [style*="display: grid"][style*="grid-template-columns: repeat(3, 1fr)"] {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
     border-left: none !important;
     border-right: none !important;
   }
 
-  [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] > div {
+  [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] > div,
+  [style*="display: grid"][style*="grid-template-columns: repeat(3, 1fr)"] > div {
     border-right: none !important;
     border-bottom: 2px solid rgba(32,30,29,0.4) !important;
     padding: 20px !important;
   }
 
-  [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] > div:last-child {
+  [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] > div:last-child,
+  [style*="display: grid"][style*="grid-template-columns: repeat(3, 1fr)"] > div:last-child {
     border-bottom: none !important;
+  }
+
+  /* Any 2-equal-column grid (e.g. wizard steps 3-6 fields) collapses to one column on mobile */
+  [style*="display:grid"][style*="grid-template-columns:1fr 1fr"],
+  [style*="display: grid"][style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
   }
 }
 

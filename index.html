@@ -214,7 +214,7 @@
 
       <div style="display:flex;gap:4px;border-bottom:2px solid rgba(32,30,29,0.15);margin-bottom:28px;flex-wrap:wrap">
         <sc-for list="{{ steps }}" as="st" hint-placeholder-count="7">
-          <div onClick="{{ st.goTo }}" style="{{ st.tabStyle }}">{{ st.n }}. {{ st.label }}</div>
+          <div onClick="{{ st.goTo }}" style="{{ st.tabStyle }}">{{ st.tabText }}</div>
         </sc-for>
       </div>
 
@@ -286,12 +286,12 @@
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
         <h3 style="font-size:16px;margin:0 0 18px">Step 2: Profile & timeline</h3>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Your age</label><input id="age" type="text" placeholder="e.g. 58" value="{{ fields.age }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Partner's age</label><input id="partnerAge" type="text" placeholder="Leave blank if none" value="{{ fields.partnerAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target retirement age</label><input id="retireAge" type="text" placeholder="e.g. 65" value="{{ fields.retireAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Country / region</label><input id="country" type="text" placeholder="e.g. United Kingdom" value="{{ fields.country }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Your age</label><input id="age" type="text" placeholder="e.g. 58" value="{{ fields.age }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Partner's age</label><input id="partnerAge" type="text" placeholder="Leave blank if none" value="{{ fields.partnerAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target retirement age</label><input id="retireAge" type="text" placeholder="e.g. 65" value="{{ fields.retireAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Country / region</label><input id="country" type="text" placeholder="e.g. United Kingdom" value="{{ fields.country }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
           <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Employment status</label>
-            <select id="employment" value="{{ fields.employment }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+            <select id="employment" value="{{ fields.employment }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Employed (PAYE)</option>
               <option>Self-employed</option>
@@ -301,7 +301,7 @@
             </select>
           </div>
           <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Health status</label>
-            <select id="health" value="{{ fields.health }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+            <select id="health" value="{{ fields.health }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Excellent</option>
               <option>Good</option>
@@ -309,7 +309,7 @@
               <option>Poor / chronic conditions</option>
             </select>
           </div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Financial dependants</label><input id="dependants" type="text" placeholder="e.g. 0" value="{{ fields.dependants }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Financial dependants</label><input id="dependants" type="text" placeholder="e.g. 0" value="{{ fields.dependants }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
         </div>
       </div>
       </sc-if>
@@ -318,12 +318,12 @@
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
         <h3 style="font-size:16px;margin:0 0 18px">Step 3: Financial picture</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual household income (now)</label><input id="income" type="text" placeholder="e.g. \u00a370,000" value="{{ fields.income }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Total pension / retirement savings</label><input id="pension" type="text" placeholder="e.g. \u00a3150,000" value="{{ fields.pension }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Other savings & investments</label><input id="savings" type="text" placeholder="e.g. \u00a330,000 in ISA" value="{{ fields.savings }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Property equity</label><input id="equity" type="text" placeholder="e.g. \u00a3200,000" value="{{ fields.equity }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Outstanding debts</label><input id="debts" type="text" placeholder="e.g. \u00a350k mortgage remaining" value="{{ fields.debts }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual pension contributions (now)</label><input id="contributions" type="text" placeholder="e.g. \u00a38,000/yr incl. employer" value="{{ fields.contributions }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual household income (now)</label><input id="income" type="text" placeholder="e.g. £70,000" value="{{ fields.income }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Total pension / retirement savings</label><input id="pension" type="text" placeholder="e.g. £150,000" value="{{ fields.pension }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Other savings & investments</label><input id="savings" type="text" placeholder="e.g. £30,000 in ISA" value="{{ fields.savings }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Property equity</label><input id="equity" type="text" placeholder="e.g. £200,000" value="{{ fields.equity }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Outstanding debts</label><input id="debts" type="text" placeholder="e.g. £50k mortgage remaining" value="{{ fields.debts }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual pension contributions (now)</label><input id="contributions" type="text" placeholder="e.g. £8,000 p.a. incl. employer" value="{{ fields.contributions }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
         </div>
       </div>
       </sc-if>
@@ -332,8 +332,8 @@
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
         <h3 style="font-size:16px;margin:0 0 18px">Step 4: Retirement goals</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Lifestyle expectation</label>
-            <select id="lifestyle" value="{{ fields.lifestyle }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+          <div style="order:1"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Lifestyle expectation</label>
+            <select id="lifestyle" value="{{ fields.lifestyle }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Modest / essential needs</option>
               <option>Comfortable / moderate</option>
@@ -342,16 +342,20 @@
               <option>Enter my own monthly amount</option>
             </select>
           </div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Part-time work in retirement?</label>
-            <select id="partTime" value="{{ fields.partTime }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+
+          <div style="{{ targetSlotStyle }}"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target monthly income in retirement</label><input id="target" type="text" placeholder="e.g. £3,500/month net" value="{{ fields.target }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+
+          <div style="{{ partTimeSlotStyle }}"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Part-time work in retirement?</label>
+            <select id="partTime" value="{{ fields.partTime }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Yes, for several years</option>
               <option>Possibly / undecided</option>
               <option>No &mdash; full stop at retirement</option>
             </select>
           </div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Leave an estate / inheritance?</label>
-            <select id="estate" value="{{ fields.estate }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+
+          <div style="order:4"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Leave an estate / inheritance?</label>
+            <select id="estate" value="{{ fields.estate }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Yes, this is a clear priority</option>
               <option>Nice to have if possible</option>
@@ -359,10 +363,7 @@
             </select>
           </div>
         </div>
-        <sc-if value="{{ lifestyleIsCustom }}">
-          <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target monthly income in retirement</label><input id="target" type="text" placeholder="e.g. \u00a33,500/month net" value="{{ fields.target }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
-        </sc-if>
-        <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Key plans or activities in retirement</label><textarea id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property..." value="{{ fields.plans }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Key plans or activities in retirement</label><textarea id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property..." value="{{ fields.plans }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
@@ -381,9 +382,9 @@
           <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_other" type="checkbox" checked="{{ fields.src_other }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Other</label>
         </div>
         <sc-if value="{{ fields.src_other }}">
-          <div style="margin-top:12px"><input id="srcOtherText" type="text" placeholder="Please describe the income source" value="{{ fields.srcOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div style="margin-top:12px"><input id="srcOtherText" type="text" placeholder="Please describe the income source" value="{{ fields.srcOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
         </sc-if>
-        <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Amounts or notes on any sources</label><textarea id="srcNotes" placeholder="e.g. State pension ~\u00a310,500/yr from age 67..." value="{{ fields.srcNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Amounts or notes on any sources</label><textarea id="srcNotes" placeholder="e.g. State pension ~£10,500 p.a. from age 67..." value="{{ fields.srcNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
@@ -402,11 +403,11 @@
           <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_other" type="checkbox" checked="{{ fields.c_other }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Other concern</label>
         </div>
         <sc-if value="{{ fields.c_other }}">
-          <div style="margin-top:12px"><input id="concernOtherText" type="text" placeholder="Please describe the concern" value="{{ fields.concernOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px" /></div>
+          <div style="margin-top:12px"><input id="concernOtherText" type="text" placeholder="Please describe the concern" value="{{ fields.concernOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
         </sc-if>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
           <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Investment risk tolerance</label>
-            <select id="risk" value="{{ fields.risk }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+            <select id="risk" value="{{ fields.risk }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Very cautious &mdash; capital preservation first</option>
               <option>Cautious &mdash; some growth, low risk</option>
@@ -415,7 +416,7 @@
             </select>
           </div>
           <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Emergency income buffer</label>
-            <select id="buffer" value="{{ fields.buffer }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px">
+            <select id="buffer" value="{{ fields.buffer }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Less than 3 months</option>
               <option>3&ndash;6 months</option>
@@ -424,22 +425,17 @@
             </select>
           </div>
         </div>
-        <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else we should know?</label><textarea id="question" placeholder="e.g. 'Am I on track to retire at 62?' or 'Should I consolidate my three pension pots?'" value="{{ fields.question }}" onChange="{{ handleChange }}" style="width:100%;min-height:90px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#f5f4f3;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else we should know?</label><textarea id="question" placeholder="e.g. 'Am I on track to retire at 62?' or 'Should I consolidate my three pension pots?'" value="{{ fields.question }}" onChange="{{ handleChange }}" style="width:100%;min-height:90px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
       <div style="display:flex;align-items:center;justify-content:space-between;border-top:2px solid rgba(32,30,29,0.4);padding-top:20px">
-        <button onClick="{{ prevStep }}" disabled="{{ backDisabled }}" style="{{ prevBtnStyle }}">{{ backLabel }}</button>
-        <div style="display:flex;gap:6px">
-          <sc-for list="{{ wizardDots }}" as="dot" hint-placeholder-count="6">
-            <span onClick="{{ dot.goTo }}" style="{{ dot.dotStyle }}"></span>
-          </sc-for>
-        </div>
+        <button onClick="{{ prevStep }}" disabled="{{ backDisabled }}" class="btn-secondary" style="{{ prevBtnStyle }}">{{ backLabel }}</button>
         <sc-if value="{{ isStep6 }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ finishWizard }}" style="background:#2C8494;color:#fff;border:none;font-weight:800;font-size:14px;padding:12px 22px;cursor:pointer;text-align:left;white-space:nowrap">Create prompt &rarr;</button>
+          <button onClick="{{ finishWizard }}" class="btn-primary">Create prompt &rarr;</button>
         </sc-if>
         <sc-if value="{{ isNotStep6 }}" hint-placeholder-val="{{ true }}">
-          <button onClick="{{ nextStep }}" style="background:#2C8494;color:#fff;border:none;font-weight:800;font-size:14px;padding:12px 22px;cursor:pointer;text-align:left;white-space:nowrap">{{ nextLabel }}</button>
+          <button onClick="{{ nextStep }}" class="btn-primary">{{ nextLabel }}</button>
         </sc-if>
       </div>
     </div>
@@ -459,11 +455,12 @@
 
       <!-- Review Details Section -->
       <div style="background:#fff;border:1px solid rgba(32,30,29,0.2);border-radius:8px;margin-bottom:24px">
-        <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="width:100%;padding:16px 24px;background:transparent;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;color:#201e1d">
+        <button onClick="{{ toggleReviewDetails }}" style="width:100%;padding:16px 24px;background:transparent;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;color:#201e1d">
           <span>Review the details you provided</span>
-          <span style="font-size:20px;color:#2C8494">▼</span>
+          <span style="font-size:20px;color:#2C8494">{{ reviewToggleIcon }}</span>
         </button>
-        <div style="display:none;padding:0 24px 24px;border-top:1px solid rgba(32,30,29,0.1);font-size:13px;color:rgba(32,30,29,0.8);line-height:1.8">
+        <sc-if value="{{ showReviewDetails }}">
+        <div style="padding:0 24px 24px;border-top:1px solid rgba(32,30,29,0.1);font-size:13px;color:rgba(32,30,29,0.8);line-height:1.8">
           <sc-if value="{{ fields.age }}">
             <div style="margin-bottom:12px"><strong>Your age:</strong> {{ fields.age }}</div>
           </sc-if>
@@ -489,6 +486,7 @@
             <div style="margin-bottom:12px"><strong>Lifestyle expectation:</strong> {{ fields.lifestyle }}</div>
           </sc-if>
         </div>
+        </sc-if>
       </div>
 
       <!-- Prompt Section -->
@@ -509,9 +507,7 @@
 
       <!-- Action Button -->
       <div style="display:flex;justify-content:center;margin-bottom:24px">
-        <button onClick="{{ showUsePromptModal }}" style="background:#2C8494;color:#fff;border:none;font-weight:800;font-size:14px;padding:14px 28px;cursor:pointer;border-radius:6px;display:flex;align-items:center;gap:8px;white-space:nowrap">
-          <span style="font-size:18px">📋</span> Use this prompt (Copy to clipboard)
-        </button>
+        <button onClick="{{ showUsePromptModal }}" class="btn-primary" style="padding:14px 28px">Use this prompt</button>
       </div>
 
       <!-- Disclaimer -->
@@ -691,7 +687,6 @@ class Component extends DCLogic {
     phase: 'wizard',
     step: 1,
     openSection: null,
-    completedSteps: [],
     selected: {},
     expanded: {},
     browseSelected: {},
@@ -700,7 +695,8 @@ class Component extends DCLogic {
     toasts: [],
     outputText: '',
     showSelectionWarning: false,
-    showStarterPromptText: false
+    showStarterPromptText: false,
+    showReviewDetails: false
   };
 
   goApp = () => { window.scrollTo(0, 0); this.setState({ view: 'app', phase: 'wizard', step: 1, openSection: null }); };
@@ -718,7 +714,7 @@ class Component extends DCLogic {
         return;
       }
       this.generatePrompt();
-      this.setState((s) => ({ completedSteps: s.completedSteps.includes(6) ? s.completedSteps : [...s.completedSteps, 6], phase: 'result' }));
+      this.setState({ phase: 'result' });
       return;
     }
     if (n > 1 && Object.keys(this.state.selected).length === 0) {
@@ -734,10 +730,7 @@ class Component extends DCLogic {
       this.setState({ showSelectionWarning: true });
       return;
     }
-    this.setState((s2) => ({
-      completedSteps: s2.completedSteps.includes(s2.step) ? s2.completedSteps : [...s2.completedSteps, s2.step],
-      step: Math.min(6, s2.step + 1)
-    }));
+    this.setState((s2) => ({ step: Math.min(6, s2.step + 1) }));
   };
   prevStep = () => {
     this.setState((s2) => ({ step: Math.max(1, s2.step - 1) }));
@@ -746,6 +739,7 @@ class Component extends DCLogic {
   openSection = (id) => this.setState({ openSection: id });
   closeSection = () => this.setState({ openSection: null });
   stopPropagation = (e) => e.stopPropagation();
+  toggleReviewDetails = () => this.setState((s) => ({ showReviewDetails: !s.showReviewDetails }));
 
   finishWizard = () => this.goStep(7);
 
@@ -1035,10 +1029,11 @@ class Component extends DCLogic {
       const n = i + 1;
       const isSummaryTab = n === 7;
       const active = isSummaryTab ? isResult : (isWizard && s.step === n);
-      const completed = isSummaryTab ? false : s.completedSteps.includes(n);
+      const completed = isSummaryTab ? false : isResult ? true : (isWizard && n < s.step);
       return {
         n,
         label,
+        tabText: completed && !active ? '✓ ' + label : n + '. ' + label,
         goTo: () => this.goStep(n),
         tabStyle: {
           padding: '10px 16px',
@@ -1047,15 +1042,13 @@ class Component extends DCLogic {
           whiteSpace: 'nowrap',
           flex: 'none',
           borderBottom: active ? '3px solid ' + ACCENT : '3px solid transparent',
-          color: active ? ACCENT_DARK : completed ? TEXT : TEXT_MUTED,
-          fontWeight: active ? 800 : 600,
+          color: active ? ACCENT_DARK : completed ? ACCENT_DARK : TEXT_MUTED,
+          fontWeight: active ? 800 : completed ? 700 : 600,
           background: active ? ACCENT_TINT : 'transparent',
           borderRadius: '6px 6px 0 0'
-        },
-        dotStyle: { width: '9px', height: '9px', borderRadius: '50%', cursor: 'pointer', background: active ? ACCENT : completed ? ACCENT_DARK : DIVIDER }
+        }
       };
     });
-    const wizardDots = steps.slice(0, 6);
 
     const selectedCount = Object.keys(s.selected).length;
     const browseSelectedCount = Object.keys(s.browseSelected).length;
@@ -1066,6 +1059,9 @@ class Component extends DCLogic {
     const backDisabled = s.step === 1;
     const nextLabel = s.step === 6 ? 'Create prompt \u2192' : 'Next \u2192';
     const backLabel = '\u2190 Back';
+    const lifestyleIsCustom = s.fields.lifestyle === 'Enter my own monthly amount';
+    const targetSlotStyle = { order: 2, display: lifestyleIsCustom ? 'block' : 'none' };
+    const partTimeSlotStyle = { order: lifestyleIsCustom ? 3 : 2 };
 
     return {
       isLanding, isApp, isWizard, isResult, isStarterPrompt, isBrowse,
@@ -1080,6 +1076,9 @@ class Component extends DCLogic {
       activeSectionModal,
       closeSection: this.closeSection,
       stopPropagation: this.stopPropagation,
+      showReviewDetails: s.showReviewDetails,
+      toggleReviewDetails: this.toggleReviewDetails,
+      reviewToggleIcon: s.showReviewDetails ? '▲' : '▼',
       hasSelection: selectedCount > 0,
       selectedCount,
       browseSections,
@@ -1093,17 +1092,18 @@ class Component extends DCLogic {
       selectAllPrompts: this.selectAllPrompts,
       deselectAllPrompts: this.deselectAllPrompts,
       steps,
-      wizardDots,
       isStep1: s.step === 1, isStep2: s.step === 2, isStep3: s.step === 3, isStep4: s.step === 4, isStep5: s.step === 5, isStep6: s.step === 6,
       isNotStep6: s.step !== 6,
-      lifestyleIsCustom: s.fields.lifestyle === 'Enter my own monthly amount',
+      lifestyleIsCustom,
+      targetSlotStyle,
+      partTimeSlotStyle,
       fields: s.fields,
       handleChange: this.handleChange,
       prevStep: this.prevStep, nextStep: this.nextStep, finishWizard: this.finishWizard,
       backDisabled,
       nextLabel,
       backLabel,
-      prevBtnStyle: { whiteSpace: 'nowrap', background: 'transparent', border: '1px solid ' + DIVIDER, fontSize: '14px', padding: '12px 20px', cursor: backDisabled ? 'not-allowed' : 'pointer', textAlign: 'left', opacity: backDisabled ? 0.45 : 1 },
+      prevBtnStyle: { cursor: backDisabled ? 'not-allowed' : 'pointer', opacity: backDisabled ? 0.5 : 1 },
       outputText: s.outputText,
       copyFinal: this.copyFinal,
       openInChatGPT: this.openInChatGPT,
