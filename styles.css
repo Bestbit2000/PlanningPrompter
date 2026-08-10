@@ -793,6 +793,27 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   }
 
   /* Wizard step tabs: Material-style scrollable single row instead of wrapping onto multiple lines */
+  .wizard-tabs-wrap {
+    position: relative;
+  }
+  .wizard-tabs-wrap::before,
+  .wizard-tabs-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 2px;
+    width: 28px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .wizard-tabs-wrap::before {
+    left: 0;
+    background: linear-gradient(to right, #f5f4f3, rgba(245,244,243,0));
+  }
+  .wizard-tabs-wrap::after {
+    right: 0;
+    background: linear-gradient(to left, #f5f4f3, rgba(245,244,243,0));
+  }
   .wizard-tabs {
     flex-wrap: nowrap !important;
     overflow-x: auto;
@@ -1459,9 +1480,8 @@ fieldset div > label:hover {
   align-items: end;
 }
 .landing-hero-eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.02em;
   color: #226B79;
   font-weight: 800;
   margin-bottom: 16px;

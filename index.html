@@ -181,10 +181,7 @@
     <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid #e2e8f0;overflow:hidden;margin-bottom:24px">
       <!-- Prompt Header -->
       <div style="background:#f1f5f9;border-bottom:1px solid #e2e8f0;padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
-        <div style="display:flex;align-items:center;gap:8px">
-          <span style="font-size:20px">📝</span>
-          <h3 style="font-size:16px;font-weight:700;color:#334155;margin:0">The prompt</h3>
-        </div>
+        <h3 style="font-size:16px;font-weight:700;color:#334155;margin:0">The prompt</h3>
         <button onClick="{{ showStarterPromptModal }}" class="btn-primary">Use this prompt</button>
       </div>
 
@@ -212,10 +209,12 @@
       <h2 style="font-size:26px;margin:0 0 6px">Build your prompt</h2>
       <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Select the questions you want answered, then add as much or as little detail about yourself as you like. Nothing here is saved or sent anywhere &mdash; it only builds the text of your prompt.</p>
 
-      <div class="wizard-tabs" style="display:flex;gap:4px;border-bottom:2px solid rgba(32,30,29,0.15);margin-bottom:28px">
-        <sc-for list="{{ steps }}" as="st" hint-placeholder-count="7">
-          <div onClick="{{ st.goTo }}" style="{{ st.tabStyle }}">{{ st.tabText }}</div>
-        </sc-for>
+      <div class="wizard-tabs-wrap">
+        <div class="wizard-tabs" style="display:flex;gap:4px;border-bottom:2px solid rgba(32,30,29,0.15);margin-bottom:28px">
+          <sc-for list="{{ steps }}" as="st" hint-placeholder-count="7">
+            <div onClick="{{ st.goTo }}" style="{{ st.tabStyle }}">{{ st.tabText }}</div>
+          </sc-for>
+        </div>
       </div>
 
     <sc-if value="{{ isWizard }}">
@@ -463,8 +462,11 @@
         <div style="padding:0 24px 24px;border-top:1px solid rgba(32,30,29,0.1);font-size:13px;color:rgba(32,30,29,0.8);line-height:1.8">
           <sc-if value="{{ hasReviewDetails }}">
           <sc-for list="{{ reviewSections }}" as="sec" hint-placeholder-count="5">
-            <div style="margin-top:16px">
-              <div style="font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:8px">{{ sec.title }}</div>
+            <div style="margin-top:20px;padding-bottom:16px;border-bottom:1px solid rgba(32,30,29,0.1)">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                <div style="font-size:14px;font-weight:700;color:#164752">{{ sec.title }}</div>
+                <button onClick="{{ sec.onEdit }}" style="background:transparent;border:1px solid rgba(32,30,29,0.25);border-radius:4px;color:#2C8494;font-size:12px;font-weight:700;cursor:pointer;padding:4px 10px">Edit</button>
+              </div>
               <sc-for list="{{ sec.items }}" as="item" hint-placeholder-count="3">
                 <div style="margin-bottom:8px"><strong>{{ item.label }}:</strong> {{ item.value }}</div>
               </sc-for>
@@ -482,10 +484,7 @@
       <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid rgba(32,30,29,0.2);overflow:hidden;margin-bottom:24px">
         <!-- Prompt Header -->
         <div style="background:#f1f5f9;border-bottom:1px solid rgba(32,30,29,0.1);padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
-          <div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:20px">📝</span>
-            <h3 style="font-size:16px;font-weight:700;color:#334155;margin:0">Here is your tailored prompt</h3>
-          </div>
+          <h3 style="font-size:16px;font-weight:700;color:#334155;margin:0">Here is your tailored prompt</h3>
         </div>
 
         <!-- Prompt Content -->
@@ -1092,12 +1091,14 @@ class Component extends DCLogic {
     if (f.question) concernsItems.push({ label: 'Additional question', value: f.question });
 
     const reviewSections = [
-      { title: 'Profile & timeline', items: profileItems },
-      { title: 'Financial picture', items: financeItems },
-      { title: 'Retirement goals', items: goalsItems },
-      { title: 'Expected income sources', items: incomeItems },
-      { title: 'Concerns, risk & anything else', items: concernsItems }
-    ].filter((sec) => sec.items.length > 0);
+      { title: 'Profile & timeline', step: 2, items: profileItems },
+      { title: 'Financial picture', step: 3, items: financeItems },
+      { title: 'Retirement goals', step: 4, items: goalsItems },
+      { title: 'Expected income sources', step: 5, items: incomeItems },
+      { title: 'Concerns, risk & anything else', step: 6, items: concernsItems }
+    ]
+      .filter((sec) => sec.items.length > 0)
+      .map((sec) => ({ title: sec.title, items: sec.items, onEdit: () => this.goStep(sec.step) }));
     const hasReviewDetails = reviewSections.length > 0;
 
     return {
