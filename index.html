@@ -433,23 +433,79 @@
 
     <!-- RESULT: PERSONALISED PROMPT -->
     <sc-if value="{{ isResult }}">
-    <div style="padding-top:32px" data-screen-label="Personalised Prompt">
-      <h2 style="font-size:26px;margin:0 0 6px">Your personalised prompt</h2>
-      <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 20px;max-width:70ch">Copy this into any AI chatbot for a response built around your own situation.</p>
-
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px">
-        <button onClick="{{ copyFinal }}" style="background:#2C8494;color:#fff;border:none;font-weight:800;font-size:14px;padding:12px 20px;cursor:pointer;text-align:left;white-space:nowrap">Copy prompt</button>
-        <sc-if value="{{ enableOpenInChatGPT }}">
-          <button onClick="{{ openInChatGPT }}" style="background:transparent;color:#201e1d;border:1px solid rgba(32,30,29,0.4);font-weight:600;font-size:14px;padding:12px 20px;cursor:pointer;text-align:left;white-space:nowrap">Open in ChatGPT &rarr;</button>
-        </sc-if>
-        <button onClick="{{ adjustInputs }}" style="background:transparent;color:#201e1d;border:1px solid rgba(32,30,29,0.4);font-weight:600;font-size:14px;padding:12px 20px;cursor:pointer;text-align:left;white-space:nowrap">Adjust prompt inputs</button>
+    <div style="padding-top:32px;padding-bottom:80px" data-screen-label="Personalised Prompt">
+      <!-- Success Banner -->
+      <div style="background:#2C8494;color:#fff;padding:40px 32px;margin:-32px calc(-50vw + 50%) 32px;display:flex;align-items:center;justify-content:center">
+        <div style="max-width:1120px;width:100%;text-align:center">
+          <div style="font-size:48px;margin-bottom:16px">✓</div>
+          <h1 style="font-size:32px;font-weight:800;margin:0 0 12px;color:#fff">Your prompt is ready</h1>
+          <p style="font-size:16px;margin:0;color:rgba(255,255,255,0.95);max-width:60ch;margin-left:auto;margin-right:auto">We've compiled your selections and details into a comprehensive prompt.</p>
+        </div>
       </div>
 
-      <div style="border:1px solid rgba(32,30,29,0.4);background:#eceae9;padding:14px 16px;font-size:13px;color:rgba(32,30,29,0.8);margin-bottom:20px">This generates an educational prompt only. AI responses are not regulated financial advice. Always consult a qualified financial adviser for major decisions.</div>
+      <!-- Review Details Section -->
+      <div style="background:#fff;border:1px solid rgba(32,30,29,0.2);border-radius:8px;margin-bottom:24px">
+        <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="width:100%;padding:16px 24px;background:transparent;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;color:#201e1d">
+          <span>Review the details you provided</span>
+          <span style="font-size:20px;color:#2C8494">▼</span>
+        </button>
+        <div style="display:none;padding:0 24px 24px;border-top:1px solid rgba(32,30,29,0.1);font-size:13px;color:rgba(32,30,29,0.8);line-height:1.8">
+          <sc-if value="{{ fields.age }}">
+            <div style="margin-bottom:12px"><strong>Your age:</strong> {{ fields.age }}</div>
+          </sc-if>
+          <sc-if value="{{ fields.partnerAge }}">
+            <div style="margin-bottom:12px"><strong>Partner's age:</strong> {{ fields.partnerAge }}</div>
+          </sc-if>
+          <sc-if value="{{ fields.retireAge }}">
+            <div style="margin-bottom:12px"><strong>Target retirement age:</strong> {{ fields.retireAge }}</div>
+          </sc-if>
+          <sc-if value="{{ fields.country }}">
+            <div style="margin-bottom:12px"><strong>Country / region:</strong> {{ fields.country }}</div>
+          </sc-if>
+          <sc-if value="{{ fields.employment }}">
+            <div style="margin-bottom:12px"><strong>Employment status:</strong> {{ fields.employment }}</div>
+          </sc-if>
+          <sc-if value="{{ fields.income }}">
+            <div style="margin-bottom:12px"><strong>Annual household income:</strong> {{ fields.income }}</div>
+          </sc-if>
+          <sc-if value="{{ fields.pension }}">
+            <div style="margin-bottom:12px"><strong>Pension / retirement savings:</strong> {{ fields.pension }}</div>
+          </sc-if>
+          <sc-if value="{{ fields.lifestyle }}">
+            <div style="margin-bottom:12px"><strong>Lifestyle expectation:</strong> {{ fields.lifestyle }}</div>
+          </sc-if>
+        </div>
+      </div>
 
-      <div style="background:#201e1d;padding:20px">
-        <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px">Your complete prompt</div>
-        <pre style="white-space:pre-wrap;color:#f5f4f3;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.6;margin:0">{{ outputText }}</pre>
+      <!-- Prompt Section -->
+      <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid rgba(32,30,29,0.2);overflow:hidden;margin-bottom:24px">
+        <!-- Prompt Header -->
+        <div style="background:#f1f5f9;border-bottom:1px solid rgba(32,30,29,0.1);padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:20px">📝</span>
+            <h3 style="font-size:16px;font-weight:700;color:#334155;margin:0">Here is your tailored prompt</h3>
+          </div>
+        </div>
+
+        <!-- Prompt Content -->
+        <div style="position:relative;background:#1e293b;padding:24px;border-top:3px solid #2C8494">
+          <pre style="font-family:'Courier New',monospace;font-size:13px;line-height:1.6;color:#e2e8f0;margin:0;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto">{{ outputText }}</pre>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <div style="display:flex;justify-content:center;margin-bottom:24px">
+        <button onClick="{{ showUsePromptModal }}" style="background:#2C8494;color:#fff;border:none;font-weight:800;font-size:14px;padding:14px 28px;cursor:pointer;border-radius:6px;display:flex;align-items:center;gap:8px;white-space:nowrap">
+          <span style="font-size:18px">📋</span> Use this prompt (Copy to clipboard)
+        </button>
+      </div>
+
+      <!-- Disclaimer -->
+      <div style="background:#fef3c7;border-left:4px solid #f59e0b;border-radius:8px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start">
+        <span style="font-size:20px;flex-shrink:0">⚠️</span>
+        <div>
+          <p style="font-size:13px;color:#78350f;margin:0;line-height:1.6"><strong>Note:</strong> This is for educational purposes only. The prompt asks for factual information, not regulated financial advice. You should always speak to a qualified financial adviser about your personal circumstances.</p>
+        </div>
       </div>
     </div>
     </sc-if>
@@ -892,6 +948,7 @@ class Component extends DCLogic {
   openInClaude = () => window.open('https://claude.ai/?q=' + encodeURIComponent(STARTER_PROMPT_DATA.prompt), '_blank');
   openInGemini = () => window.open('https://gemini.google.com/?q=' + encodeURIComponent(STARTER_PROMPT_DATA.prompt), '_blank');
   adjustInputs = () => this.setState({ phase: 'wizard', step: 1 });
+  showUsePromptModal = () => window.showPromptModal(this.state.outputText);
 
   renderVals() {
     const s = this.state;
@@ -1007,6 +1064,7 @@ class Component extends DCLogic {
       openInClaude: this.openInClaude,
       openInGemini: this.openInGemini,
       adjustInputs: this.adjustInputs,
+      showUsePromptModal: this.showUsePromptModal,
       enableOpenInChatGPT: this.props.enableOpenInChatGPT ?? true,
       toasts: s.toasts,
       closeToast: this.closeToast
