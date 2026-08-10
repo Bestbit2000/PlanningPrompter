@@ -208,61 +208,75 @@
   <sc-if value="{{ isApp }}">
   <div data-screen-label="App" style="max-width:1120px;margin:0 auto;padding:0 32px 80px">
 
-    <sc-if value="{{ isWizard }}">
     <div style="padding-top:32px">
       <h2 style="font-size:26px;margin:0 0 6px">Build your prompt</h2>
       <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Select the questions you want answered, then add as much or as little detail about yourself as you like. Nothing here is saved or sent anywhere &mdash; it only builds the text of your prompt.</p>
 
-      <div style="display:flex;gap:0;border-bottom:2px solid rgba(32,30,29,0.4);margin-bottom:28px;flex-wrap:wrap">
-        <sc-for list="{{ steps }}" as="st" hint-placeholder-count="6">
-          <div onClick="{{ st.goTo }}" style="padding:10px 16px;font-size:13px;cursor:pointer;white-space:nowrap;flex:none;{{ st.tabStyle }}">{{ st.n }}. {{ st.label }}</div>
+      <div style="display:flex;gap:4px;border-bottom:2px solid rgba(32,30,29,0.15);margin-bottom:28px;flex-wrap:wrap">
+        <sc-for list="{{ steps }}" as="st" hint-placeholder-count="7">
+          <div onClick="{{ st.goTo }}" style="{{ st.tabStyle }}">{{ st.n }}. {{ st.label }}</div>
         </sc-for>
       </div>
+
+    <sc-if value="{{ isWizard }}">
+    <div>
 
       <sc-if value="{{ isStep1 }}">
       <div style="margin-bottom:24px">
         <h3 style="font-size:16px;margin:0 0 6px">Step 1: Select your questions</h3>
-        <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0 0 16px">Pick at least one question to continue &mdash; you'll add your own details on the next steps.</p>
+        <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0 0 16px">Pick the areas you want to cover. We've grouped them to make it easier.</p>
 
         <sc-if value="{{ showSelectionWarning }}">
           <div style="background:#EAF3F3;border:1px solid #2C8494;padding:12px 16px;margin-bottom:20px;font-size:13px;font-weight:600;color:#164752">Select at least one question below to continue.</div>
         </sc-if>
 
-        <sc-if value="{{ hasSelection }}">
-          <div style="display:flex;align-items:center;gap:16px;background:#EAF3F3;border:1px solid #2C8494;padding:12px 16px;margin-bottom:20px">
-            <span style="font-size:13px;font-weight:600"><span style="font-weight:800;color:#164752">{{ selectedCount }}</span> question(s) selected in total</span>
-          </div>
-        </sc-if>
-
-        <div style="margin-bottom:32px">
-          <div style="display:flex;align-items:flex-end;justify-content:space-between;border-bottom:2px solid rgba(32,30,29,0.4);padding-bottom:10px;margin-bottom:16px;gap:16px;flex-wrap:wrap">
-            <div>
-              <div style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:4px">Topic {{ sectionNumber }} of {{ totalSections }}</div>
-              <h4 style="font-size:19px;margin:0 0 4px">{{ currentSection.title }}</h4>
-              <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0">{{ currentSection.subtitle }}</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px">
+          <sc-for list="{{ sectionCards }}" as="sec" hint-placeholder-count="4">
+            <div style="{{ sec.cardStyle }}">
+              <div style="font-size:13px;font-weight:800;color:#226B79;margin-bottom:8px">{{ sec.title }}</div>
+              <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0 0 18px;min-height:36px">{{ sec.subtitle }}</p>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+                <span style="{{ sec.badgeStyle }}">{{ sec.count }}</span>
+                <span style="font-size:13px;color:rgba(32,30,29,0.75)">questions selected</span>
+              </div>
+              <button onClick="{{ sec.onOpen }}" style="width:100%;background:#eceae9;border:1px solid rgba(32,30,29,0.3);padding:12px;font-size:14px;font-weight:600;cursor:pointer">Review &amp; select questions</button>
             </div>
-            <div style="display:flex;gap:8px;flex:none">
-              <button onClick="{{ currentSection.onSelectAll }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer;text-align:left;white-space:nowrap">Select all</button>
-              <button onClick="{{ currentSection.onDeselectAll }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer;text-align:left;white-space:nowrap">Deselect</button>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ activeSectionModal }}">
+      <div onClick="{{ closeSection }}" style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px">
+        <div onClick="{{ stopPropagation }}" style="background:#fff;border-radius:8px;max-width:900px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.3)">
+          <div style="padding:24px 24px 16px;border-bottom:1px solid rgba(32,30,29,0.1)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+              <div>
+                <h2 style="font-size:20px;margin:0 0 6px;color:#164752;font-weight:800">{{ activeSectionModal.title }}</h2>
+                <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0">Select the questions you want answered.</p>
+              </div>
+              <button onClick="{{ closeSection }}" style="background:transparent;border:none;font-size:22px;cursor:pointer;color:#999;line-height:1;padding:0;flex:none">&times;</button>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:16px">
+              <button onClick="{{ activeSectionModal.onSelectAll }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer">Select all</button>
+              <button onClick="{{ activeSectionModal.onDeselectAll }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer">Deselect all</button>
             </div>
           </div>
-
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <sc-for list="{{ currentSection.questions }}" as="q" hint-placeholder-count="5">
+          <div style="overflow-y:auto;padding:16px 24px 24px;flex:1;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ activeSectionModal.questions }}" as="q" hint-placeholder-count="5">
               <div onClick="{{ q.onRowClick }}" style="{{ q.cardStyle }}">
-                <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;cursor:pointer">
+                <div style="display:flex;gap:12px;align-items:flex-start;padding:16px">
                   <input type="checkbox" onClick="{{ q.onCheckboxClick }}" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:16px;height:16px;accent-color:#2C8494;flex:none" />
                   <div style="flex:1;min-width:0">
-                    <div style="font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:4px">{{ q.quickSummary }}</div>
-                    <div style="font-size:15px;margin-bottom:8px">{{ q.humanVersion }}</div>
-                    <span onClick="{{ q.onToggleExpand }}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer">{{ q.toggleLabel }}</span>
-                    <sc-if value="{{ q.expanded }}">
-                      <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap">{{ q.aiOptimised }}</div>
-                    </sc-if>
+                    <div style="font-size:14px;font-weight:700;color:#226B79;margin-bottom:4px">{{ q.quickSummary }}</div>
+                    <div style="font-size:14px;color:#201e1d">{{ q.humanVersion }}</div>
                   </div>
                 </div>
               </div>
             </sc-for>
+          </div>
+          <div style="padding:16px 24px;border-top:1px solid rgba(32,30,29,0.1);display:flex;justify-content:flex-end">
+            <button onClick="{{ closeSection }}" style="background:#2C8494;color:#fff;border:none;padding:10px 28px;font-weight:700;font-size:14px;cursor:pointer;border-radius:4px">Done</button>
           </div>
         </div>
       </div>
@@ -415,10 +429,10 @@
       </sc-if>
 
       <div style="display:flex;align-items:center;justify-content:space-between;border-top:2px solid rgba(32,30,29,0.4);padding-top:20px">
-        <button onClick="{{ prevStep }}" disabled="{{ backDisabled }}" style="white-space:nowrap;{{ prevBtnStyle }}">{{ backLabel }}</button>
+        <button onClick="{{ prevStep }}" disabled="{{ backDisabled }}" style="{{ prevBtnStyle }}">{{ backLabel }}</button>
         <div style="display:flex;gap:6px">
-          <sc-for list="{{ steps }}" as="st" hint-placeholder-count="6">
-            <span onClick="{{ st.goTo }}" style="width:9px;height:9px;border-radius:50%;cursor:pointer;{{ st.dotStyle }}"></span>
+          <sc-for list="{{ wizardDots }}" as="dot" hint-placeholder-count="6">
+            <span onClick="{{ dot.goTo }}" style="{{ dot.dotStyle }}"></span>
           </sc-for>
         </div>
         <sc-if value="{{ isStep6 }}" hint-placeholder-val="{{ false }}">
@@ -433,7 +447,7 @@
 
     <!-- RESULT: PERSONALISED PROMPT -->
     <sc-if value="{{ isResult }}">
-    <div style="padding-top:32px;padding-bottom:80px" data-screen-label="Personalised Prompt">
+    <div style="padding-bottom:48px" data-screen-label="Personalised Prompt">
       <!-- Success Banner -->
       <div style="background:#2C8494;color:#fff;padding:40px 32px;margin:-32px calc(-50vw + 50%) 32px;display:flex;align-items:center;justify-content:center">
         <div style="max-width:1120px;width:100%;text-align:center">
@@ -510,6 +524,7 @@
     </div>
     </sc-if>
 
+    </div>
   </div>
   </sc-if>
 
@@ -602,8 +617,8 @@ const PROMPTS_DATA = {
   "sections": [
     {
       "id": "foundation",
-      "title": "Foundation of a plan",
-      "subtitle": "The essential building blocks everyone needs to understand first",
+      "title": "Foundations of a plan",
+      "subtitle": "The essential building blocks everyone needs to understand first.",
       "questions": [
         { "id": "foundation_1", "quickSummary": "Target retirement income", "humanVersion": "What should I aim for as a realistic monthly retirement income, and what are the main ways people fund that?", "aiOptimised": "I'm planning my retirement income and need help understanding realistic targets. Please help me think through: (1) What factors should I consider when setting a monthly retirement income goal (e.g., current lifestyle, cost of living, inflation, longevity expectations)? (2) What is a realistic income target for different lifestyle scenarios (modest, comfortable, affluent)? (3) What are the main ways people fund retirement income (pension drawdown, annuities, investments, state benefits, part-time work, rental income)? For each funding method, explain the basic mechanics and typical contribution to overall income. Please be specific about UK context where relevant, and provide realistic examples of monthly income targets for different circumstances." },
         { "id": "foundation_2", "quickSummary": "State Pension basics", "humanVersion": "How does the UK State Pension work, and how much can I realistically expect to receive?", "aiOptimised": "I need to understand the UK State Pension and how much I can expect from it. Please explain: (1) How does the modern UK State Pension system work (New State Pension vs. legacy systems)? (2) What factors determine the amount I'll receive (National Insurance contributions record, gaps in contributions, years worked)? (3) How much can I realistically expect (provide current rates and examples for different contribution histories)? (4) How do I check my own State Pension forecast? (5) What happens if I have gaps in my National Insurance record, and can they be filled? Please structure this for someone who doesn't understand pensions and provide specific 2025 figures where possible." },
@@ -614,8 +629,8 @@ const PROMPTS_DATA = {
     },
     {
       "id": "awareness",
-      "title": "Things to be aware of",
-      "subtitle": "Risks and considerations that could derail your plan if ignored",
+      "title": "Things to consider",
+      "subtitle": "Important factors that will impact your retirement strategy.",
       "questions": [
         { "id": "awareness_1", "quickSummary": "Safe withdrawal rate", "humanVersion": "How much can I safely withdraw each year from my pension without running out of money? What is the 'safe withdrawal rate'?", "aiOptimised": "I'm concerned about how much I can safely spend from my pension each year without running out of money in retirement. Please explain: (1) What is the 'safe withdrawal rate' and how is it calculated? (2) What are the most common safe withdrawal rate percentages (e.g., 4% rule) and what assumptions do they make? (3) What factors affect how much is 'safe' for my specific situation (pension pot size, age at retirement, expected lifespan, investment returns, inflation, withdrawal flexibility)? (4) How do I work out my personal safe withdrawal rate? (5) What happens if actual investment returns are lower than assumed — what's my contingency? (6) Should I adjust my withdrawals based on investment performance, and if so, how? Please explain the thinking step-by-step with practical examples. Assume I'm in the UK, retiring at 65, with a pension pot of £200,000, expecting to live to 95." },
         { "id": "awareness_2", "quickSummary": "Sequence of returns risk", "humanVersion": "What is 'sequence of returns risk' and how can I protect my pension from poor investment returns early in retirement?", "aiOptimised": "I want to understand sequence of returns risk and why it matters in retirement. Please explain: (1) What is 'sequence of returns risk' and why is it a bigger problem in retirement than during working years? (2) Give a specific example showing how two people with identical pension pots and identical average returns can end up with very different outcomes based on when returns occur. (3) What is the 'critical period' and why is it important? (4) What strategies exist to protect against sequence risk (cash buffers, portfolio diversification, flexible spending, annuities, bucketing strategies)? (5) For each strategy, explain how it works and what trade-offs it involves. (6) If I'm entering drawdown in 2025-2026, how concerned should I be about current market conditions? Please provide practical examples and actionable strategies I can implement." },
@@ -627,8 +642,8 @@ const PROMPTS_DATA = {
     },
     {
       "id": "optimise",
-      "title": "How to get the most out of your pension",
-      "subtitle": "Optimisation strategies to maximize what you have",
+      "title": "Getting the most out of your pension",
+      "subtitle": "Strategies to optimize your retirement income and tax efficiency.",
       "questions": [
         { "id": "optimise_1", "quickSummary": "Tax-efficient withdrawal strategy", "humanVersion": "How can I take income from my pension and savings in a tax-efficient way? What is the best order to draw from different accounts, and how do I maximize tax-free allowances and my tax-free lump sum?", "aiOptimised": "I need to understand how to withdraw income from my retirement savings in a tax-efficient way. Please walk me through: (1) What are the main types of accounts I might have (pension, ISA, general savings, investment accounts, property) and how is income from each taxed differently? (2) What are the current tax-free allowances I should be aware of in 2025 (personal allowance, dividend allowance, capital gains allowance, trading allowance, pension allowance)? (3) In what order should I draw from different accounts to minimize tax over my lifetime (sequencing strategy)? (4) How should I time taking my pension tax-free lump sum (all at once vs. in stages over years) and why does timing matter for tax? (5) How does taking pension income affect my tax position for other income sources (state pension, rental income, dividends)? (6) Give me a practical worked example: I'm retiring at 65 with £200k pension, £50k ISA, £30k general savings, and will receive £10k state pension. How should I structure withdrawals year 1-5 to minimize tax? Please show the year-by-year breakdown and total tax paid under different strategies." },
         { "id": "optimise_2", "quickSummary": "Pension consolidation", "humanVersion": "Should I consolidate my multiple pensions into one plan, or keep them separate? What are the trade-offs?", "aiOptimised": "I have multiple pensions from different employers and I'm considering whether to consolidate them. Please explain: (1) What are the main reasons to consolidate pensions (simplicity, fees, investment choice, withdrawal flexibility)? (2) What are the main reasons to keep pensions separate (protection, different pension types, special terms, simplicity in some cases)? (3) What are the practical steps to consolidate (transfer process, timelines, costs)? (4) What risks exist in consolidation (transfer delays, loss of guarantees, pension transfers to unsuitable funds)? (5) What questions should I ask my existing pension providers before transferring (fees, investment options, death benefits, guarantees, withdrawal terms)? (6) For someone with 4-5 smaller pensions from previous jobs, what's the typical impact on fees and investment flexibility? Please provide a worked example showing the cost/benefit analysis of consolidating vs. keeping separate, and a decision-making flowchart for someone uncertain." },
@@ -636,6 +651,16 @@ const PROMPTS_DATA = {
         { "id": "optimise_4", "quickSummary": "Annuity decision point", "humanVersion": "At what point does buying an annuity make financial sense, and should it be part of my overall strategy?", "aiOptimised": "I'm trying to decide whether an annuity makes financial sense for me. Please explain: (1) What is an annuity and how does it work (payment structure, guarantees, death benefits, types — fixed, escalating, joint life)? (2) How much income would I get from different types of annuities, and how do annuity rates compare to historical levels? (3) What are the break-even points — at what age does an annuity typically make financial sense (life expectancy, discount rates)? (4) What are the key factors that affect whether an annuity suits my situation (health, life expectancy, other income sources, bequest goals, risk tolerance)? (5) What are the alternatives to a full annuity (drawdown, hybrid approaches, delayed annuity purchase, longevity insurance)? (6) If I buy an annuity, what type would suit me best (fixed, escalating, joint-life)? (7) What are the latest annuity rates (2025) and how have they changed? Please provide a detailed comparison for someone turning 65 with £150k pension pot — show annuity income vs. drawdown income over different scenarios (living to 80, 85, 90, 95), including tax implications." },
         { "id": "optimise_5", "quickSummary": "Investment strategy for drawdown", "humanVersion": "How should my investment strategy change as I move from accumulation to living off my pension? What portfolio type is appropriate?", "aiOptimised": "I need to rethink my investment strategy now that I'm retiring and will be drawing income. Please explain: (1) Why does investment strategy need to change from accumulation (saving) to decumulation (drawing income)? (2) What are the main portfolio types for retirement (cautious, balanced, growth, etc.) and who does each suit? (3) What should my asset allocation be (stocks vs. bonds vs. cash) and does it depend on my age, life expectancy, or income needs? (4) How important is ongoing growth in retirement — shouldn't I be 100% in safe investments? (5) What role should bonds play, and what duration should I target? (6) How much cash should I hold, and how does this relate to sequence of returns risk? (7) What about defensive/alternative investments, and do they help? (8) Should my portfolio change over time (getting more cautious as I age), and if so, how? Please provide specific portfolio allocation recommendations for someone aged 60-70, 70-80, and 80+ retiring with different income needs and risk tolerances. Include discussion of current yield and growth prospects (2025 context)." },
         { "id": "optimise_6", "quickSummary": "Part-time work impact", "humanVersion": "How does part-time work in early retirement affect my pension tax, state pension eligibility, and overall income strategy?", "aiOptimised": "I'm considering part-time work in early retirement and need to understand the implications. Please explain: (1) How does earning additional income affect my tax position (personal allowance, higher rate tax, National Insurance)? (2) If I have both pension income and earned income, how does this affect my overall tax bill (different allowances, marginal rates)? (3) Can earning money reduce my State Pension (does it mean deferring is worse value)? (4) What is the 'earnings limit' for benefits or means-testing, and does any apply to me? (5) What income level starts to make additional tax bands relevant? (6) What are the National Insurance implications of part-time work (do I pay NI, does it affect my NI record, do I care)? (7) How much part-time work 'pays for itself' after tax and National Insurance? (8) Should I structure any work differently (employed vs. self-employed, consulting vs. salary)? Please provide worked examples: someone aged 62 earning £200/week, someone aged 60 earning £300/week, and someone aged 58 earning £500/week — for each show total tax/NI paid and net income received. Also show how this affects their retirement income needs from pension." }
+      ]
+    },
+    {
+      "id": "anythingElse",
+      "title": "Anything else?",
+      "subtitle": "Specific scenarios, alternative options, and other common queries.",
+      "questions": [
+        { "id": "anythingElse_1", "quickSummary": "Property wealth", "humanVersion": "How can I use my property wealth (e.g., downsizing or equity release) to fund retirement?", "aiOptimised": "I want to understand how I could use property wealth to support my retirement income. Please explain: (1) What are the main ways to release property wealth in retirement (downsizing, equity release/lifetime mortgages, home reversion plans, renting out a room)? (2) How does each option work, and what are the typical costs, interest, or reduction in property value involved? (3) What are the pros and cons of each approach, including the impact on any inheritance I want to leave and on means-tested benefits? (4) How do I estimate how much income or lump sum I could realistically release from my property? (5) What questions should I ask a specialist adviser before proceeding with any option? Please provide a worked example for someone with £200,000 of property equity comparing downsizing versus equity release." },
+        { "id": "anythingElse_2", "quickSummary": "Working in retirement", "humanVersion": "What are the rules and implications of working part-time while drawing a pension?", "aiOptimised": "I'm considering working part-time while also drawing my pension and want to understand the implications. Please explain: (1) Can I work and draw a pension at the same time, and are there any restrictions on doing so? (2) How does earning income affect my tax position when combined with pension income (personal allowance, higher-rate tax thresholds)? (3) What is the Money Purchase Annual Allowance (MPAA), and when does it apply if I start flexibly drawing from a defined contribution pension while still working? (4) Does part-time work affect my State Pension or entitlement to any other benefits? (5) What National Insurance considerations apply to part-time earnings at this stage? Please provide a worked example of someone earning £10,000/year part-time alongside £15,000/year of pension income, showing the tax and allowance implications." },
+        { "id": "anythingElse_3", "quickSummary": "Inheritance & estate", "humanVersion": "How are pensions treated for inheritance tax purposes?", "aiOptimised": "I want to understand how my pension fits into inheritance planning. Please explain: (1) Are pensions normally inside or outside of my estate for inheritance tax purposes? (2) How does the tax treatment differ depending on whether I die before or after age 75? (3) Who can inherit my pension, and how is it taxed in their hands? (4) What practical steps do I need to take to make sure my pension goes to the people I intend (e.g., expression of wish forms, keeping beneficiaries up to date)? (5) How might proposed or recent changes to pension and inheritance tax rules affect this? Please explain in plain English, note clearly where rules may change, and suggest what I should confirm directly with a financial adviser or my pension provider." }
       ]
     }
   ]
@@ -656,7 +681,7 @@ window.STARTER_PROMPT_DATA = STARTER_PROMPT_DATA;
 
 const GENERIC_PROMPT = STARTER_PROMPT_DATA.prompt;
 
-const STEP_NAMES = ['Select questions', 'Profile', 'Finances', 'Goals', 'Income', 'Concerns'];
+const STEP_NAMES = ['Select questions', 'Profile', 'Finances', 'Goals', 'Income', 'Concerns', 'Summary'];
 const ACCENT = '#2C8494', ACCENT_DARK = '#1B5560', ACCENT_TINT = '#EAF3F3', SURFACE = '#eceae9', TEXT = '#201e1d', TEXT_MUTED = 'rgba(32,30,29,0.65)', DIVIDER = 'rgba(32,30,29,0.4)';
 
 class Component extends DCLogic {
@@ -665,7 +690,7 @@ class Component extends DCLogic {
     view: 'landing',
     phase: 'wizard',
     step: 1,
-    sectionIndex: 0,
+    openSection: null,
     completedSteps: [],
     selected: {},
     expanded: {},
@@ -678,7 +703,7 @@ class Component extends DCLogic {
     showStarterPromptText: false
   };
 
-  goApp = () => { window.scrollTo(0, 0); this.setState({ view: 'app', phase: 'wizard', step: 1, sectionIndex: 0 }); };
+  goApp = () => { window.scrollTo(0, 0); this.setState({ view: 'app', phase: 'wizard', step: 1, openSection: null }); };
   goBrowse = () => { window.scrollTo(0, 0); this.setState({ view: 'browse' }); };
   goLanding = () => { window.scrollTo(0, 0); this.setState({ view: 'landing' }); };
   goStarterPrompt = () => { window.scrollTo(0, 0); this.setState({ view: 'starterPrompt', showStarterPromptText: false }); };
@@ -687,24 +712,27 @@ class Component extends DCLogic {
   copyGeneric = () => this.copyText(GENERIC_PROMPT, 'Starter prompt copied');
 
   goStep = (n) => {
-    if (n > 1 && Object.keys(this.state.selected).length === 0) {
-      this.setState({ step: 1, sectionIndex: 0, showSelectionWarning: true });
+    if (n === 7) {
+      if (Object.keys(this.state.selected).length === 0) {
+        this.setState({ phase: 'wizard', step: 1, showSelectionWarning: true });
+        return;
+      }
+      this.generatePrompt();
+      this.setState((s) => ({ completedSteps: s.completedSteps.includes(6) ? s.completedSteps : [...s.completedSteps, 6], phase: 'result' }));
       return;
     }
-    this.setState({ step: n, sectionIndex: 0, showSelectionWarning: false });
+    if (n > 1 && Object.keys(this.state.selected).length === 0) {
+      this.setState({ phase: 'wizard', step: 1, showSelectionWarning: true });
+      return;
+    }
+    this.setState({ phase: 'wizard', step: n, showSelectionWarning: false });
   };
 
   nextStep = () => {
     const s = this.state;
-    if (s.step === 1) {
-      if (s.sectionIndex < PROMPTS_DATA.sections.length - 1) {
-        this.setState({ sectionIndex: s.sectionIndex + 1 });
-        return;
-      }
-      if (Object.keys(s.selected).length === 0) {
-        this.setState({ showSelectionWarning: true });
-        return;
-      }
+    if (s.step === 1 && Object.keys(s.selected).length === 0) {
+      this.setState({ showSelectionWarning: true });
+      return;
     }
     this.setState((s2) => ({
       completedSteps: s2.completedSteps.includes(s2.step) ? s2.completedSteps : [...s2.completedSteps, s2.step],
@@ -712,23 +740,14 @@ class Component extends DCLogic {
     }));
   };
   prevStep = () => {
-    const s = this.state;
-    if (s.step === 1) {
-      if (s.sectionIndex > 0) this.setState({ sectionIndex: s.sectionIndex - 1 });
-      return;
-    }
     this.setState((s2) => ({ step: Math.max(1, s2.step - 1) }));
   };
 
-  finishWizard = () => {
-    if (Object.keys(this.state.selected).length === 0) {
-      this.setState({ step: 1, showSelectionWarning: true });
-      return;
-    }
-    this.setState((s) => ({ completedSteps: s.completedSteps.includes(6) ? s.completedSteps : [...s.completedSteps, 6] }));
-    this.generatePrompt();
-    this.setState({ phase: 'result' });
-  };
+  openSection = (id) => this.setState({ openSection: id });
+  closeSection = () => this.setState({ openSection: null });
+  stopPropagation = (e) => e.stopPropagation();
+
+  finishWizard = () => this.goStep(7);
 
   handleChange = (e) => {
     const id = e.target.id;
@@ -947,7 +966,7 @@ class Component extends DCLogic {
   openInChatGPT = () => window.open('https://chatgpt.com/?q=' + encodeURIComponent(this.state.outputText), '_blank');
   openInClaude = () => window.open('https://claude.ai/?q=' + encodeURIComponent(STARTER_PROMPT_DATA.prompt), '_blank');
   openInGemini = () => window.open('https://gemini.google.com/?q=' + encodeURIComponent(STARTER_PROMPT_DATA.prompt), '_blank');
-  adjustInputs = () => this.setState({ phase: 'wizard', step: 1 });
+  adjustInputs = () => this.setState({ phase: 'wizard', step: 1, openSection: null });
   showUsePromptModal = () => window.showPromptModal(this.state.outputText);
 
   renderVals() {
@@ -972,7 +991,7 @@ class Component extends DCLogic {
         showCopy,
         toggleLabel: expanded ? 'Hide AI-optimised prompt' : 'Show AI-optimised prompt',
         copyLabel: 'Copy prompt',
-        cardStyle: { border: selected ? '2px solid ' + ACCENT : '2px solid ' + DIVIDER, background: selected ? ACCENT_TINT : SURFACE },
+        cardStyle: { borderRadius: '8px', cursor: 'pointer', border: selected ? '2px solid ' + ACCENT : '2px solid ' + DIVIDER, background: selected ? ACCENT_TINT : SURFACE },
         onRowClick: () => toggleFn(q.id),
         onCheckboxClick: (e) => { e.stopPropagation(); toggleFn(q.id); },
         onToggleExpand: (e) => { e.stopPropagation(); toggleExpandFn(q.id); },
@@ -980,15 +999,28 @@ class Component extends DCLogic {
       };
     };
 
-    const currentSectionData = PROMPTS_DATA.sections[s.sectionIndex] || PROMPTS_DATA.sections[0];
-    const currentSection = {
-      id: currentSectionData.id,
-      title: currentSectionData.title,
-      subtitle: currentSectionData.subtitle,
-      onSelectAll: () => this.selectAllSection(currentSectionData.id),
-      onDeselectAll: () => this.deselectSection(currentSectionData.id),
-      questions: currentSectionData.questions.map((q) => buildQuestionView(q, s.selected, s.expanded, this.toggleQuestion, this.toggleExpand, false))
-    };
+    const sectionCards = PROMPTS_DATA.sections.map((sec) => {
+      const count = sec.questions.filter((q) => s.selected[q.id]).length;
+      return {
+        id: sec.id,
+        title: sec.title,
+        subtitle: sec.subtitle,
+        count,
+        countLabel: count === 1 ? '1 question selected' : count + ' questions selected',
+        cardStyle: { borderRadius: '8px', padding: '24px', border: count > 0 ? '2px solid ' + ACCENT : '1px solid rgba(32,30,29,0.15)', background: count > 0 ? ACCENT_TINT : '#fff' },
+        badgeStyle: { width: '24px', height: '24px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 800, flex: 'none', background: count > 0 ? ACCENT : DIVIDER, color: count > 0 ? '#fff' : TEXT },
+        onOpen: () => this.openSection(sec.id)
+      };
+    });
+
+    const openSectionData = s.openSection ? PROMPTS_DATA.sections.find((sec) => sec.id === s.openSection) : null;
+    const activeSectionModal = openSectionData ? {
+      id: openSectionData.id,
+      title: openSectionData.title,
+      onSelectAll: () => this.selectAllSection(openSectionData.id),
+      onDeselectAll: () => this.deselectSection(openSectionData.id),
+      questions: openSectionData.questions.map((q) => buildQuestionView(q, s.selected, s.expanded, this.toggleQuestion, this.toggleExpand, false))
+    } : null;
 
     const browseSections = PROMPTS_DATA.sections.map((sec) => ({
       id: sec.id,
@@ -1001,16 +1033,29 @@ class Component extends DCLogic {
 
     const steps = STEP_NAMES.map((label, i) => {
       const n = i + 1;
-      const active = s.step === n;
-      const completed = s.completedSteps.includes(n);
+      const isSummaryTab = n === 7;
+      const active = isSummaryTab ? isResult : (isWizard && s.step === n);
+      const completed = isSummaryTab ? false : s.completedSteps.includes(n);
       return {
         n,
         label,
         goTo: () => this.goStep(n),
-        tabStyle: { borderBottom: active ? '3px solid ' + ACCENT : '3px solid transparent', color: active ? ACCENT_DARK : completed ? TEXT : TEXT_MUTED, fontWeight: active ? 800 : 600 },
-        dotStyle: { background: active ? ACCENT : completed ? ACCENT_DARK : DIVIDER }
+        tabStyle: {
+          padding: '10px 16px',
+          fontSize: '13px',
+          cursor: 'pointer',
+          whiteSpace: 'nowrap',
+          flex: 'none',
+          borderBottom: active ? '3px solid ' + ACCENT : '3px solid transparent',
+          color: active ? ACCENT_DARK : completed ? TEXT : TEXT_MUTED,
+          fontWeight: active ? 800 : 600,
+          background: active ? ACCENT_TINT : 'transparent',
+          borderRadius: '6px 6px 0 0'
+        },
+        dotStyle: { width: '9px', height: '9px', borderRadius: '50%', cursor: 'pointer', background: active ? ACCENT : completed ? ACCENT_DARK : DIVIDER }
       };
     });
+    const wizardDots = steps.slice(0, 6);
 
     const selectedCount = Object.keys(s.selected).length;
     const browseSelectedCount = Object.keys(s.browseSelected).length;
@@ -1018,10 +1063,9 @@ class Component extends DCLogic {
     const browseHasNoSelection = browseSelectedCount === 0;
     const browseHasOneSelection = browseSelectedCount === 1;
     const browseHasMultipleSelections = browseSelectedCount > 1;
-    const totalSections = PROMPTS_DATA.sections.length;
-    const backDisabled = s.step === 1 && s.sectionIndex === 0;
-    const nextLabel = s.step === 1 && s.sectionIndex < totalSections - 1 ? 'Next section \u2192' : s.step === 6 ? 'Create prompt \u2192' : 'Next \u2192';
-    const backLabel = s.step === 1 && s.sectionIndex > 0 ? '\u2190 Previous section' : '\u2190 Back';
+    const backDisabled = s.step === 1;
+    const nextLabel = s.step === 6 ? 'Create prompt \u2192' : 'Next \u2192';
+    const backLabel = '\u2190 Back';
 
     return {
       isLanding, isApp, isWizard, isResult, isStarterPrompt, isBrowse,
@@ -1032,9 +1076,10 @@ class Component extends DCLogic {
       toggleStarterPromptText: this.toggleStarterPromptText,
       showStarterPromptModal: window.showStarterPromptModal,
       copyGeneric: this.copyGeneric, copyStarter: this.copyStarter,
-      currentSection,
-      sectionNumber: s.sectionIndex + 1,
-      totalSections,
+      sectionCards,
+      activeSectionModal,
+      closeSection: this.closeSection,
+      stopPropagation: this.stopPropagation,
       hasSelection: selectedCount > 0,
       selectedCount,
       browseSections,
@@ -1048,6 +1093,7 @@ class Component extends DCLogic {
       selectAllPrompts: this.selectAllPrompts,
       deselectAllPrompts: this.deselectAllPrompts,
       steps,
+      wizardDots,
       isStep1: s.step === 1, isStep2: s.step === 2, isStep3: s.step === 3, isStep4: s.step === 4, isStep5: s.step === 5, isStep6: s.step === 6,
       isNotStep6: s.step !== 6,
       lifestyleIsCustom: s.fields.lifestyle === 'Enter my own monthly amount',
@@ -1057,7 +1103,7 @@ class Component extends DCLogic {
       backDisabled,
       nextLabel,
       backLabel,
-      prevBtnStyle: { background: 'transparent', border: '1px solid ' + DIVIDER, fontSize: '14px', padding: '12px 20px', cursor: backDisabled ? 'not-allowed' : 'pointer', textAlign: 'left', opacity: backDisabled ? 0.45 : 1 },
+      prevBtnStyle: { whiteSpace: 'nowrap', background: 'transparent', border: '1px solid ' + DIVIDER, fontSize: '14px', padding: '12px 20px', cursor: backDisabled ? 'not-allowed' : 'pointer', textAlign: 'left', opacity: backDisabled ? 0.45 : 1 },
       outputText: s.outputText,
       copyFinal: this.copyFinal,
       openInChatGPT: this.openInChatGPT,
