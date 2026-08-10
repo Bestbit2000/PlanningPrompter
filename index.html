@@ -212,7 +212,7 @@
       <h2 style="font-size:26px;margin:0 0 6px">Build your prompt</h2>
       <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Select the questions you want answered, then add as much or as little detail about yourself as you like. Nothing here is saved or sent anywhere &mdash; it only builds the text of your prompt.</p>
 
-      <div style="display:flex;gap:4px;border-bottom:2px solid rgba(32,30,29,0.15);margin-bottom:28px;flex-wrap:wrap">
+      <div class="wizard-tabs" style="display:flex;gap:4px;border-bottom:2px solid rgba(32,30,29,0.15);margin-bottom:28px">
         <sc-for list="{{ steps }}" as="st" hint-placeholder-count="7">
           <div onClick="{{ st.goTo }}" style="{{ st.tabStyle }}">{{ st.tabText }}</div>
         </sc-for>
@@ -461,29 +461,18 @@
         </button>
         <sc-if value="{{ showReviewDetails }}">
         <div style="padding:0 24px 24px;border-top:1px solid rgba(32,30,29,0.1);font-size:13px;color:rgba(32,30,29,0.8);line-height:1.8">
-          <sc-if value="{{ fields.age }}">
-            <div style="margin-bottom:12px"><strong>Your age:</strong> {{ fields.age }}</div>
+          <sc-if value="{{ hasReviewDetails }}">
+          <sc-for list="{{ reviewSections }}" as="sec" hint-placeholder-count="5">
+            <div style="margin-top:16px">
+              <div style="font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:#226B79;font-weight:800;margin-bottom:8px">{{ sec.title }}</div>
+              <sc-for list="{{ sec.items }}" as="item" hint-placeholder-count="3">
+                <div style="margin-bottom:8px"><strong>{{ item.label }}:</strong> {{ item.value }}</div>
+              </sc-for>
+            </div>
+          </sc-for>
           </sc-if>
-          <sc-if value="{{ fields.partnerAge }}">
-            <div style="margin-bottom:12px"><strong>Partner's age:</strong> {{ fields.partnerAge }}</div>
-          </sc-if>
-          <sc-if value="{{ fields.retireAge }}">
-            <div style="margin-bottom:12px"><strong>Target retirement age:</strong> {{ fields.retireAge }}</div>
-          </sc-if>
-          <sc-if value="{{ fields.country }}">
-            <div style="margin-bottom:12px"><strong>Country / region:</strong> {{ fields.country }}</div>
-          </sc-if>
-          <sc-if value="{{ fields.employment }}">
-            <div style="margin-bottom:12px"><strong>Employment status:</strong> {{ fields.employment }}</div>
-          </sc-if>
-          <sc-if value="{{ fields.income }}">
-            <div style="margin-bottom:12px"><strong>Annual household income:</strong> {{ fields.income }}</div>
-          </sc-if>
-          <sc-if value="{{ fields.pension }}">
-            <div style="margin-bottom:12px"><strong>Pension / retirement savings:</strong> {{ fields.pension }}</div>
-          </sc-if>
-          <sc-if value="{{ fields.lifestyle }}">
-            <div style="margin-bottom:12px"><strong>Lifestyle expectation:</strong> {{ fields.lifestyle }}</div>
+          <sc-if value="{{ !hasReviewDetails }}" hint-placeholder-val="{{ false }}">
+            <div style="padding-top:16px;color:rgba(32,30,29,0.6)">No additional details were entered.</div>
           </sc-if>
         </div>
         </sc-if>
@@ -599,7 +588,7 @@
       <sc-if value="{{ browseHasOneSelection }}"><span class="count">1</span> question selected</sc-if>
       <sc-if value="{{ browseHasMultipleSelections }}"><span class="count">{{ browseSelectedCount }}</span> questions selected</sc-if>
     </span>
-    <button class="copy-button" data-copy-all="true" data-disabled="{{ browseHasNoSelection }}">Use all selected</button>
+    <button class="copy-button" onClick="{{ copyAllSelected }}" data-disabled="{{ browseHasNoSelection }}">Use all selected</button>
   </div>
   </sc-if>
 
@@ -1063,6 +1052,54 @@ class Component extends DCLogic {
     const targetSlotStyle = { order: 2, display: lifestyleIsCustom ? 'block' : 'none' };
     const partTimeSlotStyle = { order: lifestyleIsCustom ? 3 : 2 };
 
+    const f = s.fields;
+    const profileItems = [];
+    if (f.age) profileItems.push({ label: 'Your age', value: f.age });
+    if (f.partnerAge) profileItems.push({ label: "Partner's age", value: f.partnerAge });
+    if (f.retireAge) profileItems.push({ label: 'Target retirement age', value: f.retireAge });
+    if (f.country) profileItems.push({ label: 'Country / region', value: f.country });
+    if (f.employment) profileItems.push({ label: 'Employment status', value: f.employment });
+    if (f.health) profileItems.push({ label: 'Health status', value: f.health });
+    if (f.dependants) profileItems.push({ label: 'Financial dependants', value: f.dependants });
+
+    const financeItems = [];
+    if (f.income) financeItems.push({ label: 'Annual household income', value: f.income });
+    if (f.pension) financeItems.push({ label: 'Total pension / retirement savings', value: f.pension });
+    if (f.savings) financeItems.push({ label: 'Other savings & investments', value: f.savings });
+    if (f.equity) financeItems.push({ label: 'Property equity', value: f.equity });
+    if (f.debts) financeItems.push({ label: 'Outstanding debts', value: f.debts });
+    if (f.contributions) financeItems.push({ label: 'Annual pension contributions', value: f.contributions });
+
+    const goalsItems = [];
+    if (f.lifestyle) goalsItems.push({ label: 'Lifestyle expectation', value: f.lifestyle });
+    if (lifestyleIsCustom && f.target) goalsItems.push({ label: 'Target monthly income', value: f.target });
+    if (f.partTime) goalsItems.push({ label: 'Part-time work in retirement', value: f.partTime });
+    if (f.estate) goalsItems.push({ label: 'Leave an estate / inheritance', value: f.estate });
+    if (f.plans) goalsItems.push({ label: 'Key plans or activities', value: f.plans });
+
+    const sourcesList = this.getSources();
+    const incomeItems = [];
+    if (sourcesList.length) incomeItems.push({ label: 'Expected sources', value: sourcesList.join(', ') });
+    if (f.src_other && f.srcOtherText) incomeItems.push({ label: 'Other source', value: f.srcOtherText });
+    if (f.srcNotes) incomeItems.push({ label: 'Notes', value: f.srcNotes });
+
+    const concernsList = this.getConcerns();
+    const concernsItems = [];
+    if (concernsList.length) concernsItems.push({ label: 'Main concerns', value: concernsList.join(', ') });
+    if (f.c_other && f.concernOtherText) concernsItems.push({ label: 'Other concern', value: f.concernOtherText });
+    if (f.risk) concernsItems.push({ label: 'Investment risk tolerance', value: f.risk });
+    if (f.buffer) concernsItems.push({ label: 'Emergency income buffer', value: f.buffer });
+    if (f.question) concernsItems.push({ label: 'Additional question', value: f.question });
+
+    const reviewSections = [
+      { title: 'Profile & timeline', items: profileItems },
+      { title: 'Financial picture', items: financeItems },
+      { title: 'Retirement goals', items: goalsItems },
+      { title: 'Expected income sources', items: incomeItems },
+      { title: 'Concerns, risk & anything else', items: concernsItems }
+    ].filter((sec) => sec.items.length > 0);
+    const hasReviewDetails = reviewSections.length > 0;
+
     return {
       isLanding, isApp, isWizard, isResult, isStarterPrompt, isBrowse,
       goLanding: this.goLanding, goApp: this.goApp, goBrowse: this.goBrowse, goStarterPrompt: this.goStarterPrompt,
@@ -1079,6 +1116,8 @@ class Component extends DCLogic {
       showReviewDetails: s.showReviewDetails,
       toggleReviewDetails: this.toggleReviewDetails,
       reviewToggleIcon: s.showReviewDetails ? '▲' : '▼',
+      reviewSections,
+      hasReviewDetails,
       hasSelection: selectedCount > 0,
       selectedCount,
       browseSections,
@@ -1273,154 +1312,6 @@ window.PROMPTS_DATA = PROMPTS_DATA;
       }, 100);
     }
   });
-
-  // Use event delegation for copy button (works with dynamically rendered content)
-  document.addEventListener('click', (e) => {
-    const copyButton = e.target.closest('.copy-button') || e.target.closest('[data-copy-all]');
-
-    if (copyButton && copyButton.dataset.disabled !== 'true') {
-      // Get all checked checkboxes
-      const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
-      if (checkedBoxes.length === 0) {
-        return;
-      }
-
-      // Extract text from each checked question (title + AI-optimised version only)
-      const selectedText = Array.from(checkedBoxes)
-        .map((checkbox, idx) => {
-          const card = checkbox.closest('[style*="border:2px"]') || checkbox.closest('div');
-          if (!card) {
-            return '';
-          }
-
-          // Get the title (quickSummary) - look for divs containing text that's typically short
-          let titleEl = null;
-          const allDivs = card.querySelectorAll('div');
-          for (let div of allDivs) {
-            const text = div.textContent.trim();
-            // Title is typically short (under 100 chars) and doesn't include the full question text
-            if (text.length > 0 && text.length < 100 && !text.includes('?') && !text.includes('Show')) {
-              titleEl = div;
-              break;
-            }
-          }
-          const title = titleEl ? titleEl.textContent.trim() : '';
-
-          // Try to find AI prompt in expanded section first
-          let aiPromptEl = null;
-          const allCardDivs = card.querySelectorAll('div');
-          for (let div of allCardDivs) {
-            const style = div.getAttribute('style') || '';
-            if (style.includes('margin-top') && style.includes('background:')) {
-              aiPromptEl = div;
-              break;
-            }
-          }
-
-          let aiPrompt = aiPromptEl ? aiPromptEl.textContent.trim() : '';
-
-          // If AI prompt not found in expanded section, look it up from PROMPTS_DATA
-          if (!aiPrompt && title && typeof PROMPTS_DATA !== 'undefined') {
-            // Search through all sections and their questions
-            if (PROMPTS_DATA.sections && Array.isArray(PROMPTS_DATA.sections)) {
-              for (const section of PROMPTS_DATA.sections) {
-                if (section.questions && Array.isArray(section.questions)) {
-                  for (const question of section.questions) {
-                    // Match by quickSummary
-                    if (question.quickSummary && question.quickSummary.trim() === title.trim()) {
-                      aiPrompt = question.aiOptimised || '';
-                      break;
-                    }
-                  }
-                }
-                if (aiPrompt) break;
-              }
-            }
-          }
-
-          const result = title && aiPrompt ? `${title}\n${aiPrompt}` : '';
-          return result;
-        })
-        .filter(Boolean)
-        .join('\n\n---\n\n');
-
-      if (selectedText) {
-        // Copy to clipboard
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(selectedText).then(() => {
-            showCopyModal(checkedBoxes.length, selectedText);
-          }).catch((err) => {
-            fallbackCopy(selectedText);
-            showCopyModal(checkedBoxes.length, selectedText);
-          });
-        } else {
-          fallbackCopy(selectedText);
-          showCopyModal(checkedBoxes.length, selectedText);
-        }
-      }
-    }
-  });
-
-  // Helper function to copy text
-  const fallbackCopy = (text) => {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); } catch (e) {}
-    document.body.removeChild(ta);
-  };
-
-  // Helper function to show copy modal
-  const showCopyModal = (count, promptText) => {
-    const modal = document.getElementById('copy-modal');
-    if (!modal) return;
-
-    // Clean up the prompt text
-    const cleanText = promptText
-      .split('\n\n---\n\n')
-      .map(q => q.trim())
-      .join('\n\n---\n\n');
-
-    // Update modal heading
-    const heading = modal.querySelector('#modal-heading');
-    if (heading) {
-      heading.textContent = `${count} question${count > 1 ? 's' : ''} copied`;
-    }
-
-    // Update prompt display
-    const promptEl = modal.querySelector('#modal-prompt');
-    if (promptEl) {
-      promptEl.textContent = cleanText;
-    }
-
-    // Update chatbot links with encoded prompt URLs
-    const encodedPrompt = encodeURIComponent(cleanText);
-
-    const chatgptLink = modal.querySelector('#modal-chatgpt-link');
-    if (chatgptLink) {
-      chatgptLink.href = `https://chatgpt.com/?q=${encodedPrompt}`;
-    }
-
-    const claudeLink = modal.querySelector('#modal-claude-link');
-    if (claudeLink) {
-      claudeLink.href = `https://claude.ai/new?q=${encodedPrompt}`;
-    }
-
-    const copilotLink = modal.querySelector('#modal-copilot-link');
-    if (copilotLink) {
-      copilotLink.href = `https://copilot.microsoft.com/?q=${encodedPrompt}`;
-    }
-
-    // Show modal
-    modal.style.display = 'flex';
-
-    // Initialize chatbot selection when modal opens
-    initializeChatbotSelection();
-  };
-
-  // Expose showCopyModal globally so other pages can use it
-  window.showCopyModal = showCopyModal;
 
   // Helper function to create modal if it doesn't exist
   const ensureModalExists = () => {

@@ -791,6 +791,20 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   [style*="display: grid"][style*="grid-template-columns: 1fr 1fr"] {
     grid-template-columns: 1fr !important;
   }
+
+  /* Wizard step tabs: Material-style scrollable single row instead of wrapping onto multiple lines */
+  .wizard-tabs {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .wizard-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .wizard-tabs > div {
+    flex: 0 0 auto !important;
+  }
 }
 
 @media (max-width: 480px) {
