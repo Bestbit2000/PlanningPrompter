@@ -198,10 +198,20 @@
     </div>
 
     <!-- Disclaimer -->
-    <div style="background:#fef3c7;border-left:4px solid #f59e0b;border-radius:8px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start">
+    <div style="background:#fef3c7;border-left:4px solid #f59e0b;border-radius:8px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start;margin-bottom:24px">
       <span style="font-size:20px;flex-shrink:0">⚠️</span>
       <div>
         <p style="font-size:13px;color:#78350f;margin:0;line-height:1.6"><strong>Note:</strong> This is for educational purposes only. The prompt asks for factual information, not regulated financial advice. You should always speak to a qualified financial adviser about your personal circumstances.</p>
+      </div>
+    </div>
+
+    <div style="background:#2C8494;color:#fff;padding:40px 32px;margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%)">
+      <div style="max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap">
+        <div>
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:26px;margin:0 0 8px;color:#fff">Want to be more specific about the questions?</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.9);margin:0;max-width:50ch">Choose from a list based on what you're looking to know, and pick the questions that matter most to you.</p>
+        </div>
+        <button data-action="goBrowse" onClick="{{ goBrowse }}" style="background:#fff;color:#164752;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;flex:none;white-space:nowrap;border-radius:4px">Choose from a list &rarr;</button>
       </div>
     </div>
   </div>
