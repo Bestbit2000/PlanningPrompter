@@ -24,9 +24,9 @@
 <div style="background:#f5f4f3;color:#201e1d;font-family:'Archivo',system-ui,sans-serif;min-height:100vh;line-height:1.55">
 
   <!-- ============ NAV ============ -->
-  <div class="site-header">
+  <header class="site-header">
     <div class="site-header-inner">
-      <div onClick="{{ goLanding }}" class="site-brand">
+      <div onClick="{{ goLanding }}" role="button" tabindex="0" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" class="site-brand">
         <span class="site-brand-name">Retirement Income Taskforce</span>
         <span class="site-brand-tagline">Consumer Duty Alliance</span>
       </div>
@@ -34,11 +34,11 @@
         <a href="#" onClick="{{ goLanding }}" class="site-nav-link">Home</a>
       </div>
     </div>
-  </div>
+  </header>
 
   <!-- ============ LANDING ============ -->
   <sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
-  <div data-screen-label="Landing">
+  <main data-screen-label="Landing">
 
     <!-- HERO -->
     <div class="landing-hero">
@@ -130,20 +130,20 @@
     </div>
 
     <!-- FOOTER -->
-    <div class="landing-footer">
+    <footer class="landing-footer">
       <div class="landing-footer-inner">
         <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
         <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
         <a href="https://consumerduty.org/working-groups/retirement-income-taskforce">Retirement Income Taskforce, part of the Consumer Duty Alliance</a>
       </div>
-    </div>
+    </footer>
 
-  </div>
+  </main>
   </sc-if>
 
   <!-- ============ STARTER PROMPT ============ -->
   <sc-if value="{{ isStarterPrompt }}">
-  <div data-screen-label="Starter Prompt" style="max-width:1120px;margin:0 auto;padding:32px">
+  <main data-screen-label="Starter Prompt" style="max-width:1120px;margin:0 auto;padding:32px">
 
     <!-- Header Section -->
     <div style="margin-bottom:32px">
@@ -158,7 +158,7 @@
       <!-- Card 1: What it provides -->
       <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid #e2e8f0;transition:all 0.3s ease">
         <div style="display:flex;align-items:center;margin-bottom:16px;gap:12px">
-          <div style="background:#d0f0f0;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#2C8494;font-size:20px">ℹ️</div>
+          <div style="background:#d0f0f0;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#2C8494;font-size:20px" aria-hidden="true">ℹ️</div>
           <h3 style="font-size:16px;font-weight:700;color:#201e1d;margin:0">What it provides</h3>
         </div>
         <p style="font-size:14px;color:#555;margin:0;line-height:1.6">A complete introduction to UK retirement income options, risks, and actionable next steps tailored for beginners.</p>
@@ -167,7 +167,7 @@
       <!-- Card 2: How it works -->
       <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid #e2e8f0;transition:all 0.3s ease">
         <div style="display:flex;align-items:center;margin-bottom:16px;gap:12px">
-          <div style="background:#dbeafe;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:20px">⚙️</div>
+          <div style="background:#dbeafe;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:20px" aria-hidden="true">⚙️</div>
           <h3 style="font-size:16px;font-weight:700;color:#201e1d;margin:0">How it works</h3>
         </div>
         <p style="font-size:14px;color:#555;margin:0;line-height:1.6">It sets clear boundaries, asking the AI to act as an educational coach. It breaks down complex retirement topics into digestible chunks.</p>
@@ -176,7 +176,7 @@
       <!-- Card 3: What to expect -->
       <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid #e2e8f0;transition:all 0.3s ease">
         <div style="display:flex;align-items:center;margin-bottom:16px;gap:12px">
-          <div style="background:#e9d5ff;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#7e22ce;font-size:20px">👁️</div>
+          <div style="background:#e9d5ff;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#7e22ce;font-size:20px" aria-hidden="true">👁️</div>
           <h3 style="font-size:16px;font-weight:700;color:#201e1d;margin:0">What to expect</h3>
         </div>
         <p style="font-size:14px;color:#555;margin:0;line-height:1.6">A jargon-free explanation of annuities, drawdown, state pensions, and key risks, structured with clear headings and bullet points.</p>
@@ -199,7 +199,7 @@
 
     <!-- Disclaimer -->
     <div style="background:#fef3c7;border-left:4px solid #f59e0b;border-radius:8px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start;margin-bottom:24px">
-      <span style="font-size:20px;flex-shrink:0">⚠️</span>
+      <span style="font-size:20px;flex-shrink:0" aria-hidden="true">⚠️</span>
       <div>
         <p style="font-size:13px;color:#78350f;margin:0;line-height:1.6"><strong>Note:</strong> This is for educational purposes only. The prompt asks for factual information, not regulated financial advice. You should always speak to a qualified financial adviser about your personal circumstances.</p>
       </div>
@@ -214,12 +214,12 @@
         <button data-action="goBrowse" onClick="{{ goBrowse }}" style="background:#fff;color:#164752;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;flex:none;white-space:nowrap;border-radius:4px">Choose from a list &rarr;</button>
       </div>
     </div>
-  </div>
+  </main>
   </sc-if>
 
   <!-- ============ APP ============ -->
   <sc-if value="{{ isApp }}">
-  <div data-screen-label="App" style="max-width:1120px;margin:0 auto;padding:0 32px 80px">
+  <main data-screen-label="App" style="max-width:1120px;margin:0 auto;padding:0 32px 80px">
 
     <div style="padding-top:32px">
       <h2 style="font-size:26px;margin:0 0 6px">Build your prompt</h2>
@@ -228,7 +228,7 @@
       <div class="wizard-tabs-wrap">
         <div class="wizard-tabs" style="display:flex;gap:4px;border-bottom:2px solid rgba(32,30,29,0.15);margin-bottom:28px">
           <sc-for list="{{ steps }}" as="st" hint-placeholder-count="7">
-            <div onClick="{{ st.goTo }}" style="{{ st.tabStyle }}">{{ st.tabText }}</div>
+            <button onClick="{{ st.goTo }}" style="{{ st.tabStyle }}">{{ st.tabText }}</button>
           </sc-for>
         </div>
       </div>
@@ -242,7 +242,7 @@
         <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0 0 16px">Answer three quick questions and we'll shortlist the prompts most relevant to you.</p>
 
         <sc-if value="{{ showSelectionWarning }}">
-          <div style="background:#EAF3F3;border:1px solid #2C8494;padding:12px 16px;margin-bottom:20px;font-size:13px;font-weight:600;color:#164752">Select at least one question below to continue.</div>
+          <div style="background:#EAF3F3;border:1px solid #2C8494;padding:12px 16px;margin-bottom:20px;font-size:13px;font-weight:600;color:#164752" role="alert">Select at least one question below to continue.</div>
         </sc-if>
 
         <sc-if value="{{ isStep1Quiz }}">
@@ -260,33 +260,33 @@
             </sc-for>
           </div>
           <sc-if value="{{ browseQuizShowBack }}" hint-placeholder-val="{{ false }}">
-            <button onClick="{{ browseQuizBack }}" style="margin-top:24px;background:transparent;border:none;color:#226B79;font-weight:600;font-size:13px;cursor:pointer;padding:0">&larr; Back</button>
+            <button onClick="{{ browseQuizBack }}" style="margin-top:24px;background:transparent;border:none;color:#226B79;font-weight:600;font-size:13px;cursor:pointer;padding:0;min-height:44px">&larr; Back</button>
           </sc-if>
         </div>
         </sc-if>
 
         <sc-if value="{{ isStep1Shortlist }}" hint-placeholder-val="{{ false }}">
-        <div>
+        <div aria-live="polite">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:16px;flex-wrap:wrap">
             <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0">Here are the prompts that best match what you're looking for.</p>
-            <button onClick="{{ restartBrowseQuiz }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;white-space:nowrap;flex:none">Change your answers</button>
+            <button onClick="{{ restartBrowseQuiz }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;white-space:nowrap;flex:none;min-height:44px">Change your answers</button>
           </div>
 
           <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:16px">
-            <button onClick="{{ onSelectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap">Select all</button>
-            <button onClick="{{ onDeselectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap">Deselect</button>
+            <button onClick="{{ onSelectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap;min-height:44px">Select all</button>
+            <button onClick="{{ onDeselectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap;min-height:44px">Deselect</button>
           </div>
 
           <div style="display:flex;flex-direction:column;gap:10px">
             <sc-for list="{{ browseShortlist }}" as="q" hint-placeholder-count="5">
               <sc-if value="{{ q.selected }}">
-                <div onClick="{{ q.onRowClick }}" style="border:2px solid #2C8494;background:#EAF3F3;border-radius:8px;transition:all 0.2s ease;cursor:pointer">
+                <div onClick="{{ q.onRowClick }}" role="button" tabindex="0" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" style="border:2px solid #2C8494;background:#EAF3F3;border-radius:8px;transition:all 0.2s ease;cursor:pointer">
                   <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;cursor:pointer">
-                    <input type="checkbox" onClick="{{ q.onCheckboxClick }}" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:16px;height:16px;accent-color:#2C8494;flex:none" />
+                    <input type="checkbox" onClick="{{ q.onCheckboxClick }}" tabindex="-1" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:24px;height:24px;accent-color:#2C8494;flex:none" />
                     <div style="flex:1;min-width:0">
                       <div style="font-size:15px;font-weight:600;color:#226B79;margin-bottom:4px">{{ q.quickSummary }}</div>
                       <div style="font-size:15px;margin-bottom:8px;color:#201e1d">{{ q.humanVersion }}</div>
-                      <span onClick="{{ q.onToggleExpand }}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block">{{ q.toggleLabel }}</span>
+                      <span onClick="{{ q.onToggleExpand }}" role="button" tabindex="0" aria-expanded="{{ q.expanded }}" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block;min-height:44px;align-content:center">{{ q.toggleLabel }}</span>
                       <sc-if value="{{ q.expanded }}">
                         <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap;animation:slideDown 0.2s ease">{{ q.aiOptimised }}</div>
                       </sc-if>
@@ -295,13 +295,13 @@
                 </div>
               </sc-if>
               <sc-if value="{{ !q.selected }}">
-                <div onClick="{{ q.onRowClick }}" style="border:2px solid rgba(32,30,29,0.4);background:#eceae9;border-radius:8px;transition:all 0.2s ease;cursor:pointer">
+                <div onClick="{{ q.onRowClick }}" role="button" tabindex="0" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" style="border:2px solid rgba(32,30,29,0.4);background:#eceae9;border-radius:8px;transition:all 0.2s ease;cursor:pointer">
                   <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;cursor:pointer">
-                    <input type="checkbox" onClick="{{ q.onCheckboxClick }}" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:16px;height:16px;accent-color:#2C8494;flex:none" />
+                    <input type="checkbox" onClick="{{ q.onCheckboxClick }}" tabindex="-1" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:24px;height:24px;accent-color:#2C8494;flex:none" />
                     <div style="flex:1;min-width:0">
                       <div style="font-size:15px;font-weight:600;color:#226B79;margin-bottom:4px">{{ q.quickSummary }}</div>
                       <div style="font-size:15px;margin-bottom:8px;color:#201e1d">{{ q.humanVersion }}</div>
-                      <span onClick="{{ q.onToggleExpand }}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block">{{ q.toggleLabel }}</span>
+                      <span onClick="{{ q.onToggleExpand }}" role="button" tabindex="0" aria-expanded="{{ q.expanded }}" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block;min-height:44px;align-content:center">{{ q.toggleLabel }}</span>
                       <sc-if value="{{ q.expanded }}">
                         <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap;animation:slideDown 0.2s ease">{{ q.aiOptimised }}</div>
                       </sc-if>
@@ -320,11 +320,11 @@
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
         <h3 style="font-size:16px;margin:0 0 18px">Step 2: Profile & timeline</h3>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Your age</label><input id="age" type="text" placeholder="e.g. 58" value="{{ fields.age }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Partner's age</label><input id="partnerAge" type="text" placeholder="Leave blank if none" value="{{ fields.partnerAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target retirement age</label><input id="retireAge" type="text" placeholder="e.g. 65" value="{{ fields.retireAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Country / region</label><input id="country" type="text" placeholder="e.g. United Kingdom" value="{{ fields.country }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Employment status</label>
+          <div><label for="age" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Your age</label><input id="age" type="text" placeholder="e.g. 58" value="{{ fields.age }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label for="partnerAge" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Partner's age</label><input id="partnerAge" type="text" placeholder="Leave blank if none" value="{{ fields.partnerAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label for="retireAge" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target retirement age</label><input id="retireAge" type="text" placeholder="e.g. 65" value="{{ fields.retireAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label for="country" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Country / region</label><input id="country" type="text" placeholder="e.g. United Kingdom" value="{{ fields.country }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label for="employment" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Employment status</label>
             <select id="employment" value="{{ fields.employment }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Employed (PAYE)</option>
@@ -334,7 +334,7 @@
               <option>Already retired / semi-retired</option>
             </select>
           </div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Health status</label>
+          <div><label for="health" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Health status</label>
             <select id="health" value="{{ fields.health }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Excellent</option>
@@ -343,7 +343,7 @@
               <option>Poor / chronic conditions</option>
             </select>
           </div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Financial dependants</label><input id="dependants" type="text" placeholder="e.g. 0" value="{{ fields.dependants }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label for="dependants" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Financial dependants</label><input id="dependants" type="text" placeholder="e.g. 0" value="{{ fields.dependants }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
         </div>
       </div>
       </sc-if>
@@ -352,12 +352,12 @@
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
         <h3 style="font-size:16px;margin:0 0 18px">Step 3: Financial picture</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual household income (now)</label><input id="income" type="text" placeholder="e.g. £70,000" value="{{ fields.income }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Total pension / retirement savings</label><input id="pension" type="text" placeholder="e.g. £150,000" value="{{ fields.pension }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Other savings & investments</label><input id="savings" type="text" placeholder="e.g. £30,000 in ISA" value="{{ fields.savings }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Property equity</label><input id="equity" type="text" placeholder="e.g. £200,000" value="{{ fields.equity }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Outstanding debts</label><input id="debts" type="text" placeholder="e.g. £50k mortgage remaining" value="{{ fields.debts }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual pension contributions (now)</label><input id="contributions" type="text" placeholder="e.g. £8,000 p.a. incl. employer" value="{{ fields.contributions }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label for="income" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual household income (now)</label><input id="income" type="text" placeholder="e.g. £70,000" value="{{ fields.income }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label for="pension" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Total pension / retirement savings</label><input id="pension" type="text" placeholder="e.g. £150,000" value="{{ fields.pension }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label for="savings" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Other savings & investments</label><input id="savings" type="text" placeholder="e.g. £30,000 in ISA" value="{{ fields.savings }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label for="equity" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Property equity</label><input id="equity" type="text" placeholder="e.g. £200,000" value="{{ fields.equity }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label for="debts" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Outstanding debts</label><input id="debts" type="text" placeholder="e.g. £50k mortgage remaining" value="{{ fields.debts }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label for="contributions" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual pension contributions (now)</label><input id="contributions" type="text" placeholder="e.g. £8,000 p.a. incl. employer" value="{{ fields.contributions }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
         </div>
       </div>
       </sc-if>
@@ -366,7 +366,7 @@
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
         <h3 style="font-size:16px;margin:0 0 18px">Step 4: Retirement goals</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          <div style="order:1"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Lifestyle expectation</label>
+          <div style="order:1"><label for="lifestyle" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Lifestyle expectation</label>
             <select id="lifestyle" value="{{ fields.lifestyle }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Modest / essential needs</option>
@@ -377,9 +377,9 @@
             </select>
           </div>
 
-          <div style="{{ targetSlotStyle }}"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target monthly income in retirement</label><input id="target" type="text" placeholder="e.g. £3,500/month net" value="{{ fields.target }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div style="{{ targetSlotStyle }}"><label for="target" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target monthly income in retirement</label><input id="target" type="text" placeholder="e.g. £3,500/month net" value="{{ fields.target }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
 
-          <div style="{{ partTimeSlotStyle }}"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Part-time work in retirement?</label>
+          <div style="{{ partTimeSlotStyle }}"><label for="partTime" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Part-time work in retirement?</label>
             <select id="partTime" value="{{ fields.partTime }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Yes, for several years</option>
@@ -388,7 +388,7 @@
             </select>
           </div>
 
-          <div style="order:4"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Leave an estate / inheritance?</label>
+          <div style="order:4"><label for="estate" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Leave an estate / inheritance?</label>
             <select id="estate" value="{{ fields.estate }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Yes, this is a clear priority</option>
@@ -397,7 +397,7 @@
             </select>
           </div>
         </div>
-        <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Key plans or activities in retirement</label><textarea id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property..." value="{{ fields.plans }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label for="plans" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Key plans or activities in retirement</label><textarea id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property..." value="{{ fields.plans }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
@@ -405,20 +405,20 @@
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
         <h3 style="font-size:16px;margin:0 0 18px">Step 5: Expected income sources</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px">
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_state" type="checkbox" checked="{{ fields.src_state }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> State pension / Social Security</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_db" type="checkbox" checked="{{ fields.src_db }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Defined benefit / final salary pension</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_dc" type="checkbox" checked="{{ fields.src_dc }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Defined contribution / personal pension</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_annuity" type="checkbox" checked="{{ fields.src_annuity }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Annuity</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_rental" type="checkbox" checked="{{ fields.src_rental }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Rental income</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_invest" type="checkbox" checked="{{ fields.src_invest }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Investment / dividend income</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_business" type="checkbox" checked="{{ fields.src_business }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Business / self-employed income</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_inherit" type="checkbox" checked="{{ fields.src_inherit }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Inheritance or windfall</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="src_other" type="checkbox" checked="{{ fields.src_other }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Other</label>
+          <label for="src_state" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_state" type="checkbox" checked="{{ fields.src_state }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> State pension / Social Security</label>
+          <label for="src_db" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_db" type="checkbox" checked="{{ fields.src_db }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Defined benefit / final salary pension</label>
+          <label for="src_dc" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_dc" type="checkbox" checked="{{ fields.src_dc }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Defined contribution / personal pension</label>
+          <label for="src_annuity" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_annuity" type="checkbox" checked="{{ fields.src_annuity }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Annuity</label>
+          <label for="src_rental" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_rental" type="checkbox" checked="{{ fields.src_rental }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Rental income</label>
+          <label for="src_invest" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_invest" type="checkbox" checked="{{ fields.src_invest }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Investment / dividend income</label>
+          <label for="src_business" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_business" type="checkbox" checked="{{ fields.src_business }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Business / self-employed income</label>
+          <label for="src_inherit" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_inherit" type="checkbox" checked="{{ fields.src_inherit }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Inheritance or windfall</label>
+          <label for="src_other" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_other" type="checkbox" checked="{{ fields.src_other }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Other</label>
         </div>
         <sc-if value="{{ fields.src_other }}">
-          <div style="margin-top:12px"><input id="srcOtherText" type="text" placeholder="Please describe the income source" value="{{ fields.srcOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div style="margin-top:12px"><label for="srcOtherText" class="sr-only" style="display:none">Describe other income source</label><input id="srcOtherText" type="text" placeholder="Please describe the income source" value="{{ fields.srcOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
         </sc-if>
-        <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Amounts or notes on any sources</label><textarea id="srcNotes" placeholder="e.g. State pension ~£10,500 p.a. from age 67..." value="{{ fields.srcNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label for="srcNotes" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Amounts or notes on any sources</label><textarea id="srcNotes" placeholder="e.g. State pension ~£10,500 p.a. from age 67..." value="{{ fields.srcNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
@@ -426,21 +426,21 @@
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
         <h3 style="font-size:16px;margin:0 0 18px">Step 6: Concerns, risk & anything else</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px">
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_runout" type="checkbox" checked="{{ fields.c_runout }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Running out of money</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_inflation" type="checkbox" checked="{{ fields.c_inflation }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Inflation eroding income</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_care" type="checkbox" checked="{{ fields.c_care }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Long-term care costs</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_tax" type="checkbox" checked="{{ fields.c_tax }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Tax efficiency</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_market" type="checkbox" checked="{{ fields.c_market }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Market volatility</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_early" type="checkbox" checked="{{ fields.c_early }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Dying too early / life cover</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_partner" type="checkbox" checked="{{ fields.c_partner }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Partner survivorship</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_health" type="checkbox" checked="{{ fields.c_health }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Unexpected health costs</label>
-          <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer"><input id="c_other" type="checkbox" checked="{{ fields.c_other }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:16px;height:16px" /> Other concern</label>
+          <label for="c_runout" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_runout" type="checkbox" checked="{{ fields.c_runout }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Running out of money</label>
+          <label for="c_inflation" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_inflation" type="checkbox" checked="{{ fields.c_inflation }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Inflation eroding income</label>
+          <label for="c_care" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_care" type="checkbox" checked="{{ fields.c_care }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Long-term care costs</label>
+          <label for="c_tax" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_tax" type="checkbox" checked="{{ fields.c_tax }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Tax efficiency</label>
+          <label for="c_market" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_market" type="checkbox" checked="{{ fields.c_market }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Market volatility</label>
+          <label for="c_early" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_early" type="checkbox" checked="{{ fields.c_early }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Dying too early / life cover</label>
+          <label for="c_partner" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_partner" type="checkbox" checked="{{ fields.c_partner }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Partner survivorship</label>
+          <label for="c_health" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_health" type="checkbox" checked="{{ fields.c_health }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Unexpected health costs</label>
+          <label for="c_other" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_other" type="checkbox" checked="{{ fields.c_other }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Other concern</label>
         </div>
         <sc-if value="{{ fields.c_other }}">
-          <div style="margin-top:12px"><input id="concernOtherText" type="text" placeholder="Please describe the concern" value="{{ fields.concernOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div style="margin-top:12px"><label for="concernOtherText" class="sr-only" style="display:none">Describe other concern</label><input id="concernOtherText" type="text" placeholder="Please describe the concern" value="{{ fields.concernOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
         </sc-if>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Investment risk tolerance</label>
+          <div><label for="risk" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Investment risk tolerance</label>
             <select id="risk" value="{{ fields.risk }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Very cautious &mdash; capital preservation first</option>
@@ -449,7 +449,7 @@
               <option>Adventurous &mdash; higher growth, comfortable with volatility</option>
             </select>
           </div>
-          <div><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Emergency income buffer</label>
+          <div><label for="buffer" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Emergency income buffer</label>
             <select id="buffer" value="{{ fields.buffer }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Less than 3 months</option>
@@ -459,7 +459,7 @@
             </select>
           </div>
         </div>
-        <div style="margin-top:16px"><label style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else we should know?</label><textarea id="question" placeholder="e.g. 'Am I on track to retire at 62?' or 'Should I consolidate my three pension pots?'" value="{{ fields.question }}" onChange="{{ handleChange }}" style="width:100%;min-height:90px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label for="question" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else we should know?</label><textarea id="question" placeholder="e.g. 'Am I on track to retire at 62?' or 'Should I consolidate my three pension pots?'" value="{{ fields.question }}" onChange="{{ handleChange }}" style="width:100%;min-height:90px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
@@ -483,7 +483,7 @@
       <!-- Success Banner -->
       <div style="background:#2C8494;color:#fff;padding:40px 32px;margin:-32px calc(-50vw + 50%) 32px;display:flex;align-items:center;justify-content:center">
         <div style="max-width:1120px;width:100%;text-align:center">
-          <div style="font-size:48px;margin-bottom:16px">✓</div>
+          <div style="font-size:48px;margin-bottom:16px" aria-hidden="true">✓</div>
           <h1 style="font-size:32px;font-weight:800;margin:0 0 12px;color:#fff">Your prompt is ready</h1>
           <p style="font-size:16px;margin:0;color:rgba(255,255,255,0.95);max-width:60ch;margin-left:auto;margin-right:auto">We've compiled your selections and details into a comprehensive prompt.</p>
         </div>
@@ -491,9 +491,9 @@
 
       <!-- Review Details Section -->
       <div style="background:#fff;border:1px solid rgba(32,30,29,0.2);border-radius:8px;margin-bottom:24px">
-        <button onClick="{{ toggleReviewDetails }}" style="width:100%;padding:16px 24px;background:transparent;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;color:#201e1d">
+        <button onClick="{{ toggleReviewDetails }}" aria-expanded="{{ showReviewDetails }}" style="width:100%;padding:16px 24px;background:transparent;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;color:#201e1d;min-height:44px">
           <span>Review the details you provided</span>
-          <span style="font-size:20px;color:#2C8494">{{ reviewToggleIcon }}</span>
+          <span style="font-size:20px;color:#2C8494" aria-hidden="true">{{ reviewToggleIcon }}</span>
         </button>
         <sc-if value="{{ showReviewDetails }}">
         <div style="padding:0 24px 24px;border-top:1px solid rgba(32,30,29,0.1);font-size:13px;color:rgba(32,30,29,0.8);line-height:1.8">
@@ -502,7 +502,7 @@
             <div style="margin-top:20px;padding-bottom:16px;border-bottom:1px solid rgba(32,30,29,0.1)">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
                 <div style="font-size:14px;font-weight:700;color:#164752">{{ sec.title }}</div>
-                <button onClick="{{ sec.onEdit }}" style="background:transparent;border:1px solid rgba(32,30,29,0.25);border-radius:4px;color:#2C8494;font-size:12px;font-weight:700;cursor:pointer;padding:4px 10px">Edit</button>
+                <button onClick="{{ sec.onEdit }}" style="background:transparent;border:1px solid rgba(32,30,29,0.25);border-radius:4px;color:#2C8494;font-size:12px;font-weight:700;cursor:pointer;padding:4px 10px;min-height:44px">Edit</button>
               </div>
               <sc-for list="{{ sec.items }}" as="item" hint-placeholder-count="3">
                 <div style="margin-bottom:8px"><strong>{{ item.label }}:</strong> {{ item.value }}</div>
@@ -537,7 +537,7 @@
 
       <!-- Disclaimer -->
       <div style="background:#fef3c7;border-left:4px solid #f59e0b;border-radius:8px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start">
-        <span style="font-size:20px;flex-shrink:0">⚠️</span>
+        <span style="font-size:20px;flex-shrink:0" aria-hidden="true">⚠️</span>
         <div>
           <p style="font-size:13px;color:#78350f;margin:0;line-height:1.6"><strong>Note:</strong> This is for educational purposes only. The prompt asks for factual information, not regulated financial advice. You should always speak to a qualified financial adviser about your personal circumstances.</p>
         </div>
@@ -546,12 +546,12 @@
     </sc-if>
 
     </div>
-  </div>
+  </main>
   </sc-if>
 
   <!-- ============ BROWSE (standalone prompt list) ============ -->
   <sc-if value="{{ isBrowse }}">
-  <div data-screen-label="Browse Prompts" style="max-width:1120px;margin:0 auto;padding:32px 32px 120px">
+  <main data-screen-label="Browse Prompts" style="max-width:1120px;margin:0 auto;padding:32px 32px 120px">
     <h2 style="font-size:30px;margin:0 0 8px">Prompt list</h2>
     <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Answer three quick questions and we'll shortlist the prompts most relevant to you.</p>
 
@@ -570,33 +570,33 @@
         </sc-for>
       </div>
       <sc-if value="{{ browseQuizShowBack }}" hint-placeholder-val="{{ false }}">
-        <button onClick="{{ browseQuizBack }}" style="margin-top:24px;background:transparent;border:none;color:#226B79;font-weight:600;font-size:13px;cursor:pointer;padding:0">&larr; Back</button>
+        <button onClick="{{ browseQuizBack }}" style="margin-top:24px;background:transparent;border:none;color:#226B79;font-weight:600;font-size:13px;cursor:pointer;padding:0;min-height:44px">&larr; Back</button>
       </sc-if>
     </div>
     </sc-if>
 
     <sc-if value="{{ isBrowseResults }}" hint-placeholder-val="{{ false }}">
-    <div>
+    <div aria-live="polite">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:16px;flex-wrap:wrap">
         <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0">Here are the prompts that best match what you're looking for. Select the ones you need, then copy them to your AI chatbot.</p>
-        <button onClick="{{ restartBrowseQuiz }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;white-space:nowrap;flex:none">Change your answers</button>
+        <button onClick="{{ restartBrowseQuiz }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;white-space:nowrap;flex:none;min-height:44px">Change your answers</button>
       </div>
 
       <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:16px">
-        <button onClick="{{ onSelectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap">Select all</button>
-        <button onClick="{{ onDeselectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap">Deselect</button>
+        <button onClick="{{ onSelectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap;min-height:44px">Select all</button>
+        <button onClick="{{ onDeselectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap;min-height:44px">Deselect</button>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:36px">
         <sc-for list="{{ browseShortlist }}" as="q" hint-placeholder-count="5">
           <sc-if value="{{ q.selected }}">
-            <div onClick="{{ q.onRowClick }}" style="border:2px solid #2C8494;background:#EAF3F3;border-radius:8px;transition:all 0.2s ease;cursor:pointer">
+            <div onClick="{{ q.onRowClick }}" role="button" tabindex="0" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" style="border:2px solid #2C8494;background:#EAF3F3;border-radius:8px;transition:all 0.2s ease;cursor:pointer">
               <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;cursor:pointer">
-                <input type="checkbox" onClick="{{ q.onCheckboxClick }}" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:16px;height:16px;accent-color:#2C8494;flex:none" />
+                <input type="checkbox" onClick="{{ q.onCheckboxClick }}" tabindex="-1" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:24px;height:24px;accent-color:#2C8494;flex:none" />
                 <div style="flex:1;min-width:0">
                   <div style="font-size:15px;font-weight:600;color:#226B79;margin-bottom:4px">{{ q.quickSummary }}</div>
                   <div style="font-size:15px;margin-bottom:8px;color:#201e1d">{{ q.humanVersion }}</div>
-                  <span onClick="{{ q.onToggleExpand }}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block">{{ q.toggleLabel }}</span>
+                  <span onClick="{{ q.onToggleExpand }}" role="button" tabindex="0" aria-expanded="{{ q.expanded }}" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block;min-height:44px;align-content:center">{{ q.toggleLabel }}</span>
                   <sc-if value="{{ q.expanded }}">
                     <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap;animation:slideDown 0.2s ease">{{ q.aiOptimised }}</div>
                   </sc-if>
@@ -605,13 +605,13 @@
             </div>
           </sc-if>
           <sc-if value="{{ !q.selected }}">
-            <div onClick="{{ q.onRowClick }}" style="border:2px solid rgba(32,30,29,0.4);background:#eceae9;border-radius:8px;transition:all 0.2s ease;cursor:pointer">
+            <div onClick="{{ q.onRowClick }}" role="button" tabindex="0" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" style="border:2px solid rgba(32,30,29,0.4);background:#eceae9;border-radius:8px;transition:all 0.2s ease;cursor:pointer">
               <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;cursor:pointer">
-                <input type="checkbox" onClick="{{ q.onCheckboxClick }}" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:16px;height:16px;accent-color:#2C8494;flex:none" />
+                <input type="checkbox" onClick="{{ q.onCheckboxClick }}" tabindex="-1" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:24px;height:24px;accent-color:#2C8494;flex:none" />
                 <div style="flex:1;min-width:0">
                   <div style="font-size:15px;font-weight:600;color:#226B79;margin-bottom:4px">{{ q.quickSummary }}</div>
                   <div style="font-size:15px;margin-bottom:8px;color:#201e1d">{{ q.humanVersion }}</div>
-                  <span onClick="{{ q.onToggleExpand }}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block">{{ q.toggleLabel }}</span>
+                  <span onClick="{{ q.onToggleExpand }}" role="button" tabindex="0" aria-expanded="{{ q.expanded }}" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block;min-height:44px;align-content:center">{{ q.toggleLabel }}</span>
                   <sc-if value="{{ q.expanded }}">
                     <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap;animation:slideDown 0.2s ease">{{ q.aiOptimised }}</div>
                   </sc-if>
@@ -628,12 +628,12 @@
             <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:26px;margin:0 0 8px;color:#fff">Want a more tailored answer?</h2>
             <p style="font-size:14px;color:rgba(255,255,255,0.9);margin:0;max-width:50ch">Add your age, pension, income and concerns, and these same questions produce answers specific to your situation.</p>
           </div>
-          <button data-action="goApp" onClick="{{ goApp }}" style="background:#fff;color:#164752;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;flex:none;white-space:nowrap;border-radius:4px">Personalise the prompt &rarr;</button>
+          <button data-action="goApp" onClick="{{ goApp }}" style="background:#fff;color:#164752;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;flex:none;white-space:nowrap;border-radius:4px;min-height:44px">Personalise the prompt &rarr;</button>
         </div>
       </div>
     </div>
     </sc-if>
-  </div>
+  </main>
   </sc-if>
 
   <!-- Sticky bottom bar for copy all -->
@@ -651,21 +651,21 @@
 
   <!-- Universal footer for non-landing pages (landing has its own, fuller footer above) -->
   <sc-if value="{{ !isLanding }}">
-  <div class="landing-footer" style="{{ universalFooterStyle }}">
+  <footer class="landing-footer" style="{{ universalFooterStyle }}">
     <div class="landing-footer-inner">
       <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
       <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
     </div>
-  </div>
+  </footer>
   </sc-if>
 
   <!-- Important information modal (available from every page) -->
   <sc-if value="{{ showInfoModal }}">
   <div onClick="{{ closeInfoModal }}" style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px">
-    <div onClick="{{ stopClick }}" style="background:#fff;border-radius:12px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,0.3)">
+    <div onClick="{{ stopClick }}" id="info-modal-content" role="dialog" aria-modal="true" aria-labelledby="info-modal-title" style="background:#fff;border-radius:12px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,0.3)">
       <div style="padding:28px 32px 20px;border-bottom:1px solid rgba(32,30,29,0.1);display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
-        <h2 style="font-size:22px;margin:0;color:#164752;font-weight:800">Important information about this site</h2>
-        <button onClick="{{ closeInfoModal }}" style="background:transparent;border:none;font-size:24px;cursor:pointer;color:#999;line-height:1;padding:0;flex:none">&times;</button>
+        <h2 id="info-modal-title" style="font-size:22px;margin:0;color:#164752;font-weight:800">Important information about this site</h2>
+        <button onClick="{{ closeInfoModal }}" aria-label="Close modal" style="background:transparent;border:none;font-size:24px;cursor:pointer;color:#999;line-height:1;padding:0;flex:none;min-height:44px;min-width:44px">&times;</button>
       </div>
       <div style="padding:24px 32px;font-size:14px;color:rgba(32,30,29,0.85);line-height:1.7">
         <p style="margin:0 0 16px"><strong>We only help you ask better questions.</strong> This tool doesn&rsquo;t calculate anything or give you answers itself &mdash; it builds a clear, UK-focused prompt for you to use with an AI chatbot of your choice.</p>
@@ -678,12 +678,30 @@
       </div>
     </div>
   </div>
+  <script>
+    // Focus Trap for Info Modal
+    setTimeout(function() {
+      const modal = document.getElementById('info-modal-content');
+      if(modal) {
+        const focusableEls = modal.querySelectorAll('a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
+        const first = focusableEls[0];
+        const last = focusableEls[focusableEls.length - 1];
+        if (first) first.focus();
+        modal.addEventListener('keydown', function(e) {
+          if (e.key === 'Tab' || e.keyCode === 9) {
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+          }
+        });
+      }
+    }, 50);
+  </script>
   </sc-if>
 
 </div>
 </x-dc>
 
-<div id="toast-container" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;max-width:350px"></div>
+<div id="toast-container" aria-live="polite" aria-atomic="true" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;max-width:350px"></div>
 
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:1000},&quot;enableOpenInChatGPT&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
 const PROMPTS_DATA = {
@@ -788,7 +806,6 @@ const BROWSE_QUIZ_QUESTIONS = [
 ];
 
 class Component extends DCLogic {
-  // v2
   state = {
     view: 'landing',
     phase: 'wizard',
@@ -1327,6 +1344,7 @@ window.PROMPTS_DATA = PROMPTS_DATA;
     const toastDiv = document.createElement('div');
     toastDiv.style.cssText = 'background:#201e1d;color:#fff;padding:12px 16px;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);display:flex;align-items:center;gap:12px;border-radius:8px;pointer-events:auto;animation:slideIn 0.3s ease-out;max-width:350px';
     toastDiv.dataset.toastId = id;
+    toastDiv.setAttribute('role', 'alert');
 
     const msgSpan = document.createElement('span');
     msgSpan.textContent = msg;
@@ -1335,8 +1353,9 @@ window.PROMPTS_DATA = PROMPTS_DATA;
     const closeBtn = document.createElement('button');
     closeBtn.textContent = '×';
     closeBtn.className = 'toast-close';
-    closeBtn.style.cssText = 'background:transparent;border:none;color:#fff;cursor:pointer;font-size:20px;padding:0;line-height:1;flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center';
+    closeBtn.style.cssText = 'background:transparent;border:none;color:#fff;cursor:pointer;font-size:20px;padding:0;line-height:1;flex-shrink:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center';
     closeBtn.title = 'Close';
+    closeBtn.setAttribute('aria-label', 'Close notification');
     closeBtn.addEventListener('click', function() {
       toastDiv.style.animation = 'slideOut 0.3s ease-out forwards';
       setTimeout(function() { toastDiv.remove(); }, 300);
@@ -1391,6 +1410,11 @@ window.PROMPTS_DATA = PROMPTS_DATA;
       const modal = document.getElementById('copy-modal');
       if (modal) {
         modal.style.display = 'none';
+        
+        // Restore focus to original element if possible
+        if (window._lastFocusBeforeModal) {
+          window._lastFocusBeforeModal.focus();
+        }
       }
     }
   });
@@ -1484,17 +1508,17 @@ window.PROMPTS_DATA = PROMPTS_DATA;
     if (modal) return modal;
 
     // Modal doesn't exist, create it dynamically
-    const modalHTML = `<div id="copy-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;pointer-events:auto;align-items:center;justify-content:center">
+    const modalHTML = `<div id="copy-modal" role="dialog" aria-modal="true" aria-labelledby="copy-modal-heading" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;pointer-events:auto;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:8px;max-width:520px;width:90%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.3);pointer-events:auto;position:relative">
-    <button class="modal-close-btn" style="position:absolute;top:16px;right:16px;background:transparent;border:none;font-size:24px;cursor:pointer;color:#999;z-index:10;width:32px;height:32px;display:flex;align-items:center;justify-content:center;padding:0;line-height:1">×</button>
+    <button class="modal-close-btn" aria-label="Close modal" style="position:absolute;top:16px;right:16px;background:transparent;border:none;font-size:24px;cursor:pointer;color:#999;z-index:10;width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:0;line-height:1">×</button>
     <div style="padding:32px;overflow-y:auto">
-      <h2 style="font-size:20px;margin:0 0 8px;color:#201e1d;font-weight:800">Your prompt is ready</h2>
+      <h2 id="copy-modal-heading" style="font-size:20px;margin:0 0 8px;color:#201e1d;font-weight:800">Your prompt is ready</h2>
       <p style="font-size:14px;color:#666;margin:0 0 24px">Copy your text below, or select an AI to launch it automatically.</p>
 
       <div style="margin-bottom:24px">
         <p style="font-size:13px;font-weight:600;color:#201e1d;margin:0 0 12px">Your prompt</p>
         <div id="modal-prompt" style="background:#f5f4f3;border:1px solid #ddd;border-radius:6px;padding:12px;max-height:120px;overflow-y:auto;font-size:13px;line-height:1.5;color:#333;white-space:pre-wrap;word-wrap:break-word;font-family:monospace;margin-bottom:12px"></div>
-        <button id="copy-only-btn" class="btn-secondary" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px"><img src="./images/copy-link-icon.svg" style="width:16px;height:16px;filter:hue-rotate(200deg) saturate(1.5)" />Copy prompt only</button>
+        <button id="copy-only-btn" class="btn-secondary" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px"><img src="./images/copy-link-icon.svg" style="width:16px;height:16px;filter:hue-rotate(200deg) saturate(1.5)" alt="" />Copy prompt only</button>
       </div>
 
       <div style="margin-bottom:24px">
@@ -1502,41 +1526,42 @@ window.PROMPTS_DATA = PROMPTS_DATA;
         <p style="font-size:12px;color:#666;margin:0 0 12px">Select your preferred AI and it will open with your prompt ready to go.</p>
 
         <fieldset style="border:none;padding:0;margin:0;margin-bottom:16px">
+          <legend class="sr-only" style="display:none">Select an AI chatbot</legend>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="chatgpt" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
+              <input type="radio" name="chatbot-select" value="chatgpt" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" />
               <span style="flex:1;min-width:0">
-                <img src="./images/chatgpt.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
+                <img src="./images/chatgpt.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
                 <span style="font-weight:600;color:#201e1d;font-size:14px">ChatGPT</span>
               </span>
               <span style="font-size:10px;color:#999;font-weight:400;white-space:nowrap">Auto-fill</span>
             </label>
             <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="claude" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" checked />
+              <input type="radio" name="chatbot-select" value="claude" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" checked />
               <span style="flex:1;min-width:0">
-                <img src="./images/claude.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
+                <img src="./images/claude.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
                 <span style="font-weight:600;color:#201e1d;font-size:14px">Claude</span>
               </span>
               <span style="font-size:10px;color:#999;font-weight:400;white-space:nowrap">Auto-fill</span>
             </label>
             <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="copilot" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
+              <input type="radio" name="chatbot-select" value="copilot" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" />
               <span style="flex:1;min-width:0">
-                <img src="./images/copilot.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
+                <img src="./images/copilot.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
                 <span style="font-weight:600;color:#201e1d;font-size:14px">Copilot</span>
               </span>
             </label>
             <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="gemini" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
+              <input type="radio" name="chatbot-select" value="gemini" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" />
               <span style="flex:1;min-width:0">
-                <img src="./images/gemini.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
+                <img src="./images/gemini.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
                 <span style="font-weight:600;color:#201e1d;font-size:14px">Gemini</span>
               </span>
             </label>
             <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="perplexity" style="cursor:pointer;width:18px;height:18px;accent-color:#2C8494;flex-shrink:0" />
+              <input type="radio" name="chatbot-select" value="perplexity" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" />
               <span style="flex:1;min-width:0">
-                <img src="./images/perplexity.svg" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
+                <img src="./images/perplexity.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
                 <span style="font-weight:600;color:#201e1d;font-size:14px">Perplexity</span>
               </span>
               <span style="font-size:10px;color:#999;font-weight:400;white-space:nowrap">Auto-fill</span>
@@ -1544,9 +1569,9 @@ window.PROMPTS_DATA = PROMPTS_DATA;
           </div>
         </fieldset>
 
-        <div id="capability-message" style="font-size:12px;color:#666;background:#f0f5f2;border:1px solid #2C8494;border-radius:4px;padding:8px 12px;margin-bottom:12px;display:none"></div>
+        <div id="capability-message" role="alert" style="font-size:12px;color:#666;background:#f0f5f2;border:1px solid #2C8494;border-radius:4px;padding:8px 12px;margin-bottom:12px;display:none"></div>
 
-        <button id="launch-chat-btn" class="btn-primary" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px">Copy and launch Claude<img src="./images/external_link.svg" style="width:16px;height:16px;filter:brightness(0) invert(1)" /></button>
+        <button id="launch-chat-btn" class="btn-primary" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px">Copy and launch Claude<img src="./images/external_link.svg" alt="" style="width:16px;height:16px;filter:brightness(0) invert(1)" /></button>
         <p style="font-size:11px;color:#888;margin:10px 0 0;text-align:center">We only give you better questions, not the answers. Always check with a professional if you're unsure.</p>
       </div>
     </div>
@@ -1571,7 +1596,7 @@ window.PROMPTS_DATA = PROMPTS_DATA;
       const aiName = selected.value.charAt(0).toUpperCase() + selected.value.slice(1);
       // Update button text while preserving the icon
       const iconHTML = launchBtn.innerHTML.includes('external_link') ? launchBtn.querySelector('img').outerHTML : '';
-      launchBtn.innerHTML = `Copy and launch ${aiName}${iconHTML ? '<img src="./images/external_link.svg" style="width:16px;height:16px;filter:brightness(0) invert(1)" />' : ''}`;
+      launchBtn.innerHTML = `Copy and launch ${aiName}${iconHTML ? '<img src="./images/external_link.svg" alt="" style="width:16px;height:16px;filter:brightness(0) invert(1)" />' : ''}`;
 
       if (selected.value === 'copilot' || selected.value === 'gemini') {
         capabilityMsg.textContent = "Note: You'll need to paste the prompt into " + aiName + " as auto-fill isn't available.";
@@ -1596,6 +1621,9 @@ window.PROMPTS_DATA = PROMPTS_DATA;
     if (!promptText) {
       return;
     }
+
+    // Save current focus to restore after modal closes
+    window._lastFocusBeforeModal = document.activeElement;
 
     // Ensure modal exists (create if needed)
     const modal = ensureModalExists();
@@ -1638,11 +1666,32 @@ window.PROMPTS_DATA = PROMPTS_DATA;
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.style.display = 'none';
+        if (window._lastFocusBeforeModal) {
+          window._lastFocusBeforeModal.focus();
+        }
       }
     });
 
-    // Show modal
+    // Show modal and trap focus
     modal.style.display = 'flex';
+    setTimeout(() => {
+      const focusableEls = modal.querySelectorAll('a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])');
+      const first = focusableEls[0];
+      const last = focusableEls[focusableEls.length - 1];
+      if (first) first.focus();
+      
+      modal.onkeydown = function(e) {
+        if (e.key === 'Tab' || e.keyCode === 9) {
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      };
+    }, 50);
 
     // Initialize chatbot selection
     initializeChatbotSelection();
@@ -1683,8 +1732,9 @@ if (!window.showSimpleToast) {
     const closeBtn = document.createElement('button');
     closeBtn.textContent = '×';
     closeBtn.className = 'toast-close';
-    closeBtn.style.cssText = 'background:transparent;border:none;color:#fff;cursor:pointer;font-size:20px;padding:0;line-height:1;flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center';
+    closeBtn.style.cssText = 'background:transparent;border:none;color:#fff;cursor:pointer;font-size:20px;padding:0;line-height:1;flex-shrink:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center';
     closeBtn.title = 'Close';
+    closeBtn.setAttribute('aria-label', 'Close notification');
     closeBtn.addEventListener('click', function() {
       toastDiv.style.animation = 'slideOut 0.3s ease-out forwards';
       setTimeout(function() { toastDiv.remove(); }, 300);

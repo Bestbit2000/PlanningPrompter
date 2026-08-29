@@ -10,6 +10,12 @@ body {
   overflow-x: hidden;
 }
 
+/* ACCESSIBILITY: Provide clear focus indicator for keyboard navigation */
+*:focus-visible {
+  outline: 3px solid #2C8494;
+  outline-offset: 2px;
+}
+
 a {
   color: #226B79;
   text-decoration: underline;
@@ -127,6 +133,8 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   color: #666;
   transition: background 0.12s, border-color 0.12s;
   white-space: nowrap;
+  min-height: 44px; /* ACCESSIBILITY: Ensure minimum touch target size */
+  min-width: 44px;
 }
 .btn-section:hover { background: #f0f0f8; border-color: #aab; }
 
@@ -151,8 +159,8 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
 }
 .question-checkbox {
   flex-shrink: 0;
-  width: 20px;
-  height: 20px;
+  width: 24px; /* ACCESSIBILITY: Increased touch target */
+  height: 24px; /* ACCESSIBILITY: Increased touch target */
   margin-top: 3px;
   cursor: pointer;
   accent-color: #2db87f;
@@ -186,6 +194,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  min-height: 44px; /* ACCESSIBILITY: Minimum touch target size */
 }
 .question-ai-toggle:hover { color: #12122a; }
 .btn-copy-ai-inline {
@@ -200,8 +209,8 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 44px; /* ACCESSIBILITY: Minimum touch target size */
+  height: 44px; /* ACCESSIBILITY: Minimum touch target size */
 }
 .btn-copy-ai-inline:hover { background: #f0f5f2; color: #2db87f; }
 .btn-copy-ai-inline.copied { background: #e6f9f3; border-color: #2db87f; color: #2db87f; }
@@ -248,6 +257,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+  min-height: 44px; /* ACCESSIBILITY: Minimum touch target size */
 }
 .btn-copy-ai:hover { background: #e8e8e4; }
 .btn-copy-ai.copied { background: #e6f4ec; border-color: #9ecfb0; color: #1a6e3c; }
@@ -277,6 +287,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   cursor: pointer;
   font-family: inherit;
   transition: background 0.15s;
+  min-height: 44px;
 }
 .btn-copy-all:hover { background: #25a26a; }
 
@@ -306,6 +317,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   cursor: pointer;
   font-family: inherit;
   transition: background 0.15s;
+  min-height: 44px;
 }
 .btn-nudge:hover { background: #25a26a; }
 
@@ -354,7 +366,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   transition: border-color 0.15s;
 }
 .field input:focus, .field select:focus, .field textarea:focus {
-  outline: none; border-color: #12122a; background: #fff;
+  border-color: #12122a; background: #fff; /* ACCESSIBILITY: Outline is now handled by :focus-visible globally */
 }
 .field textarea { resize: vertical; min-height: 68px; }
 .field-hint { font-size: 0.73rem; color: #999; margin-top: 2px; }
@@ -367,6 +379,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   font-size: 0.82rem; cursor: pointer;
   transition: background 0.12s, border-color 0.12s;
   user-select: none;
+  min-height: 44px;
 }
 .check-item:hover { background: #eaeae6; }
 .check-item.selected { background: #e6f9f3; border-color: #2db87f; }
@@ -443,6 +456,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   font-family: inherit;
   transition: background 0.15s, transform 0.1s;
   border: none;
+  min-height: 44px;
 }
 .btn:active { transform: scale(0.98); }
 .btn-primary { background: #4a2c5e; color: #fff; }
@@ -456,6 +470,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   cursor: pointer; font-family: inherit; font-weight: 500;
   transition: background 0.15s;
   width: 100%; margin-top: 0.5rem;
+  min-height: 44px;
 }
 .btn-generate:hover { background: #25a26a; }
 
@@ -605,6 +620,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   transition: all 0.2s;
   white-space: nowrap;
   font-family: inherit;
+  min-height: 44px;
 }
 .step-tab:hover { color: #4a2c5e; }
 .step-tab.active { color: #2db87f; border-bottom-color: #2db87f; }
@@ -649,6 +665,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   font-family: inherit;
   color: #666;
   transition: background 0.12s, border-color 0.12s;
+  min-height: 44px;
 }
 .btn-step:hover { background: #f0f5f2; border-color: #2db87f; }
 .btn-step:disabled {
@@ -731,6 +748,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.2s ease;
+  min-height: 44px;
 }
 .unselect-button:hover {
   background: #EAF3F3;
@@ -748,6 +766,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   transition: all 0.2s ease;
   white-space: nowrap;
   cursor: pointer;
+  min-height: 44px;
 }
 
 .copy-button:hover:not([data-disabled="true"]) {
@@ -888,8 +907,8 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
 
 .prompt-card-checkbox {
   margin-top: 4px;
-  width: 16px;
-  height: 16px;
+  width: 24px; /* ACCESSIBILITY: Increased touch target */
+  height: 24px;
   accent-color: #2C8494;
   flex: none;
   cursor: pointer;
@@ -922,6 +941,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   cursor: pointer;
   display: inline-block;
   text-decoration: underline;
+  min-height: 44px;
 }
 
 .prompt-card-toggle:hover {
@@ -976,8 +996,8 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   color: #666;
   z-index: 10;
   padding: 0;
-  width: 24px;
-  height: 24px;
+  width: 44px; /* ACCESSIBILITY: touch target */
+  height: 44px;
 }
 
 .copy-modal-content {
@@ -1021,6 +1041,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   align-items: center;
   justify-content: center;
   gap: 6px;
+  min-height: 44px;
 }
 
 .copy-modal-chatbot-link:hover {
@@ -1087,6 +1108,7 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   cursor: pointer;
   border-radius: 6px;
   width: 100%;
+  min-height: 44px;
 }
 
 .modal-close-btn {
@@ -1119,8 +1141,8 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
 input[name="chatbot-select"] {
   accent-color: #2C8494 !important;
   cursor: pointer;
-  width: 18px !important;
-  height: 18px !important;
+  width: 24px !important; /* ACCESSIBILITY */
+  height: 24px !important;
   flex-shrink: 0;
   margin: 0 !important;
 }
@@ -1442,6 +1464,7 @@ fieldset div > label:hover {
   gap: 6px;
   flex: none;
   transition: background 0.2s ease, border-color 0.2s ease;
+  min-height: 44px;
 }
 .btn-primary:hover { background: #1f6b7a; border-color: #1f6b7a; }
 .btn-primary:disabled,
@@ -1474,6 +1497,7 @@ fieldset div > label:hover {
   gap: 6px;
   flex: none;
   transition: background 0.2s ease, border-color 0.2s ease;
+  min-height: 44px;
 }
 .btn-secondary:hover {
   background: #f0f9fb;
