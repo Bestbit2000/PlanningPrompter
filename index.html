@@ -74,8 +74,8 @@
           <p>Few people have an in-depth understanding of pensions, or how to make savings last 30 years or more. Decisions often get made late, without enough time to weigh up the options.</p>
         </div>
         <div class="landing-why-item">
-          <h3>AI can help &mdash; if you ask well</h3>
-          <p>A generic question to an AI chatbot gets a generic answer. Asking a well-structured, informed question &mdash; with context about your own situation &mdash; gets you something far more useful to actually act on.</p>
+          <h3>More of us are asking AI about retirement</h3>
+          <p>It&rsquo;s increasingly common to turn to an AI chatbot with questions about pensions and income. But a generic question gets a generic answer. This tool gives you focused, UK-specific questions &mdash; covering State Pension rules, tax allowances, and drawdown &mdash; so what comes back is actually useful.</p>
         </div>
         <div class="landing-why-item">
           <h3>This isn&rsquo;t financial advice</h3>
@@ -129,6 +129,7 @@
     <div class="landing-footer">
       <div class="landing-footer-inner">
         <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
+        <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
         <a href="https://consumerduty.org/working-groups/retirement-income-taskforce">Retirement Income Taskforce, part of the Consumer Duty Alliance</a>
       </div>
     </div>
@@ -634,6 +635,37 @@
   </div>
   </sc-if>
 
+  <!-- Universal footer for non-landing pages (landing has its own, fuller footer above) -->
+  <sc-if value="{{ !isLanding }}">
+  <div class="landing-footer">
+    <div class="landing-footer-inner">
+      <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
+      <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- Important information modal (available from every page) -->
+  <sc-if value="{{ showInfoModal }}">
+  <div onClick="{{ closeInfoModal }}" style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px">
+    <div onClick="{{ stopClick }}" style="background:#fff;border-radius:12px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,0.3)">
+      <div style="padding:28px 32px 20px;border-bottom:1px solid rgba(32,30,29,0.1);display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+        <h2 style="font-size:22px;margin:0;color:#164752;font-weight:800">Important information about this site</h2>
+        <button onClick="{{ closeInfoModal }}" style="background:transparent;border:none;font-size:24px;cursor:pointer;color:#999;line-height:1;padding:0;flex:none">&times;</button>
+      </div>
+      <div style="padding:24px 32px;font-size:14px;color:rgba(32,30,29,0.85);line-height:1.7">
+        <p style="margin:0 0 16px"><strong>We only help you ask better questions.</strong> This tool doesn&rsquo;t calculate anything or give you answers itself &mdash; it builds a clear, UK-focused prompt for you to use with an AI chatbot of your choice.</p>
+        <p style="margin:0 0 16px"><strong>AI answers aren&rsquo;t guaranteed to be right.</strong> Chatbots can get facts wrong, use outdated figures, or miss details specific to your situation &mdash; even when given a good question. Always double-check anything that matters.</p>
+        <p style="margin:0 0 16px"><strong>This isn&rsquo;t financial advice.</strong> Nothing produced by this tool, or by the AI chatbots it links to, is regulated financial advice. It shouldn&rsquo;t be the basis for decisions like changing your pension, retiring, or moving your savings.</p>
+        <p style="margin:0"><strong>Always speak to a professional.</strong> For anything that affects your retirement income, talk to a regulated, independent financial adviser who can look at your full circumstances before you act.</p>
+      </div>
+      <div style="padding:20px 32px 28px">
+        <button onClick="{{ closeInfoModal }}" class="btn-primary" style="width:100%;justify-content:center">Close</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
 </div>
 </x-dc>
 
@@ -756,8 +788,13 @@ class Component extends DCLogic {
     outputText: '',
     showSelectionWarning: false,
     showStarterPromptText: false,
-    showReviewDetails: false
+    showReviewDetails: false,
+    showInfoModal: false
   };
+
+  openInfoModal = (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ showInfoModal: true }); };
+  closeInfoModal = () => this.setState({ showInfoModal: false });
+  stopClick = (e) => e.stopPropagation();
 
   goApp = () => {
     window.scrollTo(0, 0);
@@ -1251,7 +1288,11 @@ class Component extends DCLogic {
       showUsePromptModal: this.showUsePromptModal,
       enableOpenInChatGPT: this.props.enableOpenInChatGPT ?? true,
       toasts: s.toasts,
-      closeToast: this.closeToast
+      closeToast: this.closeToast,
+      showInfoModal: s.showInfoModal,
+      openInfoModal: this.openInfoModal,
+      closeInfoModal: this.closeInfoModal,
+      stopClick: this.stopClick
     };
   }
 }
@@ -1490,6 +1531,7 @@ window.PROMPTS_DATA = PROMPTS_DATA;
         <div id="capability-message" style="font-size:12px;color:#666;background:#f0f5f2;border:1px solid #2C8494;border-radius:4px;padding:8px 12px;margin-bottom:12px;display:none"></div>
 
         <button id="launch-chat-btn" class="btn-primary" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px">Copy and launch Claude<img src="./images/external_link.svg" style="width:16px;height:16px;filter:brightness(0) invert(1)" /></button>
+        <p style="font-size:11px;color:#888;margin:10px 0 0;text-align:center">We only give you better questions, not the answers. Always check with a professional if you're unsure.</p>
       </div>
     </div>
   </div>
