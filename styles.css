@@ -719,6 +719,23 @@ header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto
   font-weight: 800;
 }
 
+.unselect-button {
+  background: #fff;
+  color: #2C8494;
+  border: 1.5px solid #2C8494;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+.unselect-button:hover {
+  background: #EAF3F3;
+}
+
 .copy-button {
   background: #2C8494;
   color: #fff;
@@ -1528,11 +1545,23 @@ fieldset div > label:hover {
   gap: 8px;
 }
 .landing-hero-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 13px;
-  border: 1px solid rgba(32, 30, 29, 0.4);
-  padding: 6px 12px;
-  display: inline-block;
-  width: fit-content;
+  font-weight: 600;
+  color: #201e1d;
+  background: #fff;
+  border: 1px solid rgba(32, 30, 29, 0.25);
+  border-radius: 8px;
+  padding: 8px 14px;
+  width: 168px;
+  box-sizing: border-box;
+}
+.landing-hero-badge img {
+  width: 18px;
+  height: 18px;
+  flex: none;
 }
 
 .landing-divider {

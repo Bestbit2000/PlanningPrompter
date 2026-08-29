@@ -50,11 +50,11 @@
       <div class="landing-hero-aside">
         <div class="landing-hero-aside-label">Works alongside the AI chatbot you already use</div>
         <div class="landing-hero-badges">
-          <span class="landing-hero-badge">ChatGPT</span>
-          <span class="landing-hero-badge">Claude</span>
-          <span class="landing-hero-badge">Copilot</span>
-          <span class="landing-hero-badge">Gemini</span>
-          <span class="landing-hero-badge">Perplexity</span>
+          <span class="landing-hero-badge"><img src="./images/chatgpt.svg" alt="" />ChatGPT</span>
+          <span class="landing-hero-badge"><img src="./images/claude.svg" alt="" />Claude</span>
+          <span class="landing-hero-badge"><img src="./images/copilot.svg" alt="" />Copilot</span>
+          <span class="landing-hero-badge"><img src="./images/gemini.svg" alt="" />Gemini</span>
+          <span class="landing-hero-badge"><img src="./images/perplexity.svg" alt="" />Perplexity</span>
         </div>
       </div>
     </div>
@@ -224,61 +224,80 @@
       <sc-if value="{{ isStep1 }}">
       <div style="margin-bottom:24px">
         <h3 style="font-size:16px;margin:0 0 6px">Step 1: Select your questions</h3>
-        <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0 0 16px">Pick the areas you want to cover. We've grouped them to make it easier.</p>
+        <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0 0 16px">Answer three quick questions and we'll shortlist the prompts most relevant to you.</p>
 
         <sc-if value="{{ showSelectionWarning }}">
           <div style="background:#EAF3F3;border:1px solid #2C8494;padding:12px 16px;margin-bottom:20px;font-size:13px;font-weight:600;color:#164752">Select at least one question below to continue.</div>
         </sc-if>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px">
-          <sc-for list="{{ sectionCards }}" as="sec" hint-placeholder-count="4">
-            <div style="{{ sec.cardStyle }}">
-              <div style="font-size:13px;font-weight:800;color:#226B79;margin-bottom:8px">{{ sec.title }}</div>
-              <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0 0 18px;min-height:36px">{{ sec.subtitle }}</p>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
-                <span style="{{ sec.badgeStyle }}">{{ sec.count }}</span>
-                <span style="font-size:13px;color:rgba(32,30,29,0.75)">questions selected</span>
-              </div>
-              <button onClick="{{ sec.onOpen }}" style="width:100%;background:#eceae9;border:1px solid rgba(32,30,29,0.3);padding:12px;font-size:14px;font-weight:600;cursor:pointer">Review &amp; select questions</button>
-            </div>
-          </sc-for>
-        </div>
-      </div>
-      </sc-if>
-
-      <sc-if value="{{ activeSectionModal }}">
-      <div onClick="{{ closeSection }}" style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px">
-        <div onClick="{{ stopPropagation }}" style="background:#fff;border-radius:8px;max-width:900px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.3)">
-          <div style="padding:24px 24px 16px;border-bottom:1px solid rgba(32,30,29,0.1)">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
-              <div>
-                <h2 style="font-size:20px;margin:0 0 6px;color:#164752;font-weight:800">{{ activeSectionModal.title }}</h2>
-                <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0">Select the questions you want answered.</p>
-              </div>
-              <button onClick="{{ closeSection }}" style="background:transparent;border:none;font-size:22px;cursor:pointer;color:#999;line-height:1;padding:0;flex:none">&times;</button>
-            </div>
-            <div style="display:flex;gap:8px;margin-top:16px">
-              <button onClick="{{ activeSectionModal.onSelectAll }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer">Select all</button>
-              <button onClick="{{ activeSectionModal.onDeselectAll }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer">Deselect all</button>
-            </div>
-          </div>
-          <div style="overflow-y:auto;padding:16px 24px 24px;flex:1;display:flex;flex-direction:column;gap:10px">
-            <sc-for list="{{ activeSectionModal.questions }}" as="q" hint-placeholder-count="5">
-              <div onClick="{{ q.onRowClick }}" style="{{ q.cardStyle }}">
-                <div style="display:flex;gap:12px;align-items:flex-start;padding:16px">
-                  <input type="checkbox" onClick="{{ q.onCheckboxClick }}" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:16px;height:16px;accent-color:#2C8494;flex:none" />
-                  <div style="flex:1;min-width:0">
-                    <div style="font-size:14px;font-weight:700;color:#226B79;margin-bottom:4px">{{ q.quickSummary }}</div>
-                    <div style="font-size:14px;color:#201e1d">{{ q.humanVersion }}</div>
-                  </div>
-                </div>
-              </div>
+        <sc-if value="{{ isStep1Quiz }}">
+        <div style="max-width:640px">
+          <div style="font-size:13px;font-weight:700;color:#226B79;margin-bottom:8px">Question {{ browseQuiz.index }} of {{ browseQuiz.total }}</div>
+          <div style="display:flex;gap:6px;margin-bottom:28px">
+            <sc-for list="{{ browseQuizDots }}" as="dot" hint-placeholder-count="3">
+              <span style="{{ dot.style }}"></span>
             </sc-for>
           </div>
-          <div style="padding:16px 24px;border-top:1px solid rgba(32,30,29,0.1);display:flex;justify-content:flex-end">
-            <button onClick="{{ closeSection }}" style="background:#2C8494;color:#fff;border:none;padding:10px 28px;font-weight:700;font-size:14px;cursor:pointer;border-radius:4px">Done</button>
+          <h3 style="font-size:24px;margin:0 0 24px">{{ browseQuiz.question }}</h3>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ browseQuiz.options }}" as="opt" hint-placeholder-count="3">
+              <button onClick="{{ opt.onSelect }}" style="{{ opt.optionStyle }}">{{ opt.label }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ browseQuizShowBack }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ browseQuizBack }}" style="margin-top:24px;background:transparent;border:none;color:#226B79;font-weight:600;font-size:13px;cursor:pointer;padding:0">&larr; Back</button>
+          </sc-if>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ isStep1Shortlist }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:16px;flex-wrap:wrap">
+            <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0">Here are the prompts that best match what you're looking for.</p>
+            <button onClick="{{ restartBrowseQuiz }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;white-space:nowrap;flex:none">Change your answers</button>
+          </div>
+
+          <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:16px">
+            <button onClick="{{ onSelectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap">Select all</button>
+            <button onClick="{{ onDeselectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap">Deselect</button>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ browseShortlist }}" as="q" hint-placeholder-count="5">
+              <sc-if value="{{ q.selected }}">
+                <div onClick="{{ q.onRowClick }}" style="border:2px solid #2C8494;background:#EAF3F3;border-radius:8px;transition:all 0.2s ease;cursor:pointer">
+                  <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;cursor:pointer">
+                    <input type="checkbox" onClick="{{ q.onCheckboxClick }}" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:16px;height:16px;accent-color:#2C8494;flex:none" />
+                    <div style="flex:1;min-width:0">
+                      <div style="font-size:15px;font-weight:600;color:#226B79;margin-bottom:4px">{{ q.quickSummary }}</div>
+                      <div style="font-size:15px;margin-bottom:8px;color:#201e1d">{{ q.humanVersion }}</div>
+                      <span onClick="{{ q.onToggleExpand }}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block">{{ q.toggleLabel }}</span>
+                      <sc-if value="{{ q.expanded }}">
+                        <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap;animation:slideDown 0.2s ease">{{ q.aiOptimised }}</div>
+                      </sc-if>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ !q.selected }}">
+                <div onClick="{{ q.onRowClick }}" style="border:2px solid rgba(32,30,29,0.4);background:#eceae9;border-radius:8px;transition:all 0.2s ease;cursor:pointer">
+                  <div style="display:flex;gap:12px;align-items:flex-start;padding:16px;cursor:pointer">
+                    <input type="checkbox" onClick="{{ q.onCheckboxClick }}" checked="{{ q.selected }}" readOnly="{{ true }}" style="margin-top:4px;width:16px;height:16px;accent-color:#2C8494;flex:none" />
+                    <div style="flex:1;min-width:0">
+                      <div style="font-size:15px;font-weight:600;color:#226B79;margin-bottom:4px">{{ q.quickSummary }}</div>
+                      <div style="font-size:15px;margin-bottom:8px;color:#201e1d">{{ q.humanVersion }}</div>
+                      <span onClick="{{ q.onToggleExpand }}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block">{{ q.toggleLabel }}</span>
+                      <sc-if value="{{ q.expanded }}">
+                        <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap;animation:slideDown 0.2s ease">{{ q.aiOptimised }}</div>
+                      </sc-if>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+            </sc-for>
           </div>
         </div>
+        </sc-if>
       </div>
       </sc-if>
 
@@ -429,6 +448,7 @@
       </div>
       </sc-if>
 
+      <sc-if value="{{ showWizardNav }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;align-items:center;justify-content:space-between;border-top:2px solid rgba(32,30,29,0.4);padding-top:20px">
         <button onClick="{{ prevStep }}" disabled="{{ backDisabled }}" class="btn-secondary" style="{{ prevBtnStyle }}">{{ backLabel }}</button>
         <sc-if value="{{ isStep6 }}" hint-placeholder-val="{{ false }}">
@@ -438,6 +458,7 @@
           <button onClick="{{ nextStep }}" class="btn-primary">{{ nextLabel }}</button>
         </sc-if>
       </div>
+      </sc-if>
     </div>
     </sc-if>
 
@@ -543,12 +564,12 @@
     <div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:16px;flex-wrap:wrap">
         <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0">Here are the prompts that best match what you're looking for. Select the ones you need, then copy them to your AI chatbot.</p>
-        <button onClick="{{ restartBrowseQuiz }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer;white-space:nowrap;flex:none">Change your answers</button>
+        <button onClick="{{ restartBrowseQuiz }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;white-space:nowrap;flex:none">Change your answers</button>
       </div>
 
       <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:16px">
-        <button onClick="{{ onSelectAllShortlist }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer;text-align:left;white-space:nowrap">Select all</button>
-        <button onClick="{{ onDeselectAllShortlist }}" style="background:transparent;border:1px solid rgba(32,30,29,0.4);font-size:12px;padding:6px 12px;cursor:pointer;text-align:left;white-space:nowrap">Deselect</button>
+        <button onClick="{{ onSelectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap">Select all</button>
+        <button onClick="{{ onDeselectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap">Deselect</button>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:36px">
@@ -603,11 +624,12 @@
   <!-- Sticky bottom bar for copy all -->
   <sc-if value="{{ isBrowseResults }}">
   <div class="sticky-copy-bar">
-    <span class="selection-text">
-      <sc-if value="{{ browseHasNoSelection }}">No questions selected</sc-if>
-      <sc-if value="{{ browseHasOneSelection }}"><span class="count">1</span> question selected</sc-if>
-      <sc-if value="{{ browseHasMultipleSelections }}"><span class="count">{{ browseSelectedCount }}</span> questions selected</sc-if>
-    </span>
+    <sc-if value="{{ browseHasNoSelection }}">
+      <span class="selection-text">No questions selected</span>
+    </sc-if>
+    <sc-if value="{{ !browseHasNoSelection }}" hint-placeholder-val="{{ true }}">
+      <button class="unselect-button" onClick="{{ clearBrowseSelected }}">{{ unselectLabel }}</button>
+    </sc-if>
     <button class="copy-button" onClick="{{ copyAllSelected }}" data-disabled="{{ browseHasNoSelection }}">Use all selected</button>
   </div>
   </sc-if>
@@ -695,8 +717,8 @@ const BROWSE_QUIZ_QUESTIONS = [
     question: 'What do you want to know?',
     options: [
       { value: 'foundation', label: 'How to make a plan for your income in retirement' },
-      { value: 'awareness', label: 'Things to consider' },
-      { value: 'optimise', label: 'How to get the most out of your pension' }
+      { value: 'optimise', label: 'How to get the most out of your pension' },
+      { value: 'awareness', label: 'Things to consider' }
     ]
   },
   {
@@ -725,9 +747,6 @@ class Component extends DCLogic {
     view: 'landing',
     phase: 'wizard',
     step: 1,
-    openSection: null,
-    selected: {},
-    expanded: {},
     browseSelected: {},
     browseExpanded: {},
     browseStep: 1,
@@ -740,7 +759,19 @@ class Component extends DCLogic {
     showReviewDetails: false
   };
 
-  goApp = () => { window.scrollTo(0, 0); this.setState({ view: 'app', phase: 'wizard', step: 1, openSection: null }); };
+  goApp = () => {
+    window.scrollTo(0, 0);
+    const s = this.state;
+    const hasSelection = Object.keys(s.browseSelected).length > 0;
+    const hasAnswers = !!s.browseAnswers.category;
+    if (hasSelection) {
+      this.setState({ view: 'app', phase: 'wizard', step: 2 });
+    } else if (hasAnswers) {
+      this.setState({ view: 'app', phase: 'wizard', step: 1, browseStep: 4 });
+    } else {
+      this.setState({ view: 'app', phase: 'wizard', step: 1, browseStep: 1, browseAnswers: { category: null, stage: null, style: null } });
+    }
+  };
   goBrowse = () => { window.scrollTo(0, 0); this.setState({ view: 'browse', browseStep: 1, browseAnswers: { category: null, stage: null, style: null }, browseSelected: {}, browseExpanded: {} }); };
   goLanding = () => { window.scrollTo(0, 0); this.setState({ view: 'landing' }); };
   goStarterPrompt = () => { window.scrollTo(0, 0); this.setState({ view: 'starterPrompt', showStarterPromptText: false }); };
@@ -750,7 +781,7 @@ class Component extends DCLogic {
 
   goStep = (n) => {
     if (n === 7) {
-      if (Object.keys(this.state.selected).length === 0) {
+      if (Object.keys(this.state.browseSelected).length === 0) {
         this.setState({ phase: 'wizard', step: 1, showSelectionWarning: true });
         return;
       }
@@ -758,7 +789,7 @@ class Component extends DCLogic {
       this.setState({ phase: 'result' });
       return;
     }
-    if (n > 1 && Object.keys(this.state.selected).length === 0) {
+    if (n > 1 && Object.keys(this.state.browseSelected).length === 0) {
       this.setState({ phase: 'wizard', step: 1, showSelectionWarning: true });
       return;
     }
@@ -767,7 +798,7 @@ class Component extends DCLogic {
 
   nextStep = () => {
     const s = this.state;
-    if (s.step === 1 && Object.keys(s.selected).length === 0) {
+    if (s.step === 1 && Object.keys(s.browseSelected).length === 0) {
       this.setState({ showSelectionWarning: true });
       return;
     }
@@ -777,9 +808,6 @@ class Component extends DCLogic {
     this.setState((s2) => ({ step: Math.max(1, s2.step - 1) }));
   };
 
-  openSection = (id) => this.setState({ openSection: id });
-  closeSection = () => this.setState({ openSection: null });
-  stopPropagation = (e) => e.stopPropagation();
   toggleReviewDetails = () => this.setState((s) => ({ showReviewDetails: !s.showReviewDetails }));
 
   finishWizard = () => this.goStep(7);
@@ -790,39 +818,11 @@ class Component extends DCLogic {
     this.setState((s) => ({ fields: { ...s.fields, [id]: val } }));
   };
 
-  toggleQuestion = (id) => {
-    this.setState((s) => {
-      const sel = { ...s.selected };
-      if (sel[id]) delete sel[id]; else sel[id] = true;
-      return { selected: sel, showSelectionWarning: Object.keys(sel).length > 0 ? false : s.showSelectionWarning };
-    });
-  };
-  toggleExpand = (id) => {
-    this.setState((s) => ({ expanded: { ...s.expanded, [id]: !s.expanded[id] } }));
-  };
-
-  selectAllSection = (sectionId) => {
-    const section = PROMPTS_DATA.sections.find((s) => s.id === sectionId);
-    this.setState((s) => {
-      const sel = { ...s.selected };
-      section.questions.forEach((q) => (sel[q.id] = true));
-      return { selected: sel, showSelectionWarning: false };
-    });
-  };
-  deselectSection = (sectionId) => {
-    const section = PROMPTS_DATA.sections.find((s) => s.id === sectionId);
-    this.setState((s) => {
-      const sel = { ...s.selected };
-      section.questions.forEach((q) => delete sel[q.id]);
-      return { selected: sel };
-    });
-  };
-
   toggleBrowseQuestion = (id) => {
     this.setState((s) => {
       const sel = { ...s.browseSelected };
       if (sel[id]) delete sel[id]; else sel[id] = true;
-      return { browseSelected: sel };
+      return { browseSelected: sel, showSelectionWarning: Object.keys(sel).length > 0 ? false : s.showSelectionWarning };
     });
   };
   toggleBrowseExpand = (id) => {
@@ -832,7 +832,7 @@ class Component extends DCLogic {
     this.setState((s) => {
       const sel = { ...s.browseSelected };
       ids.forEach((id) => (sel[id] = true));
-      return { browseSelected: sel };
+      return { browseSelected: sel, showSelectionWarning: false };
     });
   };
   browseDeselectAllIds = (ids) => {
@@ -842,6 +842,7 @@ class Component extends DCLogic {
       return { browseSelected: sel };
     });
   };
+  clearBrowseSelected = () => this.setState({ browseSelected: {} });
 
   selectBrowseAnswer = (key, value) => {
     this.setState((s) => {
@@ -945,7 +946,7 @@ class Component extends DCLogic {
   generatePrompt = () => {
     const f = this.state.fields;
     const sources = this.getSources(), concerns = this.getConcerns();
-    const selectedKeys = Object.keys(this.state.selected);
+    const selectedKeys = Object.keys(this.state.browseSelected);
     let p = 'I would like your help understanding my retirement income situation. Please treat me as an individual and give me specific, practical guidance based on the details I am providing. Where you make assumptions, please state them clearly.\n\n';
     p += '--- MY PERSONAL DETAILS ---\n';
     if (f.age) p += 'My age: ' + f.age + '\n';
@@ -1014,7 +1015,7 @@ class Component extends DCLogic {
   openInChatGPT = () => window.open('https://chatgpt.com/?q=' + encodeURIComponent(this.state.outputText), '_blank');
   openInClaude = () => window.open('https://claude.ai/?q=' + encodeURIComponent(STARTER_PROMPT_DATA.prompt), '_blank');
   openInGemini = () => window.open('https://gemini.google.com/?q=' + encodeURIComponent(STARTER_PROMPT_DATA.prompt), '_blank');
-  adjustInputs = () => this.setState({ phase: 'wizard', step: 1, openSection: null });
+  adjustInputs = () => this.setState({ phase: 'wizard', step: 1 });
   showUsePromptModal = () => window.showPromptModal(this.state.outputText);
 
   renderVals() {
@@ -1047,31 +1048,13 @@ class Component extends DCLogic {
       };
     };
 
-    const sectionCards = PROMPTS_DATA.sections.map((sec) => {
-      const count = sec.questions.filter((q) => s.selected[q.id]).length;
-      return {
-        id: sec.id,
-        title: sec.title,
-        subtitle: sec.subtitle,
-        count,
-        countLabel: count === 1 ? '1 question selected' : count + ' questions selected',
-        cardStyle: { borderRadius: '8px', padding: '24px', border: count > 0 ? '2px solid ' + ACCENT : '1px solid rgba(32,30,29,0.15)', background: count > 0 ? ACCENT_TINT : '#fff' },
-        badgeStyle: { width: '24px', height: '24px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 800, flex: 'none', background: count > 0 ? ACCENT : DIVIDER, color: count > 0 ? '#fff' : TEXT },
-        onOpen: () => this.openSection(sec.id)
-      };
-    });
-
-    const openSectionData = s.openSection ? PROMPTS_DATA.sections.find((sec) => sec.id === s.openSection) : null;
-    const activeSectionModal = openSectionData ? {
-      id: openSectionData.id,
-      title: openSectionData.title,
-      onSelectAll: () => this.selectAllSection(openSectionData.id),
-      onDeselectAll: () => this.deselectSection(openSectionData.id),
-      questions: openSectionData.questions.map((q) => buildQuestionView(q, s.selected, s.expanded, this.toggleQuestion, this.toggleExpand, false))
-    } : null;
-
-    const isBrowseQuiz = isBrowse && s.browseStep <= 3;
-    const isBrowseResults = isBrowse && s.browseStep === 4;
+    const isQuizSubPhase = s.browseStep <= 3;
+    const isShortlistSubPhase = s.browseStep === 4;
+    const isBrowseQuiz = isBrowse && isQuizSubPhase;
+    const isBrowseResults = isBrowse && isShortlistSubPhase;
+    const isStep1Quiz = isWizard && s.step === 1 && isQuizSubPhase;
+    const isStep1Shortlist = isWizard && s.step === 1 && isShortlistSubPhase;
+    const showWizardNav = !isStep1Quiz;
 
     const browseQuizQuestionData = s.browseStep <= 3 ? BROWSE_QUIZ_QUESTIONS[s.browseStep - 1] : null;
     const browseQuiz = browseQuizQuestionData ? {
@@ -1101,10 +1084,10 @@ class Component extends DCLogic {
     const browseQuizDots = [1, 2, 3].map((n) => ({
       style: { flex: '1', height: '4px', borderRadius: '2px', background: n <= s.browseStep ? ACCENT : DIVIDER }
     }));
-    const browseQuizShowBack = isBrowseQuiz && s.browseStep > 1;
+    const browseQuizShowBack = isQuizSubPhase && s.browseStep > 1;
 
     let browseShortlist = [];
-    if (isBrowseResults && s.browseAnswers.category) {
+    if ((isBrowseResults || isStep1Shortlist) && s.browseAnswers.category) {
       const matchedSection = PROMPTS_DATA.sections.find((sec) => sec.id === s.browseAnswers.category);
       if (matchedSection) {
         const scored = matchedSection.questions.map((q) => {
@@ -1144,12 +1127,13 @@ class Component extends DCLogic {
       };
     });
 
-    const selectedCount = Object.keys(s.selected).length;
     const browseSelectedCount = Object.keys(s.browseSelected).length;
+    const selectedCount = browseSelectedCount;
     const browseSelectionText = browseSelectedCount === 0 ? 'No questions selected' : browseSelectedCount === 1 ? '1 question selected' : `${browseSelectedCount} questions selected`;
     const browseHasNoSelection = browseSelectedCount === 0;
     const browseHasOneSelection = browseSelectedCount === 1;
     const browseHasMultipleSelections = browseSelectedCount > 1;
+    const unselectLabel = browseSelectedCount === 1 ? 'Unselect 1 question' : `Unselect ${browseSelectedCount} questions`;
     const backDisabled = s.step === 1;
     const nextLabel = s.step === 6 ? 'Create prompt \u2192' : 'Next \u2192';
     const backLabel = '\u2190 Back';
@@ -1210,16 +1194,12 @@ class Component extends DCLogic {
     return {
       isLanding, isApp, isWizard, isResult, isStarterPrompt, isBrowse,
       goLanding: this.goLanding, goApp: this.goApp, goBrowse: this.goBrowse, goStarterPrompt: this.goStarterPrompt,
-      showSelectionWarning: s.showSelectionWarning && Object.keys(s.selected).length === 0,
+      showSelectionWarning: s.showSelectionWarning && browseSelectedCount === 0,
       starterPrompt: STARTER_PROMPT_DATA,
       showStarterPromptText: s.showStarterPromptText,
       toggleStarterPromptText: this.toggleStarterPromptText,
       showStarterPromptModal: window.showStarterPromptModal,
       copyGeneric: this.copyGeneric, copyStarter: this.copyStarter,
-      sectionCards,
-      activeSectionModal,
-      closeSection: this.closeSection,
-      stopPropagation: this.stopPropagation,
       showReviewDetails: s.showReviewDetails,
       toggleReviewDetails: this.toggleReviewDetails,
       reviewToggleIcon: s.showReviewDetails ? '▲' : '▼',
@@ -1229,6 +1209,9 @@ class Component extends DCLogic {
       selectedCount,
       isBrowseQuiz,
       isBrowseResults,
+      isStep1Quiz,
+      isStep1Shortlist,
+      showWizardNav,
       browseQuiz,
       browseQuizDots,
       browseQuizShowBack,
@@ -1237,6 +1220,8 @@ class Component extends DCLogic {
       browseShortlist,
       onSelectAllShortlist: () => this.browseSelectAllIds(browseShortlistIds),
       onDeselectAllShortlist: () => this.browseDeselectAllIds(browseShortlistIds),
+      clearBrowseSelected: this.clearBrowseSelected,
+      unselectLabel,
       hasBrowseSelection: browseSelectedCount > 0,
       browseSelectedCount,
       browseSelectionText,
