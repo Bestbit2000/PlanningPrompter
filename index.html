@@ -32,9 +32,6 @@
       </div>
       <div class="site-nav-actions">
         <a href="#" onClick="{{ goLanding }}" class="site-nav-link">Home</a>
-        <sc-if value="{{ isLanding }}">
-          <button data-action="goApp" onClick="{{ goApp }}" class="btn-primary">Try it now</button>
-        </sc-if>
       </div>
     </div>
   </div>
@@ -644,7 +641,7 @@
 
   <!-- Universal footer for non-landing pages (landing has its own, fuller footer above) -->
   <sc-if value="{{ !isLanding }}">
-  <div class="landing-footer">
+  <div class="landing-footer" style="{{ universalFooterStyle }}">
     <div class="landing-footer-inner">
       <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
       <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
@@ -1099,6 +1096,7 @@ class Component extends DCLogic {
     const isStep1Quiz = isWizard && s.step === 1 && isQuizSubPhase;
     const isStep1Shortlist = isWizard && s.step === 1 && isShortlistSubPhase;
     const showWizardNav = !isStep1Quiz;
+    const universalFooterStyle = isBrowseResults ? { paddingBottom: '96px' } : {};
 
     const browseQuizQuestionData = s.browseStep <= 3 ? BROWSE_QUIZ_QUESTIONS[s.browseStep - 1] : null;
     const browseQuiz = browseQuizQuestionData ? {
@@ -1299,7 +1297,8 @@ class Component extends DCLogic {
       showInfoModal: s.showInfoModal,
       openInfoModal: this.openInfoModal,
       closeInfoModal: this.closeInfoModal,
-      stopClick: this.stopClick
+      stopClick: this.stopClick,
+      universalFooterStyle
     };
   }
 }
