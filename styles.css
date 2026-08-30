@@ -34,18 +34,6 @@ input, textarea, select, button {
   font-family: 'Archivo', system-ui, sans-serif;
 }
 
-/* HEADER */
-header {
-  background: #4a2c5e;
-  color: #fff;
-  padding: 2rem 1.5rem 1.5rem;
-  text-align: center;
-}
-header h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.35rem; letter-spacing: -0.01em; }
-header p { font-size: 0.875rem; color: #d4c5e2; max-width: 520px; margin: 0 auto 1rem; }
-.ai-badges { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
-.ai-badge { background: rgba(255,255,255,0.12); color: #e8dff5; border: 1px solid rgba(255,255,255,0.2); border-radius: 99px; padding: 3px 12px; font-size: 0.75rem; }
-
 /* NAV TABS */
 .tab-bar {
   display: flex;
