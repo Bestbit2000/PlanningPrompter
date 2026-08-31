@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prompt editor</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="optimiser-styles.css">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="scoring-criteria.js"></script>
+<script src="optimiser-engine.js"></script>
 <script src="prompts.js"></script>
 <!-- Fallback: if prompts.js doesn't load, use inlined data -->
 <script>
@@ -45,8 +49,8 @@ setTimeout(() => {
     .section-head .controls { display: flex; gap: 6px; flex-shrink: 0; padding-top: 2px; }
     .id-badge { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 0.75rem; color: var(--text-muted); background: #f1f5f9; border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; width: fit-content; }
     label { display: block; font-weight: 600; font-size: 0.78rem; color: #475569; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.03em; }
-    input[type="text"], textarea { width: 100%; padding: 9px 11px; border: 1px solid var(--border); border-radius: 7px; font-family: var(--font-family); font-size: 0.92rem; background-color: #f8fafc; resize: vertical; }
-    input[type="text"]:focus, textarea:focus { outline: none; border-color: var(--primary); background-color: #ffffff; }
+    input[type="text"], input[type="password"], input[type="number"], textarea { width: 100%; padding: 9px 11px; border: 1px solid var(--border); border-radius: 7px; font-family: var(--font-family); font-size: 0.92rem; background-color: #f8fafc; resize: vertical; }
+    input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, textarea:focus { outline: none; border-color: var(--primary); background-color: #ffffff; }
     .section-title-input { font-size: 1.15rem; font-weight: 700; }
     .questions-wrap { border-top: 1px solid var(--border); padding: 6px 20px 18px; }
     .question-card { border: 1px solid var(--border); border-radius: 10px; margin-top: 14px; background: #fbfcfe; }
@@ -99,6 +103,7 @@ setTimeout(() => {
     <div class="toolbar-inner">
         <h1>Prompt editor</h1>
         <span class="status" id="statusLine"></span>
+        <button class="secondary" id="settingsBtn">Settings</button>
         <button class="secondary" id="resetBtn">Reload from prompts.js</button>
         <button class="secondary" id="addSectionBtn">Add section</button>
         <button id="exportBtn">Export prompts.js</button>
@@ -149,6 +154,100 @@ setTimeout(() => {
         <div class="modal-ft">
             <button class="secondary" id="cancelAddSectionBtn">Cancel</button>
             <button id="confirmAddSectionBtn">Add section</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-bg hidden" id="settingsModal">
+    <div class="modal">
+        <div class="modal-hdr">
+            <h2>Settings</h2>
+            <button class="modal-close" id="closeSettingsBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <label for="geminiApiKeyInput">Gemini API key</label>
+                <input type="password" id="geminiApiKeyInput" placeholder="AIzaSy..." />
+                <div class="tag-hint" style="margin-top:6px;">Used by "Create optimised prompt" below. Shared with prompt-evaluater.html.</div>
+            </div>
+            <div>
+                <label for="targetScoreInput">Optimiser target score (%)</label>
+                <input type="number" id="targetScoreInput" placeholder="95" min="1" max="100" />
+            </div>
+            <div>
+                <label for="maxIterInput">Optimiser max iterations</label>
+                <input type="number" id="maxIterInput" placeholder="3" min="1" max="5" />
+            </div>
+        </div>
+        <div class="modal-ft">
+            <button class="secondary" id="cancelSettingsBtn">Cancel</button>
+            <button id="saveSettingsBtn">Save settings</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay hidden" id="optimiseModal">
+    <div class="modal-panel" style="max-width: 1180px;">
+        <div class="modal-header">
+            <h2 id="optimiseModalTitle">Create optimised prompt</h2>
+            <button class="modal-close-btn" id="closeOptimiseBtn">&times;</button>
+        </div>
+        <div class="modal-body" style="display:flex; gap:20px; align-items:flex-start;">
+
+            <div style="flex:1; min-width:0;">
+                <label for="optimiseStartingQuestion" style="display:block;margin-bottom:6px;">Starting question (human version)</label>
+                <div id="optimiseStartingQuestion" class="result-box" style="max-height:110px; margin-bottom:16px;"></div>
+
+                <div id="optimiseBaselineSection" class="hidden">
+                    <label style="display:block;margin-bottom:6px;">Baseline response</label>
+                    <div id="optimiseBaselineResponse" class="result-box" style="max-height:220px; margin-bottom:8px;"></div>
+                    <div style="font-weight:700; margin-bottom:16px;">Baseline score: <span id="optimiseBaselineScore">-</span></div>
+                </div>
+
+                <div id="optimiseIterationsSection" class="hidden" style="margin-bottom:16px;">
+                    <label style="display:block;margin-bottom:6px;">Iterations</label>
+                    <div id="optimiseIterationsList"></div>
+                </div>
+
+                <div id="optimiseFinalSection" class="hidden">
+                    <div id="optimiseComparison" class="comparison-box">
+                        <div class="score-compare">
+                            <div>Human version score: <span class="score-old" id="optimiseOldScore">0%</span></div>
+                            <div>&rarr;</div>
+                            <div>Best AI-optimised score: <span class="score-new" id="optimiseNewScore">0%</span></div>
+                        </div>
+                    </div>
+
+                    <label for="optimiseResponseBox" style="display:block;margin-bottom:6px;">AI response from the best prompt found</label>
+                    <div id="optimiseResponseBox" class="result-box" style="height: 220px; margin-bottom: 16px;"></div>
+
+                    <label for="optimiseResultText">Optimised prompt (review and edit before using)</label>
+                    <textarea id="optimiseResultText" rows="8"></textarea>
+                </div>
+            </div>
+
+            <div style="width:280px; flex-shrink:0;">
+                <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:12px;">
+                    <div class="metric-card">
+                        <div class="metric-label">This run</div>
+                        <div class="metric-value" id="optimiseRunTokens" style="font-size:1.1rem;">0 tokens</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Lifetime total</div>
+                        <div class="metric-value" id="optimiseLifetimeTokens" style="font-size:1.1rem;">0 tokens</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Time</div>
+                        <div class="metric-value" id="optimiseTimeDisplay" style="font-size:1.1rem;">-</div>
+                    </div>
+                </div>
+                <div id="optimiseLog" class="log-stream" style="max-height: 420px; background:#f8fafc; border:1px solid var(--border); border-radius: 8px;"></div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button class="secondary" id="closeOptimiseBtn2">Cancel</button>
+            <button id="useOptimisedBtn" disabled>Use this</button>
         </div>
     </div>
 </div>
@@ -354,7 +453,7 @@ setTimeout(() => {
         body.appendChild(field('Question id', q.id, v => { q.id = v; }, false));
         body.appendChild(field('Quick summary', q.quickSummary, v => { q.quickSummary = v; qsummarySpan.textContent = v || '(untitled question)'; }, false));
         body.appendChild(field('Human version', q.humanVersion, v => { q.humanVersion = v; }, true, 3));
-        body.appendChild(field('AI-optimised prompt', q.aiOptimised, v => { q.aiOptimised = v; }, true, 6));
+        body.appendChild(aiOptimisedField(q));
 
         const row = document.createElement('div');
         row.className = 'row-2';
@@ -378,6 +477,180 @@ setTimeout(() => {
         input.addEventListener('input', () => { onChange(input.value); saveDraft(); });
         wrap.appendChild(input);
         return wrap;
+    }
+
+    function aiOptimisedField(q) {
+        const wrap = document.createElement('div');
+        const headerRow = document.createElement('div');
+        headerRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:4px;';
+        const lbl = document.createElement('label');
+        lbl.textContent = 'AI-optimised prompt';
+        lbl.style.margin = '0';
+        headerRow.appendChild(lbl);
+        const createBtn = document.createElement('button');
+        createBtn.type = 'button';
+        createBtn.className = 'small';
+        createBtn.textContent = '✨ Create optimised prompt';
+        headerRow.appendChild(createBtn);
+        wrap.appendChild(headerRow);
+
+        const textarea = document.createElement('textarea');
+        textarea.rows = 6;
+        textarea.value = q.aiOptimised || '';
+        textarea.addEventListener('input', () => { q.aiOptimised = textarea.value; saveDraft(); });
+        wrap.appendChild(textarea);
+
+        createBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openOptimiseModal(q, textarea);
+        });
+
+        return wrap;
+    }
+
+    // --- Settings modal ---
+
+    function openSettingsModal() {
+        const s = PromptOptimiser.getSettings();
+        document.getElementById('geminiApiKeyInput').value = s.apiKey;
+        document.getElementById('targetScoreInput').value = s.targetScore;
+        document.getElementById('maxIterInput').value = s.maxIterations;
+        document.getElementById('settingsModal').classList.remove('hidden');
+    }
+
+    function closeSettingsModal() {
+        document.getElementById('settingsModal').classList.add('hidden');
+    }
+
+    // --- Optimise-prompt modal ---
+
+    let optimiseState = null;
+    let optimiseRunTokens = 0;
+
+    function formatTokens(n) {
+        return n.toLocaleString('en-GB') + ' token' + (n === 1 ? '' : 's');
+    }
+
+    function appendOptimiseLog(message, tokens) {
+        const stream = document.getElementById('optimiseLog');
+        const entry = document.createElement('div');
+        entry.className = 'log-entry';
+        entry.textContent = tokens ? `${message} (${tokens} tokens)` : message;
+        stream.appendChild(entry);
+        stream.scrollTop = stream.scrollHeight;
+
+        if (tokens) {
+            optimiseRunTokens += tokens;
+            document.getElementById('optimiseRunTokens').textContent = formatTokens(optimiseRunTokens);
+        }
+        refreshLifetimeTokenDisplay();
+    }
+
+    function refreshLifetimeTokenDisplay() {
+        const t = PromptOptimiser.getTelemetry();
+        document.getElementById('optimiseLifetimeTokens').textContent = formatTokens(t.totalTokens);
+    }
+
+    function renderIterationRow(data) {
+        const list = document.getElementById('optimiseIterationsList');
+        document.getElementById('optimiseIterationsSection').classList.remove('hidden');
+        const row = document.createElement('div');
+        row.className = 'iteration-row' + (data.isNewBest ? ' iteration-best' : '');
+        row.innerHTML = `<span>Iteration ${data.iteration}${data.isNewBest ? '<span class="iteration-best-tag">NEW BEST</span>' : ''}</span><span class="iteration-score">${data.score}%</span>`;
+        list.appendChild(row);
+    }
+
+    function openOptimiseModal(question, targetTextarea) {
+        const settings = PromptOptimiser.getSettings();
+        if (!settings.apiKey) {
+            showToast('Add your Gemini API key in Settings first.');
+            openSettingsModal();
+            return;
+        }
+        if (!question.humanVersion || !question.humanVersion.trim()) {
+            showToast('Enter a human version of the question first.');
+            return;
+        }
+        optimiseState = { question, targetTextarea };
+        document.getElementById('optimiseModal').classList.remove('hidden');
+        runOptimisationForQuestion();
+    }
+
+    function closeOptimiseModal() {
+        document.getElementById('optimiseModal').classList.add('hidden');
+    }
+
+    async function runOptimisationForQuestion() {
+        if (!optimiseState) return;
+        const { question } = optimiseState;
+        const settings = PromptOptimiser.getSettings();
+        const styleConstraint = (question.styles && question.styles.length) ? question.styles.join(', ') : 'clear, factual, and jargon-free';
+
+        document.getElementById('optimiseModalTitle').textContent = 'Create optimised prompt' + (question.quickSummary ? ': ' + question.quickSummary : '');
+        document.getElementById('optimiseStartingQuestion').textContent = question.humanVersion.trim();
+        document.getElementById('optimiseBaselineSection').classList.add('hidden');
+        document.getElementById('optimiseIterationsSection').classList.add('hidden');
+        document.getElementById('optimiseIterationsList').innerHTML = '';
+        document.getElementById('optimiseFinalSection').classList.add('hidden');
+        document.getElementById('optimiseLog').innerHTML = '';
+        document.getElementById('optimiseResponseBox').innerHTML = '';
+        document.getElementById('optimiseResultText').value = '';
+        document.getElementById('useOptimisedBtn').disabled = true;
+
+        optimiseRunTokens = 0;
+        document.getElementById('optimiseRunTokens').textContent = formatTokens(0);
+        refreshLifetimeTokenDisplay();
+
+        const telemetry = PromptOptimiser.getTelemetry();
+        if (telemetry.optAverageMs) {
+            document.getElementById('optimiseTimeDisplay').textContent = `~${PromptOptimiser.formatDuration(telemetry.optAverageMs)} est.`;
+            appendOptimiseLog(`Estimated time: ~${PromptOptimiser.formatDuration(telemetry.optAverageMs)} (average of ${telemetry.optRunCount} previous run${telemetry.optRunCount === 1 ? '' : 's'}).`);
+        } else {
+            document.getElementById('optimiseTimeDisplay').textContent = 'Running…';
+        }
+
+        const logger = {
+            log: (msg, tokens) => appendOptimiseLog(msg, tokens),
+            onBaseline: (data) => {
+                document.getElementById('optimiseBaselineSection').classList.remove('hidden');
+                document.getElementById('optimiseBaselineResponse').innerHTML = window.marked ? marked.parse(data.responseText) : data.responseText;
+                document.getElementById('optimiseBaselineScore').textContent = data.score + '%';
+            },
+            onIteration: renderIterationRow
+        };
+
+        try {
+            const result = await PromptOptimiser.runOptimisationLoop({
+                apiKey: settings.apiKey,
+                startingPrompt: question.humanVersion.trim(),
+                styleConstraint,
+                maxIterations: settings.maxIterations,
+                targetScore: settings.targetScore,
+                logger
+            });
+
+            document.getElementById('optimiseOldScore').textContent = result.initialScore + '%';
+            document.getElementById('optimiseNewScore').textContent = result.bestScore + '%';
+            document.getElementById('optimiseFinalSection').classList.remove('hidden');
+            document.getElementById('optimiseResponseBox').innerHTML = window.marked ? marked.parse(result.bestResponseText) : result.bestResponseText;
+            document.getElementById('optimiseResultText').value = result.bestPrompt;
+            document.getElementById('useOptimisedBtn').disabled = false;
+            document.getElementById('optimiseTimeDisplay').textContent = PromptOptimiser.formatDuration(result.elapsedMs);
+            refreshLifetimeTokenDisplay();
+        } catch (err) {
+            appendOptimiseLog('Error: ' + err.message);
+            document.getElementById('optimiseTimeDisplay').textContent = '-';
+        }
+    }
+
+    function applyOptimisedResult() {
+        if (!optimiseState) return;
+        const newValue = document.getElementById('optimiseResultText').value;
+        optimiseState.question.aiOptimised = newValue;
+        optimiseState.targetTextarea.value = newValue;
+        saveDraft();
+        closeOptimiseModal();
+        showToast('Optimised prompt applied');
     }
 
     function tagField(labelText, placeholder, value, onChange) {
@@ -501,6 +774,23 @@ setTimeout(() => {
         document.getElementById('cancelAddSectionBtn').addEventListener('click', closeAddSectionModal);
         document.getElementById('confirmAddSectionBtn').addEventListener('click', confirmAddSection);
         titleInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') confirmAddSection(); });
+
+        document.getElementById('settingsBtn').addEventListener('click', openSettingsModal);
+        document.getElementById('closeSettingsBtn').addEventListener('click', closeSettingsModal);
+        document.getElementById('cancelSettingsBtn').addEventListener('click', closeSettingsModal);
+        document.getElementById('saveSettingsBtn').addEventListener('click', () => {
+            PromptOptimiser.saveSettings({
+                apiKey: document.getElementById('geminiApiKeyInput').value.trim(),
+                targetScore: parseInt(document.getElementById('targetScoreInput').value) || 95,
+                maxIterations: parseInt(document.getElementById('maxIterInput').value) || 3
+            });
+            closeSettingsModal();
+            showToast('Settings saved');
+        });
+
+        document.getElementById('closeOptimiseBtn').addEventListener('click', closeOptimiseModal);
+        document.getElementById('closeOptimiseBtn2').addEventListener('click', closeOptimiseModal);
+        document.getElementById('useOptimisedBtn').addEventListener('click', applyOptimisedResult);
 
         document.getElementById('resetBtn').addEventListener('click', async () => {
             if (!confirm('Discard all local edits and reload the current prompts.js file?')) return;

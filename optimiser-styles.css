@@ -140,6 +140,47 @@
   background: #f8fafc;
 }
 
+/* AI response preview */
+.result-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+  max-height: 600px;
+  overflow-y: auto;
+  font-size: 0.95rem;
+  color: #334155;
+  line-height: 1.7;
+}
+.result-box h1, .result-box h2, .result-box h3 { margin-top: 1.5em; margin-bottom: 0.5em; color: #0f172a; }
+.result-box p { margin-top: 0; margin-bottom: 1em; }
+
+/* Score panel (per-pillar breakdown) */
+.score-panel { margin-top: 16px; padding: 20px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; }
+.score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.score-category { background: white; border-radius: 8px; border: 1px solid #e2e8f0; overflow: hidden; }
+.score-header { background: #f1f5f9; padding: 10px 12px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+.score-label { font-weight: 700; color: #1e293b; font-size: 0.9rem; }
+.score-val { font-weight: 800; color: var(--primary, #2563eb); font-size: 1rem; }
+.score-sub-items { padding: 10px 12px; font-size: 0.8rem; color: #475569; line-height: 1.8; }
+.sub-flex { display: flex; justify-content: space-between; border-bottom: 1px dashed #e2e8f0; padding: 2px 0; }
+.sub-flex:last-child { border-bottom: none; }
+.overall-score { font-weight: 700; color: #0f172a; margin-top: 4px; }
+.feedback-text { font-size: 0.9rem; color: #334155; margin-top: 12px; background: white; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-style: italic; }
+
+/* Before/after score comparison */
+.comparison-box { background: #ffffff; border: 2px solid var(--accent, #8b5cf6); border-radius: 8px; padding: 16px; margin-bottom: 16px; text-align: center; }
+.score-compare { display: flex; justify-content: space-around; align-items: center; font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
+.score-old { color: #64748b; text-decoration: line-through; }
+.score-new { color: var(--success, #10b981); font-size: 1.6rem; }
+
+/* Per-iteration score progression */
+.iteration-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 6px; margin-top: 6px; font-size: 0.88rem; background: #fff; }
+.iteration-row .iteration-score { font-weight: 700; }
+.iteration-row.iteration-best { border-color: var(--success, #10b981); background: #f0fdf4; }
+.iteration-row.iteration-best .iteration-score { color: var(--success, #10b981); }
+.iteration-row .iteration-best-tag { font-size: 0.72rem; font-weight: 700; color: var(--success, #10b981); margin-left: 6px; }
+
 /* Circular Score Gauge */
 .score-gauge-container {
   display: flex;
