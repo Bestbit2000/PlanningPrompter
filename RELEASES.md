@@ -15,8 +15,12 @@ Versions are written `vX.Y.Z` and shown at the bottom of every page.
 When a part is incremented, every part to its right resets to 0. A release that
 contains both new functionality and bug fixes is a Y release.
 
-The number lives in one place: `window.APP_VERSION` in [version.js](version.js).
-The footer reads it from there, so nothing else needs editing.
+The number lives in two places, which must match:
+
+- `window.APP_VERSION` in [version.js](version.js), which the footer reads.
+- The `?v=X.Y.Z` on the stylesheet and script addresses at the top of
+  [index.html](index.html). Changing it makes browsers fetch fresh copies
+  instead of using ones cached from the previous release.
 
 ## Environments
 
@@ -37,8 +41,9 @@ a few minutes.
    and the full wizard in dev, on desktop and at phone width.
 3. **Decide the number** — from the table above, based on the largest kind of
    change in the release.
-4. **Bump** — update `window.APP_VERSION` in `version.js` and add an entry to the
-   release history below.
+4. **Bump** — update `window.APP_VERSION` in `version.js`, change every
+   `?v=X.Y.Z` at the top of `index.html` to the same number, and add an entry to
+   the release history below.
 5. **Commit and tag** — commit with the message `Release vX.Y.Z`, then tag it:
    ```bash
    git tag -a vX.Y.Z -m "Release vX.Y.Z"
@@ -62,4 +67,5 @@ functionality, and goes through steps 2 to 8 as a Z release.
 
 | Version | Date | Changes |
 |---|---|---|
+| v0.1.1 | 2 October 2026 | Version number added to stylesheet and script addresses so a release is not shown with a cached stylesheet (PO-13). |
 | v0.1.0 | 2 October 2026 | First numbered version. Version number shown in the footer (PO-7). Header logos (PO-4). Wizard and prompt changes from user feedback (PO-5). Risk register and site mitigations (PO-11). |
