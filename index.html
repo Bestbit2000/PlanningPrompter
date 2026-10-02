@@ -21,16 +21,9 @@
   <!-- ============ NAV ============ -->
   <header class="site-header">
     <div class="site-header-inner">
-      <div class="site-logos">
-        <a href="#" onClick="{{ goLanding }}" class="site-logo-link"><img src="./images/rit-logo.png" alt="Retirement Income Taskforce home" /></a>
-        <a href="https://consumerduty.org" target="_blank" rel="noopener" class="site-logo-link"><img src="./images/cda-logo.png" alt="Consumer Duty Alliance website (opens in a new tab)" /></a>
-      </div>
-      <div onClick="{{ goLanding }}" role="button" tabindex="0" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" class="site-brand">
-        <span class="site-brand-name">Retirement Income Taskforce</span>
-        <span class="site-brand-tagline">Consumer Duty Alliance</span>
-      </div>
+      <span class="site-brand-name">Retirement income prompt generator</span>
       <div class="site-nav-actions">
-        <a href="#" onClick="{{ goLanding }}" class="site-nav-link">Home</a>
+        <button type="button" onClick="{{ goLanding }}" class="site-start-again">Start again</button>
       </div>
     </div>
   </header>
@@ -42,7 +35,7 @@
     <!-- HERO -->
     <div class="landing-hero">
       <div>
-        <div class="landing-hero-eyebrow">Retirement Income Taskforce &middot; Consumer Duty Alliance</div>
+        <img class="landing-hero-rit" src="./images/rit-logo.png" alt="Retirement Income Taskforce" />
         <h1 class="landing-hero-title">Ask AI better questions about your retirement income</h1>
         <p class="landing-hero-lead">AI chatbots can be a genuinely useful sounding board as you approach retirement &mdash; but only if you ask them well. This free tool gives you the right questions, ready-built prompts, and a way to add your own details, so the answer you get back is actually about you.</p>
         <div class="landing-hero-actions">
@@ -131,15 +124,20 @@
     <!-- FOOTER -->
     <footer class="landing-footer">
       <div class="landing-footer-inner">
-        <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
-        <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
-        <a href="https://consumerduty.org/working-groups/retirement-income-taskforce">Retirement Income Taskforce, part of the Consumer Duty Alliance</a>
-        <span class="footer-links">
-          <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">Free guidance from MoneyHelper</a>
-          <a href="#" onClick="{{ openInfoModal }}">Privacy</a>
-          <a href="https://consumerduty.org/keep-in-touch" target="_blank" rel="noopener">Report a problem</a>
-        </span>
-        <span class="app-version">{{ appVersion }}</span>
+        <div class="footer-row footer-row-end">
+          <div class="footer-group">
+            <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
+            <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">Free guidance from MoneyHelper</a>
+          </div>
+          <div class="footer-group">
+            <a href="#" onClick="{{ openInfoModal }}">Privacy</a>
+            <a href="https://consumerduty.org/keep-in-touch" target="_blank" rel="noopener">Report a problem</a>
+          </div>
+        </div>
+        <div class="footer-row footer-row-end">
+          <span>Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
+          <span class="app-version">{{ appVersion }}</span>
+        </div>
       </div>
     </footer>
 
@@ -224,11 +222,13 @@
       <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Select the questions you want answered, then add as much or as little detail about yourself as you like. We don&rsquo;t store what you type &mdash; it only builds the text of your prompt, which is sent to the chatbot you choose.</p>
 
       <div class="wizard-tabs-wrap">
-        <div class="wizard-tabs" style="display:flex;gap:4px;border-bottom:2px solid rgba(32,30,29,0.15);margin-bottom:28px">
+        <button type="button" class="tabs-arrow tabs-arrow-left" aria-label="Show earlier steps" onClick="{{ scrollTabsLeft }}" disabled="{{ tabsAtStart }}" style="{{ tabsArrowStyle }}">&lsaquo;</button>
+        <div class="wizard-tabs" style="display:flex;gap:4px">
           <sc-for list="{{ steps }}" as="st" hint-placeholder-count="7">
-            <button onClick="{{ st.goTo }}" style="{{ st.tabStyle }}">{{ st.tabText }}</button>
+            <button type="button" onClick="{{ st.goTo }}" aria-current="{{ st.ariaCurrent }}" style="{{ st.tabStyle }}">{{ st.tabText }}</button>
           </sc-for>
         </div>
+        <button type="button" class="tabs-arrow tabs-arrow-right" aria-label="Show later steps" onClick="{{ scrollTabsRight }}" disabled="{{ tabsAtEnd }}" style="{{ tabsArrowStyle }}">&rsaquo;</button>
       </div>
 
     <sc-if value="{{ isWizard }}">
@@ -265,14 +265,14 @@
 
         <sc-if value="{{ isStep1Shortlist }}" hint-placeholder-val="{{ false }}">
         <div aria-live="polite">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:16px;flex-wrap:wrap">
-            <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0">Here are the prompts that best match what you're looking for.</p>
-            <button onClick="{{ restartBrowseQuiz }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;white-space:nowrap;flex:none;min-height:44px">Change your answers</button>
-          </div>
+          <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 12px">Here are the prompts that best match what you're looking for.</p>
 
-          <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:16px">
-            <button onClick="{{ onSelectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap;min-height:44px">Select all</button>
-            <button onClick="{{ onDeselectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap;min-height:44px">Deselect</button>
+          <div class="list-controls">
+            <button type="button" onClick="{{ restartBrowseQuiz }}" class="list-link-btn">Change your answers</button>
+            <div class="list-controls-group">
+              <button type="button" onClick="{{ onSelectAllShortlist }}" class="list-btn">Select all</button>
+              <button type="button" onClick="{{ onDeselectAllShortlist }}" class="list-btn">Deselect all</button>
+            </div>
           </div>
 
           <div style="display:flex;flex-direction:column;gap:10px">
@@ -284,10 +284,6 @@
                     <div style="flex:1;min-width:0">
                       <div style="font-size:15px;font-weight:600;color:#226B79;margin-bottom:4px">{{ q.quickSummary }}</div>
                       <div style="font-size:15px;margin-bottom:8px;color:#201e1d">{{ q.humanVersion }}</div>
-                      <span onClick="{{ q.onToggleExpand }}" role="button" tabindex="0" aria-expanded="{{ q.expanded }}" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block;min-height:44px;align-content:center">{{ q.toggleLabel }}</span>
-                      <sc-if value="{{ q.expanded }}">
-                        <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap;animation:slideDown 0.2s ease">{{ q.aiOptimised }}</div>
-                      </sc-if>
                     </div>
                   </div>
                 </div>
@@ -299,10 +295,6 @@
                     <div style="flex:1;min-width:0">
                       <div style="font-size:15px;font-weight:600;color:#226B79;margin-bottom:4px">{{ q.quickSummary }}</div>
                       <div style="font-size:15px;margin-bottom:8px;color:#201e1d">{{ q.humanVersion }}</div>
-                      <span onClick="{{ q.onToggleExpand }}" role="button" tabindex="0" aria-expanded="{{ q.expanded }}" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block;min-height:44px;align-content:center">{{ q.toggleLabel }}</span>
-                      <sc-if value="{{ q.expanded }}">
-                        <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap;animation:slideDown 0.2s ease">{{ q.aiOptimised }}</div>
-                      </sc-if>
                     </div>
                   </div>
                 </div>
@@ -623,14 +615,14 @@
 
     <sc-if value="{{ isBrowseResults }}" hint-placeholder-val="{{ false }}">
     <div aria-live="polite">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;gap:16px;flex-wrap:wrap">
-        <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0">Here are the prompts that best match what you're looking for. Select the ones you need, then copy them to your AI chatbot.</p>
-        <button onClick="{{ restartBrowseQuiz }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;white-space:nowrap;flex:none;min-height:44px">Change your answers</button>
-      </div>
+      <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 12px">Here are the prompts that best match what you're looking for. Select the topics you want to cover, then create your combined prompt.</p>
 
-      <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:16px">
-        <button onClick="{{ onSelectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap;min-height:44px">Select all</button>
-        <button onClick="{{ onDeselectAllShortlist }}" style="background:#fff;color:#2C8494;border:1.5px solid #2C8494;border-radius:6px;font-size:12px;font-weight:700;padding:6px 14px;cursor:pointer;text-align:left;white-space:nowrap;min-height:44px">Deselect</button>
+      <div class="list-controls">
+        <button type="button" onClick="{{ restartBrowseQuiz }}" class="list-link-btn">Change your answers</button>
+        <div class="list-controls-group">
+          <button type="button" onClick="{{ onSelectAllShortlist }}" class="list-btn">Select all</button>
+          <button type="button" onClick="{{ onDeselectAllShortlist }}" class="list-btn">Deselect all</button>
+        </div>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:36px">
@@ -642,10 +634,6 @@
                 <div style="flex:1;min-width:0">
                   <div style="font-size:15px;font-weight:600;color:#226B79;margin-bottom:4px">{{ q.quickSummary }}</div>
                   <div style="font-size:15px;margin-bottom:8px;color:#201e1d">{{ q.humanVersion }}</div>
-                  <span onClick="{{ q.onToggleExpand }}" role="button" tabindex="0" aria-expanded="{{ q.expanded }}" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block;min-height:44px;align-content:center">{{ q.toggleLabel }}</span>
-                  <sc-if value="{{ q.expanded }}">
-                    <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap;animation:slideDown 0.2s ease">{{ q.aiOptimised }}</div>
-                  </sc-if>
                 </div>
               </div>
             </div>
@@ -657,10 +645,6 @@
                 <div style="flex:1;min-width:0">
                   <div style="font-size:15px;font-weight:600;color:#226B79;margin-bottom:4px">{{ q.quickSummary }}</div>
                   <div style="font-size:15px;margin-bottom:8px;color:#201e1d">{{ q.humanVersion }}</div>
-                  <span onClick="{{ q.onToggleExpand }}" role="button" tabindex="0" aria-expanded="{{ q.expanded }}" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" style="font-size:12px;font-weight:600;color:#226B79;cursor:pointer;display:inline-block;min-height:44px;align-content:center">{{ q.toggleLabel }}</span>
-                  <sc-if value="{{ q.expanded }}">
-                    <div style="margin-top:12px;background:#eceae9;border-left:2px solid #2C8494;padding:12px 14px;font-size:13px;color:rgba(32,30,29,0.85);white-space:pre-wrap;animation:slideDown 0.2s ease">{{ q.aiOptimised }}</div>
-                  </sc-if>
                 </div>
               </div>
             </div>
@@ -699,14 +683,20 @@
   <sc-if value="{{ !isLanding }}">
   <footer class="landing-footer" style="{{ universalFooterStyle }}">
     <div class="landing-footer-inner">
-      <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
-      <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
-      <span class="footer-links">
-        <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">Free guidance from MoneyHelper</a>
-        <a href="#" onClick="{{ openInfoModal }}">Privacy</a>
-        <a href="https://consumerduty.org/keep-in-touch" target="_blank" rel="noopener">Report a problem</a>
-      </span>
-      <span class="app-version">{{ appVersion }}</span>
+      <div class="footer-row footer-row-end">
+        <div class="footer-group">
+          <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
+          <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">Free guidance from MoneyHelper</a>
+        </div>
+        <div class="footer-group">
+          <a href="#" onClick="{{ openInfoModal }}">Privacy</a>
+          <a href="https://consumerduty.org/keep-in-touch" target="_blank" rel="noopener">Report a problem</a>
+        </div>
+      </div>
+      <div class="footer-row footer-row-end">
+        <span>Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
+        <span class="app-version">{{ appVersion }}</span>
+      </div>
     </div>
   </footer>
   </sc-if>
@@ -843,8 +833,66 @@ class Component extends DCLogic {
     showSelectionWarning: false,
     showStarterPromptText: false,
     showReviewDetails: false,
-    showInfoModal: false
+    showInfoModal: false,
+    tabsOverflow: false,
+    tabsAtStart: true,
+    tabsAtEnd: true
   };
+
+  // ---- Wizard tab bar: arrows and centring (PO-17) ----
+  // These touch the DOM directly because scroll position isn't part of the template.
+  getTabBar = () => document.querySelector('.wizard-tabs');
+
+  measureTabs = () => {
+    const el = this.getTabBar();
+    const s = this.state;
+    if (!el) {
+      if (s.tabsOverflow) this.setState({ tabsOverflow: false, tabsAtStart: true, tabsAtEnd: true });
+      return;
+    }
+    const tabsOverflow = el.scrollWidth > el.clientWidth + 1;
+    const tabsAtStart = el.scrollLeft <= 1;
+    const tabsAtEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
+    if (tabsOverflow !== s.tabsOverflow || tabsAtStart !== s.tabsAtStart || tabsAtEnd !== s.tabsAtEnd) {
+      this.setState({ tabsOverflow, tabsAtStart, tabsAtEnd });
+    }
+  };
+
+  centreActiveTab = () => {
+    const el = this.getTabBar();
+    const tab = el && el.querySelector('[aria-current="step"]');
+    if (!tab) return;
+    el.scrollTo({ left: tab.offsetLeft - (el.clientWidth - tab.offsetWidth) / 2, behavior: 'smooth' });
+  };
+
+  scrollTabsBy = (dir) => {
+    const el = this.getTabBar();
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
+  };
+  scrollTabsLeft = () => this.scrollTabsBy(-1);
+  scrollTabsRight = () => this.scrollTabsBy(1);
+
+  componentDidMount() {
+    this._onTabScroll = (e) => { if (e.target && e.target.classList && e.target.classList.contains('wizard-tabs')) this.measureTabs(); };
+    document.addEventListener('scroll', this._onTabScroll, true);
+    window.addEventListener('resize', this.measureTabs);
+    this.measureTabs();
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('scroll', this._onTabScroll, true);
+    window.removeEventListener('resize', this.measureTabs);
+  }
+
+  componentDidUpdate() {
+    const s = this.state;
+    const key = s.view + '|' + s.phase + '|' + s.step;
+    if (key !== this._tabKey) {
+      this._tabKey = key;
+      this.centreActiveTab();
+    }
+    this.measureTabs();
+  }
 
   openInfoModal = (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ showInfoModal: true }); };
   closeInfoModal = () => this.setState({ showInfoModal: false });
@@ -1214,12 +1262,16 @@ class Component extends DCLogic {
         label,
         tabText: completed && !active ? '✓ ' + label : n + '. ' + label,
         goTo: () => this.goStep(n),
+        ariaCurrent: active ? 'step' : undefined,
         tabStyle: {
           padding: '10px 16px',
           fontSize: '13px',
           cursor: 'pointer',
           whiteSpace: 'nowrap',
           flex: 'none',
+          borderTop: 'none',
+          borderLeft: 'none',
+          borderRight: 'none',
           borderBottom: active ? '3px solid ' + ACCENT : '3px solid transparent',
           color: active ? ACCENT_DARK : completed ? ACCENT_DARK : TEXT_MUTED,
           fontWeight: active ? 800 : completed ? 700 : 600,
@@ -1342,6 +1394,11 @@ class Component extends DCLogic {
       browseHasMultipleSelections,
       copyAllSelected: this.copyAllSelected,
       steps,
+      scrollTabsLeft: this.scrollTabsLeft,
+      scrollTabsRight: this.scrollTabsRight,
+      tabsAtStart: s.tabsAtStart,
+      tabsAtEnd: s.tabsAtEnd,
+      tabsArrowStyle: { display: s.tabsOverflow ? 'flex' : 'none' },
       isStep1: s.step === 1, isStep2: s.step === 2, isStep3: s.step === 3, isStep4: s.step === 4, isStep5: s.step === 5, isStep6: s.step === 6,
       isNotStep6: s.step !== 6,
       lifestyleIsCustom,

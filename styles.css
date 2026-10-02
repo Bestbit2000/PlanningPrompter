@@ -788,6 +788,85 @@ input, textarea, select, button {
   }
 }
 
+/* Controls above a shortlist of questions: "Change your answers" on the left,
+   "Select all" and "Deselect all" on the right. */
+.list-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.list-controls-group { display: flex; gap: 8px; }
+.list-btn {
+  background: #fff;
+  color: #2C8494;
+  border: 1.5px solid #2C8494;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 14px;
+  min-height: 36px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.list-btn:hover { background: #f0f9fb; border-color: #1f6b7a; }
+.list-link-btn {
+  background: none;
+  border: none;
+  color: #226B79;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0;
+  min-height: 36px;
+  cursor: pointer;
+}
+.list-link-btn:hover { color: #164752; }
+@media (max-width: 768px) {
+  .list-btn, .list-link-btn { min-height: 44px; }
+}
+
+/* Wizard step tabs: one row that scrolls sideways when the steps don't fit.
+   On desktop the arrows scroll it; on touch screens it is swiped. */
+.wizard-tabs-wrap {
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 2px solid rgba(32, 30, 29, 0.15);
+  margin-bottom: 28px;
+}
+.wizard-tabs {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.wizard-tabs::-webkit-scrollbar { display: none; }
+.tabs-arrow {
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: 4px;
+  border: 1px solid #2C8494;
+  border-radius: 8px;
+  background: #fff;
+  color: #164752;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.tabs-arrow-left { margin-right: 8px; }
+.tabs-arrow-right { margin-left: 8px; }
+.tabs-arrow:hover:not(:disabled) { background: #f0f9fb; border-color: #1f6b7a; }
+.tabs-arrow:disabled { color: #b9b8b7; border-color: #ddd; background: #f5f4f3; cursor: default; }
+
 @media (max-width: 768px) {
   /* Any 3-equal-column grid (e.g. wizard step 2 fields) collapses to one column on mobile */
   [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"],
@@ -838,18 +917,8 @@ input, textarea, select, button {
     right: 0;
     background: linear-gradient(to left, #f5f4f3, rgba(245,244,243,0));
   }
-  .wizard-tabs {
-    flex-wrap: nowrap !important;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .wizard-tabs::-webkit-scrollbar {
-    display: none;
-  }
-  .wizard-tabs > div {
-    flex: 0 0 auto !important;
-  }
+  /* Arrows are for desktop; on touch screens the bar is swiped */
+  .tabs-arrow { display: none !important; }
 }
 
 @media (max-width: 480px) {
@@ -1385,6 +1454,8 @@ fieldset div > label:hover {
 }
 
 /* ============ SITE HEADER ============ */
+/* Slim tool bar. It sits under the Consumer Duty Alliance site header, which
+   carries the main branding, so this bar only names the tool and offers a restart. */
 .site-header {
   background: #fff;
   border-bottom: 3px solid #2C8494;
@@ -1395,26 +1466,10 @@ fieldset div > label:hover {
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 32px;
-  height: 64px;
+  min-height: 52px;
   display: flex;
   align-items: center;
   gap: 18px;
-}
-/* Pennant logos hang from the top of the bar and overhang its bottom edge */
-.site-logos {
-  display: flex;
-  gap: 10px;
-  flex: none;
-  align-self: flex-start;
-  height: 64px;
-}
-.site-logo-link { display: block; height: 96px; }
-.site-logo-link img { display: block; height: 96px; width: auto; }
-.site-brand {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.25;
-  cursor: pointer;
 }
 .site-brand-name {
   font-family: 'Archivo', sans-serif;
@@ -1422,32 +1477,34 @@ fieldset div > label:hover {
   font-size: 16px;
   color: #164752;
 }
-.site-brand-tagline {
-  font-size: 12px;
-  color: rgba(32, 30, 29, 0.7);
-}
 .site-nav-actions {
   margin-left: auto;
   display: flex;
   align-items: center;
   gap: 24px;
 }
-.site-nav-link {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1B5560;
-  text-decoration: none;
+.site-start-again {
+  background: #fff;
+  color: #2C8494;
+  border: 2px solid #2C8494;
+  border-radius: 8px;
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 4px 14px;
+  min-height: 36px;
+  cursor: pointer;
 }
+.site-start-again:hover { background: #f0f9fb; border-color: #1f6b7a; }
 
+/* Keep a full-size touch target on touch-sized screens */
 @media (max-width: 768px) {
-  .site-logos { align-self: center; height: auto; gap: 8px; }
-  .site-logo-link, .site-logo-link img { height: 52px; }
+  .site-start-again { min-height: 44px; }
 }
 
 @media (max-width: 480px) {
   .site-header-inner { padding: 0 16px; gap: 10px; }
-  .site-nav-actions { gap: 12px; }
-  .site-brand-tagline { display: none; }
+  .site-brand-name { font-size: 14px; }
 }
 
 /* ============ WIZARD STEP HELP TEXT ============ */
@@ -1540,12 +1597,11 @@ fieldset div > label:hover {
   gap: 56px;
   align-items: end;
 }
-.landing-hero-eyebrow {
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  color: #226B79;
-  font-weight: 800;
-  margin-bottom: 16px;
+.landing-hero-rit {
+  display: block;
+  width: 68px;
+  height: auto;
+  margin-bottom: 20px;
 }
 .landing-hero-title {
   font-family: 'Archivo', sans-serif;
@@ -1734,15 +1790,16 @@ fieldset div > label:hover {
   max-width: 1120px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 12px;
   font-size: 12px;
   color: rgba(32, 30, 29, 0.6);
 }
 .landing-footer-inner a { color: rgba(32, 30, 29, 0.6); }
-.footer-links { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 6px 20px; }
-.app-version { flex-basis: 100%; }
+.footer-row { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.footer-row-end { justify-content: space-between; }
+.footer-group { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.app-version { margin-left: auto; }
 
 /* ============ LAUNCH DIALOG: BEFORE YOU USE THE ANSWER ============ */
 .before-you-use {
