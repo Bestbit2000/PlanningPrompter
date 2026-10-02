@@ -4,13 +4,6 @@
 <title>Retirement Income Prompt Generator</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "y9w1hpcig9");
-</script>
 <script src="./version.js"></script>
 <script src="./prompts.js"></script>
 <script src="./support.js"></script>
@@ -141,6 +134,11 @@
         <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
         <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
         <a href="https://consumerduty.org/working-groups/retirement-income-taskforce">Retirement Income Taskforce, part of the Consumer Duty Alliance</a>
+        <span class="footer-links">
+          <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">Free guidance from MoneyHelper</a>
+          <a href="#" onClick="{{ openInfoModal }}">Privacy</a>
+          <a href="https://consumerduty.org/keep-in-touch" target="_blank" rel="noopener">Report a problem</a>
+        </span>
         <span class="app-version">{{ appVersion }}</span>
       </div>
     </footer>
@@ -204,13 +202,6 @@
       </div>
     </div>
 
-    <!-- Disclaimer -->
-    <div style="background:#fef3c7;border-left:4px solid #f59e0b;border-radius:8px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start;margin-bottom:24px">
-      <span style="font-size:20px;flex-shrink:0" aria-hidden="true">⚠️</span>
-      <div>
-        <p style="font-size:13px;color:#78350f;margin:0;line-height:1.6"><strong>Note:</strong> This is for educational purposes only. The prompt asks for factual information, not regulated financial advice. You should always speak to a qualified financial adviser about your personal circumstances.</p>
-      </div>
-    </div>
 
     <div style="background:#2C8494;color:#fff;padding:40px 32px;margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%)">
       <div style="max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap">
@@ -230,7 +221,7 @@
 
     <div style="padding-top:32px">
       <h2 style="font-size:26px;margin:0 0 6px">Build your prompt</h2>
-      <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Select the questions you want answered, then add as much or as little detail about yourself as you like. Nothing here is saved or sent anywhere &mdash; it only builds the text of your prompt.</p>
+      <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Select the questions you want answered, then add as much or as little detail about yourself as you like. We don&rsquo;t store what you type &mdash; it only builds the text of your prompt, which is sent to the chatbot you choose.</p>
 
       <div class="wizard-tabs-wrap">
         <div class="wizard-tabs" style="display:flex;gap:4px;border-bottom:2px solid rgba(32,30,29,0.15);margin-bottom:28px">
@@ -341,7 +332,7 @@
               <option>Already retired / semi-retired</option>
             </select>
           </div>
-          <div><label for="health" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Health status</label>
+          <div><label for="health" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Health status (optional)</label>
             <select id="health" value="{{ fields.health }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Excellent</option>
@@ -349,6 +340,7 @@
               <option>Fair</option>
               <option>Poor / chronic conditions</option>
             </select>
+            <span style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-top:5px">Helps the AI think about how long your income may need to last. Leave blank if you&rsquo;d rather not say.</span>
           </div>
           <div><label for="dependants" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Financial dependants</label><input id="dependants" type="text" placeholder="e.g. 0" value="{{ fields.dependants }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
         </div>
@@ -596,14 +588,6 @@
       <div style="display:flex;justify-content:center;margin-bottom:24px">
         <button onClick="{{ showUsePromptModal }}" class="btn-primary" style="padding:14px 28px">Use this prompt</button>
       </div>
-
-      <!-- Disclaimer -->
-      <div style="background:#fef3c7;border-left:4px solid #f59e0b;border-radius:8px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start">
-        <span style="font-size:20px;flex-shrink:0" aria-hidden="true">⚠️</span>
-        <div>
-          <p style="font-size:13px;color:#78350f;margin:0;line-height:1.6"><strong>Note:</strong> This is for educational purposes only. The prompt asks for factual information, not regulated financial advice. You should always speak to a qualified financial adviser about your personal circumstances.</p>
-        </div>
-      </div>
     </div>
     </sc-if>
 
@@ -717,6 +701,11 @@
     <div class="landing-footer-inner">
       <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
       <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
+      <span class="footer-links">
+        <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">Free guidance from MoneyHelper</a>
+        <a href="#" onClick="{{ openInfoModal }}">Privacy</a>
+        <a href="https://consumerduty.org/keep-in-touch" target="_blank" rel="noopener">Report a problem</a>
+      </span>
       <span class="app-version">{{ appVersion }}</span>
     </div>
   </footer>
@@ -734,7 +723,12 @@
         <p style="margin:0 0 16px"><strong>We only help you ask better questions.</strong> This tool doesn&rsquo;t calculate anything or give you answers itself &mdash; it builds a clear, UK-focused prompt for you to use with an AI chatbot of your choice.</p>
         <p style="margin:0 0 16px"><strong>AI answers aren&rsquo;t guaranteed to be right.</strong> Chatbots can get facts wrong, use outdated figures, or miss details specific to your situation &mdash; even when given a good question. Always double-check anything that matters.</p>
         <p style="margin:0 0 16px"><strong>This isn&rsquo;t financial advice.</strong> Nothing produced by this tool, or by the AI chatbots it links to, is regulated financial advice. It shouldn&rsquo;t be the basis for decisions like changing your pension, retiring, or moving your savings.</p>
-        <p style="margin:0"><strong>Always speak to a professional.</strong> For anything that affects your retirement income, talk to a regulated, independent financial adviser who can look at your full circumstances before you act.</p>
+        <p style="margin:0 0 16px"><strong>You aren&rsquo;t protected if a chatbot gets it wrong.</strong> AI chatbots are not regulated financial advisers. If you act on an answer and lose money, you can&rsquo;t take a complaint to the Financial Ombudsman Service or claim from the Financial Services Compensation Scheme.</p>
+        <p style="margin:0 0 16px"><strong>Free, impartial help is available.</strong> <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">MoneyHelper</a> offers free guidance on pensions, and its Pension Wise service gives a free appointment to people aged 50 or over with a defined contribution pension.</p>
+        <p style="margin:0 0 16px"><strong>Always speak to a professional.</strong> For anything that affects your retirement income, talk to a regulated, independent financial adviser who can look at your full circumstances before you act. You can check a firm or adviser on the <a href="https://register.fca.org.uk/" target="_blank" rel="noopener">FCA Register</a>.</p>
+        <p style="margin:0 0 16px"><strong>Watch out for scams.</strong> Be wary of anyone who pressures you to move your pension, promises guaranteed returns or contacts you out of the blue. Take your time, and check the firm on the FCA Register first.</p>
+        <p style="margin:0 0 16px"><strong>Your privacy.</strong> We don&rsquo;t store or track what you type, and this site sets no cookies. When you launch a chatbot, your prompt &mdash; including any details you added &mdash; is sent to that chatbot&rsquo;s provider and handled under their privacy policy. Don&rsquo;t include your name, address, National Insurance number or account numbers.</p>
+        <p style="margin:0"><strong>We don&rsquo;t endorse any chatbot.</strong> The chatbots listed are widely used examples. The Consumer Duty Alliance does not recommend one over another.</p>
       </div>
       <div style="padding:20px 32px 28px">
         <button onClick="{{ closeInfoModal }}" class="btn-primary" style="width:100%;justify-content:center">Close</button>
@@ -1376,7 +1370,7 @@ class Component extends DCLogic {
       closeInfoModal: this.closeInfoModal,
       stopClick: this.stopClick,
       universalFooterStyle,
-      appVersion: window.APP_VERSION ? 'v' + window.APP_VERSION : ''
+      appVersion: (window.APP_VERSION ? 'v' + window.APP_VERSION : '') + (window.APP_LAST_REVIEWED ? ' · Last reviewed ' + window.APP_LAST_REVIEWED : '')
     };
   }
 }
@@ -1476,11 +1470,8 @@ class Component extends DCLogic {
 
     if (chatbotRadios.length === 0) return;
 
-    // Default to the first chatbot in the list whenever none is selected,
-    // so a user can't click Launch without having picked one.
-    if (!document.querySelector('input[name="chatbot-select"]:checked')) {
-      chatbotRadios[0].checked = true;
-    }
+    // No chatbot is pre-selected, so the choice is the user's and no provider
+    // looks endorsed. The launch button stays disabled until one is picked.
 
     if (!chatbotSelectionInitialized) {
       chatbotSelectionInitialized = true;
@@ -1571,7 +1562,7 @@ class Component extends DCLogic {
 
       <div style="margin-bottom:24px">
         <p style="font-size:13px;font-weight:600;color:#201e1d;margin:0 0 12px">Quick launch</p>
-        <p style="font-size:12px;color:#666;margin:0 0 12px">Select your preferred AI and it will open with your prompt ready to go.</p>
+        <p style="font-size:12px;color:#666;margin:0 0 12px">Select the AI you already use and it will open with your prompt ready to go. We don&rsquo;t endorse any of them.</p>
 
         <fieldset style="border:none;padding:0;margin:0;margin-bottom:16px">
           <legend class="sr-only" style="display:none">Select an AI chatbot</legend>
@@ -1585,7 +1576,7 @@ class Component extends DCLogic {
               <span style="font-size:10px;color:#999;font-weight:400;white-space:nowrap">Auto-fill</span>
             </label>
             <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="claude" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" checked />
+              <input type="radio" name="chatbot-select" value="claude" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" />
               <span style="flex:1;min-width:0">
                 <img src="./images/claude.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
                 <span style="font-weight:600;color:#201e1d;font-size:14px">Claude</span>
@@ -1619,8 +1610,17 @@ class Component extends DCLogic {
 
         <div id="capability-message" role="alert" style="font-size:12px;color:#666;background:#f0f5f2;border:1px solid #2C8494;border-radius:4px;padding:8px 12px;margin-bottom:12px;display:none"></div>
 
-        <button id="launch-chat-btn" class="btn-primary" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px">Copy and launch Claude<img src="./images/external_link.svg" alt="" style="width:16px;height:16px;filter:brightness(0) invert(1)" /></button>
-        <p style="font-size:11px;color:#888;margin:10px 0 0;text-align:center">We only give you better questions, not the answers. Always check with a professional if you're unsure.</p>
+        <div class="before-you-use">
+          <p class="before-you-use-title">Before you use the answer</p>
+          <ul>
+            <li>Check the figures. AI chatbots can get facts and tax rules wrong.</li>
+            <li>It isn&rsquo;t financial advice, and you aren&rsquo;t protected if it&rsquo;s wrong.</li>
+            <li>Free, impartial help is available from <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">MoneyHelper</a>.</li>
+          </ul>
+        </div>
+
+        <button id="launch-chat-btn" class="btn-primary" disabled style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px">Choose a chatbot above</button>
+        <p style="font-size:12px;color:#666;margin:10px 0 0;text-align:center">This sends your prompt, including any details you entered, to the chatbot you choose. Don&rsquo;t include your name, address or account numbers.</p>
       </div>
     </div>
   </div>
@@ -1640,11 +1640,15 @@ class Component extends DCLogic {
     const launchBtn = modal.querySelector('#launch-chat-btn');
     const capabilityMsg = modal.querySelector('#capability-message');
 
+    if (launchBtn) launchBtn.disabled = !selected;
+    if (!selected && launchBtn) {
+      launchBtn.textContent = 'Choose a chatbot above';
+      if (capabilityMsg) capabilityMsg.style.display = 'none';
+    }
+
     if (selected && launchBtn) {
-      const aiName = selected.value.charAt(0).toUpperCase() + selected.value.slice(1);
-      // Update button text while preserving the icon
-      const iconHTML = launchBtn.innerHTML.includes('external_link') ? launchBtn.querySelector('img').outerHTML : '';
-      launchBtn.innerHTML = `Copy and launch ${aiName}${iconHTML ? '<img src="./images/external_link.svg" alt="" style="width:16px;height:16px;filter:brightness(0) invert(1)" />' : ''}`;
+      const aiName = selected.value === 'chatgpt' ? 'ChatGPT' : selected.value.charAt(0).toUpperCase() + selected.value.slice(1);
+      launchBtn.innerHTML = `Copy and launch ${aiName}<img src="./images/external_link.svg" alt="" style="width:16px;height:16px;filter:brightness(0) invert(1)" />`;
 
       if (selected.value === 'copilot' || selected.value === 'gemini') {
         capabilityMsg.textContent = "Note: You'll need to paste the prompt into " + aiName + " as auto-fill isn't available.";

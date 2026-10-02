@@ -1741,7 +1741,23 @@ fieldset div > label:hover {
   color: rgba(32, 30, 29, 0.6);
 }
 .landing-footer-inner a { color: rgba(32, 30, 29, 0.6); }
+.footer-links { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 6px 20px; }
 .app-version { flex-basis: 100%; }
+
+/* ============ LAUNCH DIALOG: BEFORE YOU USE THE ANSWER ============ */
+.before-you-use {
+  background: #EAF3F3;
+  border: 1px solid #2C8494;
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #201e1d;
+}
+.before-you-use-title { font-weight: 800; margin: 0 0 6px; }
+.before-you-use ul { margin: 0; padding-left: 18px; }
+.before-you-use a { color: #1B5560; }
 
 @media (max-width: 768px) {
   .landing-hero {

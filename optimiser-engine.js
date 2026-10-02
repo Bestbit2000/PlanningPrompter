@@ -145,6 +145,8 @@ INSTRUCTIONS:
 Split the prompt into two clear sections:
 - "Part 1: Core Task" (Define scenario, UK context, factual requirements).
 - "Part 2: Formatting & Guardrails" (Explicit instructions enforcing 250-500 word limit, BLUF, drill-downs, and Target Style).
+The rewritten prompt MUST also follow every one of these rules:
+${PROMPT_GUARDRAIL_RULES.map((rule) => '- ' + rule).join('\n')}
 Return ONLY the finalized prompt text.
 `;
   }
