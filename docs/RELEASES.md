@@ -17,9 +17,9 @@ contains both new functionality and bug fixes is a Y release.
 
 The number lives in two places, which must match:
 
-- `window.APP_VERSION` in [version.js](version.js), which the footer reads.
+- `window.APP_VERSION` in [version.js](../version.js), which the footer reads.
 - The `?v=X.Y.Z` on the stylesheet and script addresses at the top of
-  [index.html](index.html). Changing it makes browsers fetch fresh copies
+  [index.html](../index.html). Changing it makes browsers fetch fresh copies
   instead of using ones cached from the previous release.
 
 ## Environments
