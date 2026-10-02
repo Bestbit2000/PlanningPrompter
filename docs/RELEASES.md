@@ -72,5 +72,6 @@ functionality, and goes through steps 2 to 8 as a Z release.
 
 | Version | Date | Changes |
 |---|---|---|
+| v0.2.0 | 2 October 2026 | Tool placed under the Consumer Duty Alliance header: slim tool bar with "Start again", CDA logo and "Home" removed, Taskforce badge on the landing page (PO-16, PO-20). Footer reduced to two lines (PO-14). AI prompt text removed from the question lists and the list buttons tidied (PO-15). Step tabs scroll with arrows on narrow desktop windows and centre the active step (PO-17). Repository tidied for hand-off, with documents moved to docs/ (part of PO-18). |
 | v0.1.1 | 2 October 2026 | Version number added to stylesheet and script addresses so a release is not shown with a cached stylesheet (PO-13). |
 | v0.1.0 | 2 October 2026 | First numbered version. Version number shown in the footer (PO-7). Header logos (PO-4). Wizard and prompt changes from user feedback (PO-5). Risk register and site mitigations (PO-11). |

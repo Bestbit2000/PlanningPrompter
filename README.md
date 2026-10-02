@@ -40,8 +40,10 @@ does not need to be hosted:
   a sub-page.
 - The tool is designed to sit under the Consumer Duty Alliance site header,
   with its own slim bar ("Start again") beneath it.
-- The only outside request the page makes itself is to Google Fonts for the
-  Archivo typeface. The chatbot links open in the user's own browser.
+- The page makes two kinds of outside request itself: Google Fonts (the Archivo
+  typeface) and unpkg.com (the React library, loaded by `support.js`). If the
+  host blocks outside scripts, allow `unpkg.com`. The chatbot links open in the
+  user's own browser.
 - After changing `styles.css`, `prompts.js`, `version.js` or `support.js`, update
   the `?v=` number on their addresses in `index.html` so browsers fetch the new
   copies. See [docs/RELEASES.md](docs/RELEASES.md).
