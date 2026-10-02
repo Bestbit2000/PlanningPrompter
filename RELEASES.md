@@ -48,10 +48,15 @@ a few minutes.
    ```bash
    git tag -a vX.Y.Z -m "Release vX.Y.Z"
    ```
-6. **Publish** — push the commit and the tag to production:
+6. **Publish** — push the commit to production, then push the tag on its own:
    ```bash
-   git push origin main --follow-tags
+   git push origin main
    ```
+   ```bash
+   git push origin vX.Y.Z
+   ```
+   Push them separately. Twice, pushing the commit and tag together did not
+   start a GitHub Pages build, so the live site stayed on the old version.
 7. **Verify** — load https://bestbit2000.github.io/PlanningPrompter/ and confirm
    the footer shows the new number.
 8. **Update Jira** — move every Jira item included in the release to the status
