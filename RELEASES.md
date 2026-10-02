@@ -23,9 +23,11 @@ The footer reads it from there, so nothing else needs editing.
 | Environment | Where | What it runs |
 |---|---|---|
 | Dev | Local checkout, opened in a browser | Work in progress |
-| Production | The `main` branch on GitHub | The latest tagged release |
+| Production | The `main` branch on GitHub, served by GitHub Pages at https://bestbit2000.github.io/PlanningPrompter/ | The latest tagged release |
 
 There is no staging environment, so checks before release happen in dev.
+GitHub Pages rebuilds the live site from `main` after each push, which can take
+a few minutes.
 
 ## Release cycle
 
@@ -45,9 +47,11 @@ There is no staging environment, so checks before release happen in dev.
    ```bash
    git push origin main --follow-tags
    ```
-7. **Verify** — load production and confirm the footer shows the new number.
-8. **Close out** — set the Jira fix version on the released items and move them
-   to done.
+7. **Verify** — load https://bestbit2000.github.io/PlanningPrompter/ and confirm
+   the footer shows the new number.
+8. **Update Jira** — move every Jira item included in the release to the status
+   "Released". The items are the ones listed against the version in the release
+   history below. Do this on every release, once step 7 has passed.
 
 ### Bug fix releases
 
