@@ -21,7 +21,6 @@ Copy these, keeping the folder structure, to any web server:
 | `prompts.js` | The questions and prompts. Edit this to change the wording |
 | `version.js` | The release number and "last reviewed" date shown in the footer |
 | `support.js` | The small runtime that `index.html` is written for. Don't edit |
-| `image-slot.js` | Loaded by `index.html`. Keep it for now |
 | `images/` | The Taskforce logo and the chatbot icons |
 
 Everything else in the repository is for the people who maintain the tool and
