@@ -15,6 +15,29 @@ body {
   outline: 3px solid #2C8494;
   outline-offset: 2px;
 }
+/* The teal ring can't be seen on teal or dark surfaces, so those use a white one. */
+.surface-dark :focus-visible,
+.surface-dark:focus-visible,
+#toast-container :focus-visible {
+  outline-color: #fff;
+}
+
+/* Text for screen readers only, e.g. a label the layout has no room to show. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* A heading takes focus when the screen changes so that a screen reader announces it and
+   Tab carries on from there. It is not a control and can't be tabbed to, so it has no ring. */
+[data-screen-heading]:focus { outline: none; }
 
 a {
   color: #226B79;
@@ -726,8 +749,8 @@ input, textarea, select, button {
 
 .unselect-button {
   background: #fff;
-  color: #2C8494;
-  border: 1.5px solid #2C8494;
+  color: #226B79;
+  border: 1.5px solid #226B79;
   font-family: 'Archivo', sans-serif;
   font-weight: 700;
   font-size: 13px;
@@ -743,7 +766,7 @@ input, textarea, select, button {
 }
 
 .copy-button {
-  background: #2C8494;
+  background: #226B79;
   color: #fff;
   border: none;
   font-family: 'Archivo', sans-serif;
@@ -757,16 +780,19 @@ input, textarea, select, button {
   min-height: 44px;
 }
 
-.copy-button:hover:not([data-disabled="true"]) {
-  background: #1f6b7a;
+.copy-button:hover:not(:disabled) {
+  background: #1B5560;
   cursor: pointer;
 }
 
-.copy-button[data-disabled="true"] {
+.copy-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  pointer-events: none;
 }
+
+/* The bar is fixed to the bottom of the window, so keep anything scrolled into view
+   (a focused row, for example) clear of it. */
+html:has(.sticky-copy-bar) { scroll-padding-bottom: 96px; }
 
 @media (max-width: 768px) {
   /* Hide text tabs on tablets and mobile */
@@ -799,10 +825,35 @@ input, textarea, select, button {
   margin-bottom: 16px;
 }
 .list-controls-group { display: flex; gap: 8px; }
+
+/* One question in a shortlist. The whole row is the checkbox's label, so a click or
+   tap anywhere on it ticks the box. Border and tint come from the selected state. */
+.question-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.question-row input {
+  margin-top: 4px;
+  width: 24px;
+  height: 24px;
+  accent-color: #2C8494;
+  flex: none;
+  cursor: pointer;
+  /* Focus scrolls the checkbox into view; the margin brings the rest of its row with it. */
+  scroll-margin: 20px 0 150px;
+}
+.question-row-text { flex: 1; min-width: 0; }
+.question-row-summary { display: block; font-size: 15px; font-weight: 600; color: #226B79; margin-bottom: 4px; }
+.question-row-question { display: block; font-size: 15px; margin-bottom: 8px; color: #201e1d; }
 .list-btn {
   background: #fff;
-  color: #2C8494;
-  border: 1.5px solid #2C8494;
+  color: #226B79;
+  border: 1.5px solid #226B79;
   border-radius: 6px;
   font-size: 12px;
   font-weight: 700;
@@ -1485,8 +1536,8 @@ fieldset div > label:hover {
 }
 .site-start-again {
   background: #fff;
-  color: #2C8494;
-  border: 2px solid #2C8494;
+  color: #226B79;
+  border: 2px solid #226B79;
   border-radius: 8px;
   font-family: 'Archivo', sans-serif;
   font-weight: 800;
@@ -1525,9 +1576,9 @@ fieldset div > label:hover {
 
 /* ============ SHARED BUTTONS (primary / secondary) ============ */
 .btn-primary {
-  background: #2C8494;
+  background: #226B79;
   color: #fff;
-  border: 2px solid #2C8494;
+  border: 2px solid #226B79;
   font-family: 'Archivo', sans-serif;
   font-weight: 800;
   font-size: 14px;
@@ -1543,7 +1594,7 @@ fieldset div > label:hover {
   transition: background 0.2s ease, border-color 0.2s ease;
   min-height: 44px;
 }
-.btn-primary:hover { background: #1f6b7a; border-color: #1f6b7a; }
+.btn-primary:hover { background: #1B5560; border-color: #1B5560; }
 .btn-primary:disabled,
 .btn-primary[data-disabled="true"] {
   opacity: 0.5;
@@ -1559,8 +1610,8 @@ fieldset div > label:hover {
 
 .btn-secondary {
   background: #fff;
-  color: #2C8494;
-  border: 2px solid #2C8494;
+  color: #226B79;
+  border: 2px solid #226B79;
   font-family: 'Archivo', sans-serif;
   font-weight: 800;
   font-size: 14px;
@@ -1578,8 +1629,8 @@ fieldset div > label:hover {
 }
 .btn-secondary:hover {
   background: #f0f9fb;
-  border-color: #1f6b7a;
-  color: #1f6b7a;
+  border-color: #1B5560;
+  color: #1B5560;
 }
 
 .btn-lg {
@@ -1755,7 +1806,7 @@ fieldset div > label:hover {
 }
 
 .landing-cta-banner {
-  background: #2C8494;
+  background: #226B79;
   color: #fff;
   padding: 64px 32px;
 }
@@ -1778,7 +1829,7 @@ fieldset div > label:hover {
 .landing-cta-inner p {
   margin: 0;
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9);
   max-width: 50ch;
 }
 
@@ -1793,9 +1844,9 @@ fieldset div > label:hover {
   flex-direction: column;
   gap: 12px;
   font-size: 12px;
-  color: rgba(32, 30, 29, 0.6);
+  color: rgba(32, 30, 29, 0.7);
 }
-.landing-footer-inner a { color: rgba(32, 30, 29, 0.6); }
+.landing-footer-inner a { color: rgba(32, 30, 29, 0.7); }
 .footer-row { display: flex; flex-wrap: wrap; gap: 6px 20px; }
 .footer-row-end { justify-content: space-between; }
 .footer-group { display: flex; flex-wrap: wrap; gap: 6px 20px; }
