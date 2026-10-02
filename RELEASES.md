@@ -58,4 +58,4 @@ functionality, and goes through steps 2 to 8 as a Z release.
 
 | Version | Date | Changes |
 |---|---|---|
-| v0.1.0 | Unreleased | First numbered version. Version number shown in the footer (PO-7). |
+| v0.1.0 | 2 October 2026 | First numbered version. Version number shown in the footer (PO-7). Header logos (PO-4). Wizard and prompt changes from user feedback (PO-5). Risk register and site mitigations (PO-11). |
