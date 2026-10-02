@@ -1386,36 +1386,45 @@ fieldset div > label:hover {
 
 /* ============ SITE HEADER ============ */
 .site-header {
-  background: #2C8494;
-  position: sticky;
-  top: 0;
+  background: #fff;
+  border-bottom: 3px solid #2C8494;
+  position: relative;
   z-index: 20;
 }
 .site-header-inner {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 14px 32px;
+  padding: 0 32px;
+  height: 64px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 18px;
 }
+/* Pennant logos hang from the top of the bar and overhang its bottom edge */
+.site-logos {
+  display: flex;
+  gap: 10px;
+  flex: none;
+  align-self: flex-start;
+  height: 64px;
+}
+.site-logo-link { display: block; height: 96px; }
+.site-logo-link img { display: block; height: 96px; width: auto; }
 .site-brand {
   display: flex;
   flex-direction: column;
-  line-height: 1.2;
+  line-height: 1.25;
   cursor: pointer;
 }
 .site-brand-name {
   font-family: 'Archivo', sans-serif;
   font-weight: 800;
-  font-size: 15px;
-  color: #fff;
+  font-size: 16px;
+  color: #164752;
 }
 .site-brand-tagline {
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  color: rgba(32, 30, 29, 0.7);
 }
 .site-nav-actions {
   margin-left: auto;
@@ -1425,13 +1434,36 @@ fieldset div > label:hover {
 }
 .site-nav-link {
   font-size: 14px;
-  color: #fff;
+  font-weight: 600;
+  color: #1B5560;
   text-decoration: none;
 }
 
+@media (max-width: 768px) {
+  .site-logos { align-self: center; height: auto; gap: 8px; }
+  .site-logo-link, .site-logo-link img { height: 52px; }
+}
+
 @media (max-width: 480px) {
-  .site-header-inner { padding: 12px 16px; gap: 10px; }
+  .site-header-inner { padding: 0 16px; gap: 10px; }
   .site-nav-actions { gap: 12px; }
+  .site-brand-tagline { display: none; }
+}
+
+/* ============ WIZARD STEP HELP TEXT ============ */
+.wizard-step-intro { font-size: 14px; margin: 0 0 6px; max-width: 720px; }
+.wizard-step-hint { font-size: 13px; color: rgba(32, 30, 29, 0.7); margin: 0 0 18px; max-width: 720px; }
+.wizard-subhead { font-size: 14px; margin: 24px 0 6px; }
+.wizard-subhead + div { margin-top: 12px; }
+.income-source-row { border-top: 1px solid rgba(32, 30, 29, 0.15); padding: 4px 0; }
+.income-source-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 18px;
+  padding: 4px 0 14px 32px;
+}
+@media (max-width: 480px) {
+  .income-source-detail { grid-template-columns: 1fr; padding-left: 0; }
 }
 
 /* ============ SHARED BUTTONS (primary / secondary) ============ */
@@ -1709,6 +1741,7 @@ fieldset div > label:hover {
   color: rgba(32, 30, 29, 0.6);
 }
 .landing-footer-inner a { color: rgba(32, 30, 29, 0.6); }
+.app-version { flex-basis: 100%; }
 
 @media (max-width: 768px) {
   .landing-hero {

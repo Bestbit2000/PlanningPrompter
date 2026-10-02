@@ -11,6 +11,7 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "y9w1hpcig9");
 </script>
+<script src="./version.js"></script>
 <script src="./prompts.js"></script>
 <script src="./support.js"></script>
 </head>
@@ -27,6 +28,10 @@
   <!-- ============ NAV ============ -->
   <header class="site-header">
     <div class="site-header-inner">
+      <div class="site-logos">
+        <a href="#" onClick="{{ goLanding }}" class="site-logo-link"><img src="./images/rit-logo.png" alt="Retirement Income Taskforce home" /></a>
+        <a href="https://consumerduty.org" target="_blank" rel="noopener" class="site-logo-link"><img src="./images/cda-logo.png" alt="Consumer Duty Alliance website (opens in a new tab)" /></a>
+      </div>
       <div onClick="{{ goLanding }}" role="button" tabindex="0" onKeyDown="if(event.key==='Enter'||event.key===' '){event.preventDefault(); this.click();}" class="site-brand">
         <span class="site-brand-name">Retirement Income Taskforce</span>
         <span class="site-brand-tagline">Consumer Duty Alliance</span>
@@ -136,6 +141,7 @@
         <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
         <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
         <a href="https://consumerduty.org/working-groups/retirement-income-taskforce">Retirement Income Taskforce, part of the Consumer Duty Alliance</a>
+        <span class="app-version">{{ appVersion }}</span>
       </div>
     </footer>
 
@@ -351,15 +357,46 @@
 
       <sc-if value="{{ isStep3 }}">
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
-        <h3 style="font-size:16px;margin:0 0 18px">Step 3: Financial picture</h3>
+        <h3 style="font-size:16px;margin:0 0 8px">Step 3: What you have now</h3>
+        <p class="wizard-step-intro">Tell us about the pension pots, savings, property and debts you have today. Income you expect once you retire, such as the State Pension or a final salary pension, goes in step 5.</p>
+        <p class="wizard-step-hint">A figure or a short description are both fine &mdash; for example &ldquo;£150,000 across two pots, one already in drawdown&rdquo;.</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          <div><label for="income" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual household income (now)</label><input id="income" type="text" placeholder="e.g. £70,000" value="{{ fields.income }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
           <div><label for="pension" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Total pension / retirement savings</label><input id="pension" type="text" placeholder="e.g. £150,000" value="{{ fields.pension }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
           <div><label for="savings" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Other savings & investments</label><input id="savings" type="text" placeholder="e.g. £30,000 in ISA" value="{{ fields.savings }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
           <div><label for="equity" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Property equity</label><input id="equity" type="text" placeholder="e.g. £200,000" value="{{ fields.equity }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
           <div><label for="debts" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Outstanding debts</label><input id="debts" type="text" placeholder="e.g. £50k mortgage remaining" value="{{ fields.debts }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+        </div>
+
+        <h4 class="wizard-subhead">Pensions you&rsquo;ve already accessed</h4>
+        <p class="wizard-step-hint">Taking taxable income or lump sums from a pension usually lowers how much you can pay in afterwards. Taking only your tax-free cash does not. Telling us which applies stops the AI guessing.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <div><label for="pensionAccess" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Have you taken anything from a pension yet?</label>
+            <select id="pensionAccess" value="{{ fields.pensionAccess }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>No &mdash; nothing taken yet</option>
+              <option>Tax-free cash only</option>
+              <option>Taxable income or lump sums</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+          <div><label for="partnerPensionAccess" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Has your partner? (leave blank if none)</label>
+            <select id="partnerPensionAccess" value="{{ fields.partnerPensionAccess }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>No &mdash; nothing taken yet</option>
+              <option>Tax-free cash only</option>
+              <option>Taxable income or lump sums</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+        </div>
+
+        <h4 class="wizard-subhead">While you&rsquo;re still working</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <div><label for="income" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual household income (now)</label><input id="income" type="text" placeholder="e.g. £70,000" value="{{ fields.income }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
           <div><label for="contributions" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual pension contributions (now)</label><input id="contributions" type="text" placeholder="e.g. £8,000 p.a. incl. employer" value="{{ fields.contributions }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
         </div>
+
+        <div style="margin-top:20px"><label for="financeNotes" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else about your finances</label><textarea id="financeNotes" placeholder="e.g. One pot is already in drawdown, my partner has a small pot they have not touched..." value="{{ fields.financeNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
@@ -378,7 +415,15 @@
             </select>
           </div>
 
-          <div style="{{ targetSlotStyle }}"><label for="target" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target monthly income in retirement</label><input id="target" type="text" placeholder="e.g. £3,500/month net" value="{{ fields.target }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div style="{{ targetSlotStyle }}"><label for="target" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target monthly income in retirement</label><input id="target" type="text" placeholder="e.g. £3,500/month net" value="{{ fields.target }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" />
+            <label for="targetBasis" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin:10px 0 5px">Is that figure before or after tax?</label>
+            <select id="targetBasis" value="{{ fields.targetBasis }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>After tax</option>
+              <option>Before tax</option>
+              <option>Not sure</option>
+            </select>
+          </div>
 
           <div style="{{ partTimeSlotStyle }}"><label for="partTime" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Part-time work in retirement?</label>
             <select id="partTime" value="{{ fields.partTime }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
@@ -398,28 +443,44 @@
             </select>
           </div>
         </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
+          <div><label for="spending" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Expected spending in retirement</label><input id="spending" type="text" placeholder="e.g. £2,800 a month, or £34,000 a year" value="{{ fields.spending }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+          <div><label for="spendingBasis" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Is that figure before or after tax?</label>
+            <select id="spendingBasis" value="{{ fields.spendingBasis }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>After tax (what I actually spend)</option>
+              <option>Before tax (the income I need before tax is taken off)</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+        </div>
+        <p class="wizard-step-hint" style="margin:8px 0 0">Leave spending blank if you don&rsquo;t know yet. The AI will be asked to estimate it and to say that it has.</p>
         <div style="margin-top:16px"><label for="plans" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Key plans or activities in retirement</label><textarea id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property..." value="{{ fields.plans }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
       <sc-if value="{{ isStep5 }}">
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
-        <h3 style="font-size:16px;margin:0 0 18px">Step 5: Expected income sources</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px">
-          <label for="src_state" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_state" type="checkbox" checked="{{ fields.src_state }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> State pension / Social Security</label>
-          <label for="src_db" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_db" type="checkbox" checked="{{ fields.src_db }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Defined benefit / final salary pension</label>
-          <label for="src_dc" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_dc" type="checkbox" checked="{{ fields.src_dc }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Defined contribution / personal pension</label>
-          <label for="src_annuity" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_annuity" type="checkbox" checked="{{ fields.src_annuity }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Annuity</label>
-          <label for="src_rental" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_rental" type="checkbox" checked="{{ fields.src_rental }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Rental income</label>
-          <label for="src_invest" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_invest" type="checkbox" checked="{{ fields.src_invest }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Investment / dividend income</label>
-          <label for="src_business" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_business" type="checkbox" checked="{{ fields.src_business }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Business / self-employed income</label>
-          <label for="src_inherit" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_inherit" type="checkbox" checked="{{ fields.src_inherit }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Inheritance or windfall</label>
-          <label for="src_other" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="src_other" type="checkbox" checked="{{ fields.src_other }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Other</label>
+        <h3 style="font-size:16px;margin:0 0 8px">Step 5: Income you expect in retirement</h3>
+        <p class="wizard-step-intro">Tick each source of income you expect once you retire, then tell us roughly how much and when it starts. Pots and savings you already hold belong in step 3 &mdash; there is no need to repeat them here.</p>
+        <p class="wizard-step-hint">A figure or a short description are both fine. Leave the amount blank if you don&rsquo;t know it yet.</p>
+        <div class="income-source-list">
+          <sc-for list="{{ sourceRows }}" as="src" hint-placeholder-count="9">
+            <div class="income-source-row">
+              <label for="{{ src.id }}" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="{{ src.id }}" type="checkbox" checked="{{ src.checked }}" onChange="{{ src.onChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> {{ src.label }}</label>
+              <sc-if value="{{ src.checked }}">
+                <div class="income-source-detail">
+                  <sc-if value="{{ src.isOther }}">
+                    <div style="grid-column:1 / -1"><label for="srcOtherText" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">What is the income source?</label><input id="srcOtherText" type="text" placeholder="Please describe the income source" value="{{ src.otherText }}" onChange="{{ src.onChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+                  </sc-if>
+                  <div><label for="{{ src.amtId }}" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">How much?</label><input id="{{ src.amtId }}" type="text" placeholder="{{ src.amtPlaceholder }}" value="{{ src.amt }}" onChange="{{ src.onChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+                  <div><label for="{{ src.fromId }}" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">From when?</label><input id="{{ src.fromId }}" type="text" placeholder="{{ src.fromPlaceholder }}" value="{{ src.from }}" onChange="{{ src.onChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
         </div>
-        <sc-if value="{{ fields.src_other }}">
-          <div style="margin-top:12px"><label for="srcOtherText" class="sr-only" style="display:none">Describe other income source</label><input id="srcOtherText" type="text" placeholder="Please describe the income source" value="{{ fields.srcOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px" /></div>
-        </sc-if>
-        <div style="margin-top:16px"><label for="srcNotes" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Amounts or notes on any sources</label><textarea id="srcNotes" placeholder="e.g. State pension ~£10,500 p.a. from age 67..." value="{{ fields.srcNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label for="srcNotes" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else about your retirement income</label><textarea id="srcNotes" placeholder="e.g. My final salary pension is reduced if I take it before 65..." value="{{ fields.srcNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.4);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
@@ -656,6 +717,7 @@
     <div class="landing-footer-inner">
       <span>Educational tool only. Not regulated financial advice &mdash; always consider speaking to a qualified financial adviser.</span>
       <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
+      <span class="app-version">{{ appVersion }}</span>
     </div>
   </footer>
   </sc-if>
@@ -725,7 +787,21 @@ window.STARTER_PROMPT_DATA = STARTER_PROMPT_DATA;
 
 const GENERIC_PROMPT = STARTER_PROMPT_DATA.prompt;
 
-const STEP_NAMES = ['Select questions', 'Profile', 'Finances', 'Goals', 'Income', 'Concerns', 'Summary'];
+const STEP_NAMES = ['Select questions', 'Profile', 'What you have', 'Goals', 'Future income', 'Concerns', 'Summary'];
+
+// Income sources offered in step 5. Each ticked source gets an amount field
+// (id + '_amt') and a start field (id + '_from').
+const INCOME_SOURCES = [
+  { id: 'src_state', label: 'State pension / Social Security', amtPlaceholder: 'e.g. £11,500 a year', fromPlaceholder: 'e.g. Age 67' },
+  { id: 'src_db', label: 'Defined benefit / final salary pension', amtPlaceholder: 'e.g. £9,000 a year', fromPlaceholder: 'e.g. Age 65' },
+  { id: 'src_dc', label: 'Defined contribution / personal pension', amtPlaceholder: 'e.g. Drawing about £800 a month', fromPlaceholder: 'e.g. When I retire' },
+  { id: 'src_annuity', label: 'Annuity', amtPlaceholder: 'e.g. £4,000 a year', fromPlaceholder: 'e.g. Already being paid' },
+  { id: 'src_rental', label: 'Rental income', amtPlaceholder: 'e.g. £700 a month before costs', fromPlaceholder: 'e.g. Already being paid' },
+  { id: 'src_invest', label: 'Investment / dividend income', amtPlaceholder: 'e.g. About £2,000 a year', fromPlaceholder: 'e.g. Already being paid' },
+  { id: 'src_business', label: 'Business / self-employed income', amtPlaceholder: 'e.g. £10,000 a year part-time', fromPlaceholder: 'e.g. Until age 70' },
+  { id: 'src_inherit', label: 'Inheritance or windfall', amtPlaceholder: 'e.g. Around £50,000', fromPlaceholder: 'e.g. Not sure when' },
+  { id: 'src_other', label: 'Other', amtPlaceholder: 'e.g. £3,000 a year', fromPlaceholder: 'e.g. Age 60' }
+];
 const ACCENT = '#2C8494', ACCENT_DARK = '#1B5560', ACCENT_TINT = '#EAF3F3', SURFACE = '#eceae9', TEXT = '#201e1d', TEXT_MUTED = 'rgba(32,30,29,0.65)', DIVIDER = 'rgba(32,30,29,0.4)';
 
 const BROWSE_QUIZ_QUESTIONS = [
@@ -954,9 +1030,13 @@ class Component extends DCLogic {
   };
 
   getSources = () => {
-    const map = { src_state: 'State pension / Social Security', src_db: 'Defined benefit / final salary pension', src_dc: 'Defined contribution / personal pension', src_annuity: 'Annuity', src_rental: 'Rental income', src_invest: 'Investment / dividend income', src_business: 'Business / self-employed income', src_inherit: 'Inheritance or windfall' };
     const f = this.state.fields;
-    return Object.keys(map).filter((id) => f[id]).map((id) => map[id]);
+    return INCOME_SOURCES.filter((src) => f[src.id]).map((src) => {
+      const name = src.id === 'src_other' ? 'Other' + (f.srcOtherText ? ' (' + f.srcOtherText + ')' : '') : src.label;
+      const amt = f[src.id + '_amt'], from = f[src.id + '_from'];
+      const detail = [amt, from ? 'from: ' + from : ''].filter(Boolean).join(', ');
+      return { name, detail };
+    });
   };
   getConcerns = () => {
     const map = { c_runout: 'Running out of money', c_inflation: 'Inflation eroding purchasing power', c_care: 'Long-term care costs', c_tax: 'Tax efficiency', c_market: 'Market volatility', c_early: 'Dying prematurely / life cover', c_partner: 'Partner survivorship', c_health: 'Unexpected health costs' };
@@ -968,7 +1048,7 @@ class Component extends DCLogic {
     const f = this.state.fields;
     const sources = this.getSources(), concerns = this.getConcerns();
     const selectedKeys = Object.keys(this.state.browseSelected);
-    let p = 'I would like your help understanding my retirement income situation. Please treat me as an individual and give me specific, practical guidance based on the details I am providing. Where you make assumptions, please state them clearly.\n\n';
+    let p = 'I would like your help understanding my retirement income situation. Please treat me as an individual and give me specific, practical guidance based on the details I am providing.\n\n';
     p += '--- MY PERSONAL DETAILS ---\n';
     if (f.age) p += 'My age: ' + f.age + '\n';
     if (f.partnerAge) p += "Partner's age: " + f.partnerAge + '\n';
@@ -984,28 +1064,30 @@ class Component extends DCLogic {
     if (f.health) p += 'Health status: ' + f.health + '\n';
     if (f.dependants) p += 'Financial dependants: ' + f.dependants + '\n';
 
-    const hasFinance = f.income || f.pension || f.savings || f.equity || f.debts || f.contributions;
+    const hasFinance = f.income || f.pension || f.savings || f.equity || f.debts || f.contributions || f.pensionAccess || f.partnerPensionAccess || f.financeNotes;
     if (hasFinance) {
-      p += '\n--- MY FINANCIAL PICTURE ---\n';
-      if (f.income) p += 'Current annual household income: ' + f.income + '\n';
+      p += '\n--- WHAT I HAVE NOW ---\n';
       if (f.pension) p += 'Total pension / retirement savings: ' + f.pension + '\n';
       if (f.savings) p += 'Other savings and investments: ' + f.savings + '\n';
       if (f.equity) p += 'Property equity: ' + f.equity + '\n';
       if (f.debts) p += 'Outstanding debts: ' + f.debts + '\n';
+      if (f.pensionAccess) p += 'What I have taken from my pensions so far: ' + f.pensionAccess + '\n';
+      if (f.partnerPensionAccess) p += 'What my partner has taken from their pensions so far: ' + f.partnerPensionAccess + '\n';
+      if (f.income) p += 'Current annual household income: ' + f.income + '\n';
       if (f.contributions) p += 'Annual pension contributions: ' + f.contributions + '\n';
+      if (f.financeNotes) p += 'Other notes on my finances: ' + f.financeNotes + '\n';
     }
-    const hasGoals = f.target || f.lifestyle || f.partTime || f.estate || f.plans;
-    if (hasGoals) {
-      p += '\n--- MY RETIREMENT GOALS ---\n';
-      if (f.target) p += 'Target monthly income in retirement: ' + f.target + '\n';
-      if (f.lifestyle) p += 'Lifestyle expectation: ' + f.lifestyle + '\n';
-      if (f.partTime) p += 'Part-time work in retirement: ' + f.partTime + '\n';
-      if (f.estate) p += 'Estate / inheritance priority: ' + f.estate + '\n';
-      if (f.plans) p += 'Key plans: ' + f.plans + '\n';
-    }
-    if (sources.length) {
-      p += '\n--- EXPECTED INCOME SOURCES ---\n';
-      p += 'Sources I expect: ' + sources.join(', ') + '\n';
+    p += '\n--- MY RETIREMENT GOALS ---\n';
+    if (f.spending) p += 'Expected spending in retirement: ' + f.spending + (f.spendingBasis ? '. This figure is: ' + f.spendingBasis : ' (I have not said whether this is before or after tax)') + '\n';
+    else p += 'Expected spending in retirement: not provided. Please estimate it, and list your estimate as an assumption.\n';
+    if (f.target) p += 'Target monthly income in retirement: ' + f.target + (f.targetBasis ? '. This figure is: ' + f.targetBasis : '') + '\n';
+    if (f.lifestyle) p += 'Lifestyle expectation: ' + f.lifestyle + '\n';
+    if (f.partTime) p += 'Part-time work in retirement: ' + f.partTime + '\n';
+    if (f.estate) p += 'Estate / inheritance priority: ' + f.estate + '\n';
+    if (f.plans) p += 'Key plans: ' + f.plans + '\n';
+    if (sources.length || f.srcNotes) {
+      p += '\n--- INCOME I EXPECT IN RETIREMENT ---\n';
+      sources.forEach((src) => { p += '- ' + src.name + (src.detail ? ': ' + src.detail : ': amount not provided') + '\n'; });
       if (f.srcNotes) p += 'Notes: ' + f.srcNotes + '\n';
     }
     const hasConcerns = concerns.length || f.risk || f.buffer;
@@ -1028,6 +1110,10 @@ class Component extends DCLogic {
     if (!selectedKeys.length && !f.question) {
       p += '\n--- MY QUESTION ---\nBased on my details above, what is your honest assessment of my retirement income situation? What are the key risks I face, and what practical steps should I be taking now?\n';
     }
+    p += '\n--- HOW TO HANDLE ASSUMPTIONS AND TAX ---\n';
+    p += 'Before anything else, give a numbered list of every assumption you are making about my situation, including any you draw from the details above.\n';
+    p += 'Do not infer anything I have not told you. In particular, do not assume whether I or my partner have triggered the Money Purchase Annual Allowance (MPAA), which tax band we are in, or what State Pension we are entitled to. Use only what I have stated; whether a pension pot is crystallised or uncrystallised does not tell you whether the MPAA applies. If a missing detail would change your answer, ask me rather than guessing.\n';
+    p += 'Whenever you quote an income or spending figure, give it both after tax and before tax and label which is which. The first time you do this, explain the difference in one plain sentence.\n';
     p += '\nPlease structure your response with: (1) an honest assessment of my current position, (2) the key gaps or risks I should address, (3) practical options or strategies to consider, and (4) questions I should be asking a qualified financial adviser.\n\nNote: I understand this is educational guidance only, not regulated financial advice.';
     this.setState({ outputText: p });
   };
@@ -1173,25 +1259,35 @@ class Component extends DCLogic {
     if (f.health) profileItems.push({ label: 'Health status', value: f.health });
     if (f.dependants) profileItems.push({ label: 'Financial dependants', value: f.dependants });
 
+    const sourceRows = INCOME_SOURCES.map((src) => ({
+      id: src.id, label: src.label, checked: !!f[src.id], isOther: src.id === 'src_other', otherText: f.srcOtherText,
+      amtId: src.id + '_amt', amt: f[src.id + '_amt'], amtPlaceholder: src.amtPlaceholder,
+      fromId: src.id + '_from', from: f[src.id + '_from'], fromPlaceholder: src.fromPlaceholder,
+      onChange: this.handleChange
+    }));
+
     const financeItems = [];
-    if (f.income) financeItems.push({ label: 'Annual household income', value: f.income });
     if (f.pension) financeItems.push({ label: 'Total pension / retirement savings', value: f.pension });
     if (f.savings) financeItems.push({ label: 'Other savings & investments', value: f.savings });
     if (f.equity) financeItems.push({ label: 'Property equity', value: f.equity });
     if (f.debts) financeItems.push({ label: 'Outstanding debts', value: f.debts });
+    if (f.pensionAccess) financeItems.push({ label: 'Taken from your pensions so far', value: f.pensionAccess });
+    if (f.partnerPensionAccess) financeItems.push({ label: 'Taken from your partner’s pensions so far', value: f.partnerPensionAccess });
+    if (f.income) financeItems.push({ label: 'Annual household income', value: f.income });
     if (f.contributions) financeItems.push({ label: 'Annual pension contributions', value: f.contributions });
+    if (f.financeNotes) financeItems.push({ label: 'Other notes', value: f.financeNotes });
 
     const goalsItems = [];
+    if (f.spending) goalsItems.push({ label: 'Expected spending', value: f.spending + (f.spendingBasis ? ' (' + f.spendingBasis + ')' : '') });
     if (f.lifestyle) goalsItems.push({ label: 'Lifestyle expectation', value: f.lifestyle });
-    if (lifestyleIsCustom && f.target) goalsItems.push({ label: 'Target monthly income', value: f.target });
+    if (lifestyleIsCustom && f.target) goalsItems.push({ label: 'Target monthly income', value: f.target + (f.targetBasis ? ' (' + f.targetBasis + ')' : '') });
     if (f.partTime) goalsItems.push({ label: 'Part-time work in retirement', value: f.partTime });
     if (f.estate) goalsItems.push({ label: 'Leave an estate / inheritance', value: f.estate });
     if (f.plans) goalsItems.push({ label: 'Key plans or activities', value: f.plans });
 
     const sourcesList = this.getSources();
     const incomeItems = [];
-    if (sourcesList.length) incomeItems.push({ label: 'Expected sources', value: sourcesList.join(', ') });
-    if (f.src_other && f.srcOtherText) incomeItems.push({ label: 'Other source', value: f.srcOtherText });
+    sourcesList.forEach((src) => incomeItems.push({ label: src.name, value: src.detail || 'Amount not provided' }));
     if (f.srcNotes) incomeItems.push({ label: 'Notes', value: f.srcNotes });
 
     const concernsList = this.getConcerns();
@@ -1204,9 +1300,9 @@ class Component extends DCLogic {
 
     const reviewSections = [
       { title: 'Profile & timeline', step: 2, items: profileItems },
-      { title: 'Financial picture', step: 3, items: financeItems },
+      { title: 'What you have now', step: 3, items: financeItems },
       { title: 'Retirement goals', step: 4, items: goalsItems },
-      { title: 'Expected income sources', step: 5, items: incomeItems },
+      { title: 'Income you expect in retirement', step: 5, items: incomeItems },
       { title: 'Concerns, risk & anything else', step: 6, items: concernsItems }
     ]
       .filter((sec) => sec.items.length > 0)
@@ -1257,6 +1353,7 @@ class Component extends DCLogic {
       lifestyleIsCustom,
       targetSlotStyle,
       partTimeSlotStyle,
+      sourceRows,
       fields: s.fields,
       handleChange: this.handleChange,
       prevStep: this.prevStep, nextStep: this.nextStep, finishWizard: this.finishWizard,
@@ -1278,7 +1375,8 @@ class Component extends DCLogic {
       openInfoModal: this.openInfoModal,
       closeInfoModal: this.closeInfoModal,
       stopClick: this.stopClick,
-      universalFooterStyle
+      universalFooterStyle,
+      appVersion: window.APP_VERSION ? 'v' + window.APP_VERSION : ''
     };
   }
 }
