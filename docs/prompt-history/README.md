@@ -14,6 +14,7 @@ paragraphs, each question's prompt, and the page code that builds the personalis
 
 | Release | Live from | What changed in the prompts | Record |
 |---|---|---|---|
+| v0.5.0 | 3 October 2026 | How the prompt is put together changed (prompt list). | [v0.5.0.md](v0.5.0.md) |
 | v0.4.0 | 3 October 2026 | 3 answer-style paragraphs added (caseStudy, factual, simple). How the prompt is put together changed (personalised prompt, prompt list, answer style). | [v0.4.0.md](v0.4.0.md) |
 | v0.3.0 | 2 October 2026 | No change to any prompt. | [v0.3.0.md](v0.3.0.md) |
 | v0.2.0 | 2 October 2026 | No change to any prompt. | [v0.2.0.md](v0.2.0.md) |
