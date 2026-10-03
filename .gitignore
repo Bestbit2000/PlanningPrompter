@@ -1,2 +1,7 @@
 optimiser/
 .claude/
+
+# Usage counter: local settings and installed packages
+stats-service/.env
+stats-service/node_modules/
+stats-service/.neon

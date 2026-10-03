@@ -1,0 +1,15 @@
+{
+  "name": "prompt-generator-usage-counter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Daily usage totals for the Retirement Income Prompt Generator. No visitor records.",
+  "type": "module",
+  "scripts": {
+    "test": "node test.mjs",
+    "local": "node local.mjs"
+  },
+  "dependencies": {
+    "@neon/functions": "^0.8.0",
+    "pg": "^8.13.0"
+  }
+}

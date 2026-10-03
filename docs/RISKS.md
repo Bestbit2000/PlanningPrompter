@@ -100,10 +100,25 @@ session analytics loaded on every page with no consent prompt.
   in the footer.
 - **Governance:** short data protection note recording what is collected, why,
   and who receives it.
-- **Status: Done on the site.** Usage analytics are lost; if they are wanted
-  later they need a consent prompt and masking on the wizard. The site still
-  loads its font from Google, which sees the visitor's IP address. The data
-  protection note is open.
+- **Status: Done on the site.** Session analytics are gone; if recordings of
+  that kind are wanted later they need a consent prompt and masking on the
+  wizard. The site still loads its font from Google, which sees the visitor's IP
+  address. The data protection note is open.
+- **Usage counts (PO-19, built 3 October 2026):** the site now counts how often
+  each part of the tool is used. This is a different case from session
+  recording, and was built so that no consent prompt is needed: it sends only
+  the name of an event and fixed labels, never anything typed; it sets no
+  cookie, stores nothing on the device and uses no visitor identifier; the
+  counter keeps daily totals and no IP addresses; and nothing is sent when the
+  browser signals Global Privacy Control or Do Not Track. The privacy paragraph
+  says "We count how often each part of the tool is used, for example how many
+  prompts are copied. The counts hold nothing about you or what you typed."
+  Two points for the data protection note: the counter runs on Neon (a hosting
+  company, in Frankfurt) on the maintainer's account until the CDA can host it,
+  and Neon, like any host, sees the visitor's IP address when the count
+  arrives, though the counter does not keep it. The added privacy sentence and
+  the decision that no consent prompt is needed have not been signed off by
+  whoever owns data protection for the CDA.
 
 ### R5. Personal and health data is sent to AI companies (High)
 

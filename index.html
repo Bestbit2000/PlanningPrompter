@@ -5,6 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./version.js?v=0.4.0"></script>
+<script src="./stats.js?v=0.4.0"></script>
 <script src="./prompts.js?v=0.4.0"></script>
 <script src="./support.js?v=0.4.0"></script>
 </head>
@@ -657,7 +658,7 @@
         <p style="margin:0 0 16px"><strong>Free, impartial help is available.</strong> <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">MoneyHelper<span class="sr-only"> (opens in a new tab)</span></a> offers free guidance on pensions, and its Pension Wise service gives a free appointment to people aged 50 or over with a defined contribution pension.</p>
         <p style="margin:0 0 16px"><strong>Always speak to a professional.</strong> For anything that affects your retirement income, talk to a regulated, independent financial adviser who can look at your full circumstances before you act. You can check a firm or adviser on the <a href="https://register.fca.org.uk/" target="_blank" rel="noopener">FCA Register<span class="sr-only"> (opens in a new tab)</span></a>.</p>
         <p style="margin:0 0 16px"><strong>Watch out for scams.</strong> Be wary of anyone who pressures you to move your pension, promises guaranteed returns or contacts you out of the blue. Take your time, and check the firm on the FCA Register first.</p>
-        <p style="margin:0 0 16px"><strong>Your privacy.</strong> We don&rsquo;t store or track what you type, and this site sets no cookies. When you launch a chatbot, your prompt &mdash; including any details you added &mdash; is sent to that chatbot&rsquo;s provider and handled under their privacy policy. Don&rsquo;t include your name, address, National Insurance number or account numbers.</p>
+        <p style="margin:0 0 16px"><strong>Your privacy.</strong> We don&rsquo;t store or track what you type, and this site sets no cookies. We count how often each part of the tool is used, for example how many prompts are copied. The counts hold nothing about you or what you typed. When you launch a chatbot, your prompt &mdash; including any details you added &mdash; is sent to that chatbot&rsquo;s provider and handled under their privacy policy. Don&rsquo;t include your name, address, National Insurance number or account numbers.</p>
         <p style="margin:0"><strong>We don&rsquo;t endorse any chatbot.</strong> The chatbots listed are widely used examples. The Consumer Duty Alliance does not recommend one over another.</p>
       </div>
       <div style="padding:20px 32px 28px">
@@ -893,7 +894,11 @@ class Component extends DCLogic {
   closeInfoModal = () => this.setState({ showInfoModal: false });
   stopClick = (e) => e.stopPropagation();
 
+  // Usage counts (PO-19): event names and fixed labels only. See stats.js.
+  track = (event, detail) => { if (window.track) window.track(event, detail); };
+
   goApp = () => {
+    this.track('route_chosen', 'personalised');
     window.scrollTo(0, 0);
     const s = this.state;
     const hasSelection = Object.keys(s.browseSelected).length > 0;
@@ -906,9 +911,9 @@ class Component extends DCLogic {
       this.setState({ view: 'app', phase: 'wizard', step: 1, browseStep: 1, browseAnswers: { category: null, stage: null, style: null } });
     }
   };
-  goBrowse = () => { window.scrollTo(0, 0); this.setState({ view: 'browse', browseStep: 1, browseAnswers: { category: null, stage: null, style: null }, browseSelected: {}, browseExpanded: {} }); };
+  goBrowse = () => { this.track('route_chosen', 'list'); window.scrollTo(0, 0); this.setState({ view: 'browse', browseStep: 1, browseAnswers: { category: null, stage: null, style: null }, browseSelected: {}, browseExpanded: {} }); };
   goLanding = () => { window.scrollTo(0, 0); this.setState({ view: 'landing' }); };
-  goStarterPrompt = () => { window.scrollTo(0, 0); this.setState({ view: 'starterPrompt', showStarterPromptText: false }); };
+  goStarterPrompt = () => { this.track('route_chosen', 'starter'); window.scrollTo(0, 0); this.setState({ view: 'starterPrompt', showStarterPromptText: false }); };
   toggleStarterPromptText = () => this.setState((s) => ({ showStarterPromptText: !s.showStarterPromptText }));
   copyStarter = () => this.copyText(STARTER_PROMPT_DATA.prompt, 'Starter prompt copied');
   copyGeneric = () => this.copyText(GENERIC_PROMPT, 'Starter prompt copied');
@@ -920,6 +925,8 @@ class Component extends DCLogic {
         return;
       }
       this.generatePrompt();
+      this.track('prompt_ready', 'personalised');
+      Object.keys(this.state.browseSelected).forEach((id) => this.track('question_used', id + '|personalised'));
       this.setState({ phase: 'result' });
       return;
     }
@@ -1071,7 +1078,8 @@ class Component extends DCLogic {
       })
       .filter(Boolean)
       .join('\n\n---\n\n');
-    window.showPromptModal(this.withStyle(text));
+    ids.forEach((id) => this.track('question_used', id + '|list'));
+    window.showPromptModal(this.withStyle(text), 'list');
   };
 
   getSources = () => {
@@ -1174,7 +1182,7 @@ class Component extends DCLogic {
   openInClaude = () => window.open('https://claude.ai/?q=' + encodeURIComponent(STARTER_PROMPT_DATA.prompt), '_blank');
   openInGemini = () => window.open('https://gemini.google.com/?q=' + encodeURIComponent(STARTER_PROMPT_DATA.prompt), '_blank');
   adjustInputs = () => this.setState({ phase: 'wizard', step: 1 });
-  showUsePromptModal = () => window.showPromptModal(this.state.outputText);
+  showUsePromptModal = () => window.showPromptModal(this.state.outputText, 'personalised');
 
   renderVals() {
     const s = this.state;
@@ -1649,6 +1657,7 @@ class Component extends DCLogic {
           // that is still there when the user comes back from the chatbot's tab.
           window.copyToClipboard(promptText).catch(() => showSimpleToast(COPY_FAILED_MESSAGE, { persist: true }));
           window.open(url, '_blank');
+          if (window.track) window.track('chatbot_launched', selected.value + '|' + (window._promptType || ''));
         }
       });
     }
@@ -1796,14 +1805,18 @@ class Component extends DCLogic {
       return;
     }
     const promptText = window.STARTER_PROMPT_DATA.prompt || '';
-    window.showPromptModal(promptText);
+    window.showPromptModal(promptText, 'starter');
   };
 
-  // Generic function to show prompt modal with any prompt data
-  window.showPromptModal = function(promptText) {
+  // Generic function to show prompt modal with any prompt data. "promptType" is
+  // 'starter', 'list' or 'personalised', and is used only for the usage counts (PO-19).
+  window.showPromptModal = function(promptText, promptType) {
     if (!promptText) {
       return;
     }
+
+    window._promptType = promptType || '';
+    if (window.track) window.track('prompt_ready', window._promptType);
 
     // Save current focus to restore after modal closes
     window._lastFocusBeforeModal = document.activeElement;
@@ -1825,7 +1838,10 @@ class Component extends DCLogic {
       copyOnlyBtn.onclick = () => {
         // Only say it was copied if it was
         window.copyToClipboard(promptText).then(
-          () => showSimpleToast('The prompt has been copied to your clipboard'),
+          () => {
+            showSimpleToast('The prompt has been copied to your clipboard');
+            if (window.track) window.track('prompt_copied', promptType || '');
+          },
           () => showSimpleToast(COPY_FAILED_MESSAGE, { persist: true })
         );
       };

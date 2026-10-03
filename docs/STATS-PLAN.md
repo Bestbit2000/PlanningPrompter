@@ -1,7 +1,13 @@
 # Usage stats plan (PO-19)
 
 A plan for counting how the Retirement Income Prompt Generator is used, without
-any third-party stats tooling. Nothing in this plan is built yet.
+any third-party stats tooling.
+
+**Status (3 October 2026): built, using the fallback.** The site sends counts
+from `stats.js`, and the counter runs as a small service on Neon until the CDA
+can host it. How to run it and see the totals is in
+[stats-service/README.md](../stats-service/README.md). Still open: the CDA's
+answer on hosting, and sign-off of the privacy wording.
 
 Written 3 October 2026, against site version v0.3.0. The privacy points need
 sign-off from whoever owns data protection for the Consumer Duty Alliance; this
@@ -20,6 +26,8 @@ is a product plan, not legal advice.
   Alliance website, if the CDA can host it. That is still to be confirmed with
   them. If they cannot, the fallback is a small service the Taskforce owns,
   running beside the tool.
+- **Built (3 October 2026):** the fallback, so that counting can start from the
+  current GitHub Pages address without waiting for the CDA.
 - **Hand-over:** everything is delivered as files the CDA's developer installs
   and runs themselves. The Taskforce does not operate any part of it.
 
@@ -61,9 +69,11 @@ the counts are of visits and actions. Someone who comes back next week counts
 again.
 
 To stop one visit counting twice, the page remembers in memory which one-off
-events it has already sent (`landing_view`, and each `route_chosen` type). That
-memory is gone when the page is closed or reloaded. Nothing is written to the
-device.
+events it has already sent: `landing_view`, and each distinct `route_chosen`,
+`prompt_ready` and `question_used`. So going back to change an answer and
+building the prompt again does not count its questions twice. `prompt_copied`
+and `chatbot_launched` count every press. That memory is gone when the page is
+closed or reloaded. Nothing is written to the device.
 
 ### What is never sent
 
@@ -72,6 +82,8 @@ device.
 - Any visitor, session or device identifier.
 
 Question ids are the fixed ids already in `prompts.js`, such as `foundation_1`.
+The counter accepts any id of that shape (letters, an underscore, a number), so
+adding a question to `prompts.js` needs no change to the counter.
 
 ## How it is stored
 
@@ -86,12 +98,15 @@ One table of daily totals. There is no row per visitor and no row per event.
 
 The key is `day` + `event` + `detail`. A message either adds one to an existing
 row or creates the row at one. The size does not depend on the number of
-visits: there are about 60 possible combinations of event and labels, so at
-most about 60 rows a day.
+visits: there are about 70 possible combinations of event and labels, so at
+most about 70 rows a day. The counter also refuses to add more than 500 rows
+in one day, so made-up ids cannot fill the table.
 
 The endpoint:
 
-- accepts `POST` with a small JSON body: `{ "event": "...", "detail": "..." }`;
+- accepts `POST` with a small JSON body holding a list of events, so the
+  events from one action travel together:
+  `{ "events": [ { "event": "...", "detail": "..." } ] }`;
 - accepts only event names and label values on a fixed list, and ignores
   anything else, so free text can never be stored by mistake;
 - accepts requests only from the tool's own address;
@@ -109,7 +124,8 @@ The endpoint:
 | C. Web server logs | No endpoint. The page requests a tiny file per event and the totals are read from the server's access logs | No server code | Needs access to the logs, which GitHub Pages does not give. Logs hold IP addresses. Counting is manual |
 
 **Decision: A**, subject to the CDA confirming they can host it. B is the
-fallback. The page code and the message format are the same for both, and the
+fallback, and is what runs today: one function and one database on Neon, in
+Frankfurt, in a project of its own on the maintainer's Neon account. The page code and the message format are the same for both, and the
 endpoint address is one setting, so switching between them changes one line.
 
 GitHub Pages cannot run the counter by itself. It serves files only, so under B
@@ -123,12 +139,16 @@ The aim is a set of files the CDA's developer can install and run without help:
 | File or folder | What it is |
 |---|---|
 | The tool: `index.html`, `styles.css`, `prompts.js`, `version.js`, `support.js`, `images/` | As listed in the README today |
-| `stats.js` | The page-side counter calls. Does nothing until the endpoint address is set |
-| The counter | The endpoint, the one-table database set-up and the totals page, written for the CDA site's platform |
-| Install note | Where each file goes, the one setting to change (the endpoint address), and how to check it is counting |
+| `stats.js` | The page-side counter calls. Does nothing when the endpoint address is empty |
+| The counter | `stats-service/`: the endpoint, the one-table database set-up and the totals page |
+| Install note | `stats-service/README.md`: the settings, how to check it is counting, and how to move it |
 
-The counter cannot be written until the CDA site's platform is known, because
-it has to be in that platform's language and use its database.
+The counter as built needs Node and a Postgres database. If the CDA site's
+platform has neither (WordPress, say, runs on PHP and MySQL), the counter has
+to be rewritten for it as a small plugin. It is one short file,
+`stats-service/handler.mjs`, and its checks in `test.mjs` say what the rewrite
+must do. Until then the CDA site can keep using the counter where it is, once
+the CDA site's address is added to the counter's list.
 
 ### Questions for the CDA's developer
 
@@ -144,9 +164,9 @@ it has to be in that platform's language and use its database.
 
 ## Changes to the tool
 
-- **New file `stats.js`:** one `track(event, detail)` function. It uses the
-  browser's `sendBeacon`, which still delivers when the visitor is leaving for
-  a chatbot's tab. It fails silently, and it does nothing at all when no
+- **New file `stats.js`:** one `track(event, detail)` function. It sends with
+  the browser's "keepalive" option and no cookies, which still delivers when
+  the visitor is leaving for a chatbot's tab. It fails silently, and it does nothing at all when no
   endpoint address is set, so the tool works unchanged on a host with no
   counter.
 - **`index.html`:** about six calls to `track`, at the points in the table
@@ -176,8 +196,8 @@ A totals page for administrators only, with a date range and a CSV download:
 - chatbots by launches;
 - copies by type.
 
-On option A this is a page in the site's admin area. On option B it is a
-password-protected page, or a query run by a maintainer.
+On option A this is a page in the site's admin area. On option B, as built, it
+is a page at the counter's own address that asks for a key.
 
 ## Order of work
 
@@ -194,10 +214,16 @@ password-protected page, or a query run by a maintainer.
 
 Steps 3 and 4 can be done and released before the endpoint exists.
 
+Done on 3 October 2026 with option B: steps 2, 3, 4 and 6, and the endpoint
+address is set. Step 5 (release, then check the totals against a manual
+walk-through) and step 1 remain.
+
 ## Decisions needed
 
 1. **Where the counter lives:** decided as A (CDA website). Waiting on the CDA
    to confirm it is possible; B if not.
 2. **Who signs off** the added privacy sentence and the data protection note.
 3. **Whether to add `wizard_step`,** to see drop-off inside the personalised
-   route.
+   route. Not built.
+4. **Who else holds the key** to the totals page, and who owns the Neon project
+   if the fallback stays in use for long.
