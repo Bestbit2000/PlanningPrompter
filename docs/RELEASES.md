@@ -44,11 +44,18 @@ a few minutes.
 4. **Bump** — update `window.APP_VERSION` in `version.js`, change every
    `?v=X.Y.Z` at the top of `index.html` to the same number, and add an entry to
    the release history below.
-5. **Commit and tag** — commit with the message `Release vX.Y.Z`, then tag it:
+5. **Record the prompts** — after the bump, write this release's prompts into
+   the prompt history:
+   ```bash
+   node tools/prompt-history.js
+   ```
+   It adds `docs/prompt-history/vX.Y.Z.md` and updates the index. Include both
+   in the release commit. See [prompt-history](prompt-history/README.md).
+6. **Commit and tag** — commit with the message `Release vX.Y.Z`, then tag it:
    ```bash
    git tag -a vX.Y.Z -m "Release vX.Y.Z"
    ```
-6. **Publish** — push the commit to production, then push the tag on its own:
+7. **Publish** — push the commit to production, then push the tag on its own:
    ```bash
    git push origin main
    ```
@@ -57,16 +64,16 @@ a few minutes.
    ```
    Push them separately. Twice, pushing the commit and tag together did not
    start a GitHub Pages build, so the live site stayed on the old version.
-7. **Verify** — load https://bestbit2000.github.io/PlanningPrompter/ and confirm
+8. **Verify** — load https://bestbit2000.github.io/PlanningPrompter/ and confirm
    the footer shows the new number.
-8. **Update Jira** — move every Jira item included in the release to the status
+9. **Update Jira** — move every Jira item included in the release to the status
    "Released". The items are the ones listed against the version in the release
-   history below. Do this on every release, once step 7 has passed.
+   history below. Do this on every release, once step 8 has passed.
 
 ### Bug fix releases
 
 A bug found in production is fixed on its own, without bundling unfinished
-functionality, and goes through steps 2 to 8 as a Z release.
+functionality, and goes through steps 2 to 9 as a Z release.
 
 ## Release history
 

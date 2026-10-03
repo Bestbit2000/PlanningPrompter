@@ -126,11 +126,11 @@
         <div class="footer-row footer-row-end">
           <div class="footer-group">
             <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
-            <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">Free guidance from MoneyHelper</a>
+            <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">Free guidance from MoneyHelper<span class="sr-only"> (opens in a new tab)</span></a>
           </div>
           <div class="footer-group">
             <a href="#" onClick="{{ openInfoModal }}">Privacy</a>
-            <a href="https://consumerduty.org/keep-in-touch" target="_blank" rel="noopener">Report a problem</a>
+            <a href="https://consumerduty.org/keep-in-touch" target="_blank" rel="noopener">Report a problem<span class="sr-only"> (opens in a new tab)</span></a>
           </div>
         </div>
         <div class="footer-row footer-row-end">
@@ -195,7 +195,7 @@
 
       <!-- Prompt Content -->
       <div class="surface-dark" style="position:relative;background:#1e293b;padding:24px;border-top:3px solid #2C8494">
-        <pre tabindex="0" role="region" aria-label="The starter prompt" style="font-family:'Courier New',monospace;font-size:13px;line-height:1.6;color:#e2e8f0;margin:0;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto">{{ starterPrompt.prompt }}</pre>
+        <pre tabindex="0" role="region" aria-label="The starter prompt" style="font-family:'Courier New',monospace;font-size:14px;line-height:1.6;color:#e2e8f0;margin:0;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto">{{ starterPrompt.prompt }}</pre>
       </div>
     </div>
 
@@ -206,7 +206,7 @@
           <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:26px;margin:0 0 8px;color:#fff">Want to be more specific about the questions?</h2>
           <p style="font-size:14px;color:rgba(255,255,255,0.9);margin:0;max-width:50ch">Choose from a list based on what you're looking to know, and pick the questions that matter most to you.</p>
         </div>
-        <button data-action="goBrowse" onClick="{{ goBrowse }}" style="background:#fff;color:#164752;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;flex:none;white-space:nowrap;border-radius:4px">Choose from a list &rarr;</button>
+        <button data-action="goBrowse" onClick="{{ goBrowse }}" style="background:#fff;color:#164752;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;flex:none;white-space:nowrap;border-radius:4px;min-height:44px">Choose from a list &rarr;</button>
       </div>
     </div>
   </main>
@@ -236,15 +236,15 @@
       <sc-if value="{{ isStep1 }}">
       <div style="margin-bottom:24px">
         <h2 data-screen-heading="step" tabindex="-1" style="font-size:16px;margin:0 0 6px">Step 1: Select your questions</h2>
-        <p style="font-size:13px;color:rgba(32,30,29,0.65);margin:0 0 16px">Answer three quick questions and we'll shortlist the prompts most relevant to you.</p>
+        <p style="font-size:14px;color:rgba(32,30,29,0.65);margin:0 0 16px">Answer three quick questions and we'll shortlist the prompts most relevant to you.</p>
 
         <sc-if value="{{ showSelectionWarning }}">
-          <div style="background:#EAF3F3;border:1px solid #2C8494;padding:12px 16px;margin-bottom:20px;font-size:13px;font-weight:600;color:#164752" role="alert">Select at least one question below to continue.</div>
+          <div style="background:#EAF3F3;border:1px solid #2C8494;padding:12px 16px;margin-bottom:20px;font-size:14px;font-weight:600;color:#164752" role="alert">Select at least one question below to continue.</div>
         </sc-if>
 
         <sc-if value="{{ isStep1Quiz }}">
         <div style="max-width:640px">
-          <div style="font-size:13px;font-weight:700;color:#226B79;margin-bottom:8px">Question {{ browseQuiz.index }} of {{ browseQuiz.total }}</div>
+          <div style="font-size:14px;font-weight:700;color:#226B79;margin-bottom:8px">Question {{ browseQuiz.index }} of {{ browseQuiz.total }}</div>
           <div style="display:flex;gap:6px;margin-bottom:28px">
             <sc-for list="{{ browseQuizDots }}" as="dot" hint-placeholder-count="3">
               <span style="{{ dot.style }}"></span>
@@ -257,7 +257,7 @@
             </sc-for>
           </div>
           <sc-if value="{{ browseQuizShowBack }}" hint-placeholder-val="{{ false }}">
-            <button onClick="{{ browseQuizBack }}" style="margin-top:24px;background:transparent;border:none;color:#226B79;font-weight:600;font-size:13px;cursor:pointer;padding:0;min-height:44px">&larr; Back</button>
+            <button onClick="{{ browseQuizBack }}" style="margin-top:24px;background:transparent;border:none;color:#226B79;font-weight:600;font-size:14px;cursor:pointer;padding:0;min-height:44px">&larr; Back</button>
           </sc-if>
         </div>
         </sc-if>
@@ -294,12 +294,12 @@
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
         <h2 data-screen-heading="step" tabindex="-1" style="font-size:16px;margin:0 0 18px">Step 2: Profile & timeline</h2>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
-          <div><label for="age" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Your age</label><input id="age" type="text" placeholder="e.g. 58" value="{{ fields.age }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="partnerAge" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Partner's age</label><input id="partnerAge" type="text" placeholder="Leave blank if none" value="{{ fields.partnerAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="retireAge" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target retirement age</label><input id="retireAge" type="text" placeholder="e.g. 65" value="{{ fields.retireAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="country" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Country / region</label><input id="country" type="text" placeholder="e.g. United Kingdom" value="{{ fields.country }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="employment" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Employment status</label>
-            <select id="employment" value="{{ fields.employment }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+          <div><label for="age" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Your age</label><input id="age" type="text" placeholder="e.g. 58" value="{{ fields.age }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div><label for="partnerAge" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Partner's age</label><input id="partnerAge" type="text" placeholder="Leave blank if none" value="{{ fields.partnerAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div><label for="retireAge" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target retirement age</label><input id="retireAge" type="text" placeholder="e.g. 65" value="{{ fields.retireAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div><label for="country" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Country / region</label><input id="country" type="text" placeholder="e.g. United Kingdom" value="{{ fields.country }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div><label for="employment" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Employment status</label>
+            <select id="employment" value="{{ fields.employment }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Employed (PAYE)</option>
               <option>Self-employed</option>
@@ -308,17 +308,25 @@
               <option>Already retired / semi-retired</option>
             </select>
           </div>
-          <div><label for="health" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Health status (optional)</label>
-            <select id="health" value="{{ fields.health }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+          <div><label for="health" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Health status (optional)</label>
+            <select id="health" aria-describedby="healthHint" value="{{ fields.health }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Excellent</option>
               <option>Good</option>
               <option>Fair</option>
               <option>Poor / chronic conditions</option>
             </select>
-            <span style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-top:5px">Helps the AI think about how long your income may need to last. Leave blank if you&rsquo;d rather not say.</span>
+            <span id="healthHint" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-top:5px">Helps the AI think about how long your income may need to last. Leave blank if you&rsquo;d rather not say.</span>
           </div>
-          <div><label for="dependants" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Financial dependants</label><input id="dependants" type="text" placeholder="e.g. 0" value="{{ fields.dependants }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div><label for="dependants" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Financial dependants</label><input id="dependants" type="text" placeholder="e.g. 0" value="{{ fields.dependants }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div><label for="risk" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Investment risk tolerance</label>
+            <select id="risk" value="{{ fields.risk }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>Cautious &mdash; low risk, protecting what I have comes first</option>
+              <option>Balanced &mdash; mix of growth and security</option>
+              <option>Adventurous &mdash; higher growth, comfortable with volatility</option>
+            </select>
+          </div>
         </div>
       </div>
       </sc-if>
@@ -326,20 +334,25 @@
       <sc-if value="{{ isStep3 }}">
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
         <h2 data-screen-heading="step" tabindex="-1" style="font-size:16px;margin:0 0 8px">Step 3: What you have now</h2>
-        <p class="wizard-step-intro">Tell us about the pension pots, savings, property and debts you have today. Income you expect once you retire, such as the State Pension or a final salary pension, goes in step 5.</p>
-        <p class="wizard-step-hint">A figure or a short description are both fine &mdash; for example &ldquo;£150,000 across two pots, one already in drawdown&rdquo;.</p>
+        <p class="wizard-step-hint">All optional. A figure or a rough description is fine. Income you expect once you retire goes in step 5.</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          <div><label for="pension" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Total pension / retirement savings</label><input id="pension" type="text" placeholder="e.g. £150,000" value="{{ fields.pension }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="savings" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Other savings & investments</label><input id="savings" type="text" placeholder="e.g. £30,000 in ISA" value="{{ fields.savings }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="equity" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Property equity</label><input id="equity" type="text" placeholder="e.g. £200,000" value="{{ fields.equity }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="debts" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Outstanding debts</label><input id="debts" type="text" placeholder="e.g. £50k mortgage remaining" value="{{ fields.debts }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-        </div>
-
-        <h3 class="wizard-subhead">Pensions you&rsquo;ve already accessed</h3>
-        <p class="wizard-step-hint">Taking taxable income or lump sums from a pension usually lowers how much you can pay in afterwards. Taking only your tax-free cash does not. Telling us which applies stops the AI guessing.</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          <div><label for="pensionAccess" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Have you taken anything from a pension yet?</label>
-            <select id="pensionAccess" value="{{ fields.pensionAccess }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+          <div><label for="pension" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Pension savings</label><input id="pension" type="text" placeholder="e.g. £150,000 across two pots" value="{{ fields.pension }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div><label for="savings" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Other savings & investments</label><input id="savings" type="text" placeholder="e.g. £30,000 ISAs, £10,000 cash" value="{{ fields.savings }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div><label for="property" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Property and debts</label><input id="property" type="text" placeholder="e.g. £350,000 home, £50,000 owed" value="{{ fields.property }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div><label for="income" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Income and pension contributions now</label><input id="income" type="text" placeholder="e.g. £70,000, paying in £8,000" value="{{ fields.income }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div><label for="pensionAccess" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Have you taken anything from a pension yet?</label>
+            <select id="pensionAccess" aria-describedby="pensionAccessHint" value="{{ fields.pensionAccess }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+              <option value="">&mdash; select &mdash;</option>
+              <option>No &mdash; nothing taken yet</option>
+              <option>Tax-free cash only</option>
+              <option>Taxable income or lump sums</option>
+              <option>Not sure</option>
+            </select>
+            <span id="pensionAccessHint" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-top:5px">Taking taxable money from a pension usually lowers how much you can pay in afterwards, so this stops the AI guessing.</span>
+          </div>
+          <!-- Shown only when a partner's age was entered in step 2. styles.css hides it otherwise. -->
+          <div class="partner-only" data-open="{{ hasPartner }}"><label for="partnerPensionAccess" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Has your partner taken anything from a pension yet?</label>
+            <select id="partnerPensionAccess" aria-describedby="pensionAccessHint" value="{{ fields.partnerPensionAccess }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>No &mdash; nothing taken yet</option>
               <option>Tax-free cash only</option>
@@ -347,24 +360,9 @@
               <option>Not sure</option>
             </select>
           </div>
-          <div><label for="partnerPensionAccess" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Has your partner? (leave blank if none)</label>
-            <select id="partnerPensionAccess" value="{{ fields.partnerPensionAccess }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
-              <option value="">&mdash; select &mdash;</option>
-              <option>No &mdash; nothing taken yet</option>
-              <option>Tax-free cash only</option>
-              <option>Taxable income or lump sums</option>
-              <option>Not sure</option>
-            </select>
-          </div>
         </div>
 
-        <h3 class="wizard-subhead">While you&rsquo;re still working</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          <div><label for="income" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual household income (now)</label><input id="income" type="text" placeholder="e.g. £70,000" value="{{ fields.income }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="contributions" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Annual pension contributions (now)</label><input id="contributions" type="text" placeholder="e.g. £8,000 p.a. incl. employer" value="{{ fields.contributions }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-        </div>
-
-        <div style="margin-top:20px"><label for="financeNotes" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else about your finances</label><textarea id="financeNotes" placeholder="e.g. One pot is already in drawdown, my partner has a small pot they have not touched..." value="{{ fields.financeNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:20px"><label for="financeNotes" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else about your finances</label><textarea id="financeNotes" placeholder="e.g. One pot is already in drawdown, my partner has a small pot they have not touched..." value="{{ fields.financeNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
@@ -372,29 +370,34 @@
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
         <h2 data-screen-heading="step" tabindex="-1" style="font-size:16px;margin:0 0 18px">Step 4: Retirement goals</h2>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          <div style="order:1"><label for="lifestyle" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Lifestyle expectation</label>
-            <select id="lifestyle" value="{{ fields.lifestyle }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+          <!-- UPDATE EACH YEAR (PO-23, PO-24). The list uses the three levels of the Pensions UK
+               Retirement Living Standards, and the monthly amounts come from the same source,
+               published each June: https://www.retirementlivingstandards.org.uk/details
+               2026 yearly figures used (one person outside London / couple in London):
+                 Minimum      £13,900 / £24,100
+                 Moderate     £32,700 / £47,000
+                 Comfortable  £45,400 / £64,800
+               Each is divided by 12 and rounded to the nearest £50. When new standards come out,
+               change the three ranges below and the year in the note under the list.
+               An option's "value" is what the prompt is built from, so it carries no amounts:
+               the prompt names the level and asks the AI to use the current published figure. -->
+          <div><label for="lifestyle" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Lifestyle expectation</label>
+            <select id="lifestyle" aria-describedby="lifestyleHint" value="{{ fields.lifestyle }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
-              <option>Modest / essential needs</option>
-              <option>Comfortable / moderate</option>
-              <option>Affluent / active travel and leisure</option>
-              <option>High-end / luxury</option>
-              <option>Enter my own monthly amount</option>
+              <option value="Minimum">Minimum (£1,150 to £2,000 a month)</option>
+              <option value="Moderate">Moderate (£2,750 to £3,900 a month)</option>
+              <option value="Comfortable">Comfortable (£3,800 to £5,400 a month)</option>
+              <option value="Other">Other (enter my own monthly amount)</option>
             </select>
+            <span id="lifestyleHint" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-top:5px">The amounts are a guide to what each level costs to live on after tax, from one person outside London to a couple in London. They are from the <a href="https://www.retirementlivingstandards.org.uk/" target="_blank" rel="noopener">Retirement Living Standards 2026<span class="sr-only"> (opens in a new tab)</span></a> and leave out rent, mortgage and care costs.</span>
           </div>
 
-          <div style="{{ targetSlotStyle }}"><label for="target" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target monthly income in retirement</label><input id="target" type="text" placeholder="e.g. £3,500/month net" value="{{ fields.target }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" />
-            <label for="targetBasis" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin:10px 0 5px">Is that figure before or after tax?</label>
-            <select id="targetBasis" value="{{ fields.targetBasis }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
-              <option value="">&mdash; select &mdash;</option>
-              <option>After tax</option>
-              <option>Before tax</option>
-              <option>Not sure</option>
-            </select>
-          </div>
+          <!-- The space beside the list is always kept for the custom amount, so the boxes below
+               never move when "Other" is chosen. styles.css hides it until then. -->
+          <div class="lifestyle-custom-slot" data-open="{{ lifestyleIsCustom }}"><label for="target" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target monthly lifestyle spending in retirement</label><input id="target" type="text" placeholder="e.g. £3,500 a month" value="{{ fields.target }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
 
-          <div style="{{ partTimeSlotStyle }}"><label for="partTime" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Part-time work in retirement?</label>
-            <select id="partTime" value="{{ fields.partTime }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+          <div><label for="partTime" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Part-time work in retirement?</label>
+            <select id="partTime" value="{{ fields.partTime }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Yes, for several years</option>
               <option>Possibly / undecided</option>
@@ -402,8 +405,8 @@
             </select>
           </div>
 
-          <div style="order:4"><label for="estate" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Leave an estate / inheritance?</label>
-            <select id="estate" value="{{ fields.estate }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+          <div><label for="estate" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Do you want to leave an estate / inheritance?</label>
+            <select id="estate" value="{{ fields.estate }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
               <option value="">&mdash; select &mdash;</option>
               <option>Yes, this is a clear priority</option>
               <option>Nice to have if possible</option>
@@ -411,19 +414,7 @@
             </select>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
-          <div><label for="spending" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Expected spending in retirement</label><input id="spending" type="text" placeholder="e.g. £2,800 a month, or £34,000 a year" value="{{ fields.spending }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="spendingBasis" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Is that figure before or after tax?</label>
-            <select id="spendingBasis" value="{{ fields.spendingBasis }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
-              <option value="">&mdash; select &mdash;</option>
-              <option>After tax (what I actually spend)</option>
-              <option>Before tax (the income I need before tax is taken off)</option>
-              <option>Not sure</option>
-            </select>
-          </div>
-        </div>
-        <p class="wizard-step-hint" style="margin:8px 0 0">Leave spending blank if you don&rsquo;t know yet. The AI will be asked to estimate it and to say that it has.</p>
-        <div style="margin-top:16px"><label for="plans" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Key plans or activities in retirement</label><textarea id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property..." value="{{ fields.plans }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label for="plans" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Key plans or activities in retirement</label><textarea id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property..." value="{{ fields.plans }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
@@ -439,22 +430,22 @@
               <sc-if value="{{ src.checked }}">
                 <div class="income-source-detail">
                   <sc-if value="{{ src.isOther }}">
-                    <div style="grid-column:1 / -1"><label for="srcOtherText" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">What is the income source?</label><input id="srcOtherText" type="text" placeholder="Please describe the income source" value="{{ src.otherText }}" onChange="{{ src.onChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+                    <div style="grid-column:1 / -1"><label for="srcOtherText" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">What is the income source?</label><input id="srcOtherText" type="text" placeholder="Please describe the income source" value="{{ src.otherText }}" onChange="{{ src.onChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
                   </sc-if>
-                  <div><label for="{{ src.amtId }}" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">How much?</label><input id="{{ src.amtId }}" type="text" placeholder="{{ src.amtPlaceholder }}" value="{{ src.amt }}" onChange="{{ src.onChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-                  <div><label for="{{ src.fromId }}" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">From when?</label><input id="{{ src.fromId }}" type="text" placeholder="{{ src.fromPlaceholder }}" value="{{ src.from }}" onChange="{{ src.onChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+                  <div><label for="{{ src.amtId }}" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">How much?</label><input id="{{ src.amtId }}" type="text" placeholder="{{ src.amtPlaceholder }}" value="{{ src.amt }}" onChange="{{ src.onChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+                  <div><label for="{{ src.fromId }}" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">From when?</label><input id="{{ src.fromId }}" type="text" placeholder="{{ src.fromPlaceholder }}" value="{{ src.from }}" onChange="{{ src.onChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
                 </div>
               </sc-if>
             </div>
           </sc-for>
         </div>
-        <div style="margin-top:16px"><label for="srcNotes" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else about your retirement income</label><textarea id="srcNotes" placeholder="e.g. My final salary pension is reduced if I take it before 65..." value="{{ fields.srcNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label for="srcNotes" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else about your retirement income</label><textarea id="srcNotes" placeholder="e.g. My final salary pension is reduced if I take it before 65..." value="{{ fields.srcNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
       <sc-if value="{{ isStep6 }}">
       <div style="background:#eceae9;padding:24px;margin-bottom:24px">
-        <h2 data-screen-heading="step" tabindex="-1" style="font-size:16px;margin:0 0 18px">Step 6: Concerns, risk & anything else</h2>
+        <h2 data-screen-heading="step" tabindex="-1" style="font-size:16px;margin:0 0 18px">Step 6: Concerns & anything else</h2>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px">
           <label for="c_runout" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_runout" type="checkbox" checked="{{ fields.c_runout }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Running out of money</label>
           <label for="c_inflation" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_inflation" type="checkbox" checked="{{ fields.c_inflation }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Inflation eroding income</label>
@@ -467,29 +458,9 @@
           <label for="c_other" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_other" type="checkbox" checked="{{ fields.c_other }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Other concern</label>
         </div>
         <sc-if value="{{ fields.c_other }}">
-          <div style="margin-top:12px"><label for="concernOtherText" class="sr-only">Describe other concern</label><input id="concernOtherText" type="text" placeholder="Please describe the concern" value="{{ fields.concernOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div style="margin-top:12px"><label for="concernOtherText" class="sr-only">Describe other concern</label><input id="concernOtherText" type="text" placeholder="Please describe the concern" value="{{ fields.concernOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
         </sc-if>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
-          <div><label for="risk" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Investment risk tolerance</label>
-            <select id="risk" value="{{ fields.risk }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
-              <option value="">&mdash; select &mdash;</option>
-              <option>Very cautious &mdash; capital preservation first</option>
-              <option>Cautious &mdash; some growth, low risk</option>
-              <option>Balanced &mdash; mix of growth and security</option>
-              <option>Adventurous &mdash; higher growth, comfortable with volatility</option>
-            </select>
-          </div>
-          <div><label for="buffer" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Emergency income buffer</label>
-            <select id="buffer" value="{{ fields.buffer }}" onChange="{{ handleChange }}" style="width:100%;min-height:38px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
-              <option value="">&mdash; select &mdash;</option>
-              <option>Less than 3 months</option>
-              <option>3&ndash;6 months</option>
-              <option>6&ndash;12 months</option>
-              <option>Over 1 year</option>
-            </select>
-          </div>
-        </div>
-        <div style="margin-top:16px"><label for="question" style="display:block;font-size:12px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else we should know?</label><textarea id="question" placeholder="e.g. 'Am I on track to retire at 62?' or 'Should I consolidate my three pension pots?'" value="{{ fields.question }}" onChange="{{ handleChange }}" style="width:100%;min-height:90px;padding:8px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label for="question" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else we should know?</label><textarea id="question" placeholder="e.g. 'Am I on track to retire at 62?' or 'Should I consolidate my three pension pots?'" value="{{ fields.question }}" onChange="{{ handleChange }}" style="width:100%;min-height:90px;padding:8px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px;resize:vertical"></textarea></div>
       </div>
       </sc-if>
 
@@ -526,13 +497,13 @@
           <span style="font-size:20px;color:#2C8494" aria-hidden="true">{{ reviewToggleIcon }}</span>
         </button>
         <sc-if value="{{ showReviewDetails }}">
-        <div style="padding:0 24px 24px;border-top:1px solid rgba(32,30,29,0.1);font-size:13px;color:rgba(32,30,29,0.8);line-height:1.8">
+        <div style="padding:0 24px 24px;border-top:1px solid rgba(32,30,29,0.1);font-size:14px;color:rgba(32,30,29,0.8);line-height:1.8">
           <sc-if value="{{ hasReviewDetails }}">
           <sc-for list="{{ reviewSections }}" as="sec" hint-placeholder-count="5">
             <div style="margin-top:20px;padding-bottom:16px;border-bottom:1px solid rgba(32,30,29,0.1)">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
                 <div style="font-size:14px;font-weight:700;color:#164752">{{ sec.title }}</div>
-                <button onClick="{{ sec.onEdit }}" style="background:transparent;border:1px solid rgba(32,30,29,0.25);border-radius:4px;color:#226B79;font-size:12px;font-weight:700;cursor:pointer;padding:4px 10px;min-height:44px">Edit</button>
+                <button onClick="{{ sec.onEdit }}" style="background:transparent;border:1px solid rgba(32,30,29,0.25);border-radius:4px;color:#226B79;font-size:14px;font-weight:700;cursor:pointer;padding:4px 10px;min-height:44px">Edit</button>
               </div>
               <sc-for list="{{ sec.items }}" as="item" hint-placeholder-count="3">
                 <div style="margin-bottom:8px"><strong>{{ item.label }}:</strong> {{ item.value }}</div>
@@ -556,7 +527,7 @@
 
         <!-- Prompt Content -->
         <div class="surface-dark" style="position:relative;background:#1e293b;padding:24px;border-top:3px solid #2C8494">
-          <pre tabindex="0" role="region" aria-label="Your tailored prompt" style="font-family:'Courier New',monospace;font-size:13px;line-height:1.6;color:#e2e8f0;margin:0;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto">{{ outputText }}</pre>
+          <pre tabindex="0" role="region" aria-label="Your tailored prompt" style="font-family:'Courier New',monospace;font-size:14px;line-height:1.6;color:#e2e8f0;margin:0;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto">{{ outputText }}</pre>
         </div>
       </div>
 
@@ -579,7 +550,7 @@
 
     <sc-if value="{{ isBrowseQuiz }}">
     <div style="max-width:640px">
-      <div style="font-size:13px;font-weight:700;color:#226B79;margin-bottom:8px">Question {{ browseQuiz.index }} of {{ browseQuiz.total }}</div>
+      <div style="font-size:14px;font-weight:700;color:#226B79;margin-bottom:8px">Question {{ browseQuiz.index }} of {{ browseQuiz.total }}</div>
       <div style="display:flex;gap:6px;margin-bottom:28px">
         <sc-for list="{{ browseQuizDots }}" as="dot" hint-placeholder-count="3">
           <span style="{{ dot.style }}"></span>
@@ -592,7 +563,7 @@
         </sc-for>
       </div>
       <sc-if value="{{ browseQuizShowBack }}" hint-placeholder-val="{{ false }}">
-        <button onClick="{{ browseQuizBack }}" style="margin-top:24px;background:transparent;border:none;color:#226B79;font-weight:600;font-size:13px;cursor:pointer;padding:0;min-height:44px">&larr; Back</button>
+        <button onClick="{{ browseQuizBack }}" style="margin-top:24px;background:transparent;border:none;color:#226B79;font-weight:600;font-size:14px;cursor:pointer;padding:0;min-height:44px">&larr; Back</button>
       </sc-if>
     </div>
     </sc-if>
@@ -655,11 +626,11 @@
       <div class="footer-row footer-row-end">
         <div class="footer-group">
           <a href="#" onClick="{{ openInfoModal }}">Read important information about this site</a>
-          <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">Free guidance from MoneyHelper</a>
+          <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">Free guidance from MoneyHelper<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
         <div class="footer-group">
           <a href="#" onClick="{{ openInfoModal }}">Privacy</a>
-          <a href="https://consumerduty.org/keep-in-touch" target="_blank" rel="noopener">Report a problem</a>
+          <a href="https://consumerduty.org/keep-in-touch" target="_blank" rel="noopener">Report a problem<span class="sr-only"> (opens in a new tab)</span></a>
         </div>
       </div>
       <div class="footer-row footer-row-end">
@@ -683,8 +654,8 @@
         <p style="margin:0 0 16px"><strong>AI answers aren&rsquo;t guaranteed to be right.</strong> Chatbots can get facts wrong, use outdated figures, or miss details specific to your situation &mdash; even when given a good question. Always double-check anything that matters.</p>
         <p style="margin:0 0 16px"><strong>This isn&rsquo;t financial advice.</strong> Nothing produced by this tool, or by the AI chatbots it links to, is regulated financial advice. It shouldn&rsquo;t be the basis for decisions like changing your pension, retiring, or moving your savings.</p>
         <p style="margin:0 0 16px"><strong>You aren&rsquo;t protected if a chatbot gets it wrong.</strong> AI chatbots are not regulated financial advisers. If you act on an answer and lose money, you can&rsquo;t take a complaint to the Financial Ombudsman Service or claim from the Financial Services Compensation Scheme.</p>
-        <p style="margin:0 0 16px"><strong>Free, impartial help is available.</strong> <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">MoneyHelper</a> offers free guidance on pensions, and its Pension Wise service gives a free appointment to people aged 50 or over with a defined contribution pension.</p>
-        <p style="margin:0 0 16px"><strong>Always speak to a professional.</strong> For anything that affects your retirement income, talk to a regulated, independent financial adviser who can look at your full circumstances before you act. You can check a firm or adviser on the <a href="https://register.fca.org.uk/" target="_blank" rel="noopener">FCA Register</a>.</p>
+        <p style="margin:0 0 16px"><strong>Free, impartial help is available.</strong> <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">MoneyHelper<span class="sr-only"> (opens in a new tab)</span></a> offers free guidance on pensions, and its Pension Wise service gives a free appointment to people aged 50 or over with a defined contribution pension.</p>
+        <p style="margin:0 0 16px"><strong>Always speak to a professional.</strong> For anything that affects your retirement income, talk to a regulated, independent financial adviser who can look at your full circumstances before you act. You can check a firm or adviser on the <a href="https://register.fca.org.uk/" target="_blank" rel="noopener">FCA Register<span class="sr-only"> (opens in a new tab)</span></a>.</p>
         <p style="margin:0 0 16px"><strong>Watch out for scams.</strong> Be wary of anyone who pressures you to move your pension, promises guaranteed returns or contacts you out of the blue. Take your time, and check the firm on the FCA Register first.</p>
         <p style="margin:0 0 16px"><strong>Your privacy.</strong> We don&rsquo;t store or track what you type, and this site sets no cookies. When you launch a chatbot, your prompt &mdash; including any details you added &mdash; is sent to that chatbot&rsquo;s provider and handled under their privacy policy. Don&rsquo;t include your name, address, National Insurance number or account numbers.</p>
         <p style="margin:0"><strong>We don&rsquo;t endorse any chatbot.</strong> The chatbots listed are widely used examples. The Consumer Duty Alliance does not recommend one over another.</p>
@@ -737,6 +708,12 @@ const INCOME_SOURCES = [
   { id: 'src_inherit', label: 'Inheritance or windfall', amtPlaceholder: 'e.g. Around £50,000', fromPlaceholder: 'e.g. Not sure when' },
   { id: 'src_other', label: 'Other', amtPlaceholder: 'e.g. £3,000 a year', fromPlaceholder: 'e.g. Age 60' }
 ];
+// The lifestyle levels offered in step 4: the three Pensions UK Retirement Living Standards.
+// "Other" lets the user give their own monthly amount instead.
+const RLS_LEVELS = ['Minimum', 'Moderate', 'Comfortable'];
+// Whether a partner's age was entered in step 2. The box says "Leave blank if none", so
+// only an answer with a number in it counts. Step 3 asks about the partner's pension only then.
+const hasPartnerAge = (fields) => /\d/.test(fields.partnerAge || '');
 const ACCENT = '#2C8494', ACCENT_DARK = '#1B5560', ACCENT_TINT = '#EAF3F3', SURFACE = '#eceae9', TEXT = '#201e1d', TEXT_MUTED = 'rgba(32,30,29,0.65)', DIVIDER = 'rgba(32,30,29,0.4)';
 
 const BROWSE_QUIZ_QUESTIONS = [
@@ -809,16 +786,19 @@ class Component extends DCLogic {
     }
   };
 
+  // Glide the tab bar, unless the user has asked their device to reduce motion
+  scrollBehaviour = () => (window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
+
   centreActiveTab = () => {
     const el = this.getTabBar();
     const tab = el && el.querySelector('[aria-current="step"]');
     if (!tab) return;
-    el.scrollTo({ left: tab.offsetLeft - (el.clientWidth - tab.offsetWidth) / 2, behavior: 'smooth' });
+    el.scrollTo({ left: tab.offsetLeft - (el.clientWidth - tab.offsetWidth) / 2, behavior: this.scrollBehaviour() });
   };
 
   scrollTabsBy = (dir) => {
     const el = this.getTabBar();
-    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: this.scrollBehaviour() });
   };
   scrollTabsLeft = () => this.scrollTabsBy(-1);
   scrollTabsRight = () => this.scrollTabsBy(1);
@@ -1068,9 +1048,17 @@ class Component extends DCLogic {
     document.body.removeChild(ta);
   };
 
+  // Adds the answer style picked in the third shortlisting question to the bottom of a
+  // prompt (PO-30). The wording lives in prompts.js under "styleBlocks", which is also
+  // where the optimiser reads it, so a prompt is tested with the same text it ships with.
+  withStyle = (text) => {
+    const block = (PROMPTS_DATA.styleBlocks || {})[this.state.browseAnswers.style];
+    return block && block.text ? text + '\n\n' + block.text : text;
+  };
+
   copyQuestionText = (id) => {
     const q = this.findQuestion(id);
-    if (q) this.copyText(q.aiOptimised, `"${q.quickSummary}" copied`);
+    if (q) this.copyText(this.withStyle(q.aiOptimised), `"${q.quickSummary}" copied`);
   };
 
   copyAllSelected = () => {
@@ -1083,7 +1071,7 @@ class Component extends DCLogic {
       })
       .filter(Boolean)
       .join('\n\n---\n\n');
-    window.showPromptModal(text);
+    window.showPromptModal(this.withStyle(text));
   };
 
   getSources = () => {
@@ -1120,25 +1108,32 @@ class Component extends DCLogic {
     if (f.employment) p += 'Employment status: ' + f.employment + '\n';
     if (f.health) p += 'Health status: ' + f.health + '\n';
     if (f.dependants) p += 'Financial dependants: ' + f.dependants + '\n';
+    if (f.risk) p += 'Investment risk tolerance: ' + f.risk + '\n';
 
-    const hasFinance = f.income || f.pension || f.savings || f.equity || f.debts || f.contributions || f.pensionAccess || f.partnerPensionAccess || f.financeNotes;
+    // The partner's pension answer only counts while a partner's age is entered (PO-27)
+    const partnerAccess = hasPartnerAge(f) ? f.partnerPensionAccess : '';
+    const hasFinance = f.income || f.pension || f.savings || f.property || f.pensionAccess || partnerAccess || f.financeNotes;
     if (hasFinance) {
       p += '\n--- WHAT I HAVE NOW ---\n';
-      if (f.pension) p += 'Total pension / retirement savings: ' + f.pension + '\n';
+      if (f.pension) p += 'Pension savings: ' + f.pension + '\n';
       if (f.savings) p += 'Other savings and investments: ' + f.savings + '\n';
-      if (f.equity) p += 'Property equity: ' + f.equity + '\n';
-      if (f.debts) p += 'Outstanding debts: ' + f.debts + '\n';
+      if (f.property) p += 'Property and debts: ' + f.property + '\n';
       if (f.pensionAccess) p += 'What I have taken from my pensions so far: ' + f.pensionAccess + '\n';
-      if (f.partnerPensionAccess) p += 'What my partner has taken from their pensions so far: ' + f.partnerPensionAccess + '\n';
-      if (f.income) p += 'Current annual household income: ' + f.income + '\n';
-      if (f.contributions) p += 'Annual pension contributions: ' + f.contributions + '\n';
+      if (partnerAccess) p += 'What my partner has taken from their pensions so far: ' + partnerAccess + '\n';
+      if (f.income) p += 'Current income and pension contributions: ' + f.income + '\n';
       if (f.financeNotes) p += 'Other notes on my finances: ' + f.financeNotes + '\n';
     }
     p += '\n--- MY RETIREMENT GOALS ---\n';
-    if (f.spending) p += 'Expected spending in retirement: ' + f.spending + (f.spendingBasis ? '. This figure is: ' + f.spendingBasis : ' (I have not said whether this is before or after tax)') + '\n';
-    else p += 'Expected spending in retirement: not provided. Please estimate it, and list your estimate as an assumption.\n';
-    if (f.target) p += 'Target monthly income in retirement: ' + f.target + (f.targetBasis ? '. This figure is: ' + f.targetBasis : '') + '\n';
-    if (f.lifestyle) p += 'Lifestyle expectation: ' + f.lifestyle + '\n';
+    // The lifestyle answer is also the expected spending (PO-24). A Retirement Living Standards
+    // level is named, never given as an amount, so the AI works from the current published figure.
+    if (RLS_LEVELS.includes(f.lifestyle)) {
+      p += 'Lifestyle expectation: the "' + f.lifestyle + '" level of the Pensions UK Retirement Living Standards.\n';
+      p += 'Expected spending in retirement: please use the current published figure for that level and my household. Say which figure you used and list it as an assumption. Those figures are spending after tax and leave out housing and care costs.\n';
+    } else if (f.lifestyle === 'Other' && f.target) {
+      p += 'Target monthly lifestyle spending in retirement: ' + f.target + '. This is what I expect to spend, so treat it as an after-tax figure.\n';
+    } else {
+      p += 'Expected spending in retirement: not provided. Please estimate it, and list your estimate as an assumption.\n';
+    }
     if (f.partTime) p += 'Part-time work in retirement: ' + f.partTime + '\n';
     if (f.estate) p += 'Estate / inheritance priority: ' + f.estate + '\n';
     if (f.plans) p += 'Key plans: ' + f.plans + '\n';
@@ -1147,12 +1142,13 @@ class Component extends DCLogic {
       sources.forEach((src) => { p += '- ' + src.name + (src.detail ? ': ' + src.detail : ': amount not provided') + '\n'; });
       if (f.srcNotes) p += 'Notes: ' + f.srcNotes + '\n';
     }
-    const hasConcerns = concerns.length || f.risk || f.buffer;
-    if (hasConcerns) {
-      p += '\n--- MY CONCERNS AND RISK PROFILE ---\n';
+    // A described "Other concern" counts only while its box is ticked. A tick with no
+    // description adds nothing: "Other" tells the AI nothing by itself (PO-28).
+    const otherConcern = f.c_other && f.concernOtherText ? f.concernOtherText.trim() : '';
+    if (concerns.length || otherConcern) {
+      p += '\n--- MY CONCERNS ---\n';
       if (concerns.length) p += 'Main concerns: ' + concerns.join(', ') + '\n';
-      if (f.risk) p += 'Risk tolerance: ' + f.risk + '\n';
-      if (f.buffer) p += 'Emergency buffer: ' + f.buffer + '\n';
+      if (otherConcern) p += 'Other concern: ' + otherConcern + '\n';
     }
     if (selectedKeys.length) {
       p += '\n--- MY QUESTIONS ---\n';
@@ -1161,18 +1157,16 @@ class Component extends DCLogic {
         if (q) p += (i + 1) + '. ' + q.humanVersion + '\n\n';
       });
     }
-    if (f.question) {
-      p += (selectedKeys.length ? '' : '\n--- MY QUESTION ---\n') + f.question + '\n';
+    if (!selectedKeys.length) {
+      p += '\n--- MY QUESTION ---\nBased on my details above, what is your honest assessment of my retirement income situation? What are the key risks I face, and what practical steps should I be taking now?\n\n';
     }
-    if (!selectedKeys.length && !f.question) {
-      p += '\n--- MY QUESTION ---\nBased on my details above, what is your honest assessment of my retirement income situation? What are the key risks I face, and what practical steps should I be taking now?\n';
-    }
+    if (f.question) p += 'Anything else I want you to know: ' + f.question + '\n';
     p += '\n--- HOW TO HANDLE ASSUMPTIONS AND TAX ---\n';
     p += 'Before anything else, give a numbered list of every assumption you are making about my situation, including any you draw from the details above.\n';
     p += 'Do not infer anything I have not told you. In particular, do not assume whether I or my partner have triggered the Money Purchase Annual Allowance (MPAA), which tax band we are in, or what State Pension we are entitled to. Use only what I have stated; whether a pension pot is crystallised or uncrystallised does not tell you whether the MPAA applies. If a missing detail would change your answer, ask me rather than guessing.\n';
     p += 'Whenever you quote an income or spending figure, give it both after tax and before tax and label which is which. The first time you do this, explain the difference in one plain sentence.\n';
     p += '\nPlease structure your response with: (1) an honest assessment of my current position, (2) the key gaps or risks I should address, (3) practical options or strategies to consider, and (4) questions I should be asking a qualified financial adviser.\n\nNote: I understand this is educational guidance only, not regulated financial advice.';
-    this.setState({ outputText: p });
+    this.setState({ outputText: this.withStyle(p) });
   };
 
   copyFinal = () => this.copyText(this.state.outputText, 'Your personalised prompt copied');
@@ -1280,7 +1274,8 @@ class Component extends DCLogic {
         ariaCurrent: active ? 'step' : undefined,
         tabStyle: {
           padding: '10px 16px',
-          fontSize: '13px',
+          minHeight: '44px',
+          fontSize: '14px',
           cursor: 'pointer',
           whiteSpace: 'nowrap',
           flex: 'none',
@@ -1306,9 +1301,8 @@ class Component extends DCLogic {
     const backDisabled = s.step === 1;
     const nextLabel = s.step === 6 ? 'Create prompt \u2192' : 'Next \u2192';
     const backLabel = '\u2190 Back';
-    const lifestyleIsCustom = s.fields.lifestyle === 'Enter my own monthly amount';
-    const targetSlotStyle = { order: 2, display: lifestyleIsCustom ? 'block' : 'none' };
-    const partTimeSlotStyle = { order: lifestyleIsCustom ? 3 : 2 };
+    const lifestyleIsCustom = s.fields.lifestyle === 'Other';
+    const hasPartner = hasPartnerAge(s.fields);
 
     const f = s.fields;
     const profileItems = [];
@@ -1319,6 +1313,7 @@ class Component extends DCLogic {
     if (f.employment) profileItems.push({ label: 'Employment status', value: f.employment });
     if (f.health) profileItems.push({ label: 'Health status', value: f.health });
     if (f.dependants) profileItems.push({ label: 'Financial dependants', value: f.dependants });
+    if (f.risk) profileItems.push({ label: 'Investment risk tolerance', value: f.risk });
 
     const sourceRows = INCOME_SOURCES.map((src) => ({
       id: src.id, label: src.label, checked: !!f[src.id], isOther: src.id === 'src_other', otherText: f.srcOtherText,
@@ -1328,20 +1323,17 @@ class Component extends DCLogic {
     }));
 
     const financeItems = [];
-    if (f.pension) financeItems.push({ label: 'Total pension / retirement savings', value: f.pension });
+    if (f.pension) financeItems.push({ label: 'Pension savings', value: f.pension });
     if (f.savings) financeItems.push({ label: 'Other savings & investments', value: f.savings });
-    if (f.equity) financeItems.push({ label: 'Property equity', value: f.equity });
-    if (f.debts) financeItems.push({ label: 'Outstanding debts', value: f.debts });
+    if (f.property) financeItems.push({ label: 'Property and debts', value: f.property });
     if (f.pensionAccess) financeItems.push({ label: 'Taken from your pensions so far', value: f.pensionAccess });
-    if (f.partnerPensionAccess) financeItems.push({ label: 'Taken from your partner’s pensions so far', value: f.partnerPensionAccess });
-    if (f.income) financeItems.push({ label: 'Annual household income', value: f.income });
-    if (f.contributions) financeItems.push({ label: 'Annual pension contributions', value: f.contributions });
+    if (hasPartner && f.partnerPensionAccess) financeItems.push({ label: 'Taken from your partner’s pensions so far', value: f.partnerPensionAccess });
+    if (f.income) financeItems.push({ label: 'Income and pension contributions now', value: f.income });
     if (f.financeNotes) financeItems.push({ label: 'Other notes', value: f.financeNotes });
 
     const goalsItems = [];
-    if (f.spending) goalsItems.push({ label: 'Expected spending', value: f.spending + (f.spendingBasis ? ' (' + f.spendingBasis + ')' : '') });
-    if (f.lifestyle) goalsItems.push({ label: 'Lifestyle expectation', value: f.lifestyle });
-    if (lifestyleIsCustom && f.target) goalsItems.push({ label: 'Target monthly income', value: f.target + (f.targetBasis ? ' (' + f.targetBasis + ')' : '') });
+    if (RLS_LEVELS.includes(f.lifestyle)) goalsItems.push({ label: 'Lifestyle expectation', value: f.lifestyle + ' (Retirement Living Standards level)' });
+    if (lifestyleIsCustom && f.target) goalsItems.push({ label: 'Target monthly lifestyle spending', value: f.target });
     if (f.partTime) goalsItems.push({ label: 'Part-time work in retirement', value: f.partTime });
     if (f.estate) goalsItems.push({ label: 'Leave an estate / inheritance', value: f.estate });
     if (f.plans) goalsItems.push({ label: 'Key plans or activities', value: f.plans });
@@ -1355,16 +1347,14 @@ class Component extends DCLogic {
     const concernsItems = [];
     if (concernsList.length) concernsItems.push({ label: 'Main concerns', value: concernsList.join(', ') });
     if (f.c_other && f.concernOtherText) concernsItems.push({ label: 'Other concern', value: f.concernOtherText });
-    if (f.risk) concernsItems.push({ label: 'Investment risk tolerance', value: f.risk });
-    if (f.buffer) concernsItems.push({ label: 'Emergency income buffer', value: f.buffer });
-    if (f.question) concernsItems.push({ label: 'Additional question', value: f.question });
+    if (f.question) concernsItems.push({ label: 'Anything else we should know', value: f.question });
 
     const reviewSections = [
       { title: 'Profile & timeline', step: 2, items: profileItems },
       { title: 'What you have now', step: 3, items: financeItems },
       { title: 'Retirement goals', step: 4, items: goalsItems },
       { title: 'Income you expect in retirement', step: 5, items: incomeItems },
-      { title: 'Concerns, risk & anything else', step: 6, items: concernsItems }
+      { title: 'Concerns & anything else', step: 6, items: concernsItems }
     ]
       .filter((sec) => sec.items.length > 0)
       .map((sec) => ({ title: sec.title, items: sec.items, onEdit: () => this.goStep(sec.step) }));
@@ -1417,8 +1407,7 @@ class Component extends DCLogic {
       isStep1: s.step === 1, isStep2: s.step === 2, isStep3: s.step === 3, isStep4: s.step === 4, isStep5: s.step === 5, isStep6: s.step === 6,
       isNotStep6: s.step !== 6,
       lifestyleIsCustom,
-      targetSlotStyle,
-      partTimeSlotStyle,
+      hasPartner,
       sourceRows,
       fields: s.fields,
       handleChange: this.handleChange,
@@ -1449,8 +1438,11 @@ class Component extends DCLogic {
 </script>
 
 <script>
-  // Toast notification function - defined first to ensure global access
-  window.showSimpleToast = function(msg) {
+  // Toast notification function - defined first to ensure global access.
+  // A toast leaves by itself after 5 seconds. Pass { persist: true } for a message the
+  // user must not miss, such as a failure: it then stays until it is closed.
+  window.showSimpleToast = function(msg, options) {
+    const persist = !!(options && options.persist);
     const toastContainer = document.getElementById('toast-container');
     if (!toastContainer) return;
 
@@ -1470,22 +1462,68 @@ class Component extends DCLogic {
     closeBtn.style.cssText = 'background:transparent;border:none;color:#fff;cursor:pointer;font-size:20px;padding:0;line-height:1;flex-shrink:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center';
     closeBtn.title = 'Close';
     closeBtn.setAttribute('aria-label', 'Close notification');
-    closeBtn.addEventListener('click', function() {
+
+    const dismiss = function() {
+      if (!toastDiv.parentNode) return;
       toastDiv.style.animation = 'slideOut 0.3s ease-out forwards';
       setTimeout(function() { toastDiv.remove(); }, 300);
+    };
+
+    // The timer waits while the pointer or keyboard focus is on the toast, so it can be
+    // read or closed without racing the clock.
+    let timer = null;
+    const inUse = function() { return toastDiv.matches(':hover') || toastDiv.contains(document.activeElement); };
+    const hold = function() { clearTimeout(timer); };
+    const startTimer = function() {
+      clearTimeout(timer);
+      if (persist) return;
+      timer = setTimeout(function() { if (inUse()) startTimer(); else dismiss(); }, 5000);
+    };
+    toastDiv.addEventListener('mouseenter', hold);
+    toastDiv.addEventListener('mouseleave', startTimer);
+    toastDiv.addEventListener('focusin', hold);
+    toastDiv.addEventListener('focusout', startTimer);
+
+    closeBtn.addEventListener('click', function() {
+      clearTimeout(timer);
+      dismiss();
     });
 
     toastDiv.appendChild(msgSpan);
     toastDiv.appendChild(closeBtn);
     toastContainer.appendChild(toastDiv);
 
-    setTimeout(function() {
-      if (toastDiv.parentNode) {
-        toastDiv.style.animation = 'slideOut 0.3s ease-out forwards';
-        setTimeout(function() { toastDiv.remove(); }, 300);
-      }
-    }, 5000);
+    startTimer();
   };
+
+  // Copy text to the clipboard. The promise resolves only when the copy worked, so the
+  // caller can tell the user the truth. Falls back to the older method where the
+  // clipboard API is missing or refused.
+  window.copyToClipboard = function(text) {
+    const legacyCopy = function() {
+      return new Promise(function(resolve, reject) {
+        const active = document.activeElement;
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.setAttribute('aria-hidden', 'true');
+        ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        if (active && active.focus) active.focus();
+        if (ok) resolve(); else reject(new Error('Copy failed'));
+      });
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).catch(legacyCopy);
+    }
+    return legacyCopy();
+  };
+
+  const COPY_FAILED_MESSAGE = 'The prompt could not be copied. Select the text under “Your prompt” and copy it yourself.';
 
   // Watch for toast close button clicks
   const attachToastListeners = () => {
@@ -1607,12 +1645,9 @@ class Component extends DCLogic {
         }
 
         if (url) {
-          // Try clipboard API but always launch regardless
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(promptText).catch(() => {
-              // Silently fail - clipboard might not work with file:// protocol
-            });
-          }
+          // Copy the prompt and launch regardless. If the copy fails, say so in a message
+          // that is still there when the user comes back from the chatbot's tab.
+          window.copyToClipboard(promptText).catch(() => showSimpleToast(COPY_FAILED_MESSAGE, { persist: true }));
           window.open(url, '_blank');
         }
       });
@@ -1651,14 +1686,14 @@ class Component extends DCLogic {
       <p style="font-size:14px;color:#666;margin:0 0 24px">Copy your text below, or select an AI to launch it automatically.</p>
 
       <div style="margin-bottom:24px">
-        <p id="modal-prompt-label" style="font-size:13px;font-weight:600;color:#201e1d;margin:0 0 12px">Your prompt</p>
-        <div id="modal-prompt" tabindex="0" role="region" aria-labelledby="modal-prompt-label" style="background:#f5f4f3;border:1px solid #ddd;border-radius:6px;padding:12px;max-height:120px;overflow-y:auto;font-size:13px;line-height:1.5;color:#333;white-space:pre-wrap;word-wrap:break-word;font-family:monospace;margin-bottom:12px"></div>
+        <p id="modal-prompt-label" style="font-size:14px;font-weight:600;color:#201e1d;margin:0 0 12px">Your prompt</p>
+        <div id="modal-prompt" tabindex="0" role="region" aria-labelledby="modal-prompt-label" style="background:#f5f4f3;border:1px solid #ddd;border-radius:6px;padding:12px;max-height:120px;overflow-y:auto;font-size:14px;line-height:1.5;color:#333;white-space:pre-wrap;word-wrap:break-word;font-family:monospace;margin-bottom:12px"></div>
         <button id="copy-only-btn" class="btn-secondary" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px"><img src="./images/copy-link-icon.svg" style="width:16px;height:16px;filter:hue-rotate(200deg) saturate(1.5)" alt="" />Copy prompt only</button>
       </div>
 
       <div style="margin-bottom:24px">
-        <p style="font-size:13px;font-weight:600;color:#201e1d;margin:0 0 12px">Quick launch</p>
-        <p style="font-size:12px;color:#666;margin:0 0 12px">Select the AI you already use and it will open with your prompt ready to go. We don&rsquo;t endorse any of them.</p>
+        <p style="font-size:14px;font-weight:600;color:#201e1d;margin:0 0 12px">Quick launch</p>
+        <p style="font-size:14px;color:#666;margin:0 0 12px">Select the AI you already use and it will open with your prompt ready to go. We don&rsquo;t endorse any of them.</p>
 
         <fieldset style="border:none;padding:0;margin:0;margin-bottom:16px">
           <legend class="sr-only">Select an AI chatbot</legend>
@@ -1669,7 +1704,7 @@ class Component extends DCLogic {
                 <img src="./images/chatgpt.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
                 <span style="font-weight:600;color:#201e1d;font-size:14px">ChatGPT</span>
               </span>
-              <span style="font-size:10px;color:#666;font-weight:400;white-space:nowrap">Auto-fill</span>
+              <span style="font-size:14px;color:#666;font-weight:400;white-space:nowrap">Auto-fill</span>
             </label>
             <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
               <input type="radio" name="chatbot-select" value="claude" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" />
@@ -1677,7 +1712,7 @@ class Component extends DCLogic {
                 <img src="./images/claude.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
                 <span style="font-weight:600;color:#201e1d;font-size:14px">Claude</span>
               </span>
-              <span style="font-size:10px;color:#666;font-weight:400;white-space:nowrap">Auto-fill</span>
+              <span style="font-size:14px;color:#666;font-weight:400;white-space:nowrap">Auto-fill</span>
             </label>
             <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
               <input type="radio" name="chatbot-select" value="copilot" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" />
@@ -1699,24 +1734,24 @@ class Component extends DCLogic {
                 <img src="./images/perplexity.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
                 <span style="font-weight:600;color:#201e1d;font-size:14px">Perplexity</span>
               </span>
-              <span style="font-size:10px;color:#666;font-weight:400;white-space:nowrap">Auto-fill</span>
+              <span style="font-size:14px;color:#666;font-weight:400;white-space:nowrap">Auto-fill</span>
             </label>
           </div>
         </fieldset>
 
-        <div id="capability-message" role="alert" style="font-size:12px;color:#666;background:#f0f5f2;border:1px solid #2C8494;border-radius:4px;padding:8px 12px;margin-bottom:12px;display:none"></div>
+        <div id="capability-message" role="alert" style="font-size:14px;color:#666;background:#f0f5f2;border:1px solid #2C8494;border-radius:4px;padding:8px 12px;margin-bottom:12px;display:none"></div>
 
         <div class="before-you-use">
           <p class="before-you-use-title">Before you use the answer</p>
           <ul>
             <li>Check the figures. AI chatbots can get facts and tax rules wrong.</li>
             <li>It isn&rsquo;t financial advice, and you aren&rsquo;t protected if it&rsquo;s wrong.</li>
-            <li>Free, impartial help is available from <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">MoneyHelper</a>.</li>
+            <li>Free, impartial help is available from <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">MoneyHelper<span class="sr-only"> (opens in a new tab)</span></a>.</li>
           </ul>
         </div>
 
-        <button id="launch-chat-btn" class="btn-primary" disabled style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px">Choose a chatbot above</button>
-        <p style="font-size:12px;color:#666;margin:10px 0 0;text-align:center">This sends your prompt, including any details you entered, to the chatbot you choose. Don&rsquo;t include your name, address or account numbers.</p>
+        <button id="launch-chat-btn" class="btn-primary" disabled aria-describedby="launch-chat-note" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px">Choose a chatbot above</button>
+        <p id="launch-chat-note" style="font-size:14px;color:#666;margin:10px 0 0;text-align:center">This sends your prompt, including any details you entered, to the chatbot you choose. Don&rsquo;t include your name, address or account numbers.</p>
       </div>
     </div>
   </div>
@@ -1744,7 +1779,7 @@ class Component extends DCLogic {
 
     if (selected && launchBtn) {
       const aiName = selected.value === 'chatgpt' ? 'ChatGPT' : selected.value.charAt(0).toUpperCase() + selected.value.slice(1);
-      launchBtn.innerHTML = `Copy and launch ${aiName}<img src="./images/external_link.svg" alt="" style="width:16px;height:16px;filter:brightness(0) invert(1)" />`;
+      launchBtn.innerHTML = `Copy and launch ${aiName}<img src="./images/external_link.svg" alt="" style="width:16px;height:16px;filter:brightness(0) invert(1)" /><span class="sr-only"> (opens in a new tab)</span>`;
 
       if (selected.value === 'copilot' || selected.value === 'gemini') {
         capabilityMsg.textContent = "Note: You'll need to paste the prompt into " + aiName + " as auto-fill isn't available.";
@@ -1788,14 +1823,11 @@ class Component extends DCLogic {
     const copyOnlyBtn = modal.querySelector('#copy-only-btn');
     if (copyOnlyBtn) {
       copyOnlyBtn.onclick = () => {
-        // Try clipboard API but always show toast regardless
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(promptText).catch(() => {
-            // Silently fail - clipboard might not work with file:// protocol
-          });
-        }
-        // Always show toast immediately
-        setTimeout(() => showSimpleToast('The prompt has been copied to your clipboard'), 10);
+        // Only say it was copied if it was
+        window.copyToClipboard(promptText).then(
+          () => showSimpleToast('The prompt has been copied to your clipboard'),
+          () => showSimpleToast(COPY_FAILED_MESSAGE, { persist: true })
+        );
       };
     }
 

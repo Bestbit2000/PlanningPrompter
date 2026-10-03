@@ -18,7 +18,7 @@ Copy these, keeping the folder structure, to any web server:
 |---|---|
 | `index.html` | The whole tool: page layout and the code that drives it |
 | `styles.css` | Styling |
-| `prompts.js` | The questions and prompts. Edit this to change the wording |
+| `prompts.js` | The questions, their prompts and the three answer-style paragraphs added to the bottom of a prompt. Edit this to change the wording |
 | `version.js` | The release number and "last reviewed" date shown in the footer |
 | `support.js` | The small runtime that `index.html` is written for. Don't edit |
 | `images/` | The Taskforce logo and the chatbot icons |
@@ -29,6 +29,8 @@ does not need to be hosted:
 | Folder | What it is |
 |---|---|
 | `docs/` | Release process, risk register and planning notes |
+| `docs/prompt-history/` | A record of every prompt as it stood in each release, to show what the tool would have asked at any point in the past |
+| `tools/` | The script that writes the prompt history, run as a step of each release |
 | `optimiser/` | A separate admin tool for improving the prompts. It runs only on a maintainer's own computer and must never be published. It is not tracked in git |
 
 ## Hosting notes

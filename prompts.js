@@ -1,7 +1,16 @@
 // Live source of the question data shown in the app. Loaded by index.html via a
 // plain <script src="./prompts.js"> tag in <head>, before the app's own script
 // runs — edit the questions below and refresh the page to see the changes.
+//
+// Each question's "aiOptimised" text is its core prompt. The answer style the
+// user picks is not part of it: the matching "styleBlocks" text is added to the
+// bottom of the prompt when it is copied or launched.
 window.PROMPTS_DATA = {
+  "styleBlocks": {
+    "caseStudy": { "label": "In the style of real world case studies", "text": "How to present your answer:\nUse one or two short, realistic examples of people in the UK to show how this works in practice. Make clear the examples are illustrations, not real people and not recommendations for me, and keep any figures in them simple. This is only about how you present the answer: everything else I have asked for still applies." },
+    "factual": { "label": "With numbers and facts", "text": "How to present your answer:\nGive the key numbers and facts. Use short bullet points or a small table where it helps, say which tax year each figure is for, and say where I can check it. This is only about how you present the answer: everything else I have asked for still applies." },
+    "simple": { "label": "Short and simple descriptions", "text": "How to present your answer:\nKeep it short and simple. Use everyday words and short sentences, no more than five bullet points for each question, and explain any pension term the first time you use it. This is only about how you present the answer: everything else I have asked for still applies." }
+  },
   "sections": [
     {
       "id": "foundation",

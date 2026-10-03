@@ -84,7 +84,9 @@ Only 1 of the 19 list prompts told the AI to say it is not giving advice.
 - **Status: Partly done.** Takes effect as prompts are re-optimised. The starter
   prompt and the personalised prompt wrapper are written in the site code and do
   not pass through the optimiser, so they need the same six rules applied by
-  hand.
+  hand. The three answer-style paragraphs in `prompts.js` (PO-30, added 3
+  October 2026) are also written by hand: the optimiser tests each question
+  with them attached but does not rewrite them, so they need the same sign-off.
 
 ### R4. The privacy claim was inaccurate (High)
 
@@ -170,10 +172,21 @@ Models and tax rules change; the prompts were tuned against one model.
 
 - **On the site:** the footer shows "Last reviewed" beside the version number,
   set in `version.js`.
+- **On the site (PO-23 and PO-24, added 3 October 2026):** step 4 offers the
+  three levels of the Pensions UK Retirement Living Standards (Minimum,
+  Moderate, Comfortable) with a monthly range beside each, taken from the 2026
+  standards. The note under the list names the year and links to the source.
+  The amounts are shown on the page only. The prompt names the level and asks
+  the AI to use the current published figure, so no amount is written into it.
 - **Governance:** the three-monthly re-test (PO-8) and testing across all five
   chatbots (PO-6, PO-9). Update "Last reviewed" only after a re-test.
+- **Governance:** Pensions UK publishes new standards each year (the 2026 set
+  came out on 3 June 2026). When it does, update the three ranges and the year
+  in step 4 of `index.html`, at the comment marked "UPDATE EACH YEAR". The
+  comment lists the yearly figures used and the rounding rule.
 - **Status: Partly done.** The date shown is the date of this risk review, not
-  of a prompt re-test; the re-test cycle is open.
+  of a prompt re-test; the re-test cycle is open. The yearly update of the
+  lifestyle amounts has no named owner.
 
 ### R11. Vulnerable users (Medium)
 

@@ -49,6 +49,21 @@ a:hover {
   color: #164752;
 }
 
+/* Links that open a new tab carry a small arrow-out-of-box mark in the link's own colour.
+   Screen readers get the same message from the hidden "(opens in a new tab)" text. */
+a[target="_blank"]::after {
+  content: "";
+  display: inline-block;
+  flex: none;
+  width: 0.9em;
+  height: 0.9em;
+  margin-left: 0.25em;
+  vertical-align: -0.1em;
+  background-color: currentColor;
+  -webkit-mask: url(./images/external_link.svg) center / contain no-repeat;
+  mask: url(./images/external_link.svg) center / contain no-repeat;
+}
+
 ::selection {
   background: rgba(44, 132, 148, 0.25);
 }
@@ -753,7 +768,7 @@ input, textarea, select, button {
   border: 1.5px solid #226B79;
   font-family: 'Archivo', sans-serif;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 14px;
   padding: 10px 16px;
   border-radius: 6px;
   cursor: pointer;
@@ -855,10 +870,10 @@ html:has(.sticky-copy-bar) { scroll-padding-bottom: 96px; }
   color: #226B79;
   border: 1.5px solid #226B79;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   padding: 4px 14px;
-  min-height: 36px;
+  min-height: 44px;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -867,18 +882,15 @@ html:has(.sticky-copy-bar) { scroll-padding-bottom: 96px; }
   background: none;
   border: none;
   color: #226B79;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
   padding: 0;
-  min-height: 36px;
+  min-height: 44px;
   cursor: pointer;
 }
 .list-link-btn:hover { color: #164752; }
-@media (max-width: 768px) {
-  .list-btn, .list-link-btn { min-height: 44px; }
-}
 
 /* Wizard step tabs: one row that scrolls sideways when the steps don't fit.
    On desktop the arrows scroll it; on touch screens it is swiped. */
@@ -902,8 +914,8 @@ html:has(.sticky-copy-bar) { scroll-padding-bottom: 96px; }
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   margin-bottom: 4px;
   border: 1px solid #2C8494;
   border-radius: 8px;
@@ -1541,17 +1553,16 @@ fieldset div > label:hover {
   border-radius: 8px;
   font-family: 'Archivo', sans-serif;
   font-weight: 800;
-  font-size: 13px;
+  font-size: 14px;
   padding: 4px 14px;
-  min-height: 36px;
+  min-height: 44px;
   cursor: pointer;
+  /* On a narrow phone the tool name wraps instead of the button label */
+  white-space: nowrap;
+  flex: none;
 }
 .site-start-again:hover { background: #f0f9fb; border-color: #1f6b7a; }
 
-/* Keep a full-size touch target on touch-sized screens */
-@media (max-width: 768px) {
-  .site-start-again { min-height: 44px; }
-}
 
 @media (max-width: 480px) {
   .site-header-inner { padding: 0 16px; gap: 10px; }
@@ -1560,9 +1571,21 @@ fieldset div > label:hover {
 
 /* ============ WIZARD STEP HELP TEXT ============ */
 .wizard-step-intro { font-size: 14px; margin: 0 0 6px; max-width: 720px; }
-.wizard-step-hint { font-size: 13px; color: rgba(32, 30, 29, 0.7); margin: 0 0 18px; max-width: 720px; }
+.wizard-step-hint { font-size: 14px; color: rgba(32, 30, 29, 0.7); margin: 0 0 18px; max-width: 720px; }
 .wizard-subhead { font-size: 14px; margin: 24px 0 6px; }
 .wizard-subhead + div { margin-top: 12px; }
+
+/* Step 4: the custom spending amount sits beside the lifestyle list. On two columns its
+   space is kept when it is not in use, so the boxes underneath never move. On one column
+   (768px and under, where the grid stacks) it is taken out so no gap is left. */
+.lifestyle-custom-slot[data-open="false"] { visibility: hidden; }
+@media (max-width: 768px) {
+  .lifestyle-custom-slot[data-open="false"] { display: none; }
+}
+
+/* Step 3: the question about a partner's pension shows only when a partner's age was given */
+.partner-only[data-open="false"] { display: none; }
+
 .income-source-row { border-top: 1px solid rgba(32, 30, 29, 0.15); padding: 4px 0; }
 .income-source-detail {
   display: grid;
@@ -1679,6 +1702,9 @@ fieldset div > label:hover {
   font-size: 14px;
   font-weight: 600;
   color: #201e1d;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 .landing-hero-aside {
   border-left: 2px solid rgba(32, 30, 29, 0.4);
@@ -1686,7 +1712,7 @@ fieldset div > label:hover {
   padding-bottom: 6px;
 }
 .landing-hero-aside-label {
-  font-size: 13px;
+  font-size: 14px;
   color: rgba(32, 30, 29, 0.65);
   margin-bottom: 10px;
 }
@@ -1699,7 +1725,7 @@ fieldset div > label:hover {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #201e1d;
   background: #fff;
@@ -1843,13 +1869,20 @@ fieldset div > label:hover {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  font-size: 12px;
+  font-size: 14px;
   color: rgba(32, 30, 29, 0.7);
 }
-.landing-footer-inner a { color: rgba(32, 30, 29, 0.7); }
-.footer-row { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+/* Each footer link is a 44px-high target; the rows have no gap so the targets never overlap. */
+.landing-footer-inner a {
+  color: rgba(32, 30, 29, 0.7);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+}
+.footer-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0 20px; }
 .footer-row-end { justify-content: space-between; }
-.footer-group { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.footer-group { display: flex; flex-wrap: wrap; gap: 0 20px; }
 .app-version { margin-left: auto; }
 
 /* ============ LAUNCH DIALOG: BEFORE YOU USE THE ANSWER ============ */
@@ -1859,7 +1892,7 @@ fieldset div > label:hover {
   border-radius: 6px;
   padding: 12px 14px;
   margin-bottom: 12px;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
   color: #201e1d;
 }
@@ -1929,5 +1962,17 @@ fieldset div > label:hover {
   to {
     opacity: 0;
     transform: translateX(100%);
+  }
+}
+
+/* ============ REDUCED MOTION ============ */
+/* For people who have asked their device to reduce motion: no slides, fades or glides.
+   The tab bar's scripted scrolling checks the same setting in index.html. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
