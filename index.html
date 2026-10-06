@@ -37,10 +37,9 @@
       <div>
         <img class="landing-hero-rit" src="./images/rit-logo.png" alt="Retirement Income Taskforce" />
         <h1 class="landing-hero-title" data-screen-heading="page" tabindex="-1">Ask AI better questions about your retirement income</h1>
-        <p class="landing-hero-lead">AI chatbots can be a genuinely useful sounding board as you approach retirement &mdash; but only if you ask them well. This free tool gives you the right questions, ready-built prompts, and a way to add your own details, so the answer you get back is actually about you.</p>
+        <p class="landing-hero-lead">AI chatbots can be a genuinely useful sounding board as you approach retirement &mdash; but only if you ask them well. This free tool gives you the right questions, ready-built prompts, and a way to add your own details, so the answer you get back is actually relevant to you.</p>
         <div class="landing-hero-actions">
-          <button data-action="goApp" onClick="{{ goApp }}" class="btn-primary btn-lg">Try it now &rarr;</button>
-          <a href="#how-it-works" class="landing-hero-link">See how it works &darr;</a>
+          <a href="#how-it-works" class="btn-primary btn-lg">Get started &darr;</a>
         </div>
       </div>
       <div class="landing-hero-aside">
@@ -80,45 +79,34 @@
       </div>
     </div>
 
-    <hr class="landing-divider" />
-
     <!-- THREE LEVELS -->
-    <div id="how-it-works" class="landing-levels">
+    <div id="how-it-works" class="landing-levels-band">
+    <div class="landing-levels">
       <h2 class="landing-levels-title">Choose a way to get your prompt</h2>
-      <p class="landing-levels-lead">Each option builds on the last. Use whichever fits how much time you have &mdash; you can always come back and go further.</p>
+      <p class="landing-levels-lead">Each option builds on the last. Use whichever fits how much time you have &mdash; you can always add more detail later if you need to.</p>
 
       <div class="landing-levels-grid">
 
         <div class="landing-level-card">
-          <h3>Don&rsquo;t know where to start?</h3>
+          <h3>Help me start</h3>
           <p>If you&rsquo;re not sure what to ask yet, this single all-purpose prompt gets an AI to ask you the right clarifying questions and walk you through the essentials.</p>
           <button onClick="{{ goStarterPrompt }}" class="btn-secondary">Use a starting prompt</button>
         </div>
 
         <div class="landing-level-card">
-          <h3>Choose from a list of questions</h3>
+          <h3>Let me choose</h3>
           <p>Pick from a curated list of expert-written prompts covering the foundations of a plan, things to watch out for, and how to get the most from your pension.</p>
-          <button onClick="{{ goBrowse }}" class="btn-secondary">Choose from a prompt list</button>
+          <button onClick="{{ goBrowse }}" class="btn-secondary">Choose from a curated list</button>
         </div>
 
         <div class="landing-level-card">
-          <h3>Personalise it to you</h3>
+          <h3>Tailor to me</h3>
           <p>Select your questions first, then add details about your age, savings, income sources and concerns &mdash; so the answer speaks to your actual circumstances.</p>
           <button data-action="goApp" onClick="{{ goApp }}" class="btn-secondary">Personalise a prompt</button>
         </div>
 
       </div>
     </div>
-
-    <!-- CLOSING BANNER -->
-    <div class="landing-cta-banner surface-dark">
-      <div class="landing-cta-inner">
-        <div>
-          <h2>Ready to get a better answer?</h2>
-          <p>It takes about a minute to browse the questions, and five more to personalise your prompt.</p>
-        </div>
-        <button data-action="goApp" onClick="{{ goApp }}" class="btn-primary btn-primary-inverse btn-lg">Try it now &rarr;</button>
-      </div>
     </div>
 
     <!-- FOOTER -->
@@ -150,7 +138,7 @@
 
     <!-- Header Section -->
     <div style="margin-bottom:32px">
-      <h1 data-screen-heading="page" tabindex="-1" style="font-size:32px;font-weight:800;color:#201e1d;margin:0 0 16px">Starter prompt</h1>
+      <h1 data-screen-heading="page" tabindex="-1" style="font-size:32px;font-weight:800;color:#201e1d;margin:0 0 16px">Help me start</h1>
       <p style="font-size:16px;color:#555;margin:0;line-height:1.6;border-left:4px solid #2C8494;padding-left:16px;background:#fff;padding:12px 16px;border-radius:0 8px 8px 0;box-shadow:0 1px 3px rgba(0,0,0,0.1)">
         This prompt will get you going on your journey towards retirement. Copy it and use it with your preferred AI assistant.
       </p>
@@ -164,7 +152,7 @@
           <div style="background:#d0f0f0;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#2C8494;font-size:20px" aria-hidden="true">ℹ️</div>
           <h2 style="font-size:16px;font-weight:700;color:#201e1d;margin:0">What it provides</h2>
         </div>
-        <p style="font-size:14px;color:#555;margin:0;line-height:1.6">A complete introduction to UK retirement income options, risks, and actionable next steps tailored for beginners.</p>
+        <p style="font-size:14px;color:#555;margin:0;line-height:1.6">An introduction to UK pension types, the State Pension, things to consider and actionable next steps, tailored for people who have not thought much about their retirement.</p>
       </div>
 
       <!-- Card 2: How it works -->
@@ -182,7 +170,7 @@
           <div style="background:#e9d5ff;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#7e22ce;font-size:20px" aria-hidden="true">👁️</div>
           <h2 style="font-size:16px;font-weight:700;color:#201e1d;margin:0">What to expect</h2>
         </div>
-        <p style="font-size:14px;color:#555;margin:0;line-height:1.6">A jargon-free explanation of annuities, drawdown, state pensions, and key risks, structured with clear headings and bullet points.</p>
+        <p style="font-size:14px;color:#555;margin:0;line-height:1.6">A jargon-free explanation of key terms, the types of pension, the State Pension and the main things to consider, structured with clear headings and bullet points.</p>
       </div>
     </div>
 
@@ -191,24 +179,28 @@
       <!-- Prompt Header -->
       <div style="background:#f1f5f9;border-bottom:1px solid #e2e8f0;padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
         <h2 style="font-size:16px;font-weight:700;color:#334155;margin:0">The prompt</h2>
-        <button onClick="{{ showStarterPromptModal }}" class="btn-primary" aria-haspopup="dialog">Use this prompt</button>
       </div>
 
       <!-- Prompt Content -->
       <div class="surface-dark" style="position:relative;background:#1e293b;padding:24px;border-top:3px solid #2C8494">
         <pre tabindex="0" role="region" aria-label="The starter prompt" style="font-family:'Courier New',monospace;font-size:14px;line-height:1.6;color:#e2e8f0;margin:0;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto">{{ starterPrompt.prompt }}</pre>
       </div>
+
+      <!-- Next steps, directly under the prompt -->
+      <div class="prompt-card-actions">
+        <button onClick="{{ copyStarter }}" class="btn-secondary">Copy prompt</button>
+        <button onClick="{{ showStarterPromptModal }}" class="btn-primary" aria-haspopup="dialog">Choose your AI assistant</button>
+      </div>
     </div>
 
 
-    <div class="surface-dark" style="background:#226B79;color:#fff;padding:40px 32px;margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%)">
-      <div style="max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap">
-        <div>
-          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:26px;margin:0 0 8px;color:#fff">Want to be more specific about the questions?</h2>
-          <p style="font-size:14px;color:rgba(255,255,255,0.9);margin:0;max-width:50ch">Choose from a list based on what you're looking to know, and pick the questions that matter most to you.</p>
-        </div>
-        <button data-action="goBrowse" onClick="{{ goBrowse }}" style="background:#fff;color:#164752;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;flex:none;white-space:nowrap;border-radius:4px;min-height:44px">Choose from a list &rarr;</button>
+    <!-- Secondary: choose specific questions instead -->
+    <div class="list-upsell" style="margin-top:16px;margin-bottom:32px">
+      <div>
+        <h2 class="list-upsell-title">Want to be more specific about the questions?</h2>
+        <p class="list-upsell-text">Choose from a list based on what you're looking to know, and pick the questions that matter most to you.</p>
       </div>
+      <button data-action="goBrowse" onClick="{{ goBrowse }}" class="btn-secondary">Choose from a list &rarr;</button>
     </div>
   </main>
   </sc-if>
@@ -482,13 +474,10 @@
     <!-- RESULT: PERSONALISED PROMPT -->
     <sc-if value="{{ isResult }}">
     <div style="padding-bottom:48px" data-screen-label="Personalised Prompt">
-      <!-- Success Banner -->
-      <div class="surface-dark" style="background:#226B79;color:#fff;padding:40px 32px;margin:-32px calc(-50vw + 50%) 32px;display:flex;align-items:center;justify-content:center">
-        <div style="max-width:1120px;width:100%;text-align:center">
-          <div style="font-size:48px;margin-bottom:16px" aria-hidden="true">✓</div>
-          <h2 data-screen-heading="step" tabindex="-1" style="font-size:32px;font-weight:800;margin:0 0 12px;color:#fff">Your prompt is ready</h2>
-          <p style="font-size:16px;margin:0;color:rgba(255,255,255,0.95);max-width:60ch;margin-left:auto;margin-right:auto">We've compiled your selections and details into a comprehensive prompt.</p>
-        </div>
+      <!-- Confirmation -->
+      <div class="prompt-ready">
+        <h2 data-screen-heading="step" tabindex="-1">Step 7: Summary</h2>
+        <p><span class="prompt-ready-tick" aria-hidden="true">✓</span><strong>Your prompt is ready.</strong> We&rsquo;ve combined the questions you selected and the details you gave into one prompt.</p>
       </div>
 
       <!-- Review Details Section -->
@@ -530,11 +519,12 @@
         <div class="surface-dark" style="position:relative;background:#1e293b;padding:24px;border-top:3px solid #2C8494">
           <pre tabindex="0" role="region" aria-label="Your tailored prompt" style="font-family:'Courier New',monospace;font-size:14px;line-height:1.6;color:#e2e8f0;margin:0;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto">{{ outputText }}</pre>
         </div>
-      </div>
 
-      <!-- Action Button -->
-      <div style="display:flex;justify-content:center;margin-bottom:24px">
-        <button onClick="{{ showUsePromptModal }}" class="btn-primary" aria-haspopup="dialog" style="padding:14px 28px">Use this prompt</button>
+        <!-- Next steps, directly under the prompt -->
+        <div class="prompt-card-actions">
+          <button onClick="{{ copyFinal }}" class="btn-secondary">Copy prompt</button>
+          <button onClick="{{ showUsePromptModal }}" class="btn-primary" aria-haspopup="dialog">Choose your AI assistant</button>
+        </div>
       </div>
     </div>
     </sc-if>
@@ -545,9 +535,22 @@
 
   <!-- ============ BROWSE (standalone prompt list) ============ -->
   <sc-if value="{{ isBrowse }}">
-  <main data-screen-label="Browse Prompts" style="max-width:1120px;margin:0 auto;padding:32px 32px 120px">
+  <main data-screen-label="Browse Prompts" style="max-width:1120px;margin:0 auto;padding:32px 32px 64px">
     <h1 data-screen-heading="page" tabindex="-1" style="font-size:30px;margin:0 0 8px">Prompt list</h1>
-    <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Answer three quick questions and we'll shortlist the prompts most relevant to you.</p>
+    <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Select the questions you want answered and we&rsquo;ll combine them into one prompt, ready to use with the chatbot you choose.</p>
+
+    <div class="wizard-tabs-wrap">
+      <div class="wizard-tabs" style="display:flex;gap:4px">
+        <sc-for list="{{ browseSteps }}" as="st" hint-placeholder-count="2">
+          <button type="button" onClick="{{ st.goTo }}" aria-current="{{ st.ariaCurrent }}" disabled="{{ st.disabled }}" style="{{ st.tabStyle }}">{{ st.tabText }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <sc-if value="{{ showBrowseIntro }}">
+    <h2 style="font-size:16px;margin:0 0 6px">Step 1: Select your questions</h2>
+    <p style="font-size:14px;color:rgba(32,30,29,0.65);margin:0 0 16px">Answer three quick questions and we'll shortlist the prompts most relevant to you.</p>
+    </sc-if>
 
     <sc-if value="{{ isBrowseQuiz }}">
     <div style="max-width:640px">
@@ -557,7 +560,7 @@
           <span style="{{ dot.style }}"></span>
         </sc-for>
       </div>
-      <h2 data-screen-heading="quiz" tabindex="-1" style="font-size:24px;margin:0 0 24px">{{ browseQuiz.question }}</h2>
+      <h3 data-screen-heading="quiz" tabindex="-1" style="font-size:24px;margin:0 0 24px">{{ browseQuiz.question }}</h3>
       <div style="display:flex;flex-direction:column;gap:12px">
         <sc-for list="{{ browseQuiz.options }}" as="opt" hint-placeholder-count="3">
           <button onClick="{{ opt.onSelect }}" style="{{ opt.optionStyle }}">{{ opt.label }}</button>
@@ -581,7 +584,7 @@
         </div>
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:36px">
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
         <sc-for list="{{ browseShortlist }}" as="q" hint-placeholder-count="5">
           <label for="{{ q.inputId }}" class="question-row" style="{{ q.cardStyle }}">
             <input id="{{ q.inputId }}" type="checkbox" checked="{{ q.selected }}" onChange="{{ q.onToggle }}" />
@@ -593,36 +596,73 @@
         </sc-for>
       </div>
 
-      <div class="surface-dark" style="background:#226B79;color:#fff;padding:40px 32px;margin-top:24px;margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%)">
-        <div style="max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap">
-          <div>
-            <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:26px;margin:0 0 8px;color:#fff">Want a more tailored answer?</h2>
-            <p style="font-size:14px;color:rgba(255,255,255,0.9);margin:0;max-width:50ch">Add your age, pension, income and concerns, and these same questions produce answers specific to your situation.</p>
-          </div>
-          <button data-action="goApp" onClick="{{ goApp }}" style="background:#fff;color:#164752;border:none;font-family:'Archivo',sans-serif;font-weight:800;font-size:14px;padding:12px 24px;cursor:pointer;flex:none;white-space:nowrap;border-radius:4px;min-height:44px">Personalise the prompt &rarr;</button>
+      <!-- Primary action: sits at the end of the list, in the page flow -->
+      <div class="list-actions" role="region" aria-label="Selected questions">
+        <sc-if value="{{ browseHasNoSelection }}">
+          <span class="selection-text">No questions selected</span>
+        </sc-if>
+        <sc-if value="{{ !browseHasNoSelection }}" hint-placeholder-val="{{ true }}">
+          <button class="unselect-button" onClick="{{ clearBrowseSelected }}">{{ unselectLabel }}</button>
+        </sc-if>
+        <button class="copy-button" onClick="{{ createListPrompt }}" disabled="{{ browseHasNoSelection }}">Create my prompt &rarr;</button>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- SUMMARY: the prompt built from the selected questions (same layout as the personalised result) -->
+    <sc-if value="{{ isBrowseSummary }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Prompt List Summary">
+      <div class="prompt-ready">
+        <h2 data-screen-heading="step" tabindex="-1">Step 2: Summary</h2>
+        <p><span class="prompt-ready-tick" aria-hidden="true">✓</span><strong>Your prompt is ready.</strong> We&rsquo;ve combined the questions you selected into one prompt.</p>
+      </div>
+
+      <!-- Questions included -->
+      <div style="background:#fff;border:1px solid rgba(32,30,29,0.2);border-radius:8px;margin-bottom:24px;padding:16px 24px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+          <h3 style="font-size:15px;font-weight:600;color:#201e1d;margin:0">{{ browseSummaryHeading }}</h3>
+          <button type="button" onClick="{{ backToBrowseList }}" class="list-link-btn">Change my questions</button>
         </div>
+        <ul style="margin:8px 0 0;padding-left:20px;font-size:14px;color:rgba(32,30,29,0.8);line-height:1.8">
+          <sc-for list="{{ browseSummaryQuestions }}" as="q" hint-placeholder-count="3">
+            <li>{{ q.label }}</li>
+          </sc-for>
+        </ul>
+      </div>
+
+      <!-- Prompt Section -->
+      <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid rgba(32,30,29,0.2);overflow:hidden;margin-bottom:24px">
+        <div style="background:#f1f5f9;border-bottom:1px solid rgba(32,30,29,0.1);padding:16px 24px">
+          <h3 style="font-size:16px;font-weight:700;color:#334155;margin:0">Here is your prompt</h3>
+        </div>
+
+        <div class="surface-dark" style="position:relative;background:#1e293b;padding:24px;border-top:3px solid #2C8494">
+          <pre tabindex="0" role="region" aria-label="Your prompt" style="font-family:'Courier New',monospace;font-size:14px;line-height:1.6;color:#e2e8f0;margin:0;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto">{{ browsePromptText }}</pre>
+        </div>
+
+        <!-- Next steps, directly under the prompt -->
+        <div class="prompt-card-actions">
+          <button onClick="{{ copyListPrompt }}" class="btn-secondary">Copy prompt</button>
+          <button onClick="{{ showListPromptModal }}" class="btn-primary" aria-haspopup="dialog">Choose your AI assistant</button>
+        </div>
+      </div>
+
+      <!-- Secondary: personalise instead -->
+      <div class="list-upsell" style="margin-top:16px">
+        <div>
+          <h2 class="list-upsell-title">Want a more tailored answer?</h2>
+          <p class="list-upsell-text">Add your age, pension, income and concerns, and these same questions produce answers specific to your situation.</p>
+        </div>
+        <button data-action="goApp" onClick="{{ goApp }}" class="btn-secondary">Personalise the prompt &rarr;</button>
       </div>
     </div>
     </sc-if>
   </main>
   </sc-if>
 
-  <!-- Sticky bottom bar for copy all -->
-  <sc-if value="{{ isBrowseResults }}">
-  <div class="sticky-copy-bar" role="region" aria-label="Selected questions">
-    <sc-if value="{{ browseHasNoSelection }}">
-      <span class="selection-text">No questions selected</span>
-    </sc-if>
-    <sc-if value="{{ !browseHasNoSelection }}" hint-placeholder-val="{{ true }}">
-      <button class="unselect-button" onClick="{{ clearBrowseSelected }}">{{ unselectLabel }}</button>
-    </sc-if>
-    <button class="copy-button" onClick="{{ copyAllSelected }}" disabled="{{ browseHasNoSelection }}" aria-haspopup="dialog">Use all selected</button>
-  </div>
-  </sc-if>
-
   <!-- Universal footer for non-landing pages (landing has its own, fuller footer above) -->
   <sc-if value="{{ !isLanding }}">
-  <footer class="landing-footer" style="{{ universalFooterStyle }}">
+  <footer class="landing-footer">
     <div class="landing-footer-inner">
       <div class="footer-row footer-row-end">
         <div class="footer-group">
@@ -683,10 +723,10 @@ const PROMPTS_DATA = window.PROMPTS_DATA || { sections: [] };
 const STARTER_PROMPT_DATA = {
   "title": "Tell me what I need to know about retirement income",
   "category": "Starter prompt",
-  "summary": "A complete introduction to UK retirement income options, risks, and next steps",
+  "summary": "An introduction to UK pension types, the State Pension, things to consider and next steps",
   "explanation": "This prompt works because it asks an AI to act as an educational coach and set clear boundaries (education only, not financial advice). It breaks down retirement into digestible chunks and asks for practical next steps. The AI will give you a structured overview without overwhelming detail.",
-  "whatToExpect": "You'll get a clear, jargon-free explanation of your main options (annuities, drawdown, lump sums), how state pension fits in, the key risks to watch for, and a practical checklist of things to sort out before speaking to a financial adviser. The response will be structured with headings and bullet points, making it easy to follow.",
-  "prompt": "Act as an educational financial coach based in the UK. I am approaching retirement and want to understand the landscape of my retirement income options. Please note, I am seeking generic, factual education only, not regulated financial advice or personalised recommendations.\nPlease provide a comprehensive, easy-to-understand overview covering the following areas:\n\n1. Core Income Options: Explain the main ways to take income from a UK defined contribution pension (e.g., annuities, flexi-access drawdown, and taking lump sums/UFPLS).\n2. Pros and Cons: Outline the general advantages and disadvantages of each of these main options.\n3. The State Pension: Briefly explain how the UK State Pension operates and how it typically factors into a broader retirement income strategy.\n4. Key Risks to Consider: Detail the main risks I need to be aware of when planning my retirement income (such as inflation, longevity risk, and market volatility).\n5. Next Steps: Provide a sensible, actionable checklist of practical steps I should take to organise my financial information before I eventually speak to a regulated financial adviser.\n\nPlease ensure your response is structured clearly with headings and bullet points, uses plain British English, and maintains an objective, coaching tone throughout."
+  "whatToExpect": "You'll get a clear, jargon-free explanation of the types of pension and how to find out what you have, how the State Pension fits in, the main things to consider, and a practical checklist of next steps, including before speaking to a financial adviser. The response will be structured with headings and bullet points, making it easy to follow.",
+  "prompt": "Act as an educational financial coach based in the UK. I want to understand how I can find out more about my retirement savings and options. Please note, I am seeking generic, factual education only, not regulated financial advice or personalised recommendations. If you are linking external websites, only use UK government websites or moneyhelper.org.uk.\nPlease provide an easy-to-understand overview covering the following areas:\n\n1. Pension Types: Explain the types of pensions in the UK (e.g. defined benefit and defined contribution) and how I can find out what I have.\n2. The State Pension: Briefly explain how the UK State Pension operates and how it typically factors into a broader retirement income strategy.\n3. Key Things to Consider and How to Know Whether I'm on Track: Detail the main things I need to be aware of when planning my retirement income (such as my lifestyle, inflation and how long my money may need to last), and explain how I can work out how much I might need and whether I'm on track.\n4. Next Steps: Provide a sensible, actionable checklist of practical steps I should take, and impartial reference websites (e.g. moneyhelper.org.uk) I could use, to make myself more prepared for retirement, including before I speak to a regulated financial adviser.\n\nPlease ensure your response is structured clearly with headings and bullet points, uses plain British English with no jargon, and maintains an objective, coaching tone throughout. Offer me the option to explore further any topic that you have raised."
 };
 
 // Make STARTER_PROMPT_DATA globally available
@@ -755,6 +795,8 @@ class Component extends DCLogic {
     browseSelected: {},
     browseExpanded: {},
     browseStep: 1,
+    browseSummary: false,
+    browsePromptText: '',
     browseAnswers: { category: null, stage: null, style: null },
     fields: {},
     toasts: [],
@@ -809,14 +851,14 @@ class Component extends DCLogic {
   // as a screen; the shortlist that follows them is one more.
   screenKey = () => {
     const s = this.state;
-    return [s.view, s.phase, s.step, Math.min(s.browseStep, 4)].join('|');
+    return [s.view, s.phase, s.step, Math.min(s.browseStep, 4), s.browseSummary ? 'summary' : ''].join('|');
   };
 
   screenTitle = () => {
     const s = this.state;
     const site = 'Retirement Income Prompt Generator';
-    if (s.view === 'starterPrompt') return 'Starter prompt – ' + site;
-    if (s.view === 'browse') return 'Prompt list – ' + site;
+    if (s.view === 'starterPrompt') return 'Help me start – ' + site;
+    if (s.view === 'browse') return (s.browseSummary ? 'Your prompt is ready' : 'Step 1 of 2: Select questions') + ' – ' + site;
     if (s.view === 'app') {
       const screen = s.phase === 'result' ? 'Your prompt is ready' : 'Step ' + s.step + ' of 7: ' + STEP_NAMES[s.step - 1];
       return screen + ' – ' + site;
@@ -904,18 +946,18 @@ class Component extends DCLogic {
     const hasSelection = Object.keys(s.browseSelected).length > 0;
     const hasAnswers = !!s.browseAnswers.category;
     if (hasSelection) {
-      this.setState({ view: 'app', phase: 'wizard', step: 2 });
+      this.setState({ view: 'app', phase: 'wizard', step: 2, browseSummary: false });
     } else if (hasAnswers) {
-      this.setState({ view: 'app', phase: 'wizard', step: 1, browseStep: 4 });
+      this.setState({ view: 'app', phase: 'wizard', step: 1, browseStep: 4, browseSummary: false });
     } else {
-      this.setState({ view: 'app', phase: 'wizard', step: 1, browseStep: 1, browseAnswers: { category: null, stage: null, style: null } });
+      this.setState({ view: 'app', phase: 'wizard', step: 1, browseStep: 1, browseSummary: false, browseAnswers: { category: null, stage: null, style: null } });
     }
   };
-  goBrowse = () => { this.track('route_chosen', 'list'); window.scrollTo(0, 0); this.setState({ view: 'browse', browseStep: 1, browseAnswers: { category: null, stage: null, style: null }, browseSelected: {}, browseExpanded: {} }); };
+  goBrowse = () => { this.track('route_chosen', 'list'); window.scrollTo(0, 0); this.setState({ view: 'browse', browseStep: 1, browseSummary: false, browseAnswers: { category: null, stage: null, style: null }, browseSelected: {}, browseExpanded: {} }); };
   goLanding = () => { window.scrollTo(0, 0); this.setState({ view: 'landing' }); };
   goStarterPrompt = () => { this.track('route_chosen', 'starter'); window.scrollTo(0, 0); this.setState({ view: 'starterPrompt', showStarterPromptText: false }); };
   toggleStarterPromptText = () => this.setState((s) => ({ showStarterPromptText: !s.showStarterPromptText }));
-  copyStarter = () => this.copyText(STARTER_PROMPT_DATA.prompt, 'Starter prompt copied');
+  copyStarter = () => { this.track('prompt_copied', 'starter'); this.copyText(STARTER_PROMPT_DATA.prompt, 'Prompt copied'); };
   copyGeneric = () => this.copyText(GENERIC_PROMPT, 'Starter prompt copied');
 
   goStep = (n) => {
@@ -997,7 +1039,7 @@ class Component extends DCLogic {
   };
   restartBrowseQuiz = () => {
     window.scrollTo(0, 0);
-    this.setState({ browseStep: 1, browseAnswers: { category: null, stage: null, style: null }, browseSelected: {}, browseExpanded: {} });
+    this.setState({ browseStep: 1, browseSummary: false, browseAnswers: { category: null, stage: null, style: null }, browseSelected: {}, browseExpanded: {} });
   };
 
   selectAllPrompts = () => {
@@ -1035,7 +1077,7 @@ class Component extends DCLogic {
   };
 
   copyText = (text, msg) => {
-    const done = () => this.showToast(msg);
+    const done = () => { if (window.showSimpleToast) window.showSimpleToast(msg); else this.showToast(msg); };
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(done).catch(() => {
         this.fallbackCopy(text);
@@ -1068,7 +1110,9 @@ class Component extends DCLogic {
     if (q) this.copyText(this.withStyle(q.aiOptimised), `"${q.quickSummary}" copied`);
   };
 
-  copyAllSelected = () => {
+  // Prompt list, step 2 (PO-58): build the combined prompt and show it on its own summary
+  // screen. The dialog is now only for choosing a chatbot.
+  createListPrompt = () => {
     const ids = Object.keys(this.state.browseSelected);
     if (!ids.length) return;
     const text = ids
@@ -1079,8 +1123,13 @@ class Component extends DCLogic {
       .filter(Boolean)
       .join('\n\n---\n\n');
     ids.forEach((id) => this.track('question_used', id + '|list'));
-    window.showPromptModal(this.withStyle(text), 'list');
+    this.track('prompt_ready', 'list');
+    window.scrollTo(0, 0);
+    this.setState({ browseSummary: true, browsePromptText: this.withStyle(text) });
   };
+  backToBrowseList = () => { window.scrollTo(0, 0); this.setState({ browseSummary: false }); };
+  copyListPrompt = () => { this.track('prompt_copied', 'list'); this.copyText(this.state.browsePromptText, 'Prompt copied'); };
+  showListPromptModal = () => window.showPromptModal(this.state.browsePromptText, 'list');
 
   getSources = () => {
     const f = this.state.fields;
@@ -1177,7 +1226,7 @@ class Component extends DCLogic {
     this.setState({ outputText: this.withStyle(p) });
   };
 
-  copyFinal = () => this.copyText(this.state.outputText, 'Your personalised prompt copied');
+  copyFinal = () => { this.track('prompt_copied', 'personalised'); this.copyText(this.state.outputText, 'Prompt copied'); };
   openInChatGPT = () => window.open('https://chatgpt.com/?q=' + encodeURIComponent(this.state.outputText), '_blank');
   openInClaude = () => window.open('https://claude.ai/?q=' + encodeURIComponent(STARTER_PROMPT_DATA.prompt), '_blank');
   openInGemini = () => window.open('https://gemini.google.com/?q=' + encodeURIComponent(STARTER_PROMPT_DATA.prompt), '_blank');
@@ -1217,11 +1266,14 @@ class Component extends DCLogic {
     const isQuizSubPhase = s.browseStep <= 3;
     const isShortlistSubPhase = s.browseStep === 4;
     const isBrowseQuiz = isBrowse && isQuizSubPhase;
-    const isBrowseResults = isBrowse && isShortlistSubPhase;
+    const isBrowseSummary = isBrowse && isShortlistSubPhase && s.browseSummary;
+    const isBrowseResults = isBrowse && isShortlistSubPhase && !s.browseSummary;
+    const showBrowseIntro = !isBrowseSummary;
+    const browseSummaryQuestions = Object.keys(s.browseSelected).map((id) => this.findQuestion(id)).filter(Boolean).map((q) => ({ label: q.quickSummary }));
+    const browseSummaryHeading = browseSummaryQuestions.length === 1 ? '1 question in this prompt' : browseSummaryQuestions.length + ' questions in this prompt';
     const isStep1Quiz = isWizard && s.step === 1 && isQuizSubPhase;
     const isStep1Shortlist = isWizard && s.step === 1 && isShortlistSubPhase;
     const showWizardNav = !isStep1Quiz;
-    const universalFooterStyle = isBrowseResults ? { paddingBottom: '96px' } : {};
 
     const browseQuizQuestionData = s.browseStep <= 3 ? BROWSE_QUIZ_QUESTIONS[s.browseStep - 1] : null;
     const browseQuiz = browseQuizQuestionData ? {
@@ -1298,6 +1350,26 @@ class Component extends DCLogic {
         }
       };
     });
+
+    // The prompt list route shows the same tab bar with just its two steps, so moving on to
+    // personalise only adds steps 2 to 6 in between.
+    const browseHasSelection = Object.keys(s.browseSelected).length > 0;
+    const browseSteps = [
+      { label: 'Select questions', active: !isBrowseSummary, completed: isBrowseSummary, disabled: false, goTo: this.backToBrowseList },
+      { label: 'Summary', active: isBrowseSummary, completed: false, disabled: !isBrowseSummary && !(isShortlistSubPhase && browseHasSelection), goTo: this.createListPrompt }
+    ].map((t, i) => ({
+      tabText: t.completed ? '✓ ' + t.label : (i + 1) + '. ' + t.label,
+      goTo: t.active ? () => {} : t.goTo,
+      ariaCurrent: t.active ? 'step' : undefined,
+      disabled: t.disabled,
+      tabStyle: { ...steps[0].tabStyle,
+        cursor: t.disabled ? 'default' : 'pointer',
+        borderBottom: t.active ? '3px solid ' + ACCENT : '3px solid transparent',
+        color: t.active || t.completed ? ACCENT_DARK : TEXT_MUTED,
+        fontWeight: t.active ? 800 : t.completed ? 700 : 600,
+        background: t.active ? ACCENT_TINT : 'transparent'
+      }
+    }));
 
     const browseSelectedCount = Object.keys(s.browseSelected).length;
     const selectedCount = browseSelectedCount;
@@ -1386,6 +1458,11 @@ class Component extends DCLogic {
       selectedCount,
       isBrowseQuiz,
       isBrowseResults,
+      browseSteps,
+      isBrowseSummary, showBrowseIntro, browseSummaryQuestions, browseSummaryHeading,
+      browsePromptText: s.browsePromptText,
+      createListPrompt: this.createListPrompt, backToBrowseList: this.backToBrowseList,
+      copyListPrompt: this.copyListPrompt, showListPromptModal: this.showListPromptModal,
       isStep1Quiz,
       isStep1Shortlist,
       showWizardNav,
@@ -1405,7 +1482,6 @@ class Component extends DCLogic {
       browseHasNoSelection,
       browseHasOneSelection,
       browseHasMultipleSelections,
-      copyAllSelected: this.copyAllSelected,
       steps,
       scrollTabsLeft: this.scrollTabsLeft,
       scrollTabsRight: this.scrollTabsRight,
@@ -1438,7 +1514,6 @@ class Component extends DCLogic {
       openInfoModal: this.openInfoModal,
       closeInfoModal: this.closeInfoModal,
       stopClick: this.stopClick,
-      universalFooterStyle,
       appVersion: (window.APP_VERSION ? 'v' + window.APP_VERSION : '') + (window.APP_LAST_REVIEWED ? ' · Last reviewed ' + window.APP_LAST_REVIEWED : '')
     };
   }
@@ -1631,7 +1706,7 @@ class Component extends DCLogic {
         if (!selected) return;
 
         let url = '';
-        const promptText = document.getElementById('modal-prompt')?.textContent || '';
+        const promptText = window._modalPromptText || '';
         const encodedPrompt = encodeURIComponent(promptText);
 
         switch (selected.value) {
@@ -1691,19 +1766,11 @@ class Component extends DCLogic {
   <div style="background:#fff;border-radius:8px;max-width:520px;width:90%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.3);pointer-events:auto;position:relative">
     <button class="modal-close-btn" aria-label="Close" style="position:absolute;top:16px;right:16px;background:transparent;border:none;font-size:24px;cursor:pointer;color:#666;z-index:10;width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:0;line-height:1">×</button>
     <div style="padding:32px;overflow-y:auto">
-      <h2 id="copy-modal-heading" style="font-size:20px;margin:0 0 8px;color:#201e1d;font-weight:800">Your prompt is ready</h2>
-      <p style="font-size:14px;color:#666;margin:0 0 24px">Copy your text below, or select an AI to launch it automatically.</p>
+      <h2 id="copy-modal-heading" style="font-size:20px;margin:0 0 8px;color:#201e1d;font-weight:800;padding-right:44px">Choose your AI assistant</h2>
+      <p style="font-size:14px;color:#666;margin:0 0 12px">Select the AI you already use. We&rsquo;ll copy your prompt and open the chatbot in a new tab. We don&rsquo;t endorse any of them.</p>
+      <p style="font-size:14px;color:#666;margin:0 0 20px">ChatGPT, Claude and Perplexity open with your prompt already filled in. In Copilot and Gemini, paste it into the message box yourself.</p>
 
       <div style="margin-bottom:24px">
-        <p id="modal-prompt-label" style="font-size:14px;font-weight:600;color:#201e1d;margin:0 0 12px">Your prompt</p>
-        <div id="modal-prompt" tabindex="0" role="region" aria-labelledby="modal-prompt-label" style="background:#f5f4f3;border:1px solid #ddd;border-radius:6px;padding:12px;max-height:120px;overflow-y:auto;font-size:14px;line-height:1.5;color:#333;white-space:pre-wrap;word-wrap:break-word;font-family:monospace;margin-bottom:12px"></div>
-        <button id="copy-only-btn" class="btn-secondary" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px"><img src="./images/copy-link-icon.svg" style="width:16px;height:16px;filter:hue-rotate(200deg) saturate(1.5)" alt="" />Copy prompt only</button>
-      </div>
-
-      <div style="margin-bottom:24px">
-        <p style="font-size:14px;font-weight:600;color:#201e1d;margin:0 0 12px">Quick launch</p>
-        <p style="font-size:14px;color:#666;margin:0 0 12px">Select the AI you already use and it will open with your prompt ready to go. We don&rsquo;t endorse any of them.</p>
-
         <fieldset style="border:none;padding:0;margin:0;margin-bottom:16px">
           <legend class="sr-only">Select an AI chatbot</legend>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -1791,7 +1858,7 @@ class Component extends DCLogic {
       launchBtn.innerHTML = `Copy and launch ${aiName}<img src="./images/external_link.svg" alt="" style="width:16px;height:16px;filter:brightness(0) invert(1)" /><span class="sr-only"> (opens in a new tab)</span>`;
 
       if (selected.value === 'copilot' || selected.value === 'gemini') {
-        capabilityMsg.textContent = "Note: You'll need to paste the prompt into " + aiName + " as auto-fill isn't available.";
+        capabilityMsg.textContent = aiName + " can't be filled in for you. Your prompt will be copied: when " + aiName + " opens, paste it into the message box (Ctrl+V, or Cmd+V on a Mac).";
         capabilityMsg.style.display = 'block';
       } else {
         capabilityMsg.style.display = 'none';
@@ -1816,7 +1883,8 @@ class Component extends DCLogic {
     }
 
     window._promptType = promptType || '';
-    if (window.track) window.track('prompt_ready', window._promptType);
+    // The prompt list counts "prompt ready" when its summary screen appears, not here.
+    if (window.track && promptType !== 'list') window.track('prompt_ready', window._promptType);
 
     // Save current focus to restore after modal closes
     window._lastFocusBeforeModal = document.activeElement;
@@ -1827,25 +1895,8 @@ class Component extends DCLogic {
       return;
     }
 
-    const promptEl = modal.querySelector('#modal-prompt');
-    if (promptEl) {
-      promptEl.textContent = promptText;
-    }
-
-    // Set up copy-only button
-    const copyOnlyBtn = modal.querySelector('#copy-only-btn');
-    if (copyOnlyBtn) {
-      copyOnlyBtn.onclick = () => {
-        // Only say it was copied if it was
-        window.copyToClipboard(promptText).then(
-          () => {
-            showSimpleToast('The prompt has been copied to your clipboard');
-            if (window.track) window.track('prompt_copied', promptType || '');
-          },
-          () => showSimpleToast(COPY_FAILED_MESSAGE, { persist: true })
-        );
-      };
-    }
+    // The launch button reads the prompt from here; it is no longer shown in the dialog (PO-58).
+    window._modalPromptText = promptText;
 
     // Set up radio button change handler
     const radios = modal.querySelectorAll('input[name="chatbot-select"]');

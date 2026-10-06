@@ -730,25 +730,63 @@ input, textarea, select, button {
   }
 }
 
-/* Sticky copy bar for prompt list */
-.sticky-copy-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #fff;
-  border-top: 1px solid rgba(32, 30, 29, 0.2);
+/* Summary screens: the step heading, then one line of confirmation with a small tick */
+.prompt-ready { margin-bottom: 20px; }
+.prompt-ready h2 { font-size: 16px; margin: 0 0 6px; }
+.prompt-ready p { font-size: 14px; color: rgba(32, 30, 29, 0.8); margin: 0; max-width: 70ch; }
+.prompt-ready strong { color: #201e1d; }
+.prompt-ready-tick { color: #226B79; font-weight: 800; margin-right: 6px; }
+
+/* Prompt cards on all three routes: the next steps sit together under the prompt text,
+   on the right like every other button that moves the journey forward. */
+.prompt-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid rgba(32, 30, 29, 0.1);
+}
+@media (max-width: 480px) {
+  .prompt-card-actions > * { width: 100%; }
+}
+
+/* Prompt list: the primary action at the end of the list, then the quieter personalise card.
+   The starter prompt page uses the same card to point at the prompt list. */
+.list-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  z-index: 100;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
-  box-sizing: border-box;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: max(32px, calc((100% - 1120px) / 2 + 32px));
-  padding-right: max(32px, calc((100% - 1120px) / 2 + 32px));
+  flex-wrap: wrap;
+}
+.list-upsell {
+  margin-top: 40px;
+  padding: 24px 28px;
+  background: #fff;
+  border: 1px solid rgba(32, 30, 29, 0.2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.list-upsell-title {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+.list-upsell-text {
+  font-size: 14px;
+  color: rgba(32, 30, 29, 0.8);
+  margin: 0;
+  max-width: 60ch;
+}
+@media (max-width: 480px) {
+  .list-actions > *, .list-upsell .btn-secondary { width: 100%; }
+  .list-actions .selection-text { text-align: center; }
 }
 
 .selection-text {
@@ -804,10 +842,6 @@ input, textarea, select, button {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
-/* The bar is fixed to the bottom of the window, so keep anything scrolled into view
-   (a focused row, for example) clear of it. */
-html:has(.sticky-copy-bar) { scroll-padding-bottom: 96px; }
 
 @media (max-width: 768px) {
   /* Hide text tabs on tablets and mobile */
@@ -1617,19 +1651,13 @@ fieldset div > label:hover {
   transition: background 0.2s ease, border-color 0.2s ease;
   min-height: 44px;
 }
-.btn-primary:hover { background: #1B5560; border-color: #1B5560; }
+.btn-primary:hover { background: #1B5560; border-color: #1B5560; color: #fff; }
 .btn-primary:disabled,
 .btn-primary[data-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
 }
-
-.btn-primary-inverse {
-  background: #fff;
-  color: #164752;
-}
-.btn-primary-inverse:hover { background: #eef6f7; }
 
 .btn-secondary {
   background: #fff;
@@ -1698,14 +1726,6 @@ fieldset div > label:hover {
   align-items: center;
   flex-wrap: wrap;
 }
-.landing-hero-link {
-  font-size: 14px;
-  font-weight: 600;
-  color: #201e1d;
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-}
 .landing-hero-aside {
   border-left: 2px solid rgba(32, 30, 29, 0.4);
   padding-left: 32px;
@@ -1719,8 +1739,9 @@ fieldset div > label:hover {
 .landing-hero-badges {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
+/* Logo and name only: no box, so these don't read as buttons. */
 .landing-hero-badge {
   display: flex;
   align-items: center;
@@ -1728,16 +1749,10 @@ fieldset div > label:hover {
   font-size: 14px;
   font-weight: 600;
   color: #201e1d;
-  background: #fff;
-  border: 1px solid rgba(32, 30, 29, 0.25);
-  border-radius: 8px;
-  padding: 8px 14px;
-  width: 168px;
-  box-sizing: border-box;
 }
 .landing-hero-badge img {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   flex: none;
 }
 
@@ -1778,6 +1793,11 @@ fieldset div > label:hover {
   margin: 0;
 }
 
+/* Full-width teal band behind the three options. The cards stay white, so their text,
+   buttons and teal focus rings keep the contrast they have on the rest of the page. */
+.landing-levels-band {
+  background: #226B79;
+}
 .landing-levels {
   max-width: 1120px;
   margin: 0 auto;
@@ -1788,10 +1808,11 @@ fieldset div > label:hover {
   font-weight: 800;
   font-size: 30px;
   margin: 0 0 8px;
+  color: #fff;
 }
 .landing-levels-lead {
   font-size: 15px;
-  color: rgba(32, 30, 29, 0.7);
+  color: rgba(255, 255, 255, 0.9);
   margin: 0 0 40px;
   max-width: 60ch;
 }
@@ -1799,16 +1820,16 @@ fieldset div > label:hover {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0;
-  border-top: 2px solid rgba(32, 30, 29, 0.4);
-  border-left: 2px solid rgba(32, 30, 29, 0.4);
+  background: #fff;
+  color: #201e1d;
 }
 .landing-level-card {
   padding: 28px;
   border-right: 2px solid rgba(32, 30, 29, 0.4);
-  border-bottom: 2px solid rgba(32, 30, 29, 0.4);
   display: flex;
   flex-direction: column;
 }
+.landing-level-card:last-child { border-right: none; }
 .landing-level-eyebrow {
   font-size: 11px;
   letter-spacing: 0.1em;
@@ -1829,34 +1850,6 @@ fieldset div > label:hover {
 }
 .landing-level-card .btn-secondary {
   align-self: flex-start;
-}
-
-.landing-cta-banner {
-  background: #226B79;
-  color: #fff;
-  padding: 64px 32px;
-}
-.landing-cta-inner {
-  max-width: 1120px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 32px;
-  flex-wrap: wrap;
-}
-.landing-cta-inner h2 {
-  font-family: 'Archivo', sans-serif;
-  font-weight: 800;
-  font-size: 30px;
-  margin: 0 0 8px;
-  color: #fff;
-}
-.landing-cta-inner p {
-  margin: 0;
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.9);
-  max-width: 50ch;
 }
 
 .landing-footer {
@@ -1914,29 +1907,26 @@ fieldset div > label:hover {
     padding-top: 24px;
     padding-bottom: 0;
   }
-  .landing-hero-badges { flex-direction: row; flex-wrap: wrap; }
+  .landing-hero-badges { flex-direction: row; flex-wrap: wrap; gap: 12px 24px; }
 
   .landing-why { grid-template-columns: 1fr; gap: 32px; padding: 48px 20px; }
   .landing-why-grid { grid-template-columns: 1fr; gap: 24px; }
 
   .landing-levels { padding: 48px 20px; }
-  .landing-levels-grid { grid-template-columns: 1fr; border-left: none; border-right: none; }
-  .landing-level-card { border-right: none; }
-
-  .landing-cta-banner { padding: 40px 20px; }
-  .landing-cta-inner { flex-direction: column; align-items: flex-start; }
-  .landing-cta-inner .btn-primary { width: 100%; }
+  .landing-levels-grid { grid-template-columns: 1fr; }
+  .landing-level-card { border-right: none; border-bottom: 2px solid rgba(32, 30, 29, 0.4); }
+  .landing-level-card:last-child { border-bottom: none; }
 
   .landing-footer { padding: 20px; }
 }
 
 @media (max-width: 480px) {
-  .landing-hero, .landing-why, .landing-levels, .landing-cta-banner, .landing-footer {
+  .landing-hero, .landing-why, .landing-levels, .landing-footer {
     padding-left: 16px;
     padding-right: 16px;
   }
   .landing-hero-title { font-size: 28px; line-height: 1.15; }
-  .landing-why-title, .landing-levels-title, .landing-cta-inner h2 { font-size: 22px; }
+  .landing-why-title, .landing-levels-title { font-size: 22px; }
   .landing-why-item h3, .landing-level-card h3 { font-size: 16px; }
 
   .landing-hero-actions .btn-primary { width: 100%; }
