@@ -278,6 +278,20 @@
               </label>
             </sc-for>
           </div>
+          <sc-if value="{{ browseHasHelp }}" hint-placeholder-val="{{ false }}">
+          <h3 style="font-size:16px;font-weight:700;color:#164752;margin:24px 0 12px">Where to get help</h3>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ browseHelpList }}" as="q" hint-placeholder-count="2">
+              <label for="{{ q.inputId }}" class="question-row" style="{{ q.cardStyle }}">
+                <input id="{{ q.inputId }}" type="checkbox" checked="{{ q.selected }}" onChange="{{ q.onToggle }}" />
+                <span class="question-row-text">
+                  <span class="question-row-summary">{{ q.quickSummary }}</span>
+                  <span class="question-row-question">{{ q.humanVersion }}</span>
+                </span>
+              </label>
+            </sc-for>
+          </div>
+          </sc-if>
         </div>
         </sc-if>
       </div>
@@ -584,7 +598,7 @@
         </div>
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+      <div style="display:flex;flex-direction:column;gap:10px">
         <sc-for list="{{ browseShortlist }}" as="q" hint-placeholder-count="5">
           <label for="{{ q.inputId }}" class="question-row" style="{{ q.cardStyle }}">
             <input id="{{ q.inputId }}" type="checkbox" checked="{{ q.selected }}" onChange="{{ q.onToggle }}" />
@@ -595,6 +609,21 @@
           </label>
         </sc-for>
       </div>
+      <sc-if value="{{ browseHasHelp }}" hint-placeholder-val="{{ false }}">
+      <h3 style="font-size:16px;font-weight:700;color:#164752;margin:24px 0 12px">Where to get help</h3>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ browseHelpList }}" as="q" hint-placeholder-count="2">
+          <label for="{{ q.inputId }}" class="question-row" style="{{ q.cardStyle }}">
+            <input id="{{ q.inputId }}" type="checkbox" checked="{{ q.selected }}" onChange="{{ q.onToggle }}" />
+            <span class="question-row-text">
+              <span class="question-row-summary">{{ q.quickSummary }}</span>
+              <span class="question-row-question">{{ q.humanVersion }}</span>
+            </span>
+          </label>
+        </sc-for>
+      </div>
+      </sc-if>
+      <div style="height:20px"></div>
 
       <!-- Primary action: sits at the end of the list, in the page flow -->
       <div class="list-actions" role="region" aria-label="Selected questions">
@@ -757,16 +786,10 @@ const RLS_LEVELS = ['Minimum', 'Moderate', 'Comfortable'];
 const hasPartnerAge = (fields) => /\d/.test(fields.partnerAge || '');
 const ACCENT = '#2C8494', ACCENT_DARK = '#1B5560', ACCENT_TINT = '#EAF3F3', SURFACE = '#eceae9', TEXT = '#201e1d', TEXT_MUTED = 'rgba(32,30,29,0.65)', DIVIDER = 'rgba(32,30,29,0.4)';
 
+// The three shortlisting questions (PO-63). The stage is asked first, and the answers
+// offered to "What do you want to know?" depend on it: optionsByStage is keyed by the
+// stage chosen. Each topic value matches a "topics" tag on the questions in prompts.js.
 const BROWSE_QUIZ_QUESTIONS = [
-  {
-    key: 'category',
-    question: 'What do you want to know?',
-    options: [
-      { value: 'foundation', label: 'How to make a plan for your income in retirement' },
-      { value: 'optimise', label: 'How to get the most out of your pension' },
-      { value: 'awareness', label: 'Things to consider' }
-    ]
-  },
   {
     key: 'stage',
     question: 'Where are you in your retirement income planning?',
@@ -775,6 +798,27 @@ const BROWSE_QUIZ_QUESTIONS = [
       { value: 'soon', label: 'Thinking about retiring soon' },
       { value: 'taking', label: "I'm already taking income" }
     ]
+  },
+  {
+    key: 'topic',
+    question: 'What do you want to know?',
+    optionsByStage: {
+      building: [
+        { value: 'building_have', label: 'What I have and what I might get' },
+        { value: 'building_need', label: 'How much I need and how to get there' },
+        { value: 'building_change', label: 'What could change my plans' }
+      ],
+      soon: [
+        { value: 'soon_get', label: 'What I will get and whether it is enough' },
+        { value: 'soon_options', label: 'My options for taking my pension' },
+        { value: 'soon_sort', label: 'What to sort out before I retire' }
+      ],
+      taking: [
+        { value: 'taking_last', label: 'Making my money last' },
+        { value: 'taking_tax', label: 'Paying less tax and making more of what I have' },
+        { value: 'taking_later', label: 'Planning for later life and my family' }
+      ]
+    }
   },
   {
     key: 'style',
@@ -787,6 +831,9 @@ const BROWSE_QUIZ_QUESTIONS = [
   }
 ];
 
+// The tag on questions that are offered under every answer, after the shortlist.
+const HELP_TOPIC = 'help';
+
 class Component extends DCLogic {
   state = {
     view: 'landing',
@@ -797,7 +844,7 @@ class Component extends DCLogic {
     browseStep: 1,
     browseSummary: false,
     browsePromptText: '',
-    browseAnswers: { category: null, stage: null, style: null },
+    browseAnswers: { stage: null, topic: null, style: null },
     fields: {},
     toasts: [],
     outputText: '',
@@ -944,16 +991,16 @@ class Component extends DCLogic {
     window.scrollTo(0, 0);
     const s = this.state;
     const hasSelection = Object.keys(s.browseSelected).length > 0;
-    const hasAnswers = !!s.browseAnswers.category;
+    const hasAnswers = !!s.browseAnswers.topic;
     if (hasSelection) {
       this.setState({ view: 'app', phase: 'wizard', step: 2, browseSummary: false });
     } else if (hasAnswers) {
       this.setState({ view: 'app', phase: 'wizard', step: 1, browseStep: 4, browseSummary: false });
     } else {
-      this.setState({ view: 'app', phase: 'wizard', step: 1, browseStep: 1, browseSummary: false, browseAnswers: { category: null, stage: null, style: null } });
+      this.setState({ view: 'app', phase: 'wizard', step: 1, browseStep: 1, browseSummary: false, browseAnswers: { stage: null, topic: null, style: null } });
     }
   };
-  goBrowse = () => { this.track('route_chosen', 'list'); window.scrollTo(0, 0); this.setState({ view: 'browse', browseStep: 1, browseSummary: false, browseAnswers: { category: null, stage: null, style: null }, browseSelected: {}, browseExpanded: {} }); };
+  goBrowse = () => { this.track('route_chosen', 'list'); window.scrollTo(0, 0); this.setState({ view: 'browse', browseStep: 1, browseSummary: false, browseAnswers: { stage: null, topic: null, style: null }, browseSelected: {}, browseExpanded: {} }); };
   goLanding = () => { window.scrollTo(0, 0); this.setState({ view: 'landing' }); };
   goStarterPrompt = () => { this.track('route_chosen', 'starter'); window.scrollTo(0, 0); this.setState({ view: 'starterPrompt', showStarterPromptText: false }); };
   toggleStarterPromptText = () => this.setState((s) => ({ showStarterPromptText: !s.showStarterPromptText }));
@@ -1030,6 +1077,8 @@ class Component extends DCLogic {
   selectBrowseAnswer = (key, value) => {
     this.setState((s) => {
       const browseAnswers = { ...s.browseAnswers, [key]: value };
+      // The topics on offer belong to a stage, so a new stage clears the topic.
+      if (key === 'stage' && value !== s.browseAnswers.stage) browseAnswers.topic = null;
       const browseStep = s.browseStep < 3 ? s.browseStep + 1 : 4;
       return { browseAnswers, browseStep };
     });
@@ -1039,7 +1088,7 @@ class Component extends DCLogic {
   };
   restartBrowseQuiz = () => {
     window.scrollTo(0, 0);
-    this.setState({ browseStep: 1, browseSummary: false, browseAnswers: { category: null, stage: null, style: null }, browseSelected: {}, browseExpanded: {} });
+    this.setState({ browseStep: 1, browseSummary: false, browseAnswers: { stage: null, topic: null, style: null }, browseSelected: {}, browseExpanded: {} });
   };
 
   selectAllPrompts = () => {
@@ -1276,11 +1325,14 @@ class Component extends DCLogic {
     const showWizardNav = !isStep1Quiz;
 
     const browseQuizQuestionData = s.browseStep <= 3 ? BROWSE_QUIZ_QUESTIONS[s.browseStep - 1] : null;
+    const browseQuizOptions = browseQuizQuestionData
+      ? browseQuizQuestionData.options || browseQuizQuestionData.optionsByStage[s.browseAnswers.stage] || []
+      : [];
     const browseQuiz = browseQuizQuestionData ? {
       index: s.browseStep,
       total: 3,
       question: browseQuizQuestionData.question,
-      options: browseQuizQuestionData.options.map((opt) => {
+      options: browseQuizOptions.map((opt) => {
         const isSelected = s.browseAnswers[browseQuizQuestionData.key] === opt.value;
         return {
           value: opt.value,
@@ -1305,21 +1357,20 @@ class Component extends DCLogic {
     }));
     const browseQuizShowBack = isQuizSubPhase && s.browseStep > 1;
 
+    // The shortlist is every question tagged with the topic chosen, in the order
+    // prompts.js lists them, followed by the questions offered under every answer.
     let browseShortlist = [];
-    if ((isBrowseResults || isStep1Shortlist) && s.browseAnswers.category) {
-      const matchedSection = PROMPTS_DATA.sections.find((sec) => sec.id === s.browseAnswers.category);
-      if (matchedSection) {
-        const scored = matchedSection.questions.map((q) => {
-          let score = 0;
-          if (q.stages && q.stages.includes(s.browseAnswers.stage)) score += 2;
-          if (q.styles && q.styles.includes(s.browseAnswers.style)) score += 1;
-          return { q, score };
-        });
-        scored.sort((a, b) => b.score - a.score);
-        browseShortlist = scored.slice(0, 5).map((x) => buildQuestionView(x.q, s.browseSelected, s.browseExpanded, this.toggleBrowseQuestion, this.toggleBrowseExpand, true));
-      }
+    let browseHelpList = [];
+    if ((isBrowseResults || isStep1Shortlist) && s.browseAnswers.topic) {
+      const tagged = (topic) => PROMPTS_DATA.sections
+        .flatMap((sec) => sec.questions)
+        .filter((q) => (q.topics || []).includes(topic))
+        .map((q) => buildQuestionView(q, s.browseSelected, s.browseExpanded, this.toggleBrowseQuestion, this.toggleBrowseExpand, true));
+      browseShortlist = tagged(s.browseAnswers.topic);
+      browseHelpList = tagged(HELP_TOPIC);
     }
-    const browseShortlistIds = browseShortlist.map((q) => q.id);
+    const browseHasHelp = browseHelpList.length > 0;
+    const browseShortlistIds = browseShortlist.concat(browseHelpList).map((q) => q.id);
 
     const steps = STEP_NAMES.map((label, i) => {
       const n = i + 1;
@@ -1472,6 +1523,8 @@ class Component extends DCLogic {
       browseQuizBack: this.browseQuizBack,
       restartBrowseQuiz: this.restartBrowseQuiz,
       browseShortlist,
+      browseHelpList,
+      browseHasHelp,
       onSelectAllShortlist: () => this.browseSelectAllIds(browseShortlistIds),
       onDeselectAllShortlist: () => this.browseDeselectAllIds(browseShortlistIds),
       clearBrowseSelected: this.clearBrowseSelected,
