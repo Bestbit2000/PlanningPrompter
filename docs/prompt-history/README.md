@@ -14,6 +14,7 @@ paragraphs, each question's prompt, and the page code that builds the personalis
 
 | Release | Live from | What changed in the prompts | Record |
 |---|---|---|---|
+| v0.7.0 | 7 October 2026 | 3 answer-style paragraphs changed (caseStudy, factual, simple). 9 questions added (foundation_6, foundation_7, foundation_8, foundation_9, awareness_7, optimise_7, optimise_8, anythingElse_4, anythingElse_5). 1 question removed (optimise_6). Prompt changed for 18 questions (foundation_1, foundation_2, foundation_3, foundation_5, foundation_4, awareness_1, awareness_2, awareness_3, awareness_4, awareness_5, awareness_6, optimise_2, optimise_1, optimise_4, optimise_5, anythingElse_1, anythingElse_2, anythingElse_3). Wording shown on the site changed for 18 questions (foundation_1, foundation_2, foundation_3, foundation_5, foundation_4, awareness_1, awareness_2, awareness_3, awareness_4, awareness_5, awareness_6, optimise_2, optimise_1, optimise_4, optimise_5, anythingElse_1, anythingElse_2, anythingElse_3). | [v0.7.0.md](v0.7.0.md) |
 | v0.6.0 | 6 October 2026 | Starter prompt changed. How the prompt is put together changed (prompt list). | [v0.6.0.md](v0.6.0.md) |
 | v0.5.0 | 3 October 2026 | How the prompt is put together changed (prompt list). | [v0.5.0.md](v0.5.0.md) |
 | v0.4.0 | 3 October 2026 | 3 answer-style paragraphs added (caseStudy, factual, simple). How the prompt is put together changed (personalised prompt, prompt list, answer style). | [v0.4.0.md](v0.4.0.md) |
