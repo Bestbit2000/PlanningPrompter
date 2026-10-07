@@ -279,7 +279,7 @@
             </sc-for>
           </div>
           <sc-if value="{{ browseHasHelp }}" hint-placeholder-val="{{ false }}">
-          <h3 style="font-size:16px;font-weight:700;color:#164752;margin:24px 0 12px">Where to get help</h3>
+          <h3 style="font-size:16px;font-weight:700;color:#164752;margin:24px 0 12px">{{ browseHelpHeading }}</h3>
           <div style="display:flex;flex-direction:column;gap:10px">
             <sc-for list="{{ browseHelpList }}" as="q" hint-placeholder-count="2">
               <label for="{{ q.inputId }}" class="question-row" style="{{ q.cardStyle }}">
@@ -610,7 +610,7 @@
         </sc-for>
       </div>
       <sc-if value="{{ browseHasHelp }}" hint-placeholder-val="{{ false }}">
-      <h3 style="font-size:16px;font-weight:700;color:#164752;margin:24px 0 12px">Where to get help</h3>
+      <h3 style="font-size:16px;font-weight:700;color:#164752;margin:24px 0 12px">{{ browseHelpHeading }}</h3>
       <div style="display:flex;flex-direction:column;gap:10px">
         <sc-for list="{{ browseHelpList }}" as="q" hint-placeholder-count="2">
           <label for="{{ q.inputId }}" class="question-row" style="{{ q.cardStyle }}">
@@ -747,6 +747,8 @@
 // before this block runs) so it can be edited and reflected on refresh without
 // touching this file. Falls back to an empty list if prompts.js failed to load.
 const PROMPTS_DATA = window.PROMPTS_DATA || { sections: [] };
+// A question marked "archived" in prompts.js keeps its id and history but is not offered.
+PROMPTS_DATA.sections.forEach((sec) => { sec.questions = sec.questions.filter((q) => !q.archived); });
 
 // Starter prompt configuration - edit the values below to customize the starter prompt
 const STARTER_PROMPT_DATA = {
@@ -788,37 +790,20 @@ const ACCENT = '#2C8494', ACCENT_DARK = '#1B5560', ACCENT_TINT = '#EAF3F3', SURF
 
 // The three shortlisting questions (PO-63). The stage is asked first, and the answers
 // offered to "What do you want to know?" depend on it: optionsByStage is keyed by the
-// stage chosen. Each topic value matches a "topics" tag on the questions in prompts.js.
+// stage chosen. The wording of the first two questions and their answers is in
+// prompts.js under "shortlist" (PO-68); each topic id matches a "topics" tag on the
+// questions there.
+const SHORTLIST = PROMPTS_DATA.shortlist || { stages: [] };
 const BROWSE_QUIZ_QUESTIONS = [
   {
     key: 'stage',
-    question: 'Where are you in your retirement income planning?',
-    options: [
-      { value: 'building', label: 'Still building up towards retirement' },
-      { value: 'soon', label: 'Thinking about retiring soon' },
-      { value: 'taking', label: "I'm already taking income" }
-    ]
+    question: SHORTLIST.stageQuestion,
+    options: SHORTLIST.stages.map((st) => ({ value: st.id, label: st.label }))
   },
   {
     key: 'topic',
-    question: 'What do you want to know?',
-    optionsByStage: {
-      building: [
-        { value: 'building_have', label: 'What I have and what I might get' },
-        { value: 'building_need', label: 'How much I need and how to get there' },
-        { value: 'building_change', label: 'What could change my plans' }
-      ],
-      soon: [
-        { value: 'soon_get', label: 'What I will get and whether it is enough' },
-        { value: 'soon_options', label: 'My options for taking my pension' },
-        { value: 'soon_sort', label: 'What to sort out before I retire' }
-      ],
-      taking: [
-        { value: 'taking_last', label: 'Making my money last' },
-        { value: 'taking_tax', label: 'Paying less tax and making more of what I have' },
-        { value: 'taking_later', label: 'Planning for later life and my family' }
-      ]
-    }
+    question: SHORTLIST.topicQuestion,
+    optionsByStage: Object.fromEntries(SHORTLIST.stages.map((st) => [st.id, st.topics.map((t) => ({ value: t.id, label: t.label }))]))
   },
   {
     key: 'style',
@@ -1525,6 +1510,7 @@ class Component extends DCLogic {
       browseShortlist,
       browseHelpList,
       browseHasHelp,
+      browseHelpHeading: SHORTLIST.helpHeading,
       onSelectAllShortlist: () => this.browseSelectAllIds(browseShortlistIds),
       onDeselectAllShortlist: () => this.browseDeselectAllIds(browseShortlistIds),
       clearBrowseSelected: this.clearBrowseSelected,

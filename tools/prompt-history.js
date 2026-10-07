@@ -57,7 +57,8 @@ function extract(files) {
   const text = (v) => String(v || '').replace(/\r\n/g, '\n');
   const starter = starterSource ? text(vm.runInNewContext('(' + starterSource + ')', {}, { timeout: 2000 }).prompt) : null;
   const questions = [];
-  (data.sections || []).forEach((s) => (s.questions || []).forEach((q) => questions.push({ section: s.title, id: q.id, summary: text(q.quickSummary), human: text(q.humanVersion), prompt: text(q.aiOptimised) })));
+  // A question marked "archived" is kept in prompts.js for its id but is not on the site.
+  (data.sections || []).forEach((s) => (s.questions || []).filter((q) => !q.archived).forEach((q) => questions.push({ section: s.title, id: q.id, summary: text(q.quickSummary), human: text(q.humanVersion), prompt: text(q.aiOptimised) })));
   const styles = Object.keys(data.styleBlocks || {}).map((k) => ({ id: k, label: data.styleBlocks[k].label, text: text(data.styleBlocks[k].text) }));
   const code = {};
   ['generatePrompt', 'copyAllSelected', 'withStyle'].forEach((name) => { const src = method(files.index, name); if (src) code[name] = src; });

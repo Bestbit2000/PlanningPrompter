@@ -7,14 +7,43 @@
 // bottom of the prompt when it is copied or launched.
 //
 // Each question's "topics" lists the answers it is offered under in the site's
-// shortlisting questions, as "stage_topic" (the values are in index.html). A
-// question tagged "help" is offered under every answer. "stages" is the same
-// information by stage alone, which the optimiser shows beside each question.
+// shortlisting questions, by the ids in "shortlist" below. A question tagged
+// "help" is offered under every answer. "stages" is the same information by
+// stage alone, which the optimiser shows beside each question. A question marked
+// "archived" is kept for its id and history but is not shown on the site.
+//
+// "shortlist" holds the wording of the first two shortlisting questions and of
+// their answers. The ids must not change: the questions' "topics" refer to them.
+//
+// This file is edited from the optimiser's "Edit questions" page, which checks
+// it and keeps a copy of the old file. It can still be edited by hand.
 window.PROMPTS_DATA = {
   "styleBlocks": {
     "caseStudy": { "label": "In the style of real world case studies", "text": "How to present your answer:\nFor each question, explain it through one or two short worked examples of believable people in the UK, with ages and circumstances I could recognise. Show what they had, what they chose and what happened, then what that shows in general, with no separate explanation. Say plainly that they are illustrations, not real people and not recommendations for me. Keep figures simple, and check they add up. This is only about how you present the answer: everything else I have asked for still applies." },
     "factual": { "label": "With numbers and facts", "text": "How to present your answer:\nFor each question, put the key numbers and facts first, in short bullet points or a small table, with little narrative around them. Say which tax year every figure is for and where I can check it. Label estimates and assumptions and keep them apart from facts. Where you work something out, show the steps. Say when you are unsure of a figure rather than guess. This is only about how you present the answer: everything else I have asked for still applies." },
     "simple": { "label": "Short and simple descriptions", "text": "How to present your answer:\nKeep it short and simple, as you would for a friend. Put the main point first. Use everyday words and short sentences, and explain any pension term in plain words the first time you use it. Use no more than five bullet points for each question and leave out detail I did not ask for. I should be able to take it in at one reading. This is only about how you present the answer: everything else I have asked for still applies." }
+  },
+  "shortlist": {
+    "stageQuestion": "Where are you in your retirement income planning?",
+    "topicQuestion": "What do you want to know?",
+    "helpHeading": "Where to get help",
+    "stages": [
+      { "id": "building", "label": "Still building up towards retirement", "topics": [
+        { "id": "building_have", "label": "What I have and what I might get" },
+        { "id": "building_need", "label": "How much I need and how to get there" },
+        { "id": "building_change", "label": "What could change my plans" }
+      ] },
+      { "id": "soon", "label": "Thinking about retiring soon", "topics": [
+        { "id": "soon_get", "label": "What I will get and whether it is enough" },
+        { "id": "soon_options", "label": "My options for taking my pension" },
+        { "id": "soon_sort", "label": "What to sort out before I retire" }
+      ] },
+      { "id": "taking", "label": "I'm already taking income", "topics": [
+        { "id": "taking_last", "label": "Making my money last" },
+        { "id": "taking_tax", "label": "Paying less tax and making more of what I have" },
+        { "id": "taking_later", "label": "Planning for later life and my family" }
+      ] }
+    ]
   },
   "sections": [
     {
