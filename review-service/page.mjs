@@ -15,6 +15,8 @@ export const REVIEW_PAGE = String.raw`<!DOCTYPE html>
 <title>Answer review: Retirement Income Prompt Generator</title>
 <style>
   * { box-sizing: border-box; }
+  /* Anything marked hidden stays hidden, whatever else styles it. */
+  [hidden] { display: none !important; }
   body { font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #201e1d; background: #f5f4f3; margin: 0; }
   header { background: #fff; border-bottom: 3px solid #226B79; }
   header div { max-width: 1180px; margin: 0 auto; padding: 12px 16px; font-weight: 700; color: #164752; }
@@ -39,6 +41,10 @@ export const REVIEW_PAGE = String.raw`<!DOCTYPE html>
     .answer { position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow-y: auto; }
   }
   .answer:focus-visible { outline: 3px solid #201e1d; outline-offset: 2px; }
+  .count { border-top: 1px solid #dedad7; margin: 14px 0 0; padding-top: 10px; font-weight: 700; }
+  .rules { font-size: 15px; color: #3b3835; background: #f5f4f3; border-radius: 6px; padding: 10px 14px 2px; margin: 0 0 12px; }
+  .rules p { margin: 0 0 6px; color: #201e1d; }
+  .points em { font-style: normal; font-weight: 700; color: #201e1d; }
   .md h3 { font-size: 18px; margin: 16px 0 6px; }
   .md h4 { font-size: 16px; margin: 14px 0 6px; }
   .md table { border-collapse: collapse; margin: 0 0 12px; font-size: 15px; display: block; overflow-x: auto; }
@@ -47,8 +53,9 @@ export const REVIEW_PAGE = String.raw`<!DOCTYPE html>
   .md blockquote { margin: 0 0 12px; padding: 2px 14px; border-left: 4px solid #c9c5c2; }
   .md code { background: #eceae9; padding: 1px 4px; border-radius: 3px; }
   .md hr { border: none; border-top: 1px solid #c9c5c2; margin: 14px 0; }
-  fieldset { border: 1px solid #c9c5c2; border-radius: 8px; padding: 12px 16px 16px; margin: 0 0 16px; background: #fff; min-width: 0; }
-  legend { font-weight: 700; font-size: 17px; padding: 0 6px; color: #164752; }
+  fieldset { border: 1px solid #c9c5c2; border-radius: 8px; padding: 14px 16px 16px; margin: 0 0 16px; background: #fff; min-width: 0; }
+  legend { float: left; width: 100%; font-weight: 700; font-size: 17px; padding: 0; margin: 0 0 8px; color: #164752; }
+  legend + * { clear: both; }
   .points { font-size: 15px; color: #3b3835; margin: 0 0 12px; }
   .points strong { color: #201e1d; }
   .scale { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -164,6 +171,7 @@ export const REVIEW_PAGE = String.raw`<!DOCTYPE html>
     me.questions = q + 1;
     me.items.forEach(function (it) { it.alone = size[it.q] === 1; });
   }
+  function wordsIn(text) { return (String(text || '').match(/\S+/g) || []).length; }
   function nameOf(it) { return 'Question ' + (it.q + 1) + (it.alone ? '' : ', answer ' + it.letter); }
   function draftOf(it) {
     if (!S.draft[it.id]) {
@@ -174,7 +182,7 @@ export const REVIEW_PAGE = String.raw`<!DOCTYPE html>
   }
   function doneCount() { return S.me.items.filter(function (it) { return it.saved; }).length; }
   function minutes() {
-    var words = S.me.items.reduce(function (n, it) { return n + (it.answer.match(/\S+/g) || []).length; }, 0);
+    var words = S.me.items.reduce(function (n, it) { return n + wordsIn(it.answer); }, 0);
     return Math.max(5, Math.ceil((words / 200 + S.me.items.length + 1) / 5) * 5);
   }
 
@@ -223,15 +231,22 @@ export const REVIEW_PAGE = String.raw`<!DOCTYPE html>
 
   function item(index) {
     var it = S.me.items[index], d = draftOf(it), n = S.me.items.length;
+    var count = wordsIn(it.answer), countText = 'This answer is ' + count.toLocaleString('en-GB') + ' word' + (count === 1 ? '' : 's') + '.';
     var style = S.me.styles[it.styleKey];
     var styleHtml = !style ? '' :
       '<p><strong>Answer style asked for:</strong> ' + esc(style.name) + '</p>' +
-      '<details><summary>What a "' + esc(style.name) + '" answer should do</summary>' +
-      (style.reader ? '<p class="note">Why someone picks this style: "' + esc(style.reader) + '"</p>' : '') +
-      '<ol>' + (style.rules || []).map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ol></details>';
+      (style.reader ? '<p class="note">Why someone picks this style: "' + esc(style.reader) + '"</p>' : '');
+    // The numbered rules for the style, and the ways an answer misses it, shown in the
+    // "Answer style" box: its judging statement calls them "listed below".
+    var styleRules = !style || !(style.rules || []).length ? '' :
+      '<div class="rules"><p><strong>The rules for a "' + esc(style.name) + '" answer</strong></p>' +
+      '<ol>' + style.rules.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ol>' +
+      ((style.misses || []).length ? '<p><strong>It has missed the style if</strong></p><ul>' + style.misses.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul>' : '') +
+      '</div>';
     var groups = S.me.groups.map(function (g) {
       return '<fieldset><legend>' + esc(g.title) + '</legend>' +
-        '<ul class="points">' + (g.statements || []).map(function (s) { return '<li><strong>' + esc(s.name) + ':</strong> ' + esc(s.description) + '</li>'; }).join('') + '</ul>' +
+        '<ul class="points">' + (g.statements || []).map(function (s) { return '<li><strong>' + esc(s.name) + ':</strong> ' + esc(s.description) + (s.id === 'conciseness' || (!s.id && s.name === 'Length') ? ' <em>' + countText + '</em>' : '') + '</li>'; }).join('') + '</ul>' +
+        (g.id === 'style' ? styleRules : '') +
         scale(g, d) + '</fieldset>';
     }).join('');
     show(
@@ -240,7 +255,7 @@ export const REVIEW_PAGE = String.raw`<!DOCTYPE html>
       '<h1>' + esc(nameOf(it)) + '</h1>' +
       '<div class="card"><h2>The question</h2><p>' + esc(it.question) + '</p>' + styleHtml + '</div>' +
       '<div class="cols">' +
-        '<section class="card answer" tabindex="0" aria-label="The answer"><h2>The answer' + (it.alone ? '' : ' (' + it.letter + ')') + '</h2><div class="md">' + md(it.answer) + '</div></section>' +
+        '<section class="card answer" tabindex="0" aria-label="The answer"><h2>The answer' + (it.alone ? '' : ' (' + it.letter + ')') + '</h2><div class="md">' + md(it.answer) + '</div><p class="count">' + countText + '</p></section>' +
         '<form id="form" novalidate>' +
           '<h2>Your scores</h2>' +
           '<p class="note">Give each area one score, from 0 (fails) to 10 (cannot be faulted). The points under each heading are what to judge it on.</p>' +
