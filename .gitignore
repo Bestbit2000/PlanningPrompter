@@ -5,3 +5,7 @@ optimiser/
 stats-service/.env
 stats-service/node_modules/
 stats-service/.neon
+
+# Human review service: local settings and installed packages
+review-service/.env
+review-service/node_modules/
