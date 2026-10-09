@@ -12,24 +12,43 @@
 import { TOTALS_PAGE } from './totals-page.mjs';
 
 const TYPES = ['starter', 'list', 'personalised'];
+const BUILT = ['list', 'personalised'];   // the two routes that build a prompt from questions
 const CHATBOTS = ['chatgpt', 'claude', 'copilot', 'gemini', 'perplexity'];
 const QUESTION_ID = /^[A-Za-z]{1,30}_\d{1,3}$/;
+// Where a route was chosen: on the first screen, or from inside another route (PO-77).
+const SOURCES = ['landing', 'switch'];
+// The answers to the three shortlisting questions, by their ids in prompts.js.
+const STAGES = ['building', 'soon', 'taking'];
+const TOPIC_ID = /^(building|soon|taking)_[a-z]{1,20}$/;
+const STYLES = ['caseStudy', 'factual', 'simple'];
+const HELP_LINKS = ['moneyhelper', 'fca_register', 'report_problem', 'privacy_policy', 'living_standards', 'important_info'];
+// The boxes of the personalised route, by the ids they have on the page. Only the id is
+// ever sent, to say the box was filled in: never what was put in it.
+const FIELD_ID = /^(age|partnerAge|retireAge|country|employment|health|dependants|risk|pension|savings|property|income|pensionAccess|partnerPensionAccess|financeNotes|lifestyle|target|partTime|estate|plans|srcNotes|srcOtherText|concernOtherText|question|c_[a-z]{1,12}|src_[a-z]{1,12}(_amt|_from)?)$/;
+const parts = (d, n) => { const p = d.split('|'); return p.length === n ? p : null; };
 
 // The fixed list of what may be stored. Anything else is ignored, so free text can
 // never be stored by mistake. Keep in step with stats.js on the site.
 const DETAIL_OK = {
   landing_view: (d) => d === '',
-  route_chosen: (d) => TYPES.includes(d),
+  // 'list' alone is how a route was counted before PO-77; it is still accepted.
+  route_chosen: (d) => { const p = parts(d, 2); return TYPES.includes(d) || (!!p && TYPES.includes(p[0]) && SOURCES.includes(p[1])); },
   prompt_ready: (d) => TYPES.includes(d),
   prompt_copied: (d) => TYPES.includes(d),
-  question_used: (d) => {
-    const [id, type, extra] = d.split('|');
-    return extra === undefined && QUESTION_ID.test(id || '') && (type === 'list' || type === 'personalised');
+  question_used: (d) => { const p = parts(d, 2); return !!p && QUESTION_ID.test(p[0]) && BUILT.includes(p[1]); },
+  chatbot_launched: (d) => { const p = parts(d, 2); return !!p && CHATBOTS.includes(p[0]) && TYPES.includes(p[1]); },
+  // Which answer was picked to a shortlisting question: 'stage|soon|list'
+  shortlist_answer: (d) => {
+    const p = parts(d, 3);
+    if (!p || !BUILT.includes(p[2])) return false;
+    return p[0] === 'stage' ? STAGES.includes(p[1]) : p[0] === 'topic' ? TOPIC_ID.test(p[1]) : p[0] === 'style' ? STYLES.includes(p[1]) : false;
   },
-  chatbot_launched: (d) => {
-    const [bot, type, extra] = d.split('|');
-    return extra === undefined && CHATBOTS.includes(bot) && TYPES.includes(type);
-  }
+  // A step of the personalised route was reached: '1' to '6'. Step 7 is prompt_ready.
+  wizard_step: (d) => /^[1-6]$/.test(d),
+  launch_dialog_opened: (d) => TYPES.includes(d),
+  help_link: (d) => HELP_LINKS.includes(d),
+  // A box had something in it when a personalised prompt was built
+  field_used: (d) => FIELD_ID.test(d)
 };
 
 const MAX_BODY = 16 * 1024;        // bytes in one message

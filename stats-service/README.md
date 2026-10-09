@@ -139,7 +139,7 @@ in the plan.
 - One address can send 300 events a minute. Held in memory only.
 - One message can hold 100 events and 16 KB.
 - A day can gain 500 rows at most, so made-up question ids cannot fill the
-  table. Real use needs about 70.
+  table. Real use needs about 170.
 - Ten wrong keys a minute from one address, then the totals page asks them to
   wait.
 

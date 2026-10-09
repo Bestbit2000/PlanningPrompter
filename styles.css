@@ -69,7 +69,7 @@ a[target="_blank"]::after {
 }
 
 input, textarea, select, button {
-  font-family: 'Archivo', system-ui, sans-serif;
+  font-family: system-ui, sans-serif;
 }
 
 /* NAV TABS */
@@ -773,7 +773,7 @@ input, textarea, select, button {
   flex-wrap: wrap;
 }
 .list-upsell-title {
-  font-family: 'Archivo', sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 800;
   font-size: 18px;
   margin: 0 0 4px;
@@ -804,7 +804,7 @@ input, textarea, select, button {
   background: #fff;
   color: #226B79;
   border: 1.5px solid #226B79;
-  font-family: 'Archivo', sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 700;
   font-size: 14px;
   padding: 10px 16px;
@@ -822,7 +822,7 @@ input, textarea, select, button {
   background: #226B79;
   color: #fff;
   border: none;
-  font-family: 'Archivo', sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 800;
   font-size: 14px;
   padding: 12px 24px;
@@ -1255,7 +1255,7 @@ input, textarea, select, button {
   background: #2C8494;
   color: #fff;
   border: none;
-  font-family: 'Archivo', sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 800;
   font-size: 14px;
   padding: 12px 24px;
@@ -1330,7 +1330,7 @@ fieldset div > label:hover {
 }
 
 .starter-prompt-page-heading {
-  font-family: 'Archivo', sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 800;
   font-size: 32px;
   line-height: 1.2;
@@ -1569,7 +1569,7 @@ fieldset div > label:hover {
   gap: 18px;
 }
 .site-brand-name {
-  font-family: 'Archivo', sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 800;
   font-size: 16px;
   color: #164752;
@@ -1585,7 +1585,7 @@ fieldset div > label:hover {
   color: #226B79;
   border: 2px solid #226B79;
   border-radius: 8px;
-  font-family: 'Archivo', sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 800;
   font-size: 14px;
   padding: 4px 14px;
@@ -1636,7 +1636,7 @@ fieldset div > label:hover {
   background: #226B79;
   color: #fff;
   border: 2px solid #226B79;
-  font-family: 'Archivo', sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 800;
   font-size: 14px;
   padding: 12px 20px;
@@ -1663,7 +1663,7 @@ fieldset div > label:hover {
   background: #fff;
   color: #226B79;
   border: 2px solid #226B79;
-  font-family: 'Archivo', sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 800;
   font-size: 14px;
   padding: 12px 20px;
@@ -1706,7 +1706,7 @@ fieldset div > label:hover {
   margin-bottom: 20px;
 }
 .landing-hero-title {
-  font-family: 'Archivo', sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 800;
   font-size: 52px;
   line-height: 1.06;
@@ -1772,7 +1772,7 @@ fieldset div > label:hover {
   gap: 56px;
 }
 .landing-why-title {
-  font-family: 'Archivo', sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 800;
   font-size: 30px;
   margin: 0;
@@ -1804,7 +1804,7 @@ fieldset div > label:hover {
   padding: 64px 32px;
 }
 .landing-levels-title {
-  font-family: 'Archivo', sans-serif;
+  font-family: system-ui, sans-serif;
   font-weight: 800;
   font-size: 30px;
   margin: 0 0 8px;

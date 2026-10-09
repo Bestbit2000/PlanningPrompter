@@ -1,0 +1,2 @@
+# Kept byte for byte: support.js checks these files against a hash
+vendor/* -text

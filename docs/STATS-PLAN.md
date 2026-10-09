@@ -45,6 +45,19 @@ Each row is one event. "Type" is always one of `starter`, `list` or
 | `prompt_copied` | "Copy prompt only" succeeds | type | Copies in total and by type |
 | `chatbot_launched` | "Copy and launch" is pressed | chatbot, type | Which chatbot is used as the start point |
 
+Added on 9 October 2026 (PO-77), after the site's redesign:
+
+| Event | Sent when | Labels sent | Answers |
+|---|---|---|---|
+| `route_chosen` | As above | type, and `landing` or `switch` | Whether a route was chosen on the first screen or from inside another route |
+| `shortlist_answer` | An answer to one of the three shortlisting questions is picked | question (`stage`, `topic` or `style`), the answer's id, type | Which stage, topic and answer style visitors come for |
+| `wizard_step` | A step of the personalised route is reached | step number, 1 to 6 | Where visitors give up in the personalised route |
+| `launch_dialog_opened` | The "Choose your AI assistant" dialog opens | type | How many open the chooser and leave without launching |
+| `help_link` | A link to MoneyHelper, the FCA Register, "Report a problem", the CDA privacy policy or the Retirement Living Standards is followed, or the important information dialog is opened | which link | Whether the signposting is used |
+| `field_used` | A personalised prompt is built. One event per box that had something in it | the box's id | Which boxes visitors fill in. Never what was put in a box |
+
+All but `prompt_copied` and `chatbot_launched` count once per page load.
+
 How these answer the five questions in PO-19:
 
 1. **Each question, personalised or list:** `question_used` by question id and
@@ -78,6 +91,8 @@ closed or reloaded. Nothing is written to the device.
 ### What is never sent
 
 - Anything typed into the wizard: ages, amounts, health status, free text.
+  Since PO-77 the id of a box that was filled in is sent, such as `health`,
+  but never what was chosen or typed in it.
 - The text of any prompt.
 - Any visitor, session or device identifier.
 
@@ -98,8 +113,8 @@ One table of daily totals. There is no row per visitor and no row per event.
 
 The key is `day` + `event` + `detail`. A message either adds one to an existing
 row or creates the row at one. The size does not depend on the number of
-visits: there are about 70 possible combinations of event and labels, so at
-most about 70 rows a day. The counter also refuses to add more than 500 rows
+visits: there are about 170 possible combinations of event and labels, so at
+most about 170 rows a day. The counter also refuses to add more than 500 rows
 in one day, so made-up ids cannot fill the table.
 
 The endpoint:

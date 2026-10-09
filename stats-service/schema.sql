@@ -3,7 +3,7 @@
 
 create table if not exists usage_counts (
   day    date   not null,             -- UK date, no time
-  event  text   not null,             -- one of six fixed names
+  event  text   not null,             -- one of the fixed names in handler.mjs
   detail text   not null default '',  -- fixed labels, such as 'foundation_1|personalised'
   count  bigint not null default 0,   -- increased by one per event
   primary key (day, event, detail)

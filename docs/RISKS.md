@@ -102,8 +102,32 @@ session analytics loaded on every page with no consent prompt.
   and who receives it.
 - **Status: Done on the site.** Session analytics are gone; if recordings of
   that kind are wanted later they need a consent prompt and masking on the
-  wizard. The site still loads its font from Google, which sees the visitor's IP
-  address. The data protection note is open.
+  wizard. The data protection note is open.
+- **Font and privacy notice (PO-73 and PO-74, built 9 October 2026):** the site
+  no longer loads its font from Google; it uses the font on the visitor's
+  device. The privacy wording in the important information dialog is now a
+  fuller notice: it names the Consumer Duty Alliance as responsible for the
+  tool, names the companies that see the visitor's IP address (GitHub and
+  Neon), and links to the CDA's cookie and privacy policy for rights, the
+  contact and complaints to the ICO. The CDA's policy is written for its
+  members and its own website, which uses cookies and Google Analytics, so the
+  notice says the tool does not. The CDA has not yet confirmed that it is the
+  data controller for the tool or signed off the wording.
+- **More usage counts (PO-77, built 9 October 2026):** the site also counts
+  which shortlisting answers are picked, each step of the personalised route
+  reached, which boxes were filled in when a personalised prompt was built,
+  and clicks on the help links. Each is an event name with fixed labels added
+  to the daily totals: the id of a box, never its contents, and still no
+  visitor identifier. One count says that the optional health box was used,
+  not what was chosen. The privacy sentence now reads "We count how often each
+  part of the tool is used, for example how many prompts are copied, which
+  answers are picked and which boxes are filled in. The counts never hold what
+  you typed, and nothing in them can be linked to you." This needs the same
+  sign-off as the rest of the notice.
+- **Scripts hosted with the site (PO-75, built 9 October 2026):** React is
+  served from `vendor/` instead of unpkg.com, so the only outside
+  company a visit reaches, apart from the web host, is the usage counter's
+  host.
 - **Usage counts (PO-19, built 3 October 2026):** the site now counts how often
   each part of the tool is used. This is a different case from session
   recording, and was built so that no consent prompt is needed: it sends only

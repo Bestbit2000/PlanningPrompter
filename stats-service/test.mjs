@@ -37,7 +37,19 @@ const good = [
   { event: 'prompt_copied', detail: 'starter' },
   { event: 'question_used', detail: 'foundation_1|personalised' },
   { event: 'question_used', detail: 'anythingElse_4|list' },
-  { event: 'chatbot_launched', detail: 'chatgpt|starter' }
+  { event: 'chatbot_launched', detail: 'chatgpt|starter' },
+  // Added by PO-77
+  { event: 'route_chosen', detail: 'list|landing' },
+  { event: 'route_chosen', detail: 'personalised|switch' },
+  { event: 'shortlist_answer', detail: 'stage|soon|list' },
+  { event: 'shortlist_answer', detail: 'topic|taking_tax|personalised' },
+  { event: 'shortlist_answer', detail: 'style|caseStudy|list' },
+  { event: 'wizard_step', detail: '3' },
+  { event: 'launch_dialog_opened', detail: 'list' },
+  { event: 'help_link', detail: 'moneyhelper' },
+  { event: 'field_used', detail: 'health' },
+  { event: 'field_used', detail: 'c_runout' },
+  { event: 'field_used', detail: 'src_state_amt' }
 ];
 check('every real event is accepted', validEvents(JSON.stringify({ events: good })).length === good.length);
 
@@ -49,6 +61,17 @@ const bad = [
   { event: 'question_used', detail: 'foundation_1|list|extra' },
   { event: 'chatbot_launched', detail: 'grok|list' },
   { event: 'typed_text', detail: 'anything' },
+  { event: 'route_chosen', detail: 'list|advert' },
+  { event: 'shortlist_answer', detail: 'stage|soon' },
+  { event: 'shortlist_answer', detail: 'stage|retired|list' },
+  { event: 'shortlist_answer', detail: 'topic|my pension is small|list' },
+  { event: 'shortlist_answer', detail: 'style|simple|starter' },
+  { event: 'wizard_step', detail: '7' },
+  { event: 'launch_dialog_opened', detail: '' },
+  { event: 'help_link', detail: 'https://example.com' },
+  { event: 'field_used', detail: 'Poor / chronic conditions' },
+  { event: 'field_used', detail: 'health|Poor' },
+  { event: 'field_used', detail: 'src_state_amt_11500' },
   { event: 'constructor', detail: '' },
   { event: 'prompt_copied' },
   { detail: 'list' },
