@@ -19,6 +19,7 @@ const MAX_PACK = 2 * 1024 * 1024;   // bytes in one review pack
 const MAX_SAVE = 16 * 1024;         // bytes in one saved score
 const MAX_TEXT = 3000;              // characters in one comment
 const MAX_REVIEWERS = 100;
+const MAX_SECONDS = 4 * 60 * 60;     // the longest time kept for one answer
 const KEY_TRIES_PER_MINUTE = 10;    // wrong admin keys from one address
 const LINK_TRIES_PER_MINUTE = 30;   // links that are not in use, from one address
 const SAVES_PER_MINUTE = 120;       // from one reviewer
@@ -44,6 +45,9 @@ export function cleanScore(body, pack) {
   }
   if (typeof (body && body.dangerous) !== 'boolean') return { error: 'Say whether anything in the answer is dangerous or misleading.' };
   const data = { scores, dangerous: body.dangerous, dangerNote: body.dangerous ? text(body.dangerNote) : '', good: text(body.good), bad: text(body.bad) };
+  // How long the answer was on the reviewer's screen, in seconds, as their page counted it
+  // (PO-90). It is kept only when it is a sensible whole number.
+  if (Number.isInteger(body.seconds) && body.seconds >= 0 && body.seconds <= MAX_SECONDS) data.seconds = body.seconds;
   if (data.dangerous && !data.dangerNote) return { error: 'Say what is dangerous or misleading, and why.' };
   if (Object.values(scores).some((v) => v <= LOW_SCORE) && !data.bad) return { error: `A score of ${LOW_SCORE} or under needs a comment in "What is bad about this answer".` };
   return { data };

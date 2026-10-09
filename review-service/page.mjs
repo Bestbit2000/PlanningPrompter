@@ -93,7 +93,9 @@ export const REVIEW_PAGE = String.raw`<!DOCTYPE html>
   var key = '';
   try { key = decodeURIComponent((location.hash || '').replace(/^#/, '')); } catch (e) { key = ''; }
   var app = document.getElementById('app');
-  var S = { me: null, at: 'welcome', draft: {}, error: '', busy: false };
+  var S = { me: null, at: 'welcome', draft: {}, error: '', busy: false, time: {}, lastActive: Date.now() };
+  // After this long with no sign of life the clock stops, so a break is not counted.
+  var IDLE_SECONDS = 180;
   var LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
   function esc(v) {
@@ -211,7 +213,7 @@ export const REVIEW_PAGE = String.raw`<!DOCTYPE html>
       '<p>It should take about ' + minutes() + ' minutes. Your work is saved after each answer, so you can stop and come back with the same link.</p>' +
       '</div>' +
       '<div class="card"><h2>What we keep</h2>' +
-      '<p class="small">We keep the name you were invited under, your scores and your comments. They are seen by the people who look after the tool and may be included in their reports. No cookies are used and nothing else about you is recorded. Please do not put personal details in your comments. To have your review removed, tell the person who invited you.</p></div>' +
+      '<p class="small">We keep the name you were invited under, your scores, your comments and how long each answer takes you, which helps us tell the next reviewers how much time to allow. They are seen by the people who look after the tool and may be included in their reports. No cookies are used and nothing else about you is recorded. Please do not put personal details in your comments. To have your review removed, tell the person who invited you.</p></div>' +
       '<div class="actions"><button type="button" data-go="' + (done >= n ? 'summary' : String(firstUndone())) + '">' + (done === 0 ? 'Start' : done >= n ? 'Look at my answers' : 'Carry on (' + done + ' of ' + n + ' done)') + '</button></div>',
       true
     );
@@ -300,8 +302,22 @@ export const REVIEW_PAGE = String.raw`<!DOCTYPE html>
       '<div class="actions"><button type="button" class="plain" data-go="summary">Look at my answers again</button></div>', true);
   }
 
+  // ---- how long each answer takes (PO-90) ----
+  // One second is added to the answer on screen for every second the page is in view and
+  // the reviewer has scrolled, typed, clicked or moved within the last few minutes. Coming
+  // back to an answer adds to its time. Nothing is counted on the other screens.
+  function active() { S.lastActive = Date.now(); }
+  ['scroll', 'keydown', 'pointerdown', 'pointermove', 'touchstart', 'input'].forEach(function (name) { document.addEventListener(name, active, { capture: true, passive: true }); });
+  setInterval(function () {
+    if (typeof S.at !== 'number' || !S.me || document.visibilityState !== 'visible') return;
+    if (Date.now() - S.lastActive > IDLE_SECONDS * 1000) return;
+    var id = S.me.items[S.at].id;
+    S.time[id] = (S.time[id] || 0) + 1;
+  }, 1000);
+
   function go(where) {
     S.at = where;
+    active();
     if (where === 'welcome') return welcome();
     if (where === 'summary') return summary();
     if (where === 'thanks') return thanks();
@@ -342,7 +358,7 @@ export const REVIEW_PAGE = String.raw`<!DOCTYPE html>
     if (low && !d.bad.trim()) return fail('You gave a score of ' + S.me.lowScore + ' or under. Say what is bad about this answer, so it can be put right.');
     var button = document.getElementById('save');
     S.busy = true; button.disabled = true;
-    api('api/score', { itemId: it.id, scores: d.scores, dangerous: d.dangerous, dangerNote: d.dangerNote, good: d.good, bad: d.bad }).then(function (res) {
+    api('api/score', { itemId: it.id, scores: d.scores, dangerous: d.dangerous, dangerNote: d.dangerNote, good: d.good, bad: d.bad, seconds: Math.round(S.time[it.id] || 0) }).then(function (res) {
       S.busy = false;
       it.saved = res.saved;
       go(index + 1 < S.me.items.length ? index + 1 : 'summary');
@@ -357,6 +373,7 @@ export const REVIEW_PAGE = String.raw`<!DOCTYPE html>
   api('api/me').then(function (me) {
     layOut(me);
     S.me = me;
+    me.items.forEach(function (it) { S.time[it.id] = (it.saved && it.saved.seconds) || 0; });
     go('welcome');
   }).catch(function (e) {
     if (e.status === 401) return notInUse();

@@ -24,7 +24,8 @@ It holds, for each review:
 - the questions and the answers in the sample, each answer under a neutral id;
 - the five scoring groups and the judging statements shown under each;
 - each reviewer's display name, and which answers they were given;
-- their scores, their "dangerous or misleading" answers and their comments.
+- their scores, their "dangerous or misleading" answers and their comments;
+- how long each answer was on their screen while they were active, in seconds.
 
 It never holds:
 
@@ -129,6 +130,11 @@ One page, served at the service's address. It has no outside fonts or scripts.
    comment.
 5. What is good, and what is bad. A comment on what is bad is needed when any
    score is 5 or under.
+
+The page counts the seconds each answer is on screen while the reviewer is
+active, and saves that with the scores. A hidden tab, or three minutes with no
+scrolling, typing or clicking, stops the clock. The optimiser uses these times
+to adjust how long it tells the next reviewers to allow.
 
 Work is saved after each answer, so a reviewer can stop and come back with the
 same link. Scores can be changed until the review is closed.

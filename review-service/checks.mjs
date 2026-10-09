@@ -99,6 +99,9 @@ export async function runChecks(store, label) {
   check('a score can be changed', again.status === 200 && again.data.saved.scores.accuracy === 3);
   const back = await call('GET', '/api/me', keyA);
   check('saved scores come back with the answers', back.data.items[0].saved.scores.accuracy === 3 && back.data.items[0].saved.dangerous === true && back.data.items[1].saved === null);
+  const timed = await call('POST', '/api/score', keyA, { itemId: 'i1', scores: { accuracy: 3, actionSafety: 4 }, dangerous: true, dangerNote: 'Tells the reader to cash in.', good: '', bad: 'Wrong age.', seconds: 187 });
+  check('the time spent on an answer is kept with its scores', timed.status === 200 && timed.data.saved.seconds === 187 && (await call('GET', '/api/me', keyA)).data.items[0].saved.seconds === 187);
+  check('a time that makes no sense is not kept', cleanScore({ ...good, seconds: -5 }, pack).data.seconds === undefined && cleanScore({ ...good, seconds: 'long' }, pack).data.seconds === undefined && cleanScore({ ...good, seconds: 99999999 }, pack).data.seconds === undefined && cleanScore({ ...good, seconds: 12.5 }, pack).data.seconds === undefined);
   check('a long comment is cut to its limit', cleanScore({ ...good, good: 'x'.repeat(5000) }, pack).data.good.length === 3000);
 
   // --- Finishing ---
