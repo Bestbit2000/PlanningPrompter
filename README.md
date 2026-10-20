@@ -26,6 +26,7 @@ Copy these, keeping the folder structure, to any web server:
 | `prompts.js` | The questions, their prompts and the three answer-style paragraphs added to the bottom of a prompt. Edit this to change the wording |
 | `version.js` | The release number and "last reviewed" date shown in the footer |
 | `stats.js` | Sends the usage counts. The counter's address is the one setting at the top; leave it empty to send nothing |
+| `embed.js` | Only does anything inside a frame on another site: tells that page how tall the tool is, so the frame can fit it. See [docs/EMBEDDING.md](docs/EMBEDDING.md) |
 | `support.js` | The small runtime that `index.html` is written for. Don't edit, with one exception: the three addresses under "src/cdn.ts" point at `vendor/`. If this file is ever replaced, point them there again |
 | `vendor/` | React and React DOM, as published and unchanged. `support.js` checks each against a hash, so they must be copied byte for byte |
 | `images/` | The Taskforce logo and the chatbot icons |
@@ -38,6 +39,7 @@ does not need to be hosted:
 | `docs/` | Release process, risk register and planning notes |
 | `docs/prompt-history/` | A record of every prompt as it stood in each release, to show what the tool would have asked at any point in the past |
 | `tools/` | The script that writes the prompt history, run as a step of each release |
+| `tests/` | The back tests: every route run through in a real browser, and the prompts, counts and layout they should produce. See [tests/README.md](tests/README.md) |
 | `stats-service/` | The usage counter: a small service that runs apart from the site. See [stats-service/README.md](stats-service/README.md) |
 | `optimiser/` | A separate admin tool for improving the prompts. It runs only on a maintainer's own computer and must never be published. It is not tracked in git |
 
@@ -88,6 +90,10 @@ the totals. The optimiser's "Usage" page shows them as charts, with a
 printable report. It accepts counts only from addresses it has been told about, so
 when the tool moves to a new address, add that address to the counter. The plan
 behind it is in [docs/STATS-PLAN.md](docs/STATS-PLAN.md).
+
+To show the tool in a frame on another site, as consumerduty.org does, the page
+needs a short snippet so the frame fits each screen. It is in
+[docs/EMBEDDING.md](docs/EMBEDDING.md).
 
 ## Releases
 

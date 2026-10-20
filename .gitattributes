@@ -1,2 +1,5 @@
 # Kept byte for byte: support.js checks these files against a hash
 vendor/* -text
+
+# Back-test baselines are compared byte for byte, so they keep LF line endings on every checkout (PO-92)
+tests/baselines/* text eol=lf

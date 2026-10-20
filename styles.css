@@ -1,3 +1,7 @@
+/* Retirement Income Prompt Generator. One rule per selector; the narrow-screen changes
+   are together at the end, for 768px and under and then 480px and under (PO-94). */
+
+/* ============ BASE ============ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -39,6 +43,7 @@ body {
    Tab carries on from there. It is not a control and can't be tabbed to, so it has no ring. */
 [data-screen-heading]:focus { outline: none; }
 
+/* Links come first: the footer and dialog links below are meant to win over a:hover */
 a {
   color: #226B79;
   text-decoration: underline;
@@ -70,1484 +75,6 @@ a[target="_blank"]::after {
 
 input, textarea, select, button {
   font-family: system-ui, sans-serif;
-}
-
-/* NAV TABS */
-.tab-bar {
-  display: flex;
-  background: #fff;
-  border-bottom: 1px solid #e2e2de;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.tab {
-  flex: 1;
-  padding: 0.9rem 0.5rem;
-  text-align: center;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #888;
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  transition: color 0.15s, border-color 0.15s;
-  user-select: none;
-}
-.tab:hover { color: #12122a; }
-.tab.active { color: #4a2c5e; border-bottom-color: #4a2c5e; }
-.tab .tab-num {
-  display: inline-block;
-  width: 20px; height: 20px;
-  background: #e8e8e8;
-  border-radius: 50%;
-  font-size: 0.7rem;
-  line-height: 20px;
-  text-align: center;
-  margin-right: 5px;
-  transition: background 0.15s, color 0.15s;
-}
-.tab.active .tab-num { background: #4a2c5e; color: #fff; }
-
-/* MAIN */
-.main { max-width: 760px; margin: 0 auto; padding: 1.75rem 1rem 4rem; }
-.page { display: none; }
-.page.active { display: block; }
-
-/* TYPOGRAPHY */
-.page-title { font-size: 1.2rem; font-weight: 600; color: #4a2c5e; margin-bottom: 0.25rem; }
-.page-desc { font-size: 0.875rem; color: #666; margin-bottom: 1.5rem; }
-
-/* SELECTION SUMMARY */
-.selection-bar {
-  background: #eeeef8;
-  border: 1px solid #c8c8e8;
-  border-radius: 8px;
-  padding: 0.9rem 1.1rem;
-  margin-bottom: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-.selection-bar-text { font-size: 0.85rem; color: #3a3a6a; }
-.selection-bar-count { font-weight: 600; color: #4a2c5e; }
-
-/* SECTION CONTAINER */
-.section-container { margin-bottom: 2rem; }
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 1.2rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 2px solid #e2e2de;
-}
-.section-title { font-size: 1rem; font-weight: 600; color: #4a2c5e; }
-.section-subtitle { font-size: 0.78rem; color: #666; margin-top: 0.2rem; }
-.section-actions {
-  display: flex;
-  gap: 8px;
-  font-size: 0.8rem;
-}
-.btn-section {
-  background: transparent;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-family: inherit;
-  color: #666;
-  transition: background 0.12s, border-color 0.12s;
-  white-space: nowrap;
-  min-height: 44px; /* ACCESSIBILITY: Ensure minimum touch target size */
-  min-width: 44px;
-}
-.btn-section:hover { background: #f0f0f8; border-color: #aab; }
-
-/* QUESTION CARD - NEW LAYOUT */
-.question-card {
-  background: #fff;
-  border: 1px solid #e2e2de;
-  border-radius: 10px;
-  padding: 1rem;
-  margin-bottom: 0.8rem;
-  transition: border-color 0.15s, background 0.15s;
-}
-.question-card:hover { border-color: #bbb; background: #fafaf8; }
-.question-card.selected { background: #f0f5f2; border-color: #2db87f; }
-
-.question-row {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  cursor: pointer;
-  user-select: none;
-}
-.question-checkbox {
-  flex-shrink: 0;
-  width: 24px; /* ACCESSIBILITY: Increased touch target */
-  height: 24px; /* ACCESSIBILITY: Increased touch target */
-  margin-top: 3px;
-  cursor: pointer;
-  accent-color: #2db87f;
-}
-.question-content { flex: 1; }
-.question-summary {
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #888;
-  margin-bottom: 0.4rem;
-}
-.question-human {
-  font-size: 0.9rem;
-  color: #1a1a1a;
-  line-height: 1.5;
-  margin-bottom: 0.6rem;
-}
-.question-ai-toggle-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 0.6rem;
-}
-.question-ai-toggle {
-  font-size: 0.75rem;
-  color: #666;
-  cursor: pointer;
-  text-decoration: underline;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  min-height: 44px; /* ACCESSIBILITY: Minimum touch target size */
-}
-.question-ai-toggle:hover { color: #12122a; }
-.btn-copy-ai-inline {
-  flex-shrink: 0;
-  background: transparent;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 4px 8px;
-  cursor: pointer;
-  color: #666;
-  transition: background 0.12s, color 0.12s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px; /* ACCESSIBILITY: Minimum touch target size */
-  height: 44px; /* ACCESSIBILITY: Minimum touch target size */
-}
-.btn-copy-ai-inline:hover { background: #f0f5f2; color: #2db87f; }
-.btn-copy-ai-inline.copied { background: #e6f9f3; border-color: #2db87f; color: #2db87f; }
-
-.question-ai-container {
-  margin-top: 0.8rem;
-  padding-top: 0.8rem;
-  border-top: 1px solid #f0f0ec;
-  display: none;
-}
-.question-ai-container.expanded { display: block; }
-.question-ai-label {
-  font-size: 0.73rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #888;
-  margin-bottom: 0.5rem;
-}
-.question-ai-text {
-  background: #f9f9f7;
-  border: 1px solid #f0f0ec;
-  border-radius: 6px;
-  padding: 0.75rem;
-  font-size: 0.82rem;
-  line-height: 1.5;
-  color: #444;
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-.question-ai-content { flex: 1; white-space: pre-wrap; word-break: break-word; }
-.btn-copy-ai {
-  flex-shrink: 0;
-  background: transparent;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 4px 8px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  color: #666;
-  transition: background 0.12s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  min-height: 44px; /* ACCESSIBILITY: Minimum touch target size */
-}
-.btn-copy-ai:hover { background: #e8e8e4; }
-.btn-copy-ai.copied { background: #e6f4ec; border-color: #9ecfb0; color: #1a6e3c; }
-
-/* PAGE LEVEL COPY ALL */
-.copy-all-bar {
-  background: #fff;
-  border: 1px solid #e2e2de;
-  border-radius: 10px;
-  padding: 1.1rem;
-  margin-top: 2rem;
-  display: none;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-.copy-all-bar.visible { display: flex; }
-.copy-all-bar-text { font-size: 0.9rem; color: #555; }
-.btn-copy-all {
-  background: #2db87f;
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  padding: 0.6rem 1.5rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background 0.15s;
-  min-height: 44px;
-}
-.btn-copy-all:hover { background: #25a26a; }
-
-/* NUDGE BOX */
-.nudge-box {
-  background: #fff;
-  border: 1.5px solid #2db87f;
-  border-radius: 10px;
-  padding: 1.1rem 1.25rem;
-  margin-top: 2rem;
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-.nudge-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
-.nudge-content { flex: 1; }
-.nudge-content strong { font-size: 0.95rem; color: #4a2c5e; display: block; margin-bottom: 0.3rem; }
-.nudge-content p { font-size: 0.85rem; color: #555; margin-bottom: 0.75rem; line-height: 1.5; }
-.btn-nudge {
-  background: #2db87f;
-  color: #fff;
-  border: none;
-  border-radius: 7px;
-  padding: 0.55rem 1.2rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background 0.15s;
-  min-height: 44px;
-}
-.btn-nudge:hover { background: #25a26a; }
-
-/* SECTION 2 - DATA TEMPLATE */
-.benefit-bar {
-  background: #eeeef8;
-  border: 1px solid #c8c8e8;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  font-size: 0.83rem;
-  color: #3a3a6a;
-  margin-bottom: 1.25rem;
-  line-height: 1.5;
-}
-
-.card {
-  background: #fff;
-  border: 1px solid #e2e2de;
-  border-radius: 10px;
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-}
-.card-title {
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #666;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.6rem;
-  border-bottom: 1px solid #f0f0ec;
-}
-.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 12px; }
-.field { display: flex; flex-direction: column; gap: 4px; }
-.field label { font-size: 0.77rem; font-weight: 500; color: #555; }
-.field input, .field select, .field textarea {
-  padding: 0.5rem 0.7rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-family: inherit;
-  color: #1a1a1a;
-  background: #fafaf8;
-  width: 100%;
-  transition: border-color 0.15s;
-}
-.field input:focus, .field select:focus, .field textarea:focus {
-  border-color: #12122a; background: #fff; /* ACCESSIBILITY: Outline is now handled by :focus-visible globally */
-}
-.field textarea { resize: vertical; min-height: 68px; }
-.field-hint { font-size: 0.73rem; color: #999; margin-top: 2px; }
-
-.check-group { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 6px; }
-.check-item {
-  display: flex; align-items: center; gap: 5px;
-  background: #f4f4f1; border: 1px solid #e2e2de;
-  border-radius: 6px; padding: 5px 11px;
-  font-size: 0.82rem; cursor: pointer;
-  transition: background 0.12s, border-color 0.12s;
-  user-select: none;
-  min-height: 44px;
-}
-.check-item:hover { background: #eaeae6; }
-.check-item.selected { background: #e6f9f3; border-color: #2db87f; }
-.check-item input { margin: 0; accent-color: #2db87f; }
-
-.check-group .field { gap: 0; margin: 0; width: 100%; }
-.check-group .field input { font-size: 0.82rem; padding: 0.5rem 0.7rem; }
-
-/* SECTION 3 */
-.personalisation-bar {
-  background: #fff;
-  border: 1px solid #e2e2de;
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1.25rem;
-}
-.pb-label { font-size: 0.8rem; color: #555; margin-bottom: 6px; display: flex; justify-content: space-between; }
-.pb-track { background: #e8e8e4; border-radius: 99px; height: 6px; }
-.pb-fill { background: #2db87f; border-radius: 99px; height: 6px; transition: width 0.4s; }
-.pb-note { font-size: 0.75rem; color: #888; margin-top: 6px; }
-
-.prompt-selector-label {
-  font-size: 0.8rem; color: #555; margin-bottom: 8px;
-}
-.selected-prompts-list {
-  background: #fff;
-  border: 1px solid #e2e2de;
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
-  font-size: 0.85rem;
-  color: #444;
-  min-height: 48px;
-}
-.selected-prompts-list .none { color: #bbb; font-style: italic; }
-.selected-prompt-pill {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: #e8e8f5; border: 1px solid #b0b0d8;
-  border-radius: 99px; padding: 3px 10px;
-  font-size: 0.78rem; color: #333;
-  margin: 3px;
-}
-
-.output-box {
-  background: #fff;
-  border: 1px solid #e2e2de;
-  border-radius: 10px;
-  padding: 1.25rem;
-  margin-top: 1rem;
-}
-.output-label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #666; margin-bottom: 10px; }
-.output-pre {
-  background: #f4f4f1;
-  border: 1px solid #e2e2de;
-  border-radius: 6px;
-  padding: 1rem;
-  font-family: 'Courier New', monospace;
-  font-size: 0.78rem;
-  line-height: 1.65;
-  color: #1a1a1a;
-  white-space: pre-wrap;
-  word-break: break-word;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-/* BUTTONS */
-.btn {
-  padding: 0.6rem 1.4rem;
-  border-radius: 7px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background 0.15s, transform 0.1s;
-  border: none;
-  min-height: 44px;
-}
-.btn:active { transform: scale(0.98); }
-.btn-primary { background: #4a2c5e; color: #fff; }
-.btn-primary:hover { background: #3a1f4a; }
-.btn-secondary { background: #fff; color: #1a1a1a; border: 1px solid #ddd; }
-.btn-secondary:hover { background: #f4f4f1; }
-.btn-generate {
-  background: #2db87f; color: #fff;
-  font-size: 1rem; padding: 0.8rem 2rem;
-  border: none; border-radius: 8px;
-  cursor: pointer; font-family: inherit; font-weight: 500;
-  transition: background 0.15s;
-  width: 100%; margin-top: 0.5rem;
-  min-height: 44px;
-}
-.btn-generate:hover { background: #25a26a; }
-
-.disclaimer {
-  background: #fffbea;
-  border: 1px solid #e8d878;
-  border-radius: 8px;
-  padding: 0.7rem 1rem;
-  font-size: 0.78rem;
-  color: #7a6000;
-  margin-bottom: 1rem;
-}
-
-.copy-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-.copied-msg { color: #1a6e3c; font-size: 0.82rem; margin-top: 6px; display: none; }
-
-/* TOAST NOTIFICATIONS */
-.toast-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  pointer-events: none;
-}
-.toast {
-  background: #4a2c5e;
-  color: #fff;
-  padding: 0.9rem 1.2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  animation: slideIn 0.3s ease-out;
-  pointer-events: auto;
-  max-width: 300px;
-}
-.toast.success { background: #2db87f; }
-.toast-icon { font-size: 1.1rem; flex-shrink: 0; }
-.toast-message { flex: 1; }
-
-@keyframes slideIn {
-  from {
-    transform: translateX(400px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideOut {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(400px);
-    opacity: 0;
-  }
-}
-
-.toast.removing {
-  animation: slideOut 0.3s ease-out forwards;
-}
-
-/* STEPPED INTERFACE */
-.step-header {
-  margin-bottom: 2rem;
-}
-
-/* Step dots/progress indicator */
-.step-dots {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 2rem;
-}
-.step-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #ddd;
-  cursor: pointer;
-  transition: all 0.3s;
-  border: none;
-}
-.step-dot:hover { transform: scale(1.2); }
-.step-dot.active {
-  background: #2db87f;
-  width: 24px !important;
-  height: 24px !important;
-}
-.step-dot.completed { background: #2db87f; position: relative; }
-.step-dot.completed::after {
-  content: '✓';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  font-size: 0.7rem;
-  font-weight: bold;
-}
-
-/* Larger dots in navigation */
-.step-dot-nav {
-  width: 18px !important;
-  height: 18px !important;
-  margin: 0 4px;
-}
-.step-dot-nav.active {
-  width: 24px !important;
-  height: 24px !important;
-  margin: 0 1px;
-}
-.step-dot-nav::after {
-  font-size: 0.85rem !important;
-}
-.step-dot-nav.active::after {
-  font-size: 1rem !important;
-}
-
-/* Step tabs/navigation */
-.step-tabs {
-  display: flex;
-  gap: 0;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #ddd;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.step-tab {
-  background: transparent;
-  border: none;
-  border-bottom: 3px solid transparent;
-  padding: 0.8rem 1.2rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-  font-family: inherit;
-  min-height: 44px;
-}
-.step-tab:hover { color: #4a2c5e; }
-.step-tab.active { color: #2db87f; border-bottom-color: #2db87f; }
-.step-tab.completed { color: #2db87f; }
-.step-tab.completed::after {
-  content: ' ✓';
-  margin-left: 4px;
-}
-
-/* Step navigation buttons */
-.step-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background: #f9f9f7;
-  border-radius: 8px;
-}
-.step-nav-left { flex: 1; }
-.step-nav-center {
-  text-align: center;
-  font-size: 0.85rem;
-  color: #666;
-  font-weight: 500;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: nowrap;
-}
-.step-nav-right { flex: 1; display: flex; justify-content: flex-end; gap: 8px; }
-
-.btn-step {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.85rem;
-  cursor: pointer;
-  font-family: inherit;
-  color: #666;
-  transition: background 0.12s, border-color 0.12s;
-  min-height: 44px;
-}
-.btn-step:hover { background: #f0f5f2; border-color: #2db87f; }
-.btn-step:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-.btn-step.primary {
-  background: #2db87f;
-  border-color: #2db87f;
-  color: #fff;
-}
-.btn-step.primary:hover { background: #25a26a; }
-
-.step-container {
-  display: none;
-}
-.step-container.active {
-  display: block;
-  animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-  }
-  to {
-    opacity: 1;
-    max-height: 500px;
-  }
-}
-
-/* Summary screens: the step heading, then one line of confirmation with a small tick */
-.prompt-ready { margin-bottom: 20px; }
-.prompt-ready h2 { font-size: 16px; margin: 0 0 6px; }
-.prompt-ready p { font-size: 14px; color: rgba(32, 30, 29, 0.8); margin: 0; max-width: 70ch; }
-.prompt-ready strong { color: #201e1d; }
-.prompt-ready-tick { color: #226B79; font-weight: 800; margin-right: 6px; }
-
-/* Prompt cards on all three routes: the next steps sit together under the prompt text,
-   on the right like every other button that moves the journey forward. */
-.prompt-card-actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 12px;
-  padding: 16px 24px;
-  border-top: 1px solid rgba(32, 30, 29, 0.1);
-}
-@media (max-width: 480px) {
-  .prompt-card-actions > * { width: 100%; }
-}
-
-/* Prompt list: the primary action at the end of the list, then the quieter personalise card.
-   The starter prompt page uses the same card to point at the prompt list. */
-.list-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.list-upsell {
-  margin-top: 40px;
-  padding: 24px 28px;
-  background: #fff;
-  border: 1px solid rgba(32, 30, 29, 0.2);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.list-upsell-title {
-  font-family: system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 18px;
-  margin: 0 0 4px;
-}
-.list-upsell-text {
-  font-size: 14px;
-  color: rgba(32, 30, 29, 0.8);
-  margin: 0;
-  max-width: 60ch;
-}
-@media (max-width: 480px) {
-  .list-actions > *, .list-upsell .btn-secondary { width: 100%; }
-  .list-actions .selection-text { text-align: center; }
-}
-
-.selection-text {
-  font-size: 14px;
-  color: #201e1d;
-  font-weight: 600;
-}
-
-.selection-text .count {
-  color: #2C8494;
-  font-weight: 800;
-}
-
-.unselect-button {
-  background: #fff;
-  color: #226B79;
-  border: 1.5px solid #226B79;
-  font-family: system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 10px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.2s ease;
-  min-height: 44px;
-}
-.unselect-button:hover {
-  background: #EAF3F3;
-}
-
-.copy-button {
-  background: #226B79;
-  color: #fff;
-  border: none;
-  font-family: system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 14px;
-  padding: 12px 24px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-  cursor: pointer;
-  min-height: 44px;
-}
-
-.copy-button:hover:not(:disabled) {
-  background: #1B5560;
-  cursor: pointer;
-}
-
-.copy-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-@media (max-width: 768px) {
-  /* Hide text tabs on tablets and mobile */
-  .step-tabs {
-    display: none;
-  }
-
-  /* Make dots larger on mobile */
-  .step-dot {
-    width: 24px;
-    height: 24px;
-  }
-  .step-dot::after {
-    font-size: 1rem !important;
-  }
-
-  .step-dots {
-    gap: 16px;
-  }
-}
-
-/* Controls above a shortlist of questions: "Change your answers" on the left,
-   "Select all" and "Deselect all" on the right. */
-.list-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-}
-.list-controls-group { display: flex; gap: 8px; }
-
-/* One question in a shortlist. The whole row is the checkbox's label, so a click or
-   tap anywhere on it ticks the box. Border and tint come from the selected state. */
-.question-row {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.question-row input {
-  margin-top: 4px;
-  width: 24px;
-  height: 24px;
-  accent-color: #2C8494;
-  flex: none;
-  cursor: pointer;
-  /* Focus scrolls the checkbox into view; the margin brings the rest of its row with it. */
-  scroll-margin: 20px 0 150px;
-}
-.question-row-text { flex: 1; min-width: 0; }
-.question-row-summary { display: block; font-size: 15px; font-weight: 600; color: #226B79; margin-bottom: 4px; }
-.question-row-question { display: block; font-size: 15px; margin-bottom: 8px; color: #201e1d; }
-.list-btn {
-  background: #fff;
-  color: #226B79;
-  border: 1.5px solid #226B79;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 4px 14px;
-  min-height: 44px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.list-btn:hover { background: #f0f9fb; border-color: #1f6b7a; }
-.list-link-btn {
-  background: none;
-  border: none;
-  color: #226B79;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  padding: 0;
-  min-height: 44px;
-  cursor: pointer;
-}
-.list-link-btn:hover { color: #164752; }
-
-/* Wizard step tabs: one row that scrolls sideways when the steps don't fit.
-   On desktop the arrows scroll it; on touch screens it is swiped. */
-.wizard-tabs-wrap {
-  display: flex;
-  align-items: flex-end;
-  border-bottom: 2px solid rgba(32, 30, 29, 0.15);
-  margin-bottom: 28px;
-}
-.wizard-tabs {
-  position: relative;
-  flex: 1 1 auto;
-  min-width: 0;
-  flex-wrap: nowrap !important;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.wizard-tabs::-webkit-scrollbar { display: none; }
-.tabs-arrow {
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 4px;
-  border: 1px solid #2C8494;
-  border-radius: 8px;
-  background: #fff;
-  color: #164752;
-  font-size: 20px;
-  line-height: 1;
-  cursor: pointer;
-}
-.tabs-arrow-left { margin-right: 8px; }
-.tabs-arrow-right { margin-left: 8px; }
-.tabs-arrow:hover:not(:disabled) { background: #f0f9fb; border-color: #1f6b7a; }
-.tabs-arrow:disabled { color: #b9b8b7; border-color: #ddd; background: #f5f4f3; cursor: default; }
-
-@media (max-width: 768px) {
-  /* Any 3-equal-column grid (e.g. wizard step 2 fields) collapses to one column on mobile */
-  [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"],
-  [style*="display: grid"][style*="grid-template-columns: repeat(3, 1fr)"] {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-    border-left: none !important;
-    border-right: none !important;
-  }
-
-  [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] > div,
-  [style*="display: grid"][style*="grid-template-columns: repeat(3, 1fr)"] > div {
-    border-right: none !important;
-    border-bottom: 2px solid rgba(32,30,29,0.4) !important;
-    padding: 20px !important;
-  }
-
-  [style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] > div:last-child,
-  [style*="display: grid"][style*="grid-template-columns: repeat(3, 1fr)"] > div:last-child {
-    border-bottom: none !important;
-  }
-
-  /* Any 2-equal-column grid (e.g. wizard steps 3-6 fields) collapses to one column on mobile */
-  [style*="display:grid"][style*="grid-template-columns:1fr 1fr"],
-  [style*="display: grid"][style*="grid-template-columns: 1fr 1fr"] {
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Wizard step tabs: Material-style scrollable single row instead of wrapping onto multiple lines */
-  .wizard-tabs-wrap {
-    position: relative;
-  }
-  .wizard-tabs-wrap::before,
-  .wizard-tabs-wrap::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 2px;
-    width: 28px;
-    pointer-events: none;
-    z-index: 2;
-  }
-  .wizard-tabs-wrap::before {
-    left: 0;
-    background: linear-gradient(to right, #f5f4f3, rgba(245,244,243,0));
-  }
-  .wizard-tabs-wrap::after {
-    right: 0;
-    background: linear-gradient(to left, #f5f4f3, rgba(245,244,243,0));
-  }
-  /* Arrows are for desktop; on touch screens the bar is swiped */
-  .tabs-arrow { display: none !important; }
-}
-
-@media (max-width: 480px) {
-  .tab span.tab-label { display: none; }
-  .section-header { flex-direction: column; gap: 8px; }
-  .section-actions { width: 100%; }
-  .question-ai-text { flex-direction: column; }
-  .step-nav { flex-direction: column; gap: 1rem; }
-  .step-buttons { width: 100%; }
-  .btn-step { flex: 1; }
-
-  /* Mobile sticky bar */
-  [style*="position:fixed"][style*="bottom:0"] {
-    flex-direction: column;
-    padding: 12px 16px !important;
-    gap: 8px !important;
-  }
-  [style*="position:fixed"][style*="bottom:0"] > span {
-    width: 100%;
-    text-align: center;
-  }
-  [style*="position:fixed"][style*="bottom:0"] > button {
-    width: 100%;
-  }
-}
-
-/* PROMPT PAGE CARDS AND STYLING */
-.prompt-question-card {
-  border: 2px solid #2c8494;
-  background-color: #eceae9;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 16px;
-  cursor: pointer;
-}
-
-.prompt-question-card:hover {
-  opacity: 0.95;
-}
-
-.prompt-card-checkbox {
-  margin-top: 4px;
-  width: 24px; /* ACCESSIBILITY: Increased touch target */
-  height: 24px;
-  accent-color: #2C8494;
-  flex: none;
-  cursor: pointer;
-}
-
-.prompt-card-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.prompt-card-title {
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #226B79;
-  font-weight: 800;
-  margin-bottom: 4px;
-}
-
-.prompt-card-question {
-  font-size: 15px;
-  margin-bottom: 8px;
-  color: #201e1d;
-}
-
-.prompt-card-toggle {
-  font-size: 12px;
-  font-weight: 600;
-  color: #226B79;
-  cursor: pointer;
-  display: inline-block;
-  text-decoration: underline;
-  min-height: 44px;
-}
-
-.prompt-card-toggle:hover {
-  opacity: 0.8;
-}
-
-.prompt-ai-section {
-  margin-top: 12px;
-  background: #eceae9;
-  border-left: 2px solid #2C8494;
-  padding: 12px 14px;
-  font-size: 13px;
-  color: rgba(32, 30, 29, 0.85);
-  white-space: pre-wrap;
-  animation: slideDown 0.2s ease;
-}
-
-.copy-modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: auto;
-}
-
-.copy-modal-container {
-  background: #fff;
-  border-radius: 8px;
-  max-width: 600px;
-  width: 90%;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  pointer-events: auto;
-}
-
-.copy-modal-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #666;
-  z-index: 10;
-  padding: 0;
-  width: 44px; /* ACCESSIBILITY: touch target */
-  height: 44px;
-}
-
-.copy-modal-content {
-  padding: 40px 32px;
-  overflow-y: auto;
-}
-
-.copy-modal-heading {
-  font-size: 24px;
-  margin: 0 0 8px;
-  color: #201e1d;
-  font-weight: 800;
-}
-
-.copy-modal-subtitle {
-  font-size: 14px;
-  color: #666;
-  margin: 0 0 32px;
-}
-
-.copy-modal-buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 32px;
-}
-
-.copy-modal-chatbot-link {
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  text-align: center;
-  font-weight: 600;
-  font-size: 13px;
-  transition: all 0.2s;
-  text-decoration: none;
-  color: #201e1d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  min-height: 44px;
-}
-
-.copy-modal-chatbot-link:hover {
-  background: #f5f5f5;
-  border-color: #999;
-}
-
-.copy-modal-arrow {
-  font-size: 12px;
-}
-
-.copy-modal-prompt-label {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #999;
-  margin: 0 0 8px;
-  font-weight: 600;
-}
-
-.copy-modal-prompt-box {
-  background: #f5f4f3;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 16px;
-  max-height: 200px;
-  overflow-y: auto;
-  font-size: 13px;
-  line-height: 1.6;
-  color: #333;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-family: monospace;
-  margin-bottom: 32px;
-}
-
-.copy-modal-divider {
-  height: 1px;
-  background: #eee;
-  margin: 32px 0;
-}
-
-.copy-modal-cta-heading {
-  font-size: 16px;
-  margin: 0 0 8px;
-  font-weight: 600;
-  color: #201e1d;
-}
-
-.copy-modal-cta-text {
-  font-size: 14px;
-  color: #666;
-  margin: 0 0 16px;
-}
-
-.copy-modal-cta-button {
-  background: #2C8494;
-  color: #fff;
-  border: none;
-  font-family: system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 14px;
-  padding: 12px 24px;
-  cursor: pointer;
-  border-radius: 6px;
-  width: 100%;
-  min-height: 44px;
-}
-
-.modal-close-btn {
-  transition: all 0.2s ease !important;
-}
-
-.modal-close-btn:hover {
-  color: #2C8494 !important;
-  background: rgba(32, 30, 29, 0.1) !important;
-}
-
-.modal-personalise-btn-primary {
-  transition: all 0.2s ease !important;
-}
-
-.modal-personalise-btn-primary:hover {
-  background: #1f6b7a !important;
-}
-
-.modal-secondary-btn {
-  transition: all 0.2s ease !important;
-}
-
-.modal-secondary-btn:hover {
-  background: rgba(32, 30, 29, 0.08) !important;
-  border-color: rgba(32, 30, 29, 0.6) !important;
-}
-
-/* Radio button styling */
-input[name="chatbot-select"] {
-  accent-color: #2C8494 !important;
-  cursor: pointer;
-  width: 24px !important; /* ACCESSIBILITY */
-  height: 24px !important;
-  flex-shrink: 0;
-  margin: 0 !important;
-}
-
-/* Radio button label styling */
-fieldset div > label {
-  transition: all 0.2s ease;
-}
-
-fieldset div > label:has(input[name="chatbot-select"]:checked) {
-  background: #EAF3F3 !important;
-  border-color: #2C8494 !important;
-  border-width: 2px !important;
-}
-
-fieldset div > label:has(input[name="chatbot-select"]:hover) {
-  background: rgba(44, 132, 148, 0.05) !important;
-  border-color: rgba(44, 132, 148, 0.3) !important;
-}
-
-fieldset div > label:hover {
-  background: rgba(44, 132, 148, 0.05) !important;
-  border-color: rgba(44, 132, 148, 0.3) !important;
-}
-
-/* ============ STARTER PROMPT PAGE ============ */
-.starter-prompt-container {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 48px 32px 80px;
-}
-
-.starter-prompt-page-heading {
-  font-family: system-ui, sans-serif;
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 1.2;
-  margin: 0 0 8px;
-  color: #201e1d;
-  letter-spacing: -0.01em;
-}
-
-.starter-prompt-category {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #226B79;
-  font-weight: 800;
-  margin: 0 0 32px;
-}
-
-.starter-prompt-value-prop {
-  background: #EAF3F3;
-  border-left: 4px solid #2C8494;
-  padding: 16px 20px;
-  margin-bottom: 32px;
-  border-radius: 4px;
-}
-
-.starter-prompt-value-prop-text {
-  font-size: 15px;
-  font-weight: 600;
-  color: #164752;
-  margin: 0;
-  line-height: 1.5;
-}
-
-.starter-prompt-content-card {
-  background: #fff;
-  border: 1px solid rgba(32, 30, 29, 0.12);
-  border-radius: 8px;
-  padding: 28px;
-  margin-bottom: 28px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-}
-
-.starter-prompt-content-card h2 {
-  font-size: 14px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #226B79;
-  margin: 0 0 14px;
-}
-
-.starter-prompt-content-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.starter-prompt-content-list li {
-  font-size: 14px;
-  color: #201e1d;
-  line-height: 1.6;
-  margin-bottom: 12px;
-  padding-left: 20px;
-  position: relative;
-}
-
-.starter-prompt-content-list li:last-child {
-  margin-bottom: 0;
-}
-
-.starter-prompt-content-list li::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  color: #2C8494;
-  font-weight: bold;
-}
-
-.starter-prompt-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
-}
-
-.starter-prompt-primary-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.starter-prompt-secondary-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.starter-prompt-secondary-action-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.starter-prompt-secondary-action-group .btn-secondary {
-  flex: 1;
-}
-
-.starter-prompt-helper-text {
-  font-size: 11px;
-  color: rgba(32, 30, 29, 0.6);
-  font-weight: 500;
-  text-align: center;
-}
-
-.starter-prompt-full-text {
-  background: #fff;
-  border: 1px solid rgba(32, 30, 29, 0.12);
-  border-radius: 8px;
-  margin-bottom: 28px;
-  display: flex;
-  flex-direction: column;
-  height: 300px;
-}
-
-.starter-prompt-full-text-label {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(32, 30, 29, 0.6);
-  margin: 0;
-  padding: 16px 20px 0;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.starter-prompt-full-text-content {
-  white-space: pre-wrap;
-  color: #201e1d;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 13px;
-  line-height: 1.6;
-  margin: 0;
-  padding: 12px 20px;
-  overflow-y: auto;
-  flex: 1;
-  word-break: break-word;
-}
-
-.disclaimer-notice {
-  background: #fff;
-  border: 1px solid rgba(32, 30, 29, 0.12);
-  border-radius: 8px;
-  padding: 16px 20px;
-  font-size: 12px;
-  color: #201e1d;
-  line-height: 1.6;
-}
-
-.disclaimer-notice strong {
-  font-weight: 600;
-  color: #201e1d;
-}
-
-@media (max-width: 768px) {
-  .starter-prompt-container {
-    padding: 32px 20px 60px;
-  }
-
-  .starter-prompt-page-heading {
-    font-size: 24px;
-    margin-bottom: 6px;
-  }
-
-  .starter-prompt-category {
-    margin-bottom: 24px;
-  }
-
-  .starter-prompt-actions {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .starter-prompt-actions .btn-primary {
-    width: 100%;
-  }
-
-  .starter-prompt-secondary-actions {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .starter-prompt-secondary-actions .btn-secondary {
-    width: 100%;
-  }
-
-  .starter-prompt-secondary-action-group {
-    width: 100%;
-  }
-
-  .starter-prompt-helper-text {
-    text-align: left;
-    font-size: 10px;
-  }
-
-  .starter-prompt-content-card {
-    padding: 20px;
-    margin-bottom: 24px;
-  }
-
-  .starter-prompt-value-prop {
-    padding: 14px 16px;
-    margin-bottom: 24px;
-  }
-
-  .starter-prompt-value-prop-text {
-    font-size: 14px;
-  }
 }
 
 /* ============ SITE HEADER ============ */
@@ -1596,40 +123,6 @@ fieldset div > label:hover {
   flex: none;
 }
 .site-start-again:hover { background: #f0f9fb; border-color: #1f6b7a; }
-
-
-@media (max-width: 480px) {
-  .site-header-inner { padding: 0 16px; gap: 10px; }
-  .site-brand-name { font-size: 14px; }
-}
-
-/* ============ WIZARD STEP HELP TEXT ============ */
-.wizard-step-intro { font-size: 14px; margin: 0 0 6px; max-width: 720px; }
-.wizard-step-hint { font-size: 14px; color: rgba(32, 30, 29, 0.7); margin: 0 0 18px; max-width: 720px; }
-.wizard-subhead { font-size: 14px; margin: 24px 0 6px; }
-.wizard-subhead + div { margin-top: 12px; }
-
-/* Step 4: the custom spending amount sits beside the lifestyle list. On two columns its
-   space is kept when it is not in use, so the boxes underneath never move. On one column
-   (768px and under, where the grid stacks) it is taken out so no gap is left. */
-.lifestyle-custom-slot[data-open="false"] { visibility: hidden; }
-@media (max-width: 768px) {
-  .lifestyle-custom-slot[data-open="false"] { display: none; }
-}
-
-/* Step 3: the question about a partner's pension shows only when a partner's age was given */
-.partner-only[data-open="false"] { display: none; }
-
-.income-source-row { border-top: 1px solid rgba(32, 30, 29, 0.15); padding: 4px 0; }
-.income-source-detail {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px 18px;
-  padding: 4px 0 14px 32px;
-}
-@media (max-width: 480px) {
-  .income-source-detail { grid-template-columns: 1fr; padding-left: 0; }
-}
 
 /* ============ SHARED BUTTONS (primary / secondary) ============ */
 .btn-primary {
@@ -1830,14 +323,7 @@ fieldset div > label:hover {
   flex-direction: column;
 }
 .landing-level-card:last-child { border-right: none; }
-.landing-level-eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #226B79;
-  font-weight: 800;
-  margin-bottom: 10px;
-}
+
 .landing-level-card h3 {
   font-size: 20px;
   margin: 0 0 10px;
@@ -1852,6 +338,7 @@ fieldset div > label:hover {
   align-self: flex-start;
 }
 
+/* The footer on every screen */
 .landing-footer {
   border-top: 2px solid rgba(32, 30, 29, 0.4);
   padding: 28px 32px;
@@ -1878,7 +365,386 @@ fieldset div > label:hover {
 .footer-group { display: flex; flex-wrap: wrap; gap: 0 20px; }
 .app-version { margin-left: auto; }
 
-/* ============ LAUNCH DIALOG: BEFORE YOU USE THE ANSWER ============ */
+/* ============ WIZARD ============ */
+/* Step tabs: one row that scrolls sideways when the steps don't fit.
+   On desktop the arrows scroll it; on touch screens it is swiped. */
+.wizard-tabs-wrap {
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 2px solid rgba(32, 30, 29, 0.15);
+  margin-bottom: 28px;
+}
+.wizard-tabs {
+  display: flex;
+  gap: 4px;
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.wizard-tabs::-webkit-scrollbar { display: none; }
+.tabs-arrow {
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 4px;
+  border: 1px solid #2C8494;
+  border-radius: 8px;
+  background: #fff;
+  color: #164752;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.tabs-arrow-left { margin-right: 8px; }
+.tabs-arrow-right { margin-left: 8px; }
+.tabs-arrow:hover:not(:disabled) { background: #f0f9fb; border-color: #1f6b7a; }
+.tabs-arrow:disabled { color: #b9b8b7; border-color: #ddd; background: #f5f4f3; cursor: default; }
+
+/* The page's opening line, and step 1's */
+.page-lead { font-size: 14px; color: rgba(32, 30, 29, 0.7); margin: 0 0 24px; max-width: 70ch; }
+.step-lead { font-size: 14px; color: rgba(32, 30, 29, 0.65); margin: 0 0 16px; }
+
+/* Steps 2 to 6: each step's boxes sit on a grey panel */
+.wizard-panel { background: #eceae9; padding: 24px; margin-bottom: 24px; }
+
+/* Step help text */
+.wizard-step-intro { font-size: 14px; margin: 0 0 6px; max-width: 720px; }
+.wizard-step-hint { font-size: 14px; color: rgba(32, 30, 29, 0.7); margin: 0 0 18px; max-width: 720px; }
+
+/* The boxes: three columns in step 2, two in steps 3 and 4, and the concerns in step 6 */
+.field-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.field-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
+.field-label { display: block; font-size: 14px; color: rgba(32, 30, 29, 0.7); margin-bottom: 5px; }
+.field-hint { display: block; font-size: 14px; color: rgba(32, 30, 29, 0.7); margin-top: 5px; }
+.field-input,
+.field-textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 6px 10px;
+  border: 1px solid rgba(32, 30, 29, 0.6);
+  background: #fff;
+  font-size: 14px;
+}
+.field-textarea { min-height: 80px; padding: 8px 10px; resize: vertical; }
+/* A tick box with its label, in steps 5 and 6 */
+.check-label { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; min-height: 44px; }
+.check-input { accent-color: #2C8494; width: 24px; height: 24px; }
+
+/* Step 3: the question about a partner's pension shows only when a partner's age was given */
+.partner-only[data-open="false"] { display: none; }
+
+/* Step 4: the custom spending amount sits beside the lifestyle list. On two columns its
+   space is kept when it is not in use, so the boxes underneath never move. On one column
+   (768px and under, where the grid stacks) it is taken out so no gap is left. */
+.lifestyle-custom-slot[data-open="false"] { visibility: hidden; }
+
+/* Step 5: each income source, with its amount and start under it once ticked */
+.income-source-row { border-top: 1px solid rgba(32, 30, 29, 0.15); padding: 4px 0; }
+.income-source-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 18px;
+  padding: 4px 0 14px 32px;
+}
+
+/* ============ THE THREE SHORTLISTING QUESTIONS ============ */
+/* Asked one at a time, on the prompt list and in wizard step 1 */
+.quiz { max-width: 640px; }
+.quiz-count { font-size: 14px; font-weight: 700; color: #226B79; margin-bottom: 8px; }
+.quiz-dots { display: flex; gap: 6px; margin-bottom: 28px; }
+.quiz-question { font-size: 24px; margin: 0 0 24px; }
+.quiz-options { display: flex; flex-direction: column; gap: 12px; }
+.quiz-back {
+  margin-top: 24px;
+  background: transparent;
+  border: none;
+  color: #226B79;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  min-height: 44px;
+}
+
+/* ============ SHORTLIST OF QUESTIONS ============ */
+.shortlist-lead { font-size: 14px; color: rgba(32, 30, 29, 0.7); margin: 0 0 12px; }
+.question-list { display: flex; flex-direction: column; gap: 10px; }
+.question-help-heading { font-size: 16px; font-weight: 700; color: #164752; margin: 24px 0 12px; }
+/* Controls above a shortlist: "Change your answers" on the left,
+   "Select all" and "Deselect all" on the right. */
+.list-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.list-controls-group { display: flex; gap: 8px; }
+
+/* One question in a shortlist. The whole row is the checkbox's label, so a click or
+   tap anywhere on it ticks the box. Border and tint come from the selected state. */
+.question-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+.question-row input {
+  margin-top: 4px;
+  width: 24px;
+  height: 24px;
+  accent-color: #2C8494;
+  flex: none;
+  cursor: pointer;
+  /* Focus scrolls the checkbox into view; the margin brings the rest of its row with it. */
+  scroll-margin: 20px 0 150px;
+}
+.question-row-text { flex: 1; min-width: 0; }
+.question-row-summary { display: block; font-size: 15px; font-weight: 600; color: #226B79; margin-bottom: 4px; }
+.question-row-question { display: block; font-size: 15px; margin-bottom: 8px; color: #201e1d; }
+.list-btn {
+  background: #fff;
+  color: #226B79;
+  border: 1.5px solid #226B79;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 14px;
+  min-height: 44px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.list-btn:hover { background: #f0f9fb; border-color: #1f6b7a; }
+.list-link-btn {
+  background: none;
+  border: none;
+  color: #226B79;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0;
+  min-height: 44px;
+  cursor: pointer;
+}
+.list-link-btn:hover { color: #164752; }
+
+/* ============ PROMPT LIST: ACTIONS AND THE PERSONALISE CARD ============ */
+/* The primary action at the end of the list, then the quieter personalise card.
+   The starter prompt page uses the same card to point at the prompt list. */
+.list-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.selection-text {
+  font-size: 14px;
+  color: #201e1d;
+  font-weight: 600;
+}
+.unselect-button {
+  background: #fff;
+  color: #226B79;
+  border: 1.5px solid #226B79;
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+  min-height: 44px;
+}
+.unselect-button:hover {
+  background: #EAF3F3;
+}
+.copy-button {
+  background: #226B79;
+  color: #fff;
+  border: none;
+  font-family: system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  cursor: pointer;
+  min-height: 44px;
+}
+.copy-button:hover:not(:disabled) {
+  background: #1B5560;
+  cursor: pointer;
+}
+.copy-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.list-upsell {
+  margin-top: 40px;
+  padding: 24px 28px;
+  background: #fff;
+  border: 1px solid rgba(32, 30, 29, 0.2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.list-upsell-title {
+  font-family: system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+.list-upsell-text {
+  font-size: 14px;
+  color: rgba(32, 30, 29, 0.8);
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* ============ STARTER PROMPT ============ */
+/* The three cards above the prompt: what it provides, how it works, what to expect */
+.starter-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+.starter-card-head { display: flex; align-items: center; margin-bottom: 16px; gap: 12px; }
+/* Each card sets its own circle and icon colours */
+.starter-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.starter-card-title { font-size: 16px; font-weight: 700; color: #201e1d; margin: 0; }
+.starter-card-text { font-size: 14px; color: #555; margin: 0; line-height: 1.6; }
+
+/* ============ SUMMARY SCREENS AND PROMPT CARDS ============ */
+/* The step heading, then one line of confirmation with a small tick */
+.prompt-ready { margin-bottom: 20px; }
+.prompt-ready h2 { font-size: 16px; margin: 0 0 6px; }
+.prompt-ready p { font-size: 14px; color: rgba(32, 30, 29, 0.8); margin: 0; max-width: 70ch; }
+.prompt-ready strong { color: #201e1d; }
+.prompt-ready-tick { color: #226B79; font-weight: 800; margin-right: 6px; }
+
+/* Prompt cards on all three routes: a title bar, the prompt on a dark box, then the
+   next steps together under it, on the right like every other button that moves the
+   journey forward. */
+.prompt-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(32, 30, 29, 0.2);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.prompt-card-head { background: #f1f5f9; border-bottom: 1px solid rgba(32, 30, 29, 0.1); padding: 16px 24px; }
+.prompt-card-title { font-size: 16px; font-weight: 700; color: #334155; margin: 0; }
+.prompt-box { position: relative; background: #1e293b; padding: 24px; border-top: 3px solid #2C8494; }
+.prompt-text {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #e2e8f0;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.prompt-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid rgba(32, 30, 29, 0.1);
+}
+
+/* ============ IMPORTANT INFORMATION DIALOG ============ */
+.info-modal-body { padding: 24px 32px; font-size: 14px; color: rgba(32, 30, 29, 0.85); line-height: 1.7; }
+.info-modal-body p { margin: 0 0 16px; }
+.info-modal-body p:last-child { margin: 0; }
+
+/* ============ CHATBOT DIALOG ============ */
+.modal-close-btn {
+  transition: all 0.2s ease !important;
+}
+.modal-close-btn:hover {
+  color: #2C8494 !important;
+  background: rgba(32, 30, 29, 0.1) !important;
+}
+
+/* The chatbot choices, two to a row */
+.chatbot-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.chatbot-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  transition: all 0.2s;
+  user-select: none;
+}
+.chatbot-option-name { flex: 1; min-width: 0; }
+.chatbot-option-name img { width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 8px; }
+.chatbot-option-name span { font-weight: 600; color: #201e1d; font-size: 14px; }
+/* "Auto-fill", for the chatbots that open with the prompt filled in */
+.chatbot-option-note { font-size: 14px; color: #666; font-weight: 400; white-space: nowrap; }
+input[name="chatbot-select"] {
+  accent-color: #2C8494 !important;
+  cursor: pointer;
+  width: 24px !important; /* ACCESSIBILITY */
+  height: 24px !important;
+  flex-shrink: 0;
+  margin: 0 !important;
+}
+fieldset div > label {
+  transition: all 0.2s ease;
+}
+fieldset div > label:has(input[name="chatbot-select"]:checked) {
+  background: #EAF3F3 !important;
+  border-color: #2C8494 !important;
+  border-width: 2px !important;
+}
+fieldset div > label:has(input[name="chatbot-select"]:hover) {
+  background: rgba(44, 132, 148, 0.05) !important;
+  border-color: rgba(44, 132, 148, 0.3) !important;
+}
+fieldset div > label:hover {
+  background: rgba(44, 132, 148, 0.05) !important;
+  border-color: rgba(44, 132, 148, 0.3) !important;
+}
+
+/* Before you use the answer */
 .before-you-use {
   background: #EAF3F3;
   border: 1px solid #2C8494;
@@ -1893,7 +759,67 @@ fieldset div > label:hover {
 .before-you-use ul { margin: 0; padding-left: 18px; }
 .before-you-use a { color: #1B5560; }
 
+/* ============ TOASTS ============ */
+/* The messages themselves are styled where index.html makes them */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* ============ 768PX AND UNDER ============ */
 @media (max-width: 768px) {
+  /* The boxes and choices stack in one column. In step 2 each box is ruled off from the next. */
+  .field-grid-3 { grid-template-columns: 1fr; gap: 16px; }
+  .field-grid-3 > div { border-bottom: 2px solid rgba(32, 30, 29, 0.4); padding: 20px; }
+  .field-grid-3 > div:last-child { border-bottom: none; }
+  .field-grid-2, .check-grid, .chatbot-options { grid-template-columns: 1fr; }
+
+  /* Wizard step tabs: a fade at each end shows there is more to swipe to */
+  .wizard-tabs-wrap {
+    position: relative;
+  }
+  .wizard-tabs-wrap::before,
+  .wizard-tabs-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 2px;
+    width: 28px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .wizard-tabs-wrap::before {
+    left: 0;
+    background: linear-gradient(to right, #f5f4f3, rgba(245,244,243,0));
+  }
+  .wizard-tabs-wrap::after {
+    right: 0;
+    background: linear-gradient(to left, #f5f4f3, rgba(245,244,243,0));
+  }
+  /* Arrows are for desktop; on touch screens the bar is swiped */
+  .tabs-arrow { display: none !important; }
+
+  /* Step 4: the grid has stacked, so an unused custom amount leaves no gap */
+  .lifestyle-custom-slot[data-open="false"] { display: none; }
+
+  /* Landing page */
   .landing-hero {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -1920,7 +846,19 @@ fieldset div > label:hover {
   .landing-footer { padding: 20px; }
 }
 
+/* ============ 480PX AND UNDER ============ */
 @media (max-width: 480px) {
+  /* Buttons that move the journey on take the full width */
+  .prompt-card-actions > * { width: 100%; }
+  .list-actions > *, .list-upsell .btn-secondary { width: 100%; }
+  .list-actions .selection-text { text-align: center; }
+
+  .site-header-inner { padding: 0 16px; gap: 10px; }
+  .site-brand-name { font-size: 14px; }
+
+  .income-source-detail { grid-template-columns: 1fr; padding-left: 0; }
+
+  /* Landing page */
   .landing-hero, .landing-why, .landing-levels, .landing-footer {
     padding-left: 16px;
     padding-right: 16px;
@@ -1933,26 +871,22 @@ fieldset div > label:hover {
   .landing-level-card .btn-secondary { width: 100%; }
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+/* ============ INSIDE A FRAME ON ANOTHER SITE (PO-91) ============ */
+/* embed.js adds "embedded" inside any frame, and "embed-fit" once the page around it
+   sizes the frame to the tool. See docs/EMBEDDING.md. */
+.app-shell { min-height: 100vh; }
+/* In a frame 100vh is the frame, so a frame that grew to fit one screen could never shrink */
+.embedded .app-shell { min-height: 0; display: flow-root; }
+.embed-fit, .embed-fit body { overflow: hidden; }
+/* The frame is now as tall as the tool, so put dialogs and toasts in the part the page shows */
+.embed-fit .viewport-overlay {
+  top: var(--embed-view-top, 0px) !important;
+  bottom: auto !important;
+  height: var(--embed-view-height, 100vh) !important;
 }
-
-@keyframes slideOut {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(100%);
-  }
+.embed-fit .viewport-overlay > div { max-height: calc(var(--embed-view-height, 100vh) * 0.85) !important; }
+.embed-fit #toast-container {
+  bottom: calc(100vh - var(--embed-view-top, 0px) - var(--embed-view-height, 100vh) + 20px) !important;
 }
 
 /* ============ REDUCED MOTION ============ */

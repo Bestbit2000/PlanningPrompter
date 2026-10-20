@@ -9,3 +9,6 @@ stats-service/.neon
 # Human review service: local settings and installed packages
 review-service/.env
 review-service/node_modules/
+
+# Back tests: installed packages
+tests/node_modules/

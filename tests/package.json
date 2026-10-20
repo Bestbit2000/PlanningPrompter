@@ -1,0 +1,14 @@
+{
+  "name": "planning-prompter-backtests",
+  "private": true,
+  "description": "Back tests for the Retirement Income Prompt Generator (PO-92). See README.md.",
+  "type": "module",
+  "scripts": {
+    "backtest": "playwright test",
+    "backtest:update": "playwright test --update-snapshots",
+    "serve": "node server.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}

@@ -1,0 +1,9 @@
+Act as an educational financial coach based in the UK. I want to understand how I can find out more about my retirement savings and options. Please note, I am seeking generic, factual education only, not regulated financial advice or personalised recommendations. If you are linking external websites, only use UK government websites or moneyhelper.org.uk.
+Please provide an easy-to-understand overview covering the following areas:
+
+1. Pension Types: Explain the types of pensions in the UK (e.g. defined benefit and defined contribution) and how I can find out what I have.
+2. The State Pension: Briefly explain how the UK State Pension operates and how it typically factors into a broader retirement income strategy.
+3. Key Things to Consider and How to Know Whether I'm on Track: Detail the main things I need to be aware of when planning my retirement income (such as my lifestyle, inflation and how long my money may need to last), and explain how I can work out how much I might need and whether I'm on track.
+4. Next Steps: Provide a sensible, actionable checklist of practical steps I should take, and impartial reference websites (e.g. moneyhelper.org.uk) I could use, to make myself more prepared for retirement, including before I speak to a regulated financial adviser.
+
+Please ensure your response is structured clearly with headings and bullet points, uses plain British English with no jargon, and maintains an objective, coaching tone throughout. Offer me the option to explore further any topic that you have raised.

@@ -8,6 +8,7 @@
 <script src="./stats.js?v=0.8.0"></script>
 <script src="./prompts.js?v=0.8.0"></script>
 <script src="./support.js?v=0.8.0"></script>
+<script src="./embed.js?v=0.8.0"></script>
 </head>
 <body>
 <x-dc>
@@ -15,7 +16,7 @@
 <link rel="stylesheet" href="./styles.css?v=0.8.0">
 </helmet>
 
-<div style="background:#f5f4f3;color:#201e1d;font-family:system-ui,sans-serif;min-height:100vh;line-height:1.55">
+<div class="app-shell" style="background:#f5f4f3;color:#201e1d;font-family:system-ui,sans-serif;line-height:1.55">
 
   <!-- ============ NAV ============ -->
   <header class="site-header">
@@ -101,7 +102,7 @@
         <div class="landing-level-card">
           <h3>Tailor to me</h3>
           <p>Select your questions first, then add details about your age, savings, income sources and concerns &mdash; so the answer speaks to your actual circumstances.</p>
-          <button data-action="goApp" onClick="{{ goApp }}" class="btn-secondary">Personalise a prompt</button>
+          <button onClick="{{ goApp }}" class="btn-secondary">Personalise a prompt</button>
         </div>
 
       </div>
@@ -146,43 +147,43 @@
     <!-- Three Cards Section -->
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:32px">
       <!-- Card 1: What it provides -->
-      <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid #e2e8f0;transition:all 0.3s ease">
-        <div style="display:flex;align-items:center;margin-bottom:16px;gap:12px">
-          <div style="background:#d0f0f0;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#2C8494;font-size:20px" aria-hidden="true">ℹ️</div>
-          <h2 style="font-size:16px;font-weight:700;color:#201e1d;margin:0">What it provides</h2>
+      <div class="starter-card">
+        <div class="starter-card-head">
+          <div class="starter-card-icon" style="background:#d0f0f0;color:#2C8494" aria-hidden="true">ℹ️</div>
+          <h2 class="starter-card-title">What it provides</h2>
         </div>
-        <p style="font-size:14px;color:#555;margin:0;line-height:1.6">An introduction to UK pension types, the State Pension, things to consider and actionable next steps, tailored for people who have not thought much about their retirement.</p>
+        <p class="starter-card-text">An introduction to UK pension types, the State Pension, things to consider and actionable next steps, tailored for people who have not thought much about their retirement.</p>
       </div>
 
       <!-- Card 2: How it works -->
-      <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid #e2e8f0;transition:all 0.3s ease">
-        <div style="display:flex;align-items:center;margin-bottom:16px;gap:12px">
-          <div style="background:#dbeafe;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1e40af;font-size:20px" aria-hidden="true">⚙️</div>
-          <h2 style="font-size:16px;font-weight:700;color:#201e1d;margin:0">How it works</h2>
+      <div class="starter-card">
+        <div class="starter-card-head">
+          <div class="starter-card-icon" style="background:#dbeafe;color:#1e40af" aria-hidden="true">⚙️</div>
+          <h2 class="starter-card-title">How it works</h2>
         </div>
-        <p style="font-size:14px;color:#555;margin:0;line-height:1.6">It sets clear boundaries, asking the AI to act as an educational coach. It breaks down complex retirement topics into digestible chunks.</p>
+        <p class="starter-card-text">It sets clear boundaries, asking the AI to act as an educational coach. It breaks down complex retirement topics into digestible chunks.</p>
       </div>
 
       <!-- Card 3: What to expect -->
-      <div style="background:#fff;border-radius:12px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid #e2e8f0;transition:all 0.3s ease">
-        <div style="display:flex;align-items:center;margin-bottom:16px;gap:12px">
-          <div style="background:#e9d5ff;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#7e22ce;font-size:20px" aria-hidden="true">👁️</div>
-          <h2 style="font-size:16px;font-weight:700;color:#201e1d;margin:0">What to expect</h2>
+      <div class="starter-card">
+        <div class="starter-card-head">
+          <div class="starter-card-icon" style="background:#e9d5ff;color:#7e22ce" aria-hidden="true">👁️</div>
+          <h2 class="starter-card-title">What to expect</h2>
         </div>
-        <p style="font-size:14px;color:#555;margin:0;line-height:1.6">A jargon-free explanation of key terms, the types of pension, the State Pension and the main things to consider, structured with clear headings and bullet points.</p>
+        <p class="starter-card-text">A jargon-free explanation of key terms, the types of pension, the State Pension and the main things to consider, structured with clear headings and bullet points.</p>
       </div>
     </div>
 
     <!-- Prompt Section -->
-    <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid #e2e8f0;overflow:hidden;margin-bottom:24px">
+    <div class="prompt-card" style="border-color:#e2e8f0">
       <!-- Prompt Header -->
-      <div style="background:#f1f5f9;border-bottom:1px solid #e2e8f0;padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
-        <h2 style="font-size:16px;font-weight:700;color:#334155;margin:0">The prompt</h2>
+      <div class="prompt-card-head" style="border-bottom-color:#e2e8f0;display:flex;justify-content:space-between;align-items:center">
+        <h2 class="prompt-card-title">The prompt</h2>
       </div>
 
       <!-- Prompt Content -->
-      <div class="surface-dark" style="position:relative;background:#1e293b;padding:24px;border-top:3px solid #2C8494">
-        <pre tabindex="0" role="region" aria-label="The starter prompt" style="font-family:'Courier New',monospace;font-size:14px;line-height:1.6;color:#e2e8f0;margin:0;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto">{{ starterPrompt.prompt }}</pre>
+      <div class="surface-dark prompt-box">
+        <pre class="prompt-text" tabindex="0" role="region" aria-label="The starter prompt">{{ starterPrompt.prompt }}</pre>
       </div>
 
       <!-- Next steps, directly under the prompt -->
@@ -199,7 +200,7 @@
         <h2 class="list-upsell-title">Want to be more specific about the questions?</h2>
         <p class="list-upsell-text">Choose from a list based on what you're looking to know, and pick the questions that matter most to you.</p>
       </div>
-      <button data-action="goBrowse" onClick="{{ goBrowse }}" class="btn-secondary">Choose from a list &rarr;</button>
+      <button onClick="{{ goBrowse }}" class="btn-secondary">Choose from a list &rarr;</button>
     </div>
   </main>
   </sc-if>
@@ -210,11 +211,11 @@
 
     <div style="padding-top:32px">
       <h1 data-screen-heading="page" tabindex="-1" style="font-size:26px;margin:0 0 6px">Build your prompt</h1>
-      <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Select the questions you want answered, then add as much or as little detail about yourself as you like. We don&rsquo;t store what you type &mdash; it only builds the text of your prompt, which is sent to the chatbot you choose.</p>
+      <p class="page-lead">Select the questions you want answered, then add as much or as little detail about yourself as you like. We don&rsquo;t store what you type &mdash; it only builds the text of your prompt, which is sent to the chatbot you choose.</p>
 
       <div class="wizard-tabs-wrap">
         <button type="button" class="tabs-arrow tabs-arrow-left" aria-label="Show earlier steps" onClick="{{ scrollTabsLeft }}" disabled="{{ tabsAtStart }}" style="{{ tabsArrowStyle }}">&lsaquo;</button>
-        <div class="wizard-tabs" style="display:flex;gap:4px">
+        <div class="wizard-tabs">
           <sc-for list="{{ steps }}" as="st" hint-placeholder-count="7">
             <button type="button" onClick="{{ st.goTo }}" aria-current="{{ st.ariaCurrent }}" style="{{ st.tabStyle }}">{{ st.tabText }}</button>
           </sc-for>
@@ -228,35 +229,35 @@
       <sc-if value="{{ isStep1 }}">
       <div style="margin-bottom:24px">
         <h2 data-screen-heading="step" tabindex="-1" style="font-size:16px;margin:0 0 6px">Step 1: Select your questions</h2>
-        <p style="font-size:14px;color:rgba(32,30,29,0.65);margin:0 0 16px">Answer three quick questions and we'll shortlist the prompts most relevant to you.</p>
+        <p class="step-lead">Answer three quick questions and we'll shortlist the prompts most relevant to you.</p>
 
         <sc-if value="{{ showSelectionWarning }}">
           <div style="background:#EAF3F3;border:1px solid #2C8494;padding:12px 16px;margin-bottom:20px;font-size:14px;font-weight:600;color:#164752" role="alert">Select at least one question below to continue.</div>
         </sc-if>
 
         <sc-if value="{{ isStep1Quiz }}">
-        <div style="max-width:640px">
-          <div style="font-size:14px;font-weight:700;color:#226B79;margin-bottom:8px">Question {{ browseQuiz.index }} of {{ browseQuiz.total }}</div>
-          <div style="display:flex;gap:6px;margin-bottom:28px">
+        <div class="quiz">
+          <div class="quiz-count">Question {{ browseQuiz.index }} of {{ browseQuiz.total }}</div>
+          <div class="quiz-dots">
             <sc-for list="{{ browseQuizDots }}" as="dot" hint-placeholder-count="3">
               <span style="{{ dot.style }}"></span>
             </sc-for>
           </div>
-          <h3 data-screen-heading="quiz" tabindex="-1" style="font-size:24px;margin:0 0 24px">{{ browseQuiz.question }}</h3>
-          <div style="display:flex;flex-direction:column;gap:12px">
+          <h3 class="quiz-question" data-screen-heading="quiz" tabindex="-1">{{ browseQuiz.question }}</h3>
+          <div class="quiz-options">
             <sc-for list="{{ browseQuiz.options }}" as="opt" hint-placeholder-count="3">
               <button onClick="{{ opt.onSelect }}" style="{{ opt.optionStyle }}">{{ opt.label }}</button>
             </sc-for>
           </div>
           <sc-if value="{{ browseQuizShowBack }}" hint-placeholder-val="{{ false }}">
-            <button onClick="{{ browseQuizBack }}" style="margin-top:24px;background:transparent;border:none;color:#226B79;font-weight:600;font-size:14px;cursor:pointer;padding:0;min-height:44px">&larr; Back</button>
+            <button class="quiz-back" onClick="{{ browseQuizBack }}">&larr; Back</button>
           </sc-if>
         </div>
         </sc-if>
 
         <sc-if value="{{ isStep1Shortlist }}" hint-placeholder-val="{{ false }}">
         <div aria-live="polite">
-          <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 12px">Here are the prompts that best match what you're looking for.</p>
+          <p class="shortlist-lead">Here are the prompts that best match what you're looking for.</p>
 
           <div class="list-controls">
             <button type="button" onClick="{{ restartBrowseQuiz }}" class="list-link-btn">Change your answers</button>
@@ -266,7 +267,7 @@
             </div>
           </div>
 
-          <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="question-list">
             <sc-for list="{{ browseShortlist }}" as="q" hint-placeholder-count="5">
               <label for="{{ q.inputId }}" class="question-row" style="{{ q.cardStyle }}">
                 <input id="{{ q.inputId }}" type="checkbox" checked="{{ q.selected }}" onChange="{{ q.onToggle }}" />
@@ -278,8 +279,8 @@
             </sc-for>
           </div>
           <sc-if value="{{ browseHasHelp }}" hint-placeholder-val="{{ false }}">
-          <h3 style="font-size:16px;font-weight:700;color:#164752;margin:24px 0 12px">{{ browseHelpHeading }}</h3>
-          <div style="display:flex;flex-direction:column;gap:10px">
+          <h3 class="question-help-heading">{{ browseHelpHeading }}</h3>
+          <div class="question-list">
             <sc-for list="{{ browseHelpList }}" as="q" hint-placeholder-count="2">
               <label for="{{ q.inputId }}" class="question-row" style="{{ q.cardStyle }}">
                 <input id="{{ q.inputId }}" type="checkbox" checked="{{ q.selected }}" onChange="{{ q.onToggle }}" />
@@ -297,15 +298,15 @@
       </sc-if>
 
       <sc-if value="{{ isStep2 }}">
-      <div style="background:#eceae9;padding:24px;margin-bottom:24px">
+      <div class="wizard-panel">
         <h2 data-screen-heading="step" tabindex="-1" style="font-size:16px;margin:0 0 18px">Step 2: Profile & timeline</h2>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
-          <div><label for="age" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Your age</label><input id="age" type="text" placeholder="e.g. 58" value="{{ fields.age }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="partnerAge" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Partner's age</label><input id="partnerAge" type="text" placeholder="Leave blank if none" value="{{ fields.partnerAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="retireAge" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target retirement age</label><input id="retireAge" type="text" placeholder="e.g. 65" value="{{ fields.retireAge }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="country" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Country / region</label><input id="country" type="text" placeholder="e.g. United Kingdom" value="{{ fields.country }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="employment" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Employment status</label>
-            <select id="employment" value="{{ fields.employment }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+        <div class="field-grid-3">
+          <div><label class="field-label" for="age">Your age</label><input class="field-input" id="age" type="text" placeholder="e.g. 58" value="{{ fields.age }}" onChange="{{ handleChange }}" /></div>
+          <div><label class="field-label" for="partnerAge">Partner's age</label><input class="field-input" id="partnerAge" type="text" placeholder="Leave blank if none" value="{{ fields.partnerAge }}" onChange="{{ handleChange }}" /></div>
+          <div><label class="field-label" for="retireAge">Target retirement age</label><input class="field-input" id="retireAge" type="text" placeholder="e.g. 65" value="{{ fields.retireAge }}" onChange="{{ handleChange }}" /></div>
+          <div><label class="field-label" for="country">Country / region</label><input class="field-input" id="country" type="text" placeholder="e.g. United Kingdom" value="{{ fields.country }}" onChange="{{ handleChange }}" /></div>
+          <div><label class="field-label" for="employment">Employment status</label>
+            <select class="field-input" id="employment" value="{{ fields.employment }}" onChange="{{ handleChange }}">
               <option value="">&mdash; select &mdash;</option>
               <option>Employed (PAYE)</option>
               <option>Self-employed</option>
@@ -314,19 +315,19 @@
               <option>Already retired / semi-retired</option>
             </select>
           </div>
-          <div><label for="health" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Health status (optional)</label>
-            <select id="health" aria-describedby="healthHint" value="{{ fields.health }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+          <div><label class="field-label" for="health">Health status (optional)</label>
+            <select class="field-input" id="health" aria-describedby="healthHint" value="{{ fields.health }}" onChange="{{ handleChange }}">
               <option value="">&mdash; select &mdash;</option>
               <option>Excellent</option>
               <option>Good</option>
               <option>Fair</option>
               <option>Poor / chronic conditions</option>
             </select>
-            <span id="healthHint" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-top:5px">Helps the AI think about how long your income may need to last. Leave blank if you&rsquo;d rather not say.</span>
+            <span class="field-hint" id="healthHint">Helps the AI think about how long your income may need to last. Leave blank if you&rsquo;d rather not say.</span>
           </div>
-          <div><label for="dependants" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Financial dependants</label><input id="dependants" type="text" placeholder="e.g. 0" value="{{ fields.dependants }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="risk" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Investment risk tolerance</label>
-            <select id="risk" value="{{ fields.risk }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+          <div><label class="field-label" for="dependants">Financial dependants</label><input class="field-input" id="dependants" type="text" placeholder="e.g. 0" value="{{ fields.dependants }}" onChange="{{ handleChange }}" /></div>
+          <div><label class="field-label" for="risk">Investment risk tolerance</label>
+            <select class="field-input" id="risk" value="{{ fields.risk }}" onChange="{{ handleChange }}">
               <option value="">&mdash; select &mdash;</option>
               <option>Cautious &mdash; low risk, protecting what I have comes first</option>
               <option>Balanced &mdash; mix of growth and security</option>
@@ -338,27 +339,27 @@
       </sc-if>
 
       <sc-if value="{{ isStep3 }}">
-      <div style="background:#eceae9;padding:24px;margin-bottom:24px">
+      <div class="wizard-panel">
         <h2 data-screen-heading="step" tabindex="-1" style="font-size:16px;margin:0 0 8px">Step 3: What you have now</h2>
         <p class="wizard-step-hint">All optional. A figure or a rough description is fine. Income you expect once you retire goes in step 5.</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          <div><label for="pension" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Pension savings</label><input id="pension" type="text" placeholder="e.g. £150,000 across two pots" value="{{ fields.pension }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="savings" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Other savings & investments</label><input id="savings" type="text" placeholder="e.g. £30,000 ISAs, £10,000 cash" value="{{ fields.savings }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="property" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Property and debts</label><input id="property" type="text" placeholder="e.g. £350,000 home, £50,000 owed" value="{{ fields.property }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="income" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Income and pension contributions now</label><input id="income" type="text" placeholder="e.g. £70,000, paying in £8,000" value="{{ fields.income }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-          <div><label for="pensionAccess" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Have you taken anything from a pension yet?</label>
-            <select id="pensionAccess" aria-describedby="pensionAccessHint" value="{{ fields.pensionAccess }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+        <div class="field-grid-2">
+          <div><label class="field-label" for="pension">Pension savings</label><input class="field-input" id="pension" type="text" placeholder="e.g. £150,000 across two pots" value="{{ fields.pension }}" onChange="{{ handleChange }}" /></div>
+          <div><label class="field-label" for="savings">Other savings & investments</label><input class="field-input" id="savings" type="text" placeholder="e.g. £30,000 ISAs, £10,000 cash" value="{{ fields.savings }}" onChange="{{ handleChange }}" /></div>
+          <div><label class="field-label" for="property">Property and debts</label><input class="field-input" id="property" type="text" placeholder="e.g. £350,000 home, £50,000 owed" value="{{ fields.property }}" onChange="{{ handleChange }}" /></div>
+          <div><label class="field-label" for="income">Income and pension contributions now</label><input class="field-input" id="income" type="text" placeholder="e.g. £70,000, paying in £8,000" value="{{ fields.income }}" onChange="{{ handleChange }}" /></div>
+          <div><label class="field-label" for="pensionAccess">Have you taken anything from a pension yet?</label>
+            <select class="field-input" id="pensionAccess" aria-describedby="pensionAccessHint" value="{{ fields.pensionAccess }}" onChange="{{ handleChange }}">
               <option value="">&mdash; select &mdash;</option>
               <option>No &mdash; nothing taken yet</option>
               <option>Tax-free cash only</option>
               <option>Taxable income or lump sums</option>
               <option>Not sure</option>
             </select>
-            <span id="pensionAccessHint" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-top:5px">Taking taxable money from a pension usually lowers how much you can pay in afterwards, so this stops the AI guessing.</span>
+            <span class="field-hint" id="pensionAccessHint">Taking taxable money from a pension usually lowers how much you can pay in afterwards, so this stops the AI guessing.</span>
           </div>
           <!-- Shown only when a partner's age was entered in step 2. styles.css hides it otherwise. -->
-          <div class="partner-only" data-open="{{ hasPartner }}"><label for="partnerPensionAccess" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Has your partner taken anything from a pension yet?</label>
-            <select id="partnerPensionAccess" aria-describedby="pensionAccessHint" value="{{ fields.partnerPensionAccess }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+          <div class="partner-only" data-open="{{ hasPartner }}"><label class="field-label" for="partnerPensionAccess">Has your partner taken anything from a pension yet?</label>
+            <select class="field-input" id="partnerPensionAccess" aria-describedby="pensionAccessHint" value="{{ fields.partnerPensionAccess }}" onChange="{{ handleChange }}">
               <option value="">&mdash; select &mdash;</option>
               <option>No &mdash; nothing taken yet</option>
               <option>Tax-free cash only</option>
@@ -368,14 +369,14 @@
           </div>
         </div>
 
-        <div style="margin-top:20px"><label for="financeNotes" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else about your finances</label><textarea id="financeNotes" placeholder="e.g. One pot is already in drawdown, my partner has a small pot they have not touched..." value="{{ fields.financeNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:20px"><label class="field-label" for="financeNotes">Anything else about your finances</label><textarea class="field-textarea" id="financeNotes" placeholder="e.g. One pot is already in drawdown, my partner has a small pot they have not touched..." value="{{ fields.financeNotes }}" onChange="{{ handleChange }}"></textarea></div>
       </div>
       </sc-if>
 
       <sc-if value="{{ isStep4 }}">
-      <div style="background:#eceae9;padding:24px;margin-bottom:24px">
+      <div class="wizard-panel">
         <h2 data-screen-heading="step" tabindex="-1" style="font-size:16px;margin:0 0 18px">Step 4: Retirement goals</h2>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+        <div class="field-grid-2">
           <!-- UPDATE EACH YEAR (PO-23, PO-24). The list uses the three levels of the Pensions UK
                Retirement Living Standards, and the monthly amounts come from the same source,
                published each June: https://www.retirementlivingstandards.org.uk/details
@@ -387,23 +388,23 @@
                change the three ranges below and the year in the note under the list.
                An option's "value" is what the prompt is built from, so it carries no amounts:
                the prompt names the level and asks the AI to use the current published figure. -->
-          <div><label for="lifestyle" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Lifestyle expectation</label>
-            <select id="lifestyle" aria-describedby="lifestyleHint" value="{{ fields.lifestyle }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+          <div><label class="field-label" for="lifestyle">Lifestyle expectation</label>
+            <select class="field-input" id="lifestyle" aria-describedby="lifestyleHint" value="{{ fields.lifestyle }}" onChange="{{ handleChange }}">
               <option value="">&mdash; select &mdash;</option>
               <option value="Minimum">Minimum (£1,150 to £2,000 a month)</option>
               <option value="Moderate">Moderate (£2,750 to £3,900 a month)</option>
               <option value="Comfortable">Comfortable (£3,800 to £5,400 a month)</option>
               <option value="Other">Other (enter my own monthly amount)</option>
             </select>
-            <span id="lifestyleHint" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-top:5px">The amounts are a guide to what each level costs to live on after tax, from one person outside London to a couple in London. They are from the <a href="https://www.retirementlivingstandards.org.uk/" target="_blank" rel="noopener">Retirement Living Standards 2026<span class="sr-only"> (opens in a new tab)</span></a> and leave out rent, mortgage and care costs.</span>
+            <span class="field-hint" id="lifestyleHint">The amounts are a guide to what each level costs to live on after tax, from one person outside London to a couple in London. They are from the <a href="https://www.retirementlivingstandards.org.uk/" target="_blank" rel="noopener">Retirement Living Standards 2026<span class="sr-only"> (opens in a new tab)</span></a> and leave out rent, mortgage and care costs.</span>
           </div>
 
           <!-- The space beside the list is always kept for the custom amount, so the boxes below
                never move when "Other" is chosen. styles.css hides it until then. -->
-          <div class="lifestyle-custom-slot" data-open="{{ lifestyleIsCustom }}"><label for="target" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Target monthly lifestyle spending in retirement</label><input id="target" type="text" placeholder="e.g. £3,500 a month" value="{{ fields.target }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div class="lifestyle-custom-slot" data-open="{{ lifestyleIsCustom }}"><label class="field-label" for="target">Target monthly lifestyle spending in retirement</label><input class="field-input" id="target" type="text" placeholder="e.g. £3,500 a month" value="{{ fields.target }}" onChange="{{ handleChange }}" /></div>
 
-          <div><label for="partTime" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Part-time work in retirement?</label>
-            <select id="partTime" value="{{ fields.partTime }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+          <div><label class="field-label" for="partTime">Part-time work in retirement?</label>
+            <select class="field-input" id="partTime" value="{{ fields.partTime }}" onChange="{{ handleChange }}">
               <option value="">&mdash; select &mdash;</option>
               <option>Yes, for several years</option>
               <option>Possibly / undecided</option>
@@ -411,8 +412,8 @@
             </select>
           </div>
 
-          <div><label for="estate" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Do you want to leave an estate / inheritance?</label>
-            <select id="estate" value="{{ fields.estate }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px">
+          <div><label class="field-label" for="estate">Do you want to leave an estate / inheritance?</label>
+            <select class="field-input" id="estate" value="{{ fields.estate }}" onChange="{{ handleChange }}">
               <option value="">&mdash; select &mdash;</option>
               <option>Yes, this is a clear priority</option>
               <option>Nice to have if possible</option>
@@ -420,53 +421,53 @@
             </select>
           </div>
         </div>
-        <div style="margin-top:16px"><label for="plans" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Key plans or activities in retirement</label><textarea id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property..." value="{{ fields.plans }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label class="field-label" for="plans">Key plans or activities in retirement</label><textarea class="field-textarea" id="plans" placeholder="e.g. Travel extensively, support grandchildren, downsize property..." value="{{ fields.plans }}" onChange="{{ handleChange }}"></textarea></div>
       </div>
       </sc-if>
 
       <sc-if value="{{ isStep5 }}">
-      <div style="background:#eceae9;padding:24px;margin-bottom:24px">
+      <div class="wizard-panel">
         <h2 data-screen-heading="step" tabindex="-1" style="font-size:16px;margin:0 0 8px">Step 5: Income you expect in retirement</h2>
         <p class="wizard-step-intro">Tick each source of income you expect once you retire, then tell us roughly how much and when it starts. Pots and savings you already hold belong in step 3 &mdash; there is no need to repeat them here.</p>
         <p class="wizard-step-hint">A figure or a short description are both fine. Leave the amount blank if you don&rsquo;t know it yet.</p>
         <div class="income-source-list">
           <sc-for list="{{ sourceRows }}" as="src" hint-placeholder-count="9">
             <div class="income-source-row">
-              <label for="{{ src.id }}" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="{{ src.id }}" type="checkbox" checked="{{ src.checked }}" onChange="{{ src.onChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> {{ src.label }}</label>
+              <label class="check-label" for="{{ src.id }}"><input class="check-input" id="{{ src.id }}" type="checkbox" checked="{{ src.checked }}" onChange="{{ src.onChange }}" /> {{ src.label }}</label>
               <sc-if value="{{ src.checked }}">
                 <div class="income-source-detail">
                   <sc-if value="{{ src.isOther }}">
-                    <div style="grid-column:1 / -1"><label for="srcOtherText" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">What is the income source?</label><input id="srcOtherText" type="text" placeholder="Please describe the income source" value="{{ src.otherText }}" onChange="{{ src.onChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+                    <div style="grid-column:1 / -1"><label class="field-label" for="srcOtherText">What is the income source?</label><input class="field-input" id="srcOtherText" type="text" placeholder="Please describe the income source" value="{{ src.otherText }}" onChange="{{ src.onChange }}" /></div>
                   </sc-if>
-                  <div><label for="{{ src.amtId }}" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">How much?</label><input id="{{ src.amtId }}" type="text" placeholder="{{ src.amtPlaceholder }}" value="{{ src.amt }}" onChange="{{ src.onChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
-                  <div><label for="{{ src.fromId }}" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">From when?</label><input id="{{ src.fromId }}" type="text" placeholder="{{ src.fromPlaceholder }}" value="{{ src.from }}" onChange="{{ src.onChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+                  <div><label class="field-label" for="{{ src.amtId }}">How much?</label><input class="field-input" id="{{ src.amtId }}" type="text" placeholder="{{ src.amtPlaceholder }}" value="{{ src.amt }}" onChange="{{ src.onChange }}" /></div>
+                  <div><label class="field-label" for="{{ src.fromId }}">From when?</label><input class="field-input" id="{{ src.fromId }}" type="text" placeholder="{{ src.fromPlaceholder }}" value="{{ src.from }}" onChange="{{ src.onChange }}" /></div>
                 </div>
               </sc-if>
             </div>
           </sc-for>
         </div>
-        <div style="margin-top:16px"><label for="srcNotes" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else about your retirement income</label><textarea id="srcNotes" placeholder="e.g. My final salary pension is reduced if I take it before 65..." value="{{ fields.srcNotes }}" onChange="{{ handleChange }}" style="width:100%;min-height:80px;padding:8px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label class="field-label" for="srcNotes">Anything else about your retirement income</label><textarea class="field-textarea" id="srcNotes" placeholder="e.g. My final salary pension is reduced if I take it before 65..." value="{{ fields.srcNotes }}" onChange="{{ handleChange }}"></textarea></div>
       </div>
       </sc-if>
 
       <sc-if value="{{ isStep6 }}">
-      <div style="background:#eceae9;padding:24px;margin-bottom:24px">
+      <div class="wizard-panel">
         <h2 data-screen-heading="step" tabindex="-1" style="font-size:16px;margin:0 0 18px">Step 6: Concerns & anything else</h2>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px">
-          <label for="c_runout" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_runout" type="checkbox" checked="{{ fields.c_runout }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Running out of money</label>
-          <label for="c_inflation" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_inflation" type="checkbox" checked="{{ fields.c_inflation }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Inflation eroding income</label>
-          <label for="c_care" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_care" type="checkbox" checked="{{ fields.c_care }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Long-term care costs</label>
-          <label for="c_tax" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_tax" type="checkbox" checked="{{ fields.c_tax }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Tax efficiency</label>
-          <label for="c_market" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_market" type="checkbox" checked="{{ fields.c_market }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Market volatility</label>
-          <label for="c_early" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_early" type="checkbox" checked="{{ fields.c_early }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Dying too early / life cover</label>
-          <label for="c_partner" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_partner" type="checkbox" checked="{{ fields.c_partner }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Partner survivorship</label>
-          <label for="c_health" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_health" type="checkbox" checked="{{ fields.c_health }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Unexpected health costs</label>
-          <label for="c_other" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;min-height:44px"><input id="c_other" type="checkbox" checked="{{ fields.c_other }}" onChange="{{ handleChange }}" style="accent-color:#2C8494;width:24px;height:24px" /> Other concern</label>
+        <div class="check-grid">
+          <label class="check-label" for="c_runout"><input class="check-input" id="c_runout" type="checkbox" checked="{{ fields.c_runout }}" onChange="{{ handleChange }}" /> Running out of money</label>
+          <label class="check-label" for="c_inflation"><input class="check-input" id="c_inflation" type="checkbox" checked="{{ fields.c_inflation }}" onChange="{{ handleChange }}" /> Inflation eroding income</label>
+          <label class="check-label" for="c_care"><input class="check-input" id="c_care" type="checkbox" checked="{{ fields.c_care }}" onChange="{{ handleChange }}" /> Long-term care costs</label>
+          <label class="check-label" for="c_tax"><input class="check-input" id="c_tax" type="checkbox" checked="{{ fields.c_tax }}" onChange="{{ handleChange }}" /> Tax efficiency</label>
+          <label class="check-label" for="c_market"><input class="check-input" id="c_market" type="checkbox" checked="{{ fields.c_market }}" onChange="{{ handleChange }}" /> Market volatility</label>
+          <label class="check-label" for="c_early"><input class="check-input" id="c_early" type="checkbox" checked="{{ fields.c_early }}" onChange="{{ handleChange }}" /> Dying too early / life cover</label>
+          <label class="check-label" for="c_partner"><input class="check-input" id="c_partner" type="checkbox" checked="{{ fields.c_partner }}" onChange="{{ handleChange }}" /> Partner survivorship</label>
+          <label class="check-label" for="c_health"><input class="check-input" id="c_health" type="checkbox" checked="{{ fields.c_health }}" onChange="{{ handleChange }}" /> Unexpected health costs</label>
+          <label class="check-label" for="c_other"><input class="check-input" id="c_other" type="checkbox" checked="{{ fields.c_other }}" onChange="{{ handleChange }}" /> Other concern</label>
         </div>
         <sc-if value="{{ fields.c_other }}">
-          <div style="margin-top:12px"><label for="concernOtherText" class="sr-only">Describe other concern</label><input id="concernOtherText" type="text" placeholder="Please describe the concern" value="{{ fields.concernOtherText }}" onChange="{{ handleChange }}" style="width:100%;min-height:44px;padding:6px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px" /></div>
+          <div style="margin-top:12px"><label for="concernOtherText" class="sr-only">Describe other concern</label><input class="field-input" id="concernOtherText" type="text" placeholder="Please describe the concern" value="{{ fields.concernOtherText }}" onChange="{{ handleChange }}" /></div>
         </sc-if>
-        <div style="margin-top:16px"><label for="question" style="display:block;font-size:14px;color:rgba(32,30,29,0.7);margin-bottom:5px">Anything else we should know?</label><textarea id="question" placeholder="e.g. 'Am I on track to retire at 62?' or 'Should I consolidate my three pension pots?'" value="{{ fields.question }}" onChange="{{ handleChange }}" style="width:100%;min-height:90px;padding:8px 10px;border:1px solid rgba(32,30,29,0.6);background:#fff;font-size:14px;resize:vertical"></textarea></div>
+        <div style="margin-top:16px"><label class="field-label" for="question">Anything else we should know?</label><textarea class="field-textarea" id="question" placeholder="e.g. 'Am I on track to retire at 62?' or 'Should I consolidate my three pension pots?'" value="{{ fields.question }}" onChange="{{ handleChange }}" style="min-height:90px"></textarea></div>
       </div>
       </sc-if>
 
@@ -522,15 +523,15 @@
       </div>
 
       <!-- Prompt Section -->
-      <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid rgba(32,30,29,0.2);overflow:hidden;margin-bottom:24px">
+      <div class="prompt-card">
         <!-- Prompt Header -->
-        <div style="background:#f1f5f9;border-bottom:1px solid rgba(32,30,29,0.1);padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
-          <h3 style="font-size:16px;font-weight:700;color:#334155;margin:0">Here is your tailored prompt</h3>
+        <div class="prompt-card-head" style="display:flex;justify-content:space-between;align-items:center">
+          <h3 class="prompt-card-title">Here is your tailored prompt</h3>
         </div>
 
         <!-- Prompt Content -->
-        <div class="surface-dark" style="position:relative;background:#1e293b;padding:24px;border-top:3px solid #2C8494">
-          <pre tabindex="0" role="region" aria-label="Your tailored prompt" style="font-family:'Courier New',monospace;font-size:14px;line-height:1.6;color:#e2e8f0;margin:0;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto">{{ outputText }}</pre>
+        <div class="surface-dark prompt-box">
+          <pre class="prompt-text" tabindex="0" role="region" aria-label="Your tailored prompt">{{ outputText }}</pre>
         </div>
 
         <!-- Next steps, directly under the prompt -->
@@ -550,10 +551,10 @@
   <sc-if value="{{ isBrowse }}">
   <main data-screen-label="Browse Prompts" style="max-width:1120px;margin:0 auto;padding:32px 32px 64px">
     <h1 data-screen-heading="page" tabindex="-1" style="font-size:30px;margin:0 0 8px">Prompt list</h1>
-    <p style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 24px;max-width:70ch">Select the questions you want answered and we&rsquo;ll combine them into one prompt, ready to use with the chatbot you choose.</p>
+    <p class="page-lead">Select the questions you want answered and we&rsquo;ll combine them into one prompt, ready to use with the chatbot you choose.</p>
 
     <div class="wizard-tabs-wrap">
-      <div class="wizard-tabs" style="display:flex;gap:4px">
+      <div class="wizard-tabs">
         <sc-for list="{{ browseSteps }}" as="st" hint-placeholder-count="2">
           <button type="button" onClick="{{ st.goTo }}" aria-current="{{ st.ariaCurrent }}" disabled="{{ st.disabled }}" style="{{ st.tabStyle }}">{{ st.tabText }}</button>
         </sc-for>
@@ -562,32 +563,32 @@
 
     <sc-if value="{{ showBrowseIntro }}">
     <h2 style="font-size:16px;margin:0 0 6px">Step 1: Select your questions</h2>
-    <p style="font-size:14px;color:rgba(32,30,29,0.65);margin:0 0 16px">Answer three quick questions and we'll shortlist the prompts most relevant to you.</p>
+    <p class="step-lead">Answer three quick questions and we'll shortlist the prompts most relevant to you.</p>
     </sc-if>
 
     <sc-if value="{{ isBrowseQuiz }}">
-    <div style="max-width:640px">
-      <div style="font-size:14px;font-weight:700;color:#226B79;margin-bottom:8px">Question {{ browseQuiz.index }} of {{ browseQuiz.total }}</div>
-      <div style="display:flex;gap:6px;margin-bottom:28px">
+    <div class="quiz">
+      <div class="quiz-count">Question {{ browseQuiz.index }} of {{ browseQuiz.total }}</div>
+      <div class="quiz-dots">
         <sc-for list="{{ browseQuizDots }}" as="dot" hint-placeholder-count="3">
           <span style="{{ dot.style }}"></span>
         </sc-for>
       </div>
-      <h3 data-screen-heading="quiz" tabindex="-1" style="font-size:24px;margin:0 0 24px">{{ browseQuiz.question }}</h3>
-      <div style="display:flex;flex-direction:column;gap:12px">
+      <h3 class="quiz-question" data-screen-heading="quiz" tabindex="-1">{{ browseQuiz.question }}</h3>
+      <div class="quiz-options">
         <sc-for list="{{ browseQuiz.options }}" as="opt" hint-placeholder-count="3">
           <button onClick="{{ opt.onSelect }}" style="{{ opt.optionStyle }}">{{ opt.label }}</button>
         </sc-for>
       </div>
       <sc-if value="{{ browseQuizShowBack }}" hint-placeholder-val="{{ false }}">
-        <button onClick="{{ browseQuizBack }}" style="margin-top:24px;background:transparent;border:none;color:#226B79;font-weight:600;font-size:14px;cursor:pointer;padding:0;min-height:44px">&larr; Back</button>
+        <button class="quiz-back" onClick="{{ browseQuizBack }}">&larr; Back</button>
       </sc-if>
     </div>
     </sc-if>
 
     <sc-if value="{{ isBrowseResults }}" hint-placeholder-val="{{ false }}">
     <div aria-live="polite">
-      <p data-screen-heading="step" tabindex="-1" style="font-size:14px;color:rgba(32,30,29,0.7);margin:0 0 12px">Here are the prompts that best match what you're looking for. Select the topics you want to cover, then create your combined prompt.</p>
+      <p class="shortlist-lead" data-screen-heading="step" tabindex="-1">Here are the prompts that best match what you're looking for. Select the topics you want to cover, then create your combined prompt.</p>
 
       <div class="list-controls">
         <button type="button" onClick="{{ restartBrowseQuiz }}" class="list-link-btn">Change your answers</button>
@@ -597,7 +598,7 @@
         </div>
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="question-list">
         <sc-for list="{{ browseShortlist }}" as="q" hint-placeholder-count="5">
           <label for="{{ q.inputId }}" class="question-row" style="{{ q.cardStyle }}">
             <input id="{{ q.inputId }}" type="checkbox" checked="{{ q.selected }}" onChange="{{ q.onToggle }}" />
@@ -609,8 +610,8 @@
         </sc-for>
       </div>
       <sc-if value="{{ browseHasHelp }}" hint-placeholder-val="{{ false }}">
-      <h3 style="font-size:16px;font-weight:700;color:#164752;margin:24px 0 12px">{{ browseHelpHeading }}</h3>
-      <div style="display:flex;flex-direction:column;gap:10px">
+      <h3 class="question-help-heading">{{ browseHelpHeading }}</h3>
+      <div class="question-list">
         <sc-for list="{{ browseHelpList }}" as="q" hint-placeholder-count="2">
           <label for="{{ q.inputId }}" class="question-row" style="{{ q.cardStyle }}">
             <input id="{{ q.inputId }}" type="checkbox" checked="{{ q.selected }}" onChange="{{ q.onToggle }}" />
@@ -659,13 +660,13 @@
       </div>
 
       <!-- Prompt Section -->
-      <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid rgba(32,30,29,0.2);overflow:hidden;margin-bottom:24px">
-        <div style="background:#f1f5f9;border-bottom:1px solid rgba(32,30,29,0.1);padding:16px 24px">
-          <h3 style="font-size:16px;font-weight:700;color:#334155;margin:0">Here is your prompt</h3>
+      <div class="prompt-card">
+        <div class="prompt-card-head">
+          <h3 class="prompt-card-title">Here is your prompt</h3>
         </div>
 
-        <div class="surface-dark" style="position:relative;background:#1e293b;padding:24px;border-top:3px solid #2C8494">
-          <pre tabindex="0" role="region" aria-label="Your prompt" style="font-family:'Courier New',monospace;font-size:14px;line-height:1.6;color:#e2e8f0;margin:0;white-space:pre-wrap;word-break:break-word;max-height:400px;overflow-y:auto">{{ browsePromptText }}</pre>
+        <div class="surface-dark prompt-box">
+          <pre class="prompt-text" tabindex="0" role="region" aria-label="Your prompt">{{ browsePromptText }}</pre>
         </div>
 
         <!-- Next steps, directly under the prompt -->
@@ -681,7 +682,7 @@
           <h2 class="list-upsell-title">Want a more tailored answer?</h2>
           <p class="list-upsell-text">Add your age, pension, income and concerns, and these same questions produce answers specific to your situation.</p>
         </div>
-        <button data-action="goApp" onClick="{{ goApp }}" class="btn-secondary">Personalise the prompt &rarr;</button>
+        <button onClick="{{ goApp }}" class="btn-secondary">Personalise the prompt &rarr;</button>
       </div>
     </div>
     </sc-if>
@@ -712,29 +713,29 @@
 
   <!-- Important information modal (available from every page) -->
   <sc-if value="{{ showInfoModal }}">
-  <div onClick="{{ closeInfoModal }}" style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px">
+  <div onClick="{{ closeInfoModal }}" class="viewport-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px">
     <div onClick="{{ stopClick }}" id="info-modal-content" role="dialog" aria-modal="true" aria-labelledby="info-modal-title" style="background:#fff;border-radius:12px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,0.3)">
       <div style="padding:28px 32px 20px;border-bottom:1px solid rgba(32,30,29,0.1);display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
         <h2 id="info-modal-title" style="font-size:22px;margin:0;color:#164752;font-weight:800">Important information about this site</h2>
         <button onClick="{{ closeInfoModal }}" aria-label="Close" style="background:transparent;border:none;font-size:24px;cursor:pointer;color:#666;line-height:1;padding:0;flex:none;min-height:44px;min-width:44px">&times;</button>
       </div>
-      <div style="padding:24px 32px;font-size:14px;color:rgba(32,30,29,0.85);line-height:1.7">
-        <p style="margin:0 0 16px"><strong>We only help you ask better questions.</strong> This tool doesn&rsquo;t calculate anything or give you answers itself &mdash; it builds a clear, UK-focused prompt for you to use with an AI chatbot of your choice.</p>
-        <p style="margin:0 0 16px"><strong>AI answers aren&rsquo;t guaranteed to be right.</strong> Chatbots can get facts wrong, use outdated figures, or miss details specific to your situation &mdash; even when given a good question. Always double-check anything that matters.</p>
-        <p style="margin:0 0 16px"><strong>This isn&rsquo;t financial advice.</strong> Nothing produced by this tool, or by the AI chatbots it links to, is regulated financial advice. It shouldn&rsquo;t be the basis for decisions like changing your pension, retiring, or moving your savings.</p>
-        <p style="margin:0 0 16px"><strong>You aren&rsquo;t protected if a chatbot gets it wrong.</strong> AI chatbots are not regulated financial advisers. If you act on an answer and lose money, you can&rsquo;t take a complaint to the Financial Ombudsman Service or claim from the Financial Services Compensation Scheme.</p>
-        <p style="margin:0 0 16px"><strong>Free, impartial help is available.</strong> <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">MoneyHelper<span class="sr-only"> (opens in a new tab)</span></a> offers free guidance on pensions, and its Pension Wise service gives a free appointment to people aged 50 or over with a defined contribution pension.</p>
-        <p style="margin:0 0 16px"><strong>Always speak to a professional.</strong> For anything that affects your retirement income, talk to a regulated, independent financial adviser who can look at your full circumstances before you act. You can check a firm or adviser on the <a href="https://register.fca.org.uk/" target="_blank" rel="noopener">FCA Register<span class="sr-only"> (opens in a new tab)</span></a>.</p>
-        <p style="margin:0 0 16px"><strong>Watch out for scams.</strong> Be wary of anyone who pressures you to move your pension, promises guaranteed returns or contacts you out of the blue. Take your time, and check the firm on the FCA Register first.</p>
+      <div class="info-modal-body">
+        <p><strong>We only help you ask better questions.</strong> This tool doesn&rsquo;t calculate anything or give you answers itself &mdash; it builds a clear, UK-focused prompt for you to use with an AI chatbot of your choice.</p>
+        <p><strong>AI answers aren&rsquo;t guaranteed to be right.</strong> Chatbots can get facts wrong, use outdated figures, or miss details specific to your situation &mdash; even when given a good question. Always double-check anything that matters.</p>
+        <p><strong>This isn&rsquo;t financial advice.</strong> Nothing produced by this tool, or by the AI chatbots it links to, is regulated financial advice. It shouldn&rsquo;t be the basis for decisions like changing your pension, retiring, or moving your savings.</p>
+        <p><strong>You aren&rsquo;t protected if a chatbot gets it wrong.</strong> AI chatbots are not regulated financial advisers. If you act on an answer and lose money, you can&rsquo;t take a complaint to the Financial Ombudsman Service or claim from the Financial Services Compensation Scheme.</p>
+        <p><strong>Free, impartial help is available.</strong> <a href="https://www.moneyhelper.org.uk/en/pensions-and-retirement" target="_blank" rel="noopener">MoneyHelper<span class="sr-only"> (opens in a new tab)</span></a> offers free guidance on pensions, and its Pension Wise service gives a free appointment to people aged 50 or over with a defined contribution pension.</p>
+        <p><strong>Always speak to a professional.</strong> For anything that affects your retirement income, talk to a regulated, independent financial adviser who can look at your full circumstances before you act. You can check a firm or adviser on the <a href="https://register.fca.org.uk/" target="_blank" rel="noopener">FCA Register<span class="sr-only"> (opens in a new tab)</span></a>.</p>
+        <p><strong>Watch out for scams.</strong> Be wary of anyone who pressures you to move your pension, promises guaranteed returns or contacts you out of the blue. Take your time, and check the firm on the FCA Register first.</p>
         <!-- Privacy notice (PO-74). Keep in step with what the tool does: if the host,
              the counter or an outside script changes, or the tool moves to a site
              that sets cookies, update the wording here. -->
-        <p style="margin:0 0 16px"><strong>Your privacy.</strong> We don&rsquo;t store or track what you type, and this tool sets no cookies. What you enter stays in your browser and is used only to build the text of your prompt.</p>
-        <p style="margin:0 0 16px"><strong>What we count.</strong> We count how often each part of the tool is used, for example how many prompts are copied, which answers are picked and which boxes are filled in. The counts never hold what you typed, and nothing in them can be linked to you.</p>
-        <p style="margin:0 0 16px"><strong>What the companies that host this tool see.</strong> As with any website, opening this tool sends your device&rsquo;s internet (IP) address to the companies that deliver it: GitHub, which hosts the pages, and Neon, which runs the counter. They may handle it in the United States. We rely on our legitimate interest in running the tool and keeping it secure. We don&rsquo;t keep your IP address or link it to anything you do here.</p>
-        <p style="margin:0 0 16px"><strong>When you launch a chatbot.</strong> Your prompt &mdash; including any details you added &mdash; is sent to that chatbot&rsquo;s provider and handled under their privacy policy. Don&rsquo;t include your name, address, National Insurance number or account numbers.</p>
-        <p style="margin:0 0 16px"><strong>Who is responsible and your rights.</strong> This tool is provided by the Consumer Duty Alliance. Its <a href="https://consumerduty.org/cookie-privacy-policy" target="_blank" rel="noopener">cookie and privacy policy<span class="sr-only"> (opens in a new tab)</span></a> sets out your data protection rights, who to contact and how to complain to the Information Commissioner&rsquo;s Office. That policy also covers the Alliance&rsquo;s own website, which uses cookies. This tool does not.</p>
-        <p style="margin:0"><strong>We don&rsquo;t endorse any chatbot.</strong> The chatbots listed are widely used examples. The Consumer Duty Alliance does not recommend one over another.</p>
+        <p><strong>Your privacy.</strong> We don&rsquo;t store or track what you type, and this tool sets no cookies. What you enter stays in your browser and is used only to build the text of your prompt.</p>
+        <p><strong>What we count.</strong> We count how often each part of the tool is used, for example how many prompts are copied, which answers are picked and which boxes are filled in. The counts never hold what you typed, and nothing in them can be linked to you.</p>
+        <p><strong>What the companies that host this tool see.</strong> As with any website, opening this tool sends your device&rsquo;s internet (IP) address to the companies that deliver it: GitHub, which hosts the pages, and Neon, which runs the counter. They may handle it in the United States. We rely on our legitimate interest in running the tool and keeping it secure. We don&rsquo;t keep your IP address or link it to anything you do here.</p>
+        <p><strong>When you launch a chatbot.</strong> Your prompt &mdash; including any details you added &mdash; is sent to that chatbot&rsquo;s provider and handled under their privacy policy. Don&rsquo;t include your name, address, National Insurance number or account numbers.</p>
+        <p><strong>Who is responsible and your rights.</strong> This tool is provided by the Consumer Duty Alliance. Its <a href="https://consumerduty.org/cookie-privacy-policy" target="_blank" rel="noopener">cookie and privacy policy<span class="sr-only"> (opens in a new tab)</span></a> sets out your data protection rights, who to contact and how to complain to the Information Commissioner&rsquo;s Office. That policy also covers the Alliance&rsquo;s own website, which uses cookies. This tool does not.</p>
+        <p><strong>We don&rsquo;t endorse any chatbot.</strong> The chatbots listed are widely used examples. The Consumer Duty Alliance does not recommend one over another.</p>
       </div>
       <div style="padding:20px 32px 28px">
         <button onClick="{{ closeInfoModal }}" class="btn-primary" style="width:100%;justify-content:center">Close</button>
@@ -748,7 +749,7 @@
 
 <div id="toast-container" aria-live="polite" aria-atomic="true" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;max-width:350px"></div>
 
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:1000},&quot;enableOpenInChatGPT&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:1000}}">
 // Question data now lives in prompts.js (loaded as a plain <script> in <head>,
 // before this block runs) so it can be edited and reflected on refresh without
 // touching this file. Falls back to an empty list if prompts.js failed to load.
@@ -768,8 +769,6 @@ const STARTER_PROMPT_DATA = {
 
 // Make STARTER_PROMPT_DATA globally available
 window.STARTER_PROMPT_DATA = STARTER_PROMPT_DATA;
-
-const GENERIC_PROMPT = STARTER_PROMPT_DATA.prompt;
 
 const STEP_NAMES = ['Select questions', 'Profile', 'What you have', 'Goals', 'Future income', 'Concerns', 'Summary'];
 
@@ -831,16 +830,13 @@ class Component extends DCLogic {
     phase: 'wizard',
     step: 1,
     browseSelected: {},
-    browseExpanded: {},
     browseStep: 1,
     browseSummary: false,
     browsePromptText: '',
     browseAnswers: { stage: null, topic: null, style: null },
     fields: {},
-    toasts: [],
     outputText: '',
     showSelectionWarning: false,
-    showStarterPromptText: false,
     showReviewDetails: false,
     showInfoModal: false,
     tabsOverflow: false,
@@ -915,6 +911,13 @@ class Component extends DCLogic {
     }
   };
 
+  // A new screen starts at the top. Inside a frame that fits its content the frame does
+  // not scroll, so embed.js asks the page around it to (PO-91).
+  toTop = () => {
+    window.scrollTo(0, 0);
+    if (window.embedFrame) window.embedFrame.toTop();
+  };
+
   onDocKeyDown = (e) => {
     if (!this.state.showInfoModal) return;
     if (e.key === 'Escape') { e.preventDefault(); this.closeInfoModal(); return; }
@@ -945,6 +948,7 @@ class Component extends DCLogic {
       this.centreActiveTab();
     }
     this.measureTabs();
+    if (window.embedFrame) window.embedFrame.measure();
 
     const screenKey = this.screenKey();
     if (screenKey !== this._screenKey) {
@@ -994,7 +998,7 @@ class Component extends DCLogic {
 
   goApp = () => {
     this.trackRoute('personalised');
-    window.scrollTo(0, 0);
+    this.toTop();
     const s = this.state;
     const hasSelection = Object.keys(s.browseSelected).length > 0;
     const hasAnswers = !!s.browseAnswers.topic;
@@ -1007,12 +1011,10 @@ class Component extends DCLogic {
       this.setState({ view: 'app', phase: 'wizard', step: 1, browseStep: 1, browseSummary: false, browseAnswers: { stage: null, topic: null, style: null } });
     }
   };
-  goBrowse = () => { this.trackRoute('list'); window.scrollTo(0, 0); this.setState({ view: 'browse', browseStep: 1, browseSummary: false, browseAnswers: { stage: null, topic: null, style: null }, browseSelected: {}, browseExpanded: {} }); };
-  goLanding = () => { window.scrollTo(0, 0); this.setState({ view: 'landing' }); };
-  goStarterPrompt = () => { this.trackRoute('starter'); window.scrollTo(0, 0); this.setState({ view: 'starterPrompt', showStarterPromptText: false }); };
-  toggleStarterPromptText = () => this.setState((s) => ({ showStarterPromptText: !s.showStarterPromptText }));
+  goBrowse = () => { this.trackRoute('list'); this.toTop(); this.setState({ view: 'browse', browseStep: 1, browseSummary: false, browseAnswers: { stage: null, topic: null, style: null }, browseSelected: {} }); };
+  goLanding = () => { this.toTop(); this.setState({ view: 'landing' }); };
+  goStarterPrompt = () => { this.trackRoute('starter'); this.toTop(); this.setState({ view: 'starterPrompt' }); };
   copyStarter = () => { this.track('prompt_copied', 'starter'); this.copyText(STARTER_PROMPT_DATA.prompt, 'Prompt copied'); };
-  copyGeneric = () => this.copyText(GENERIC_PROMPT, 'Starter prompt copied');
 
   goStep = (n) => {
     if (n === 7) {
@@ -1065,9 +1067,6 @@ class Component extends DCLogic {
       return { browseSelected: sel, showSelectionWarning: Object.keys(sel).length > 0 ? false : s.showSelectionWarning };
     });
   };
-  toggleBrowseExpand = (id) => {
-    this.setState((s) => ({ browseExpanded: { ...s.browseExpanded, [id]: !s.browseExpanded[id] } }));
-  };
   browseSelectAllIds = (ids) => {
     this.setState((s) => {
       const sel = { ...s.browseSelected };
@@ -1098,22 +1097,8 @@ class Component extends DCLogic {
     this.setState((s) => ({ browseStep: Math.max(1, s.browseStep - 1) }));
   };
   restartBrowseQuiz = () => {
-    window.scrollTo(0, 0);
-    this.setState({ browseStep: 1, browseSummary: false, browseAnswers: { stage: null, topic: null, style: null }, browseSelected: {}, browseExpanded: {} });
-  };
-
-  selectAllPrompts = () => {
-    this.setState((s) => {
-      const sel = { ...s.browseSelected };
-      PROMPTS_DATA.sections.forEach((section) => {
-        section.questions.forEach((q) => (sel[q.id] = true));
-      });
-      return { browseSelected: sel };
-    });
-  };
-
-  deselectAllPrompts = () => {
-    this.setState({ browseSelected: {} });
+    this.toTop();
+    this.setState({ browseStep: 1, browseSummary: false, browseAnswers: { stage: null, topic: null, style: null }, browseSelected: {} });
   };
 
   findQuestion = (id) => {
@@ -1124,20 +1109,8 @@ class Component extends DCLogic {
     return null;
   };
 
-  showToast = (msg) => {
-    const id = Date.now() + Math.random();
-    this.setState((s) => ({ toasts: [...s.toasts, { id, msg }] }));
-    setTimeout(() => {
-      this.setState((s) => ({ toasts: s.toasts.filter((t) => t.id !== id) }));
-    }, 5000);
-  };
-
-  closeToast = (toastId) => {
-    this.setState((s) => ({ toasts: s.toasts.filter((t) => t.id !== toastId) }));
-  };
-
   copyText = (text, msg) => {
-    const done = () => { if (window.showSimpleToast) window.showSimpleToast(msg); else this.showToast(msg); };
+    const done = () => window.showSimpleToast(msg);
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(done).catch(() => {
         this.fallbackCopy(text);
@@ -1165,11 +1138,6 @@ class Component extends DCLogic {
     return block && block.text ? text + '\n\n' + block.text : text;
   };
 
-  copyQuestionText = (id) => {
-    const q = this.findQuestion(id);
-    if (q) this.copyText(this.withStyle(q.aiOptimised), `"${q.quickSummary}" copied`);
-  };
-
   // Prompt list, step 2 (PO-58): build the combined prompt and show it on its own summary
   // screen. The dialog is now only for choosing a chatbot.
   createListPrompt = () => {
@@ -1184,10 +1152,10 @@ class Component extends DCLogic {
       .join('\n\n---\n\n');
     ids.forEach((id) => this.track('question_used', id + '|list'));
     this.track('prompt_ready', 'list');
-    window.scrollTo(0, 0);
+    this.toTop();
     this.setState({ browseSummary: true, browsePromptText: this.withStyle(text) });
   };
-  backToBrowseList = () => { window.scrollTo(0, 0); this.setState({ browseSummary: false }); };
+  backToBrowseList = () => { this.toTop(); this.setState({ browseSummary: false }); };
   copyListPrompt = () => { this.track('prompt_copied', 'list'); this.copyText(this.state.browsePromptText, 'Prompt copied'); };
   showListPromptModal = () => window.showPromptModal(this.state.browsePromptText, 'list');
 
@@ -1287,10 +1255,6 @@ class Component extends DCLogic {
   };
 
   copyFinal = () => { this.track('prompt_copied', 'personalised'); this.copyText(this.state.outputText, 'Prompt copied'); };
-  openInChatGPT = () => window.open('https://chatgpt.com/?q=' + encodeURIComponent(this.state.outputText), '_blank');
-  openInClaude = () => window.open('https://claude.ai/?q=' + encodeURIComponent(STARTER_PROMPT_DATA.prompt), '_blank');
-  openInGemini = () => window.open('https://gemini.google.com/?q=' + encodeURIComponent(STARTER_PROMPT_DATA.prompt), '_blank');
-  adjustInputs = () => this.setState({ phase: 'wizard', step: 1 });
   showUsePromptModal = () => window.showPromptModal(this.state.outputText, 'personalised');
 
   renderVals() {
@@ -1302,24 +1266,16 @@ class Component extends DCLogic {
     const isWizard = s.phase === 'wizard';
     const isResult = s.phase === 'result';
 
-    const buildQuestionView = (q, selectedMap, expandedMap, toggleFn, toggleExpandFn, showCopy) => {
-      const selected = !!selectedMap[q.id];
-      const expanded = !!expandedMap[q.id];
+    const buildQuestionView = (q) => {
+      const selected = !!s.browseSelected[q.id];
       return {
         id: q.id,
         quickSummary: q.quickSummary,
         humanVersion: q.humanVersion,
-        aiOptimised: q.aiOptimised,
         selected,
-        expanded,
-        showCopy,
-        toggleLabel: expanded ? 'Hide AI-optimised prompt' : 'Show AI-optimised prompt',
-        copyLabel: 'Copy prompt',
         inputId: 'q_' + q.id,
         cardStyle: { border: selected ? '2px solid ' + ACCENT : '2px solid ' + DIVIDER, background: selected ? ACCENT_TINT : SURFACE },
-        onToggle: () => toggleFn(q.id),
-        onToggleExpand: (e) => { e.stopPropagation(); toggleExpandFn(q.id); },
-        onCopy: (e) => { e.stopPropagation(); this.copyQuestionText(q.id); }
+        onToggle: () => this.toggleBrowseQuestion(q.id)
       };
     };
 
@@ -1376,7 +1332,7 @@ class Component extends DCLogic {
       const tagged = (topic) => PROMPTS_DATA.sections
         .flatMap((sec) => sec.questions)
         .filter((q) => (q.topics || []).includes(topic))
-        .map((q) => buildQuestionView(q, s.browseSelected, s.browseExpanded, this.toggleBrowseQuestion, this.toggleBrowseExpand, true));
+        .map(buildQuestionView);
       browseShortlist = tagged(s.browseAnswers.topic);
       browseHelpList = tagged(HELP_TOPIC);
     }
@@ -1434,11 +1390,7 @@ class Component extends DCLogic {
     }));
 
     const browseSelectedCount = Object.keys(s.browseSelected).length;
-    const selectedCount = browseSelectedCount;
-    const browseSelectionText = browseSelectedCount === 0 ? 'No questions selected' : browseSelectedCount === 1 ? '1 question selected' : `${browseSelectedCount} questions selected`;
     const browseHasNoSelection = browseSelectedCount === 0;
-    const browseHasOneSelection = browseSelectedCount === 1;
-    const browseHasMultipleSelections = browseSelectedCount > 1;
     const unselectLabel = browseSelectedCount === 1 ? 'Unselect 1 question' : `Unselect ${browseSelectedCount} questions`;
     const backDisabled = s.step === 1;
     const nextLabel = s.step === 6 ? 'Create prompt \u2192' : 'Next \u2192';
@@ -1507,17 +1459,13 @@ class Component extends DCLogic {
       goLanding: this.goLanding, goApp: this.goApp, goBrowse: this.goBrowse, goStarterPrompt: this.goStarterPrompt,
       showSelectionWarning: s.showSelectionWarning && browseSelectedCount === 0,
       starterPrompt: STARTER_PROMPT_DATA,
-      showStarterPromptText: s.showStarterPromptText,
-      toggleStarterPromptText: this.toggleStarterPromptText,
       showStarterPromptModal: window.showStarterPromptModal,
-      copyGeneric: this.copyGeneric, copyStarter: this.copyStarter,
+      copyStarter: this.copyStarter,
       showReviewDetails: s.showReviewDetails,
       toggleReviewDetails: this.toggleReviewDetails,
       reviewToggleIcon: s.showReviewDetails ? '▲' : '▼',
       reviewSections,
       hasReviewDetails,
-      hasSelection: selectedCount > 0,
-      selectedCount,
       isBrowseQuiz,
       isBrowseResults,
       browseSteps,
@@ -1541,12 +1489,7 @@ class Component extends DCLogic {
       onDeselectAllShortlist: () => this.browseDeselectAllIds(browseShortlistIds),
       clearBrowseSelected: this.clearBrowseSelected,
       unselectLabel,
-      hasBrowseSelection: browseSelectedCount > 0,
-      browseSelectedCount,
-      browseSelectionText,
       browseHasNoSelection,
-      browseHasOneSelection,
-      browseHasMultipleSelections,
       steps,
       scrollTabsLeft: this.scrollTabsLeft,
       scrollTabsRight: this.scrollTabsRight,
@@ -1567,14 +1510,7 @@ class Component extends DCLogic {
       prevBtnStyle: { cursor: backDisabled ? 'not-allowed' : 'pointer', opacity: backDisabled ? 0.5 : 1 },
       outputText: s.outputText,
       copyFinal: this.copyFinal,
-      openInChatGPT: this.openInChatGPT,
-      openInClaude: this.openInClaude,
-      openInGemini: this.openInGemini,
-      adjustInputs: this.adjustInputs,
       showUsePromptModal: this.showUsePromptModal,
-      enableOpenInChatGPT: this.props.enableOpenInChatGPT ?? true,
-      toasts: s.toasts,
-      closeToast: this.closeToast,
       showInfoModal: s.showInfoModal,
       openInfoModal: this.openInfoModal,
       closeInfoModal: this.closeInfoModal,
@@ -1673,37 +1609,6 @@ class Component extends DCLogic {
 
   const COPY_FAILED_MESSAGE = 'The prompt could not be copied. Select the text under “Your prompt” and copy it yourself.';
 
-  // Watch for toast close button clicks
-  const attachToastListeners = () => {
-    const buttons = document.querySelectorAll('.toast-close:not([data-listener-attached])');
-    buttons.forEach((btn, index) => {
-      btn.dataset.listenerAttached = 'true';
-      const toastIndex = index;
-      btn.addEventListener('click', () => {
-        const toast = btn.closest('[style*="background:#201e1d"]');
-        if (toast) {
-          toast.style.display = 'none';
-          setTimeout(() => toast.remove(), 300);
-        }
-      });
-    });
-  };
-
-  // Attach listeners on page load
-  document.addEventListener('DOMContentLoaded', attachToastListeners);
-
-  // Use MutationObserver to watch for new toasts
-  const toastContainer = document.getElementById('toast-container');
-  if (toastContainer) {
-    const observer = new MutationObserver(() => {
-      attachToastListeners();
-    });
-    observer.observe(toastContainer, { childList: true });
-  }
-
-  // Also attach listeners periodically for safety
-  setInterval(attachToastListeners, 1000);
-
   // Keep Tab inside an open dialog. The list of controls is worked out on each key press
   // because a control can be disabled or hidden while the dialog is open.
   window.trapFocus = function(container, e) {
@@ -1758,13 +1663,6 @@ class Component extends DCLogic {
     if (!chatbotSelectionInitialized) {
       chatbotSelectionInitialized = true;
 
-      // Add change listeners to radio buttons
-      chatbotRadios.forEach(radio => {
-        radio.addEventListener('change', () => {
-          updateLaunchButton(launchBtn.closest('div')?.closest('div') || document);
-        });
-      });
-
       // Handle launch chat button click
       launchBtn.addEventListener('click', (e) => {
         const selected = document.querySelector('input[name="chatbot-select"]:checked');
@@ -1803,31 +1701,13 @@ class Component extends DCLogic {
     }
   };
 
-  // Handle personalise button click
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('#personalise-btn') || e.target.closest('.modal-cta-btn')) {
-      const modal = document.getElementById('copy-modal');
-      if (modal) {
-        modal.style.display = 'none';
-      }
-
-      // Navigate to app by finding and clicking the goApp button
-      setTimeout(() => {
-        const goAppButton = document.querySelector('button[data-action="goApp"]');
-        if (goAppButton) {
-          goAppButton.click();
-        }
-      }, 100);
-    }
-  });
-
   // Helper function to create modal if it doesn't exist
   const ensureModalExists = () => {
     let modal = document.getElementById('copy-modal');
     if (modal) return modal;
 
     // Modal doesn't exist, create it dynamically
-    const modalHTML = `<div id="copy-modal" role="dialog" aria-modal="true" aria-labelledby="copy-modal-heading" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;pointer-events:auto;align-items:center;justify-content:center">
+    const modalHTML = `<div id="copy-modal" class="viewport-overlay" role="dialog" aria-modal="true" aria-labelledby="copy-modal-heading" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:1000;pointer-events:auto;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:8px;max-width:520px;width:90%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,0.3);pointer-events:auto;position:relative">
     <button class="modal-close-btn" aria-label="Close" style="position:absolute;top:16px;right:16px;background:transparent;border:none;font-size:24px;cursor:pointer;color:#666;z-index:10;width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:0;line-height:1">×</button>
     <div style="padding:32px;overflow-y:auto">
@@ -1838,44 +1718,44 @@ class Component extends DCLogic {
       <div style="margin-bottom:24px">
         <fieldset style="border:none;padding:0;margin:0;margin-bottom:16px">
           <legend class="sr-only">Select an AI chatbot</legend>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="chatgpt" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" />
-              <span style="flex:1;min-width:0">
-                <img src="./images/chatgpt.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
-                <span style="font-weight:600;color:#201e1d;font-size:14px">ChatGPT</span>
+          <div class="chatbot-options">
+            <label class="chatbot-option">
+              <input type="radio" name="chatbot-select" value="chatgpt" />
+              <span class="chatbot-option-name">
+                <img src="./images/chatgpt.svg" alt="" />
+                <span>ChatGPT</span>
               </span>
-              <span style="font-size:14px;color:#666;font-weight:400;white-space:nowrap">Auto-fill</span>
+              <span class="chatbot-option-note">Auto-fill</span>
             </label>
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="claude" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" />
-              <span style="flex:1;min-width:0">
-                <img src="./images/claude.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
-                <span style="font-weight:600;color:#201e1d;font-size:14px">Claude</span>
+            <label class="chatbot-option">
+              <input type="radio" name="chatbot-select" value="claude" />
+              <span class="chatbot-option-name">
+                <img src="./images/claude.svg" alt="" />
+                <span>Claude</span>
               </span>
-              <span style="font-size:14px;color:#666;font-weight:400;white-space:nowrap">Auto-fill</span>
+              <span class="chatbot-option-note">Auto-fill</span>
             </label>
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="copilot" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" />
-              <span style="flex:1;min-width:0">
-                <img src="./images/copilot.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
-                <span style="font-weight:600;color:#201e1d;font-size:14px">Copilot</span>
-              </span>
-            </label>
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="gemini" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" />
-              <span style="flex:1;min-width:0">
-                <img src="./images/gemini.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
-                <span style="font-weight:600;color:#201e1d;font-size:14px">Gemini</span>
+            <label class="chatbot-option">
+              <input type="radio" name="chatbot-select" value="copilot" />
+              <span class="chatbot-option-name">
+                <img src="./images/copilot.svg" alt="" />
+                <span>Copilot</span>
               </span>
             </label>
-            <label style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:12px;border:2px solid #ddd;border-radius:6px;transition:all 0.2s;user-select:none">
-              <input type="radio" name="chatbot-select" value="perplexity" style="cursor:pointer;width:24px;height:24px;accent-color:#2C8494;flex-shrink:0" />
-              <span style="flex:1;min-width:0">
-                <img src="./images/perplexity.svg" alt="" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px" />
-                <span style="font-weight:600;color:#201e1d;font-size:14px">Perplexity</span>
+            <label class="chatbot-option">
+              <input type="radio" name="chatbot-select" value="gemini" />
+              <span class="chatbot-option-name">
+                <img src="./images/gemini.svg" alt="" />
+                <span>Gemini</span>
               </span>
-              <span style="font-size:14px;color:#666;font-weight:400;white-space:nowrap">Auto-fill</span>
+            </label>
+            <label class="chatbot-option">
+              <input type="radio" name="chatbot-select" value="perplexity" />
+              <span class="chatbot-option-name">
+                <img src="./images/perplexity.svg" alt="" />
+                <span>Perplexity</span>
+              </span>
+              <span class="chatbot-option-note">Auto-fill</span>
             </label>
           </div>
         </fieldset>
@@ -1985,62 +1865,6 @@ class Component extends DCLogic {
     // Initialize chatbot selection
     initializeChatbotSelection();
   };
-
-  // Attach listeners on page load
-  attachToastListeners();
-
-  // Use MutationObserver to watch for toast close buttons
-  const mainContent = document.body;
-  if (mainContent) {
-    const observer = new MutationObserver(() => {
-      attachToastListeners();
-    });
-    observer.observe(mainContent, { childList: true, subtree: true });
-  }
-
-  // Also attach listeners periodically for safety
-  setInterval(() => {
-    attachToastListeners();
-  }, 1000);
-</script>
-
-<script>
-// Ensure showSimpleToast is defined and accessible globally
-if (!window.showSimpleToast) {
-  window.showSimpleToast = function(msg) {
-    const toastContainer = document.getElementById('toast-container');
-    if (!toastContainer) return;
-
-    const toastDiv = document.createElement('div');
-    toastDiv.style.cssText = 'background:#201e1d;color:#fff;padding:12px 16px;font-size:14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);display:flex;align-items:center;gap:12px;border-radius:8px;pointer-events:auto;animation:slideIn 0.3s ease-out;max-width:350px';
-
-    const msgSpan = document.createElement('span');
-    msgSpan.textContent = msg;
-    msgSpan.style.flex = '1';
-
-    const closeBtn = document.createElement('button');
-    closeBtn.textContent = '×';
-    closeBtn.className = 'toast-close';
-    closeBtn.style.cssText = 'background:transparent;border:none;color:#fff;cursor:pointer;font-size:20px;padding:0;line-height:1;flex-shrink:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center';
-    closeBtn.title = 'Close';
-    closeBtn.setAttribute('aria-label', 'Close notification');
-    closeBtn.addEventListener('click', function() {
-      toastDiv.style.animation = 'slideOut 0.3s ease-out forwards';
-      setTimeout(function() { toastDiv.remove(); }, 300);
-    });
-
-    toastDiv.appendChild(msgSpan);
-    toastDiv.appendChild(closeBtn);
-    toastContainer.appendChild(toastDiv);
-
-    setTimeout(function() {
-      if (toastDiv.parentNode) {
-        toastDiv.style.animation = 'slideOut 0.3s ease-out forwards';
-        setTimeout(function() { toastDiv.remove(); }, 300);
-      }
-    }, 5000);
-  };
-}
 </script>
 
 </body>
