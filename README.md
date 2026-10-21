@@ -27,7 +27,7 @@ Copy these, keeping the folder structure, to any web server:
 | `version.js` | The release number and "last reviewed" date shown in the footer |
 | `stats.js` | Sends the usage counts. The counter's address is the one setting at the top; leave it empty to send nothing |
 | `embed.js` | Only does anything inside a frame on another site: tells that page how tall the tool is, so the frame can fit it. See [docs/EMBEDDING.md](docs/EMBEDDING.md) |
-| `support.js` | The small runtime that `index.html` is written for. Don't edit, with one exception: the three addresses under "src/cdn.ts" point at `vendor/`. If this file is ever replaced, point them there again |
+| `support.js` | The small runtime that `index.html` is written for. Don't edit, except in "src/cdn.ts": its three addresses point at `vendor/`, and it skips the hash check on a page opened from disk (PO-97). If this file is ever replaced, make both changes again |
 | `vendor/` | React and React DOM, as published and unchanged. `support.js` checks each against a hash, so they must be copied byte for byte |
 | `images/` | The Taskforce logo and the chatbot icons |
 
@@ -45,8 +45,9 @@ does not need to be hosted:
 
 ## Hosting notes
 
-- Serve the files over `http://` or `https://`. Opening `index.html` straight
-  from disk (a `file://` address) does not work fully.
+- Serve the files over `http://` or `https://`. Only then are the React files
+  in `vendor/` checked against their hashes: a browser cannot make that check for
+  a page opened from disk, so there they load unchecked (PO-97).
 - All addresses are relative, so the tool works from the root of a site or from
   a sub-page.
 - The tool is designed to sit under the Consumer Duty Alliance site header,
@@ -65,13 +66,17 @@ does not need to be hosted:
 
 ## Running it locally
 
-Any static file server will do. For example, with Node installed:
+Double-click `index.html`, or open it in a browser: it works straight from disk,
+with no server (PO-97). Usage counts are not added to the live figures from there.
+
+To see it served, as visitors do, any static file server will do. The back tests'
+server is one, and keeps counts away from the live counter:
 
 ```bash
-npx serve .
+node tests/server.mjs 5173
 ```
 
-Then open the address it prints.
+Then open http://localhost:5173/.
 
 ## Usage counts
 

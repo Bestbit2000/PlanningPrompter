@@ -59,12 +59,19 @@ test.describe('Landing page', () => {
     }
   });
 
-  test('the "Start again" button is on every screen and goes back to the start', async ({ tool, page }) => {
+  test('"Start again" is on every screen but the first, and goes back to the start (PO-98)', async ({ tool, page }) => {
     await tool.open();
+    const bar = page.locator('.site-header');
+    const barHeight = (await bar.boundingBox())!.height;
+    await expect(tool.button('Start again')).toHaveCount(0);
+    await expect(page.locator('.site-brand-name')).toHaveText('Retirement income prompt generator');
     for (const route of ['Use a starting prompt', 'Choose from a curated list', 'Personalise a prompt']) {
       await tool.button(route).click();
       await expect(page.locator('[data-screen-label="Landing"]')).toHaveCount(0);
+      // The bar does not change height when the button appears
+      expect((await bar.boundingBox())!.height).toBe(barHeight);
       await tool.button('Start again').click();
+      await expect(tool.button('Start again')).toHaveCount(0);
       await expect(tool.heading(1, 'Ask AI better questions about your retirement income')).toBeVisible();
       await expect(page).toHaveTitle(SITE);
       await tool.expectFocusOn('Ask AI better questions about your retirement income');

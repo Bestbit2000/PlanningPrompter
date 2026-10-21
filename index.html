@@ -23,7 +23,10 @@
     <div class="site-header-inner">
       <span class="site-brand-name">Retirement income prompt generator</span>
       <div class="site-nav-actions">
+        <!-- Only once a route is chosen: on the first screen there is nothing to start again (PO-98) -->
+        <sc-if value="{{ !isLanding }}">
         <button type="button" onClick="{{ goLanding }}" class="site-start-again">Start again</button>
+        </sc-if>
       </div>
     </div>
   </header>
@@ -747,7 +750,7 @@
 </div>
 </x-dc>
 
-<div id="toast-container" aria-live="polite" aria-atomic="true" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;max-width:350px"></div>
+<div id="toast-container" aria-live="polite" aria-atomic="true"></div>
 
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:1000}}">
 // Question data now lives in prompts.js (loaded as a plain <script> in <head>,

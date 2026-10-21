@@ -86,6 +86,15 @@ tags from articles, it can go in a custom HTML module on that page instead.
 </script>
 ```
 
+### Optional: one address for the page
+
+The page answers at both `consumerduty.org` and `www.consumerduty.org`, but the frame
+always loads from `consumerduty.org`. Under `www` the two are different sites to the
+browser. The tool still fits its frame, and links such as "Get started" still scroll the
+page (PO-99), but Joomla's own resize script cannot read inside the frame and logs
+*"Cannot read properties of null (reading 'body')"* in the console. Redirecting
+`www.consumerduty.org` to `consumerduty.org` would clear that error.
+
 ### Optional: the width
 
 `width: 100vw` includes the page's own scroll bar, so the frame is about 15px wider than

@@ -1151,10 +1151,15 @@
   var REACT_DOM_SRI = "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1";
   var BABEL_URL = "./vendor/babel.min.js";
   var BABEL_SRI = "sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y";
+  // Opened straight from disk (file://), a browser cannot check a hash: the check needs a
+  // CORS request, which file:// does not have, so it would refuse to run React at all and
+  // the page would stay blank. The files are on the viewer's own disk then, so they load
+  // without the check. Served over http or https the hashes are always checked (PO-97).
+  var CHECK_HASHES = location.protocol !== "file:";
   function cdnScriptFor(url, sri) {
     const res = window.__resources;
     const v = res ? res[url] : void 0;
-    return typeof v === "string" && v ? { src: v } : { src: url, integrity: sri };
+    return typeof v === "string" && v ? { src: v } : { src: url, integrity: CHECK_HASHES ? sri : void 0 };
   }
 
   // src/external.ts

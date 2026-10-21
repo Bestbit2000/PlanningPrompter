@@ -55,7 +55,9 @@ a:hover {
 }
 
 /* Links that open a new tab carry a small arrow-out-of-box mark in the link's own colour.
-   Screen readers get the same message from the hidden "(opens in a new tab)" text. */
+   Screen readers get the same message from the hidden "(opens in a new tab)" text.
+   The mark (images/external_link.svg) is written into this file rather than fetched,
+   so it also shows when the page is opened from disk (PO-97). */
 a[target="_blank"]::after {
   content: "";
   display: inline-block;
@@ -65,8 +67,8 @@ a[target="_blank"]::after {
   margin-left: 0.25em;
   vertical-align: -0.1em;
   background-color: currentColor;
-  -webkit-mask: url(./images/external_link.svg) center / contain no-repeat;
-  mask: url(./images/external_link.svg) center / contain no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 ::selection {
@@ -760,26 +762,41 @@ fieldset div > label:hover {
 .before-you-use a { color: #1B5560; }
 
 /* ============ TOASTS ============ */
-/* The messages themselves are styled where index.html makes them */
+/* Centred at the bottom of the window, clear of the "Back to top" button that host sites
+   such as consumerduty.org put at the bottom right (PO-100). The messages themselves are
+   styled where index.html makes them; they rise into place and sink away. */
+#toast-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  max-width: min(350px, calc(100vw - 32px));
+}
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 
 @keyframes slideOut {
   from {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
   to {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateY(12px);
   }
 }
 

@@ -43,11 +43,10 @@ test.describe('In a frame, with the host page snippet', () => {
       };
       const heights = [await fits()];
       for (const route of ROUTES) {
-        await frame.getByRole('button', { name: 'Start again' }).click();
         await frame.getByRole('button', { name: route, exact: true }).click();
         heights.push(await fits());
+        await frame.getByRole('button', { name: 'Start again' }).click();
       }
-      await frame.getByRole('button', { name: 'Start again' }).click();
       expect(await fits()).toBe(heights[0]);
       expect(new Set(heights).size).toBeGreaterThan(2);
     });
@@ -81,19 +80,57 @@ test.describe('In a frame, with the host page snippet', () => {
     expect(dialog[1]).toBeLessThanOrEqual(bottom);
     await frame.locator('body').press('Escape');
 
-    await frame.getByRole('button', { name: 'Start again' }).click();
     await frame.getByRole('button', { name: 'Use a starting prompt', exact: true }).click();
     await page.evaluate(() => window.scrollTo(0, 700));
     await frame.getByRole('button', { name: 'Copy prompt' }).click();
     await frame.getByRole('button', { name: 'Choose your AI assistant' }).click();
     await expect.poll(async () => near(await box('#copy-modal'), await visible())).toBe(true);
     await expect.poll(async () => near([(await box('#toast-container'))[1]], [(await visible())[1] - 20])).toBe(true);
+    // Centred across the frame, clear of the site's "Back to top" button at the bottom right (PO-100)
+    const toast = await frame.locator('#toast-container [role="alert"]').evaluate((el) => { const r = el.getBoundingClientRect(); return r.left + r.width / 2; });
+    const frameWidth = await page.locator('#blockrandom').evaluate((f) => f.getBoundingClientRect().width);
+    expect(Math.abs(toast - frameWidth / 2)).toBeLessThanOrEqual(1);
   });
 
   test('the snippet still wins if the old "height: 100vh !important" line is left in', async ({ tool, page }) => {
     await page.setViewportSize({ width: 1600, height: 860 });
     await openHost(page, '?keep100vh=1');
     await expect.poll(async () => { const m = await measure(page); return m.frame === m.tool && m.frame > 860; }).toBe(true);
+  });
+});
+
+test.describe('In a frame from a different site from the page (PO-99)', () => {
+  // As on www.consumerduty.org, whose frame loads from consumerduty.org
+  for (const viewport of [{ width: 1600, height: 860 }, { width: 375, height: 812 }]) {
+    test(`"Get started" scrolls the page to the three options, at ${viewport.width}px`, async ({ tool, page }) => {
+      // The mock host's copy of Joomla's script fails on the frame, as the real one does
+      tool.expectedErrors.push(/Cannot read properties of null \(reading 'body'\)/);
+      await page.setViewportSize(viewport);
+      await page.goto('/__host?xsite=1');
+      const frame = page.frames().find((f) => f.url().startsWith('http://127.0.0.1'))!;
+      await expect(frame.getByRole('heading', { level: 1 }).first()).toBeVisible();
+      // The frame fits the tool here too: that goes by message, which crosses sites
+      await expect.poll(async () => {
+        const frameH = await page.locator('#blockrandom').evaluate((f) => Math.round(f.getBoundingClientRect().height));
+        const toolH = await frame.evaluate(() => Math.ceil(document.querySelector('.app-shell')!.getBoundingClientRect().height));
+        return frameH === toolH;
+      }).toBe(true);
+      await page.evaluate(() => window.scrollTo(0, 0));
+
+      await frame.getByRole('link', { name: 'Get started ↓' }).click();
+      const targetTop = async () => (await page.locator('#blockrandom').evaluate((f) => f.getBoundingClientRect().top)) +
+        (await frame.evaluate(() => document.getElementById('how-it-works')!.getBoundingClientRect().top));
+      // In view, near the top of the window (or as near as the end of the page allows)
+      await expect.poll(async () => { const t = await targetTop(); return t >= -1 && t < viewport.height / 2; }).toBe(true);
+      expect(await frame.evaluate(() => location.hash)).toBe('#how-it-works');
+    });
+  }
+
+  test('"Get started" jumps as before when the tool is opened on its own', async ({ tool, page }) => {
+    await tool.open();
+    await page.getByRole('link', { name: 'Get started ↓' }).click();
+    await expect(page).toHaveURL(/#how-it-works$/);
+    await expect(page.locator('#how-it-works')).toBeInViewport();
   });
 });
 

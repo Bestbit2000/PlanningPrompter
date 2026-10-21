@@ -4,7 +4,9 @@
 //     so a test run is never counted and the tests can see what would have been sent;
 //   - /__host is a copy of the consumerduty.org page that shows the tool in a frame (PO-91),
 //     with the snippet from docs/EMBEDDING.md. ?snippet=0 leaves the snippet out,
-//     ?keep100vh=1 keeps the site's old "height: 100vh !important" rule.
+//     ?keep100vh=1 keeps the site's old "height: 100vh !important" rule, and ?xsite=1
+//     loads the frame from 127.0.0.1 while the page is on localhost: two different sites,
+//     as when consumerduty.org is opened as www.consumerduty.org (PO-99).
 //
 // node tests/server.mjs [port]     (default 5199)
 
@@ -27,6 +29,7 @@ const snippet = () => {
 const hostPage = (url) => {
   const withSnippet = url.searchParams.get('snippet') !== '0';
   const keep100vh = !withSnippet || url.searchParams.get('keep100vh') === '1';
+  const src = url.searchParams.get('xsite') === '1' ? `http://127.0.0.1:${port}/` : '/';
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Mock host</title>
 <style>
 body { margin: 0; font-family: sans-serif; }
@@ -47,13 +50,13 @@ footer { height: 300px; background: #2b2340; color: #fff; padding: 20px; }
 }
 </style>
 <script>
-function iFrameHeight(t) { var d = t.contentDocument || t.contentWindow.document; t.style.height = (parseInt(d.body.scrollHeight, 10) + 60) + 'px'; }
+function iFrameHeight(t) { var d = t.contentDocument; t.style.height = (parseInt(d.body.scrollHeight, 10) + 60) + 'px'; }
 </script>
 </head><body>
 <header class="main-header">Mock Consumer Duty Alliance header</header>
 <div class="banner">Retirement income prompt generator</div>
 <div class="container"><div class="com-wrapper contentpane">
-<iframe onload="iFrameHeight(this)" id="blockrandom" name="iframe" src="/" width="100%" height="500" title="Retirement income prompt generator" class="com-wrapper__iframe wrapper iframepageCSS"></iframe>
+<iframe onload="iFrameHeight(this)" id="blockrandom" name="iframe" src="${src}" width="100%" height="500" title="Retirement income prompt generator" class="com-wrapper__iframe wrapper iframepageCSS"></iframe>
 </div></div>
 <footer>Mock footer</footer>
 ${withSnippet ? snippet() : ''}

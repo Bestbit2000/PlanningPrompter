@@ -79,6 +79,21 @@
   };
   if (document.body) start(); else document.addEventListener('DOMContentLoaded', start);
 
+  // A link to a place on this page, such as "Get started". The browser would scroll the
+  // frame, which no longer scrolls, and it will not scroll the page around the frame when
+  // that page is on another site (www.consumerduty.org around consumerduty.org). Scrolling
+  // the place into view does both, so do that, and update the address as the link would (PO-99).
+  document.addEventListener('click', (e) => {
+    if (!fitted || e.defaultPrevented || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+    const link = e.target.closest && e.target.closest('a[href^="#"]');
+    const id = link && decodeURIComponent(link.getAttribute('href').slice(1));
+    const target = id && document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ block: 'start' });
+    if (location.hash !== '#' + id) history.pushState(null, '', '#' + id);
+  });
+
   window.embedFrame = {
     // The tool calls this after every update, in case the browser does not report the change
     measure: () => sendHeight(),

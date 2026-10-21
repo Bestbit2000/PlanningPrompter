@@ -27,6 +27,19 @@ test.describe('Starting prompt', () => {
     await tool.expectCounts([{ event: 'prompt_copied', detail: 'starter' }]);
   });
 
+  for (const viewport of [{ width: 1280, height: 800 }, { width: 375, height: 812 }]) {
+    test(`the "Prompt copied" message is centred at the bottom, at ${viewport.width}px (PO-100)`, async ({ tool, page }) => {
+      await page.setViewportSize(viewport);
+      await tool.button('Copy prompt').click();
+      await expect(tool.toast()).toBeVisible();
+      await page.waitForTimeout(400);
+      const box = (await tool.toast().boundingBox())!;
+      expect(Math.abs(box.x + box.width / 2 - viewport.width / 2)).toBeLessThanOrEqual(1);
+      expect(Math.round(viewport.height - (box.y + box.height))).toBe(20);
+      expect(box.x).toBeGreaterThanOrEqual(16);
+    });
+  }
+
   test('"Choose your AI assistant" opens the chatbot dialog for the starter prompt', async ({ tool, page }) => {
     await tool.button('Choose your AI assistant').click();
     await expect(page.getByRole('dialog', { name: 'Choose your AI assistant' })).toBeVisible();

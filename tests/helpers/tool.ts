@@ -12,6 +12,9 @@ export const SITE = 'Retirement Income Prompt Generator';
 export class Tool {
   readonly counts: Count[] = [];
   readonly errors: string[] = [];
+  // Errors a test expects from a page that is not the tool's, such as the mock host's
+  // copy of Joomla's resize script failing on a frame from another site
+  readonly expectedErrors: RegExp[] = [];
   constructor(readonly page: Page) {}
 
   async open(path = '/') {
@@ -74,7 +77,8 @@ export const test = base.extend<{ tool: Tool }>({
 
     await context.route('**/*', async (route) => {
       const url = new URL(route.request().url());
-      if (url.hostname !== 'localhost') return route.abort();
+      // 127.0.0.1 is the test server too, as a different site from localhost (PO-99)
+      if (url.hostname !== 'localhost' && url.hostname !== '127.0.0.1') return route.abort();
       if (url.pathname === '/__count') {
         const body = JSON.parse(route.request().postData() || '{"events":[]}');
         tool.counts.push(...body.events);
@@ -99,6 +103,6 @@ export const test = base.extend<{ tool: Tool }>({
 
     await use(tool);
 
-    expect(tool.errors, 'script errors on the page').toEqual([]);
+    expect(tool.errors.filter((e) => !tool.expectedErrors.some((re) => re.test(e))), 'script errors on the page').toEqual([]);
   }
 });

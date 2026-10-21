@@ -31,6 +31,7 @@ installed this step is already done.
 | `prompt-list.spec.ts` | "Let me choose": the three questions and Back, the shortlist for every stage and topic, select and deselect, the summary and its prompt in each answer style, moving on to personalise |
 | `wizard.spec.ts` | "Tailor to me": every step and box, the warning, the tabs and their arrows, the boxes that only appear when they apply, the prompt with everything, nothing, and each lifestyle level, the review and Edit |
 | `embed.spec.ts` | The tool in a frame on another site (PO-91), with and without the host page's snippet |
+| `from-disk.spec.ts` | `index.html` opened straight from disk, with no server, and the hash check on React that still applies whenever it is served (PO-97) |
 | `layout.spec.ts` | Every screen and dialog at desktop and phone width laid out exactly as recorded |
 
 Every test also fails if the page logs a script error, and checks the counts each action
