@@ -95,12 +95,41 @@ page (PO-99), but Joomla's own resize script cannot read inside the frame and lo
 *"Cannot read properties of null (reading 'body')"* in the console. Redirecting
 `www.consumerduty.org` to `consumerduty.org` would clear that error.
 
-### Optional: the width
+### Optional: the width under www
 
-`width: 100vw` includes the page's own scroll bar, so the frame is about 15px wider than
-the space it sits in and its right edge is cut off. Nothing in the tool sits that close
-to the edge, so this can stay. If it is ever a problem, `width: 100%` with the
-negative margins removed fits the frame to the column instead.
+The custom CSS makes the frame `width: 100vw` with margins of `calc(50% - 50vw)`, to run
+it edge to edge. That only lands on the window's edges when the frame's column is centred
+in the window and the page has no scroll bar. On consumerduty.org the column sits 17.5px
+left of centre, so the frame hangs 17.5px off the left and leaves a strip of white on
+the right. A scroll bar, which `100vw` counts, adds to it.
+
+Opened as `consumerduty.org`, the tool lines its frame up with the window itself
+(PO-105). Under `www.consumerduty.org` it cannot reach the frame, so the strip shows
+there. To fix it on both addresses, add this after the snippet above:
+
+```html
+<script>
+/* Retirement income prompt generator: run the frame from edge to edge of the window */
+(function () {
+  function setUp() {
+    var frame = document.querySelector('iframe.iframepageCSS');
+    if (!frame) return;
+    var align = function () {
+      var width = document.documentElement.clientWidth;
+      var left = frame.getBoundingClientRect().left + window.scrollX;
+      var margin = parseFloat(getComputedStyle(frame).marginLeft) || 0;
+      frame.style.setProperty('width', width + 'px', 'important');
+      frame.style.setProperty('max-width', width + 'px', 'important');
+      frame.style.setProperty('margin-left', (margin - left) + 'px', 'important');
+    };
+    align();
+    window.addEventListener('resize', align);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setUp);
+  else setUp();
+})();
+</script>
+```
 
 ## Messages
 

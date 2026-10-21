@@ -94,6 +94,35 @@
     if (location.hash !== '#' + id) history.pushState(null, '', '#' + id);
   });
 
+  // A frame meant to run edge to edge, as on consumerduty.org: its CSS makes it 100vw wide
+  // with margins of calc(50% - 50vw). That lands on the window's edges only when the frame's
+  // column is centred and the page has no scroll bar; there the column is 17.5px off centre,
+  // so the frame hangs off the left and leaves a strip of the page on the right. When the
+  // page is on the same site, so the frame element can be reached, line it up with the
+  // window itself (PO-105). On another site (www.) it cannot be, and is left as it is.
+  const frameEl = (() => { try { return window.frameElement; } catch (e) { return null; } })();
+  let edgeToEdge = false;
+  const alignToWindow = () => {
+    if (!frameEl) return;
+    const host = window.parent;
+    const width = host.document.documentElement.clientWidth;
+    const r = frameEl.getBoundingClientRect();
+    // Only a frame as wide as the window, scroll bar and all, is meant to run edge to edge
+    if (!edgeToEdge) edgeToEdge = Math.abs(r.width - host.innerWidth) <= 1;
+    if (!edgeToEdge) return;
+    const left = r.left + host.scrollX;
+    if (Math.abs(left) < 0.5 && Math.abs(r.width - width) < 0.5) return;
+    const margin = parseFloat(host.getComputedStyle(frameEl).marginLeft) || 0;
+    frameEl.style.setProperty('width', width + 'px', 'important');
+    frameEl.style.setProperty('max-width', width + 'px', 'important');
+    frameEl.style.setProperty('margin-left', (margin - left) + 'px', 'important');
+  };
+  if (frameEl) {
+    alignToWindow();
+    window.parent.addEventListener('resize', alignToWindow);
+    window.addEventListener('load', alignToWindow);
+  }
+
   window.embedFrame = {
     // The tool calls this after every update, in case the browser does not report the change
     measure: () => sendHeight(),

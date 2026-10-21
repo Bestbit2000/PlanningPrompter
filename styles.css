@@ -341,7 +341,10 @@ input, textarea, select, button {
 }
 
 /* The footer on every screen */
+/* White, like the tool bar at the top and the host page around the frame, so the grey
+   working area between them reads as the tool (PO-103). The divider line stays. */
 .landing-footer {
+  background: #fff;
   border-top: 2px solid rgba(32, 30, 29, 0.4);
   padding: 28px 32px;
 }
@@ -894,6 +897,9 @@ fieldset div > label:hover {
 .app-shell { min-height: 100vh; }
 /* In a frame 100vh is the frame, so a frame that grew to fit one screen could never shrink */
 .embedded .app-shell { min-height: 0; display: flow-root; }
+/* consumerduty.org leaves 5px of its own white between its banner and the frame, above the
+   tool bar. The same 5px below "Start again" keeps the space around it even (PO-101). */
+.embedded .site-header-inner { min-height: 57px; padding-bottom: 5px; }
 .embed-fit, .embed-fit body { overflow: hidden; }
 /* The frame is now as tall as the tool, so put dialogs and toasts in the part the page shows */
 .embed-fit .viewport-overlay {

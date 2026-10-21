@@ -6,7 +6,9 @@
 //     with the snippet from docs/EMBEDDING.md. ?snippet=0 leaves the snippet out,
 //     ?keep100vh=1 keeps the site's old "height: 100vh !important" rule, and ?xsite=1
 //     loads the frame from 127.0.0.1 while the page is on localhost: two different sites,
-//     as when consumerduty.org is opened as www.consumerduty.org (PO-99).
+//     as when consumerduty.org is opened as www.consumerduty.org (PO-99), and ?offcentre=1
+//     puts the frame's column 17.5px left of the window's centre, as it is on
+//     consumerduty.org (PO-105).
 //
 // node tests/server.mjs [port]     (default 5199)
 
@@ -23,6 +25,11 @@ const snippet = () => {
   const md = fs.readFileSync(path.join(root, 'docs', 'EMBEDDING.md'), 'utf8');
   return md.match(/```html\r?\n([\s\S]*?)```/)[1];
 };
+// The optional width snippet from docs/EMBEDDING.md, the second html block (PO-105)
+const widthSnippet = () => {
+  const md = fs.readFileSync(path.join(root, 'docs', 'EMBEDDING.md'), 'utf8');
+  return [...md.matchAll(/```html\r?\n([\s\S]*?)```/g)][1][1];
+};
 
 // Laid out like the consumerduty.org page on 20 October 2026: its header and banner, the
 // Joomla wrapper frame with the site's custom CSS and its once-on-load height script, a footer.
@@ -35,7 +42,7 @@ const hostPage = (url) => {
 body { margin: 0; font-family: sans-serif; }
 .main-header { height: 135px; background: #fff; border-bottom: 1px solid #ddd; padding: 20px; }
 .banner { height: 97px; background: #4a3a6b; color: #fff; padding: 20px; }
-.container { max-width: 1170px; margin: 0 auto; padding: 0 15px; }
+.container { max-width: 1170px; margin: 0 auto; padding: ${url.searchParams.get('offcentre') === '1' ? '0 50px 0 15px' : '0 15px'}; }
 footer { height: 300px; background: #2b2340; color: #fff; padding: 20px; }
 .iframepageCSS { margin-top: -25px; margin-bottom: -40px; }
 </style>
@@ -60,6 +67,7 @@ function iFrameHeight(t) { var d = t.contentDocument; t.style.height = (parseInt
 </div></div>
 <footer>Mock footer</footer>
 ${withSnippet ? snippet() : ''}
+${url.searchParams.get('widthsnippet') === '1' ? widthSnippet() : ''}
 </body></html>`;
 };
 

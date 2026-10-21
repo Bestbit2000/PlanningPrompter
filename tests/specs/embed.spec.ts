@@ -52,6 +52,17 @@ test.describe('In a frame, with the host page snippet', () => {
     });
   }
 
+  test('"Start again" has 5px more space below it, to match the gap consumerduty.org leaves above (PO-101)', async ({ tool, page }) => {
+    const frame = await openHost(page);
+    await frame.getByRole('button', { name: 'Use a starting prompt', exact: true }).click();
+    const gaps = await frame.evaluate(() => {
+      const bar = document.querySelector('.site-header-inner')!.getBoundingClientRect();
+      const b = document.querySelector('.site-start-again')!.getBoundingClientRect();
+      return { above: Math.round(b.top - bar.top), below: Math.round(bar.bottom - b.bottom) };
+    });
+    expect(gaps).toEqual({ above: 4, below: 9 });
+  });
+
   test('a new screen brings the top of the tool back into view', async ({ tool, page }) => {
     await page.setViewportSize({ width: 1600, height: 860 });
     const frame = await openHost(page);
@@ -96,6 +107,45 @@ test.describe('In a frame, with the host page snippet', () => {
     await page.setViewportSize({ width: 1600, height: 860 });
     await openHost(page, '?keep100vh=1');
     await expect.poll(async () => { const m = await measure(page); return m.frame === m.tool && m.frame > 860; }).toBe(true);
+  });
+});
+
+test.describe('In a frame meant to run edge to edge, in an off-centre column (PO-105)', () => {
+  const edges = (page: Page) => page.locator('#blockrandom').evaluate((f) => {
+    const r = f.getBoundingClientRect();
+    return { left: Math.round(r.left * 2) / 2, right: Math.round(r.right * 2) / 2, window: document.documentElement.clientWidth };
+  });
+
+  test('the frame is lined up with both edges of the window, and stays so when it is resized', async ({ tool, page }) => {
+    await page.setViewportSize({ width: 1600, height: 860 });
+    const frame = await openHost(page, '?offcentre=1');
+    await expect.poll(() => edges(page)).toEqual({ left: 0, right: 1600, window: 1600 });
+    await expect(frame.locator('.landing-hero')).toBeVisible();
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await expect.poll(() => edges(page)).toEqual({ left: 0, right: 1280, window: 1280 });
+    await page.setViewportSize({ width: 375, height: 812 });
+    await expect.poll(() => edges(page)).toEqual({ left: 0, right: 375, window: 375 });
+  });
+
+  test('a frame on a different site from the page is left where the page puts it', async ({ tool, page }) => {
+    tool.expectedErrors.push(/Cannot read properties of null \(reading 'body'\)/);
+    await page.setViewportSize({ width: 1600, height: 860 });
+    await page.goto('/__host?offcentre=1&xsite=1');
+    const frame = page.frames().find((f) => f.url().startsWith('http://127.0.0.1'))!;
+    await expect(frame.getByRole('heading', { level: 1 }).first()).toBeVisible();
+    await page.waitForTimeout(500);
+    expect(await edges(page)).toEqual({ left: -17.5, right: 1582.5, window: 1600 });
+  });
+
+  test('on a different site, the optional width snippet lines the frame up instead', async ({ tool, page }) => {
+    tool.expectedErrors.push(/Cannot read properties of null \(reading 'body'\)/);
+    await page.setViewportSize({ width: 1600, height: 860 });
+    await page.goto('/__host?offcentre=1&xsite=1&widthsnippet=1');
+    const frame = page.frames().find((f) => f.url().startsWith('http://127.0.0.1'))!;
+    await expect(frame.getByRole('heading', { level: 1 }).first()).toBeVisible();
+    await expect.poll(() => edges(page)).toEqual({ left: 0, right: 1600, window: 1600 });
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await expect.poll(() => edges(page)).toEqual({ left: 0, right: 1280, window: 1280 });
   });
 });
 
