@@ -14,6 +14,7 @@ paragraphs, each question's prompt, and the page code that builds the personalis
 
 | Release | Live from | What changed in the prompts | Record |
 |---|---|---|---|
+| v0.9.3 | 21 October 2026 | No change to any prompt. | [v0.9.3.md](v0.9.3.md) |
 | v0.9.2 | 21 October 2026 | No change to any prompt. | [v0.9.2.md](v0.9.2.md) |
 | v0.9.1 | 21 October 2026 | No change to any prompt. | [v0.9.1.md](v0.9.1.md) |
 | v0.9.0 | 20 October 2026 | No change to any prompt. | [v0.9.0.md](v0.9.0.md) |
