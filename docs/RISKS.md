@@ -97,7 +97,10 @@ session analytics loaded on every page with no consent prompt.
   now reads "We don't store what you type — it only builds the text of your
   prompt, which is sent to the chatbot you choose." A privacy paragraph was
   added to the important information dialog, reached from a new "Privacy" link
-  in the footer.
+  in the footer. That link was removed in PO-114 (21 October 2026): it opened
+  the same dialog as "Read important information about this site", and the
+  consumerduty.org page around the tool has its own "Cookie & Privacy Policy"
+  link. The privacy paragraphs are still in the dialog.
 - **Governance:** short data protection note recording what is collected, why,
   and who receives it.
 - **Status: Done on the site.** Session analytics are gone; if recordings of

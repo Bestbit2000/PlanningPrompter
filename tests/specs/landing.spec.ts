@@ -89,7 +89,7 @@ test.describe('Important information dialog', () => {
     return { link, dialog };
   };
 
-  test('opens from either footer link with all its sections, and is counted', async ({ tool, page }) => {
+  test('opens from the footer link with all its sections, and is counted', async ({ tool, page }) => {
     await tool.open();
     const { dialog } = await opened(tool, page, 'Read important information about this site');
     for (const s of ['We only help you ask better questions.', 'AI answers aren’t guaranteed to be right.', 'This isn’t financial advice.',
@@ -107,7 +107,8 @@ test.describe('Important information dialog', () => {
 
     await tool.button('Close').last().click();
     await expect(dialog).toHaveCount(0);
-    await opened(tool, page, 'Privacy');
+    // No separate "Privacy" link: the host page has its own privacy policy link (PO-114)
+    await expect(page.locator('footer.landing-footer').getByRole('link', { name: 'Privacy', exact: true })).toHaveCount(0);
   });
 
   test('closes with Esc, the × button, the Close button or a click outside, and gives focus back', async ({ tool, page }) => {
