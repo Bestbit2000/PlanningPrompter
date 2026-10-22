@@ -61,7 +61,9 @@ function extract(files) {
   (data.sections || []).forEach((s) => (s.questions || []).filter((q) => !q.archived).forEach((q) => questions.push({ section: s.title, id: q.id, summary: text(q.quickSummary), human: text(q.humanVersion), prompt: text(q.aiOptimised) })));
   const styles = Object.keys(data.styleBlocks || {}).map((k) => ({ id: k, label: data.styleBlocks[k].label, text: text(data.styleBlocks[k].text) }));
   const code = {};
-  ['generatePrompt', 'copyAllSelected', 'withStyle'].forEach((name) => { const src = method(files.index, name); if (src) code[name] = src; });
+  // copyAllSelected built the list prompt until v0.6.0 (PO-58), createListPrompt since; withBudget
+  // adds the word budget for several questions (PO-127).
+  ['generatePrompt', 'copyAllSelected', 'createListPrompt', 'withStyle', 'withBudget'].forEach((name) => { const src = method(files.index, name); if (src) code[name] = src; });
   return { starter, styles, questions, code };
 }
 
@@ -87,9 +89,9 @@ function changes(prev, cur) {
   if (lostQ.length) out.push(`${plural(lostQ.length, 'question')} removed (${lostQ.map((q) => q.id).join(', ')}).`);
   if (promptQ.length) out.push(`Prompt changed for ${plural(promptQ.length, 'question')} (${promptQ.map((q) => q.id).join(', ')}).`);
   if (wordingQ.length) out.push(`Wording shown on the site changed for ${plural(wordingQ.length, 'question')} (${wordingQ.map((q) => q.id).join(', ')}).`);
-  const names = { generatePrompt: 'personalised prompt', copyAllSelected: 'prompt list', withStyle: 'answer style' };
+  const names = { generatePrompt: 'personalised prompt', copyAllSelected: 'prompt list', createListPrompt: 'prompt list', withStyle: 'answer style', withBudget: 'several questions' };
   const codeChanged = Object.keys(names).filter((k) => (prev.code[k] || '') !== (cur.code[k] || ''));
-  if (codeChanged.length) out.push(`How the prompt is put together changed (${codeChanged.map((k) => names[k]).join(', ')}).`);
+  if (codeChanged.length) out.push(`How the prompt is put together changed (${[...new Set(codeChanged.map((k) => names[k]))].join(', ')}).`);
   return out.length ? out : ['No change to any prompt.'];
 }
 
@@ -99,7 +101,9 @@ function page(rel, files, data, changed) {
   const code = [
     ['generatePrompt', 'Personalised route', 'This builds the prompt from the answers given in the wizard. Text in quotes is sent as written; the rest is filled in from what the user entered.'],
     ['copyAllSelected', 'Prompt list route', 'This joins the prompts of the questions the user selected.'],
-    ['withStyle', 'Answer style', 'This adds the paragraph for the answer style the user chose to the bottom of the prompt.']
+    ['createListPrompt', 'Prompt list route', 'This joins the prompts of the questions the user selected.'],
+    ['withStyle', 'Answer style', 'This adds the paragraph for the answer style the user chose to the bottom of the prompt.'],
+    ['withBudget', 'Several questions', 'With two or more questions, this adds one word budget for the whole answer to the bottom of the prompt, after the answer style.']
   ].filter(([name]) => data.code[name]);
   return `# Prompts in ${rel.version}
 
