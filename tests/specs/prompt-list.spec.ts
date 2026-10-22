@@ -62,10 +62,10 @@ test.describe('Prompt list', () => {
     await expect(page.getByText('No questions selected')).toBeVisible();
     await expect(create).toBeDisabled();
 
-    const n = await rows(tool).count();
-    await tool.button('Select all').click();
-    for (const box of await page.locator('label.question-row input').all()) await expect(box).toBeChecked();
-    await expect(tool.button(`Unselect ${n} questions`)).toBeVisible();
+    // No "Select all": at most three questions go in one prompt (PO-126)
+    await expect(tool.button('Select all')).toHaveCount(0);
+    for (const i of [0, 1, 2]) await rows(tool).nth(i).click();
+    await expect(tool.button('Unselect 3 questions')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Summary' })).toBeEnabled();
     await tool.button('Deselect all').click();
     await expect(create).toBeDisabled();
@@ -87,8 +87,8 @@ test.describe('Prompt list', () => {
     test(`the combined prompt, answer style "${style.label}"`, async ({ tool, page }) => {
       const topic = STAGES[1].topics[1];
       await tool.answerQuiz(STAGES[1].label, topic.label, style.label);
-      await tool.button('Select all').click();
-      const n = await rows(tool).count();
+      const n = 3;
+      for (let i = 0; i < n; i++) await rows(tool).nth(i).click();
       await tool.button('Create my prompt →').click();
 
       await expect(tool.heading(2, 'Step 2: Summary')).toBeFocused();
@@ -116,6 +116,37 @@ test.describe('Prompt list', () => {
       expect(tool.countsOf('prompt_ready')).toEqual(['list']);
     });
   }
+
+  test('a fourth question is refused with a message, and freeing a place lets it in (PO-126)', async ({ tool, page }) => {
+    await tool.answerQuiz(STAGES[1].label, STAGES[1].topics[1].label, STYLES[0].label);
+    await expect(page.getByText('Select up to 3 topics you want to cover', { exact: false })).toBeVisible();
+    for (const i of [0, 1, 2]) await rows(tool).nth(i).click();
+    await rows(tool).nth(3).click();
+    await expect(rows(tool).nth(3).locator('input')).not.toBeChecked();
+    await expect(tool.toast()).toHaveText(/You can choose up to 3 questions for one prompt/);
+    await expect(tool.button('Unselect 3 questions')).toBeVisible();
+    await rows(tool).nth(0).click();
+    await rows(tool).nth(3).click();
+    await expect(rows(tool).nth(3).locator('input')).toBeChecked();
+    await expect(tool.button('Unselect 3 questions')).toBeVisible();
+  });
+
+  test('the word budget is added for two or more questions, and not for one (PO-127)', async ({ tool, page }) => {
+    const promptText = async () => (await page.getByRole('region', { name: 'Your prompt' }).textContent())!;
+    await tool.answerQuiz(STAGES[1].label, STAGES[1].topics[1].label, STYLES[2].label);
+    await rows(tool).nth(0).click();
+    await tool.button('Create my prompt →').click();
+    expect(await promptText()).not.toContain('How to answer these together');
+    await tool.button('Change my questions').click();
+    await rows(tool).nth(1).click();
+    await tool.button('Create my prompt →').click();
+    const two = await promptText();
+    expect(two).toContain('How to answer these together:');
+    expect(two).toContain('I have asked 2 questions.');
+    // Short and simple has its own, smaller budget: 100 + 150 for each question
+    expect(two).toContain('no more than 400 words: about 150 words for each question');
+    expect(two.trim().endsWith('Everything else I asked for in each question still applies.')).toBe(true);
+  });
 
   test('one question says "1 question", and "Change my questions" goes back with the choice kept', async ({ tool, page }) => {
     await tool.answerQuiz(STAGES[0].label, STAGES[0].topics[1].label, STYLES[2].label);

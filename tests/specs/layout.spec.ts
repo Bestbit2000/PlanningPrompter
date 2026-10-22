@@ -52,7 +52,7 @@ const SCREENS: Record<string, (tool: Tool) => Promise<void>> = {
     await tool.open();
     await tool.button('Choose from a curated list').click();
     await tool.answerQuiz(STAGES[2].label, STAGES[2].topics[1].label, STYLES[0].label);
-    await tool.button('Select all').click();
+    for (const i of [0, 1, 2]) await rows(tool).nth(i).click();
     await tool.button('Create my prompt →').click();
   },
   'wizard-step-1-quiz': async (tool) => { await tool.open(); await tool.button('Personalise a prompt').click(); },

@@ -259,12 +259,11 @@
 
         <sc-if value="{{ isStep1Shortlist }}" hint-placeholder-val="{{ false }}">
         <div aria-live="polite">
-          <p class="shortlist-lead">Here are the prompts that best match what you're looking for.</p>
+          <p class="shortlist-lead">Here are the prompts that best match what you're looking for. Choose up to 3.</p>
 
           <div class="list-controls">
             <button type="button" onClick="{{ restartBrowseQuiz }}" class="list-link-btn">Change your answers</button>
             <div class="list-controls-group">
-              <button type="button" onClick="{{ onSelectAllShortlist }}" class="list-btn">Select all</button>
               <button type="button" onClick="{{ onDeselectAllShortlist }}" class="list-btn">Deselect all</button>
             </div>
           </div>
@@ -590,12 +589,11 @@
 
     <sc-if value="{{ isBrowseResults }}" hint-placeholder-val="{{ false }}">
     <div aria-live="polite">
-      <p class="shortlist-lead" data-screen-heading="step" tabindex="-1">Here are the prompts that best match what you're looking for. Select the topics you want to cover, then create your combined prompt.</p>
+      <p class="shortlist-lead" data-screen-heading="step" tabindex="-1">Here are the prompts that best match what you're looking for. Select up to 3 topics you want to cover, then create your combined prompt.</p>
 
       <div class="list-controls">
         <button type="button" onClick="{{ restartBrowseQuiz }}" class="list-link-btn">Change your answers</button>
         <div class="list-controls-group">
-          <button type="button" onClick="{{ onSelectAllShortlist }}" class="list-btn">Select all</button>
           <button type="button" onClick="{{ onDeselectAllShortlist }}" class="list-btn">Deselect all</button>
         </div>
       </div>
@@ -824,6 +822,16 @@ const BROWSE_QUIZ_QUESTIONS = [
 
 // The tag on questions that are offered under every answer, after the shortlist.
 const HELP_TOPIC = 'help';
+
+// The most questions one prompt can ask (PO-126). Beyond three the prompt, the answer and
+// the chatbot link keep growing, and later questions risk thinner answers.
+const MAX_QUESTIONS = 3;
+const MAX_QUESTIONS_MESSAGE = 'You can choose up to 3 questions for one prompt. Unselect one to choose another, or ask more in the same chat once you have your answer.';
+
+// One word budget for an answer to several questions (PO-127): a short shared opening and
+// close, plus a share for each question, in place of each question's own limit. In the
+// optimiser's trial, three questions answered this way scored the same and ran 38% shorter.
+const COMBINED_BUDGET = { base: 150, each: 250, simple: { base: 100, each: 150 } };
 
 class Component extends DCLogic {
   state = {
@@ -1061,19 +1069,16 @@ class Component extends DCLogic {
     this.setState((s) => ({ fields: { ...s.fields, [id]: val } }));
   };
 
-  toggleBrowseQuestion = (id) => {
-    this.setState((s) => {
-      const sel = { ...s.browseSelected };
-      if (sel[id]) delete sel[id]; else sel[id] = true;
-      return { browseSelected: sel, showSelectionWarning: Object.keys(sel).length > 0 ? false : s.showSelectionWarning };
-    });
-  };
-  browseSelectAllIds = (ids) => {
-    this.setState((s) => {
-      const sel = { ...s.browseSelected };
-      ids.forEach((id) => (sel[id] = true));
-      return { browseSelected: sel, showSelectionWarning: false };
-    });
+  toggleBrowseQuestion = (id, e) => {
+    const sel = { ...this.state.browseSelected };
+    // A fourth question is not added (PO-126): the box is put back and a message says why.
+    if (!sel[id] && Object.keys(sel).length >= MAX_QUESTIONS) {
+      if (e && e.target) e.target.checked = false;
+      window.showSimpleToast(MAX_QUESTIONS_MESSAGE);
+      return;
+    }
+    if (sel[id]) delete sel[id]; else sel[id] = true;
+    this.setState((s) => ({ browseSelected: sel, showSelectionWarning: Object.keys(sel).length > 0 ? false : s.showSelectionWarning }));
   };
   browseDeselectAllIds = (ids) => {
     this.setState((s) => {
@@ -1154,7 +1159,23 @@ class Component extends DCLogic {
     ids.forEach((id) => this.track('question_used', id + '|list'));
     this.track('prompt_ready', 'list');
     this.toTop();
-    this.setState({ browseSummary: true, browsePromptText: this.withStyle(text) });
+    this.setState({ browseSummary: true, browsePromptText: this.withBudget(this.withStyle(text), ids.length) });
+  };
+
+  // With two or more questions, one word budget for the whole answer and the shared parts
+  // said once (PO-127), added last so it overrides each question's own length and closing.
+  withBudget = (text, count) => {
+    if (count < 2) return text;
+    const style = this.state.browseAnswers.style;
+    const b = COMBINED_BUDGET[style] || COMBINED_BUDGET;
+    const hasStyle = !!((PROMPTS_DATA.styleBlocks || {})[style] || {}).text;
+    return text + '\n\n' + 'How to answer these together:\n'
+      + `I have asked ${count} questions. Answer each in turn under its own short heading, in the order I asked them. `
+      + `Keep the whole reply to no more than ${b.base + b.each * count} words: about ${b.each} words for each question, plus a short opening and close. `
+      + `This replaces the word limits given with each question${hasStyle ? ' and in the presentation note above' : ''}. `
+      + 'Say once, at the very start, that this is general information and not regulated financial advice. '
+      + 'Then, once at the end for all the questions together rather than after each one, give the one thing to do first, the pointers to free guidance and to a regulated financial adviser, and one or two follow-up questions. '
+      + 'Everything else I asked for in each question still applies.';
   };
   backToBrowseList = () => { this.toTop(); this.setState({ browseSummary: false }); };
   copyListPrompt = () => { this.track('prompt_copied', 'list'); this.copyText(this.state.browsePromptText, 'Prompt copied'); };
@@ -1276,7 +1297,7 @@ class Component extends DCLogic {
         selected,
         inputId: 'q_' + q.id,
         cardStyle: { border: selected ? '2px solid ' + ACCENT : '2px solid ' + DIVIDER, background: selected ? ACCENT_TINT : SURFACE },
-        onToggle: () => this.toggleBrowseQuestion(q.id)
+        onToggle: (e) => this.toggleBrowseQuestion(q.id, e)
       };
     };
 
@@ -1486,7 +1507,6 @@ class Component extends DCLogic {
       browseHelpList,
       browseHasHelp,
       browseHelpHeading: SHORTLIST.helpHeading,
-      onSelectAllShortlist: () => this.browseSelectAllIds(browseShortlistIds),
       onDeselectAllShortlist: () => this.browseDeselectAllIds(browseShortlistIds),
       clearBrowseSelected: this.clearBrowseSelected,
       unselectLabel,
